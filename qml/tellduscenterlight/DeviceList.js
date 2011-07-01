@@ -15,6 +15,11 @@ var list = function() {
 	});
 	var db = openDatabaseSync("TelldusCenterLight", "1.0", "Settings used by TelldusCenter Light", 1000000);
 
+	var METHOD_TURNON = 1;
+	var METHOD_TURNOFF = 2;
+	var METHOD_BELL = 4;
+	var METHOD_DIM = 16;
+
 	function init() {
 		//Load cached devices
 		db.transaction(function(tx) {
@@ -140,16 +145,16 @@ var list = function() {
 	Device.prototype.state = function() { return this._state; }
 	Device.prototype.statevalue = function() { return this._statevalue; }
 	Device.prototype.turnOn = function() {
-		_telldusLive.call('device/turnOn', {id: this._id}, 0);
+		_telldusLive.call('device/turnOn', {id: this._id}, function(arg){ this.updateStatus(arg, METHOD_TURNON); }, this );
 	}
 	Device.prototype.turnOff = function() {
-		_telldusLive.call('device/turnOff', {id: this._id}, 0);
+		_telldusLive.call('device/turnOff', {id: this._id}, function(arg){ this.updateStatus(arg, METHOD_TURNOFF); }, this );
 	}
 	Device.prototype.bell = function() {
-		_telldusLive.call('device/bell', {id: this._id}, 0);
+		_telldusLive.call('device/bell', {id: this._id}, 0 );
 	}
 	Device.prototype.dim = function(dimvalue) {
-		_telldusLive.call('device/dim', {id: this._id, level: dimvalue}, 0);
+		_telldusLive.call('device/dim', {id: this._id, level: dimvalue}, function(arg){ this.updateStatus(arg, METHOD_DIM); }, this );
 	}
 
 	Device.prototype.update = function(data) {
@@ -163,6 +168,20 @@ var list = function() {
 			}
 			this['_' + i] = value;
 			this.onChanged.emit(i);
+		}
+	}
+
+	Device.prototype.updateStatus = function(arg, newState){
+		if(arg.status == 'success'){
+			if (this._state == newState) {
+				return;
+			}
+			this._state = newState;
+			var id = this._id;
+			db.transaction(function(tx) {
+				tx.executeSql('UPDATE Device SET state = ? WHERE id = ?', [newState, id]);
+			});
+			this.onChanged.emit('state');
 		}
 	}
 

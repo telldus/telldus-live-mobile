@@ -25,7 +25,7 @@ Item{
 		*/
 		Text{
 			id: status
-			text: deviceItem.state==1 ? "\u263C" : "\u263D" //deviceItem.state + " " + parseInt(deviceItem.statevalue, 10)
+			text: statusIcon(deviceItem.state, deviceItem)
 			font.pointSize: 25
 		}
 
@@ -100,5 +100,19 @@ Item{
 			height = height + MainScripts.SLIDERHEIGHT;
 		}
 		return height;
+	}
+
+	function statusIcon(state, deviceItem){ //TODO remove deviceItem later on
+		//return state + " " + parseInt(deviceItem.statevalue, 10)
+		if(state == 1){
+			return "\u263C";
+		}
+		else if(state == 2){
+			return "\u263D";
+		}
+		else if(state == 16){
+			return "\u2601";
+		}
+		return "";
 	}
 }
