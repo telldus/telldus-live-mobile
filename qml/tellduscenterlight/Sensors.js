@@ -110,7 +110,11 @@ var list = function() {
 	function Sensor(data) {
 		//Parse new values
 		for (var i in data) {
-			this['_' + i] = data[i];
+			if(data[i] == undefined){
+				this['_' + i] = '';
+			} else {
+				this['_' + i] = data[i];
+			}
 		}
 		this.onChanged = new Signal();
 		this._values = {};
@@ -120,10 +124,14 @@ var list = function() {
 	Sensor.prototype.name = function() { return this._name; }
 	Sensor.prototype.update = function(data) {
 		for(var i in data) {
-			if (this['_' + i] == data[i]) {
+			var value = data[i]
+			if(value == undefined){
+				value = '';
+			}
+			if (this['_' + i] == value) {
 				continue;
 			}
-			this['_' + i] = data[i];
+			this['_' + i] = value;
 			this.onChanged.emit(i);
 		}
 	}
