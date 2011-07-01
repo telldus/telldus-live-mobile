@@ -2,6 +2,11 @@
 
 Qt.include("Signal.js");
 
+var METHOD_TURNON = 1;
+var METHOD_TURNOFF = 2;
+var METHOD_BELL = 4;
+var METHOD_DIM = 16;
+
 var list = function() {
 
 	var _list = {};
@@ -14,11 +19,6 @@ var list = function() {
 		}
 	});
 	var db = openDatabaseSync("TelldusCenterLight", "1.0", "Settings used by TelldusCenter Light", 1000000);
-
-	var METHOD_TURNON = 1;
-	var METHOD_TURNOFF = 2;
-	var METHOD_BELL = 4;
-	var METHOD_DIM = 16;
 
 	function init() {
 		//Load cached devices
