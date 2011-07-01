@@ -11,6 +11,8 @@ Item {
 	 property int xMax: width - handle.width - 4
 	 onXMaxChanged: updatePos();
 	 onMinimumChanged: updatePos();
+	 property string statevalue: '1'
+	 property int state: 0
 
 	 signal slided(int dimvalue)
 
@@ -46,7 +48,7 @@ Item {
 			 id: mouse
 			 anchors.fill: parent; drag.target: parent
 			 drag.axis: Drag.XAxis; drag.minimumX: 2; drag.maximumX: slider.xMax+2
-			 onPositionChanged: { value = (maximum - minimum) * (handle.x-2) / slider.xMax + minimum; }
+			 onPositionChanged: { device.statevalue = (maximum - minimum) * (handle.x-2) / slider.xMax + minimum; }
 			 onReleased: { slider.slided((handle.x-2)/slider.xMax*255) }
 		 }
 	 }

@@ -51,14 +51,6 @@ Item{
 
 		Row{
 			id: buttonrow
-			Button{
-				text: "ON"
-				visible: MainScripts.methodContains(deviceItem.methods, "on")
-				onClicked: {
-					console.log("CLICKED on");
-					deviceItem.turnOn();
-				}
-			}
 
 			Button{
 				text: "OFF"
@@ -66,6 +58,15 @@ Item{
 				onClicked: {
 					console.log("CLICKED off");
 					deviceItem.turnOff();
+				}
+			}
+
+			Button{
+				text: "ON"
+				visible: MainScripts.methodContains(deviceItem.methods, "on")
+				onClicked: {
+					console.log("CLICKED on");
+					deviceItem.turnOn();
 				}
 			}
 
@@ -86,10 +87,26 @@ Item{
 			anchors.top: buttonrow.bottom
 			height: MainScripts.SLIDERHEIGHT
 			visible: MainScripts.methodContains(deviceItem.methods, "dim")
-			value: parseInt(deviceItem.statevalue, 10)
+			statevalue: deviceItem.statevalue
+			state: deviceItem.state
+			value: sliderValue();
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
+				deviceItem.statevalue = dimvalue;
 				deviceItem.dim(dimvalue);
+			}
+
+			function sliderValue(){
+				if(state == DeviceList.METHOD_DIM){
+					return parseInt(statevalue, 10);
+				}
+				else if(state == DeviceList.METHOD_TURNOFF){
+					return slider.minimum;
+				}
+				else if(state == DeviceList.METHOD_TURNON){
+					return slider.maximum;
+				}
+				return slider.minimum;
 			}
 		}
 	}
