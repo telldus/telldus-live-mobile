@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/tellduscenterlight/Button.qml</file>
+        <file>qml/tellduscenterlight/ContentDevice.qml</file>
+        <file>qml/tellduscenterlight/ContentFavorite.qml</file>
+        <file>qml/tellduscenterlight/ContentSensor.qml</file>
+        <file>qml/tellduscenterlight/ContentSetting.qml</file>
+        <file>qml/tellduscenterlight/DeviceElement.qml</file>
+        <file>qml/tellduscenterlight/DeviceList.js</file>
+        <file>qml/tellduscenterlight/GroupElement.qml</file>
+        <file>qml/tellduscenterlight/main.qml</file>
+        <file>qml/tellduscenterlight/mainscripts.js</file>
+        <file>qml/tellduscenterlight/SensorElement.qml</file>
+        <file>qml/tellduscenterlight/Signal.js</file>
+        <file>qml/tellduscenterlight/Slider.qml</file>
+        <file>qml/tellduscenterlight/Toolbar.qml</file>
+        <file>qml/tellduscenterlight/ToolbarButton.qml</file>
+        <file>qml/tellduscenterlight/Device.qml</file>
+        <file>qml/tellduscenterlight/DeviceListModel.qml</file>
+        <file>qml/tellduscenterlight/DeviceListModel.js</file>
+        <file>qml/tellduscenterlight/off.png</file>
+        <file>qml/tellduscenterlight/on.png</file>
+        <file>qml/tellduscenterlight/bell.png</file>
+        <file>qml/tellduscenterlight/Sensors.js</file>
+        <file>qml/tellduscenterlight/SensorListModel.js</file>
+        <file>qml/tellduscenterlight/SensorListModel.qml</file>
+        <file>qml/tellduscenterlight/Sensor.qml</file>
+        <file>qml/tellduscenterlight/Content.qml</file>
+    </qresource>
+</RCC>
