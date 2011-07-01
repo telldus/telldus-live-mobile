@@ -30,7 +30,7 @@ SOURCES += main.cpp \
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 include(qt-json/qt-json.pri)
-include(../../../kqoauth/kqoauth.pri)
+include(../kqoauth/kqoauth.pri)
 qtcAddDeployment()
 
 CONFIG -= debug_and_release debug
