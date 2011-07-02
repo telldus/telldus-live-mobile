@@ -6,7 +6,7 @@ import "mainscripts.js" as MainScripts
 Rectangle {
 	width: 480  //TODO
 	height: 800 //TODO
-	color: "white"
+	color: "black"
 	id: main
 
 	property int selectedPane: defaultSelectedMode()
