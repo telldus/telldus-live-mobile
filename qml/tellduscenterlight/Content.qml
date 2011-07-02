@@ -12,15 +12,17 @@ Rectangle{
 	states: [
 		State {
 			name: "hiddenLeft"; when: selected > pane
+			PropertyChanges { target: content; scale: 1; z: 1 }
 			AnchorChanges { target: content; anchors.left: undefined; anchors.right: parent.left }
 		},
 		State {
 			name: "hiddenRight"; when: selected < pane
+			PropertyChanges { target: content; scale: 1; z: 1 }
 			AnchorChanges { target: content; anchors.left: parent.right; anchors.right: undefined }
 		},
 		State {
 			name: "visible"; when: selected == pane
-			PropertyChanges { target: content; visible: true }
+			PropertyChanges { target: content; z: 2; }
 			AnchorChanges { target: content; anchors.right: parent.right; anchors.left: undefined }
 		}
 	]
@@ -29,13 +31,15 @@ Rectangle{
 		Transition {
 			from: "hiddenLeft"
 			to: "visible"
-			reversible: true
 			AnchorAnimation { easing.type: Easing.InOutQuad; duration: 500 }
+		},
+		Transition {
+			from: "visible"
+			NumberAnimation { easing.type: Easing.InOutQuad; duration: 500; properties: "scale"; from: 1; to: 0.8 }
 		},
 		Transition {
 			from: "hiddenRight"
 			to: "visible"
-			reversible: true
 			AnchorAnimation { easing.type: Easing.InOutQuad; duration: 500 }
 		}
 	]
