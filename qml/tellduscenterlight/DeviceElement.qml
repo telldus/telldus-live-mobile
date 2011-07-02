@@ -7,12 +7,7 @@ Item{
 	height: setElementHeight()
 	width: parent == undefined ? 0 : parent.width
 	property bool hideFavorites: false
-	visible: !hideFavorites || deviceItem.favorite
-
-	Device {
-		id: deviceItem
-		deviceId:  device
-	}
+	visible: !hideFavorites || deviceIsFavorite
 
 	Item{
 		anchors.fill: parent
@@ -25,12 +20,12 @@ Item{
 		*/
 		Text{
 			id: status
-			text: statusIcon(deviceItem.state, deviceItem)
+			text: statusIcon(deviceState)
 			font.pointSize: 25
 		}
 
 		Text{
-			text: deviceItem.name
+			text: deviceName
 			anchors.left: status.right
 			color: "red"
 		}
@@ -38,12 +33,12 @@ Item{
 		Text{
 			id: favoriteicon
 			anchors.right: parent.right
-			text: deviceItem.favorite==true ? "\u2605" : "\u2606"
+			text: deviceIsFavorite==true ? "\u2605" : "\u2606"
 			font.pointSize: 30
 			MouseArea{
 				anchors.fill: parent
 				onClicked: {
-					deviceItem.favorite = !deviceItem.favorite
+					DeviceList.list.device(deviceId).setIsFavorite(!deviceIsFavorite)
 				}
 			}
 			visible: !hideFavorites
@@ -54,28 +49,28 @@ Item{
 
 			Button{
 				text: "OFF"
-				visible: MainScripts.methodContains(deviceItem.methods, "off")
+				visible: MainScripts.methodContains(deviceMethods, "off")
 				onClicked: {
 					console.log("CLICKED off");
-					deviceItem.turnOff();
+					DeviceList.list.device(deviceId).turnOff();
 				}
 			}
 
 			Button{
 				text: "ON"
-				visible: MainScripts.methodContains(deviceItem.methods, "on")
+				visible: MainScripts.methodContains(deviceMethods, "on")
 				onClicked: {
 					console.log("CLICKED on");
-					deviceItem.turnOn();
+					DeviceList.list.device(deviceId).turnOn();
 				}
 			}
 
 			Button{
 				text: "BELL"
-				visible: MainScripts.methodContains(deviceItem.methods, "bell")
+				visible: MainScripts.methodContains(deviceMethods, "bell")
 				onClicked: {
 					console.log("CLICKED BELL");
-					deviceItem.bell();
+					DeviceList.list.device(deviceId).bell();
 				}
 			}
 			anchors.right: favoriteicon.left
@@ -86,24 +81,24 @@ Item{
 			width: parent.width
 			anchors.top: buttonrow.bottom
 			height: MainScripts.SLIDERHEIGHT
-			visible: MainScripts.methodContains(deviceItem.methods, "dim")
-			statevalue: deviceItem.statevalue
-			state: deviceItem.state
+			visible: MainScripts.methodContains(deviceMethods, "dim")
+			statevalue: deviceStateValue
+			state: deviceState
 			value: sliderValue();
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
-				deviceItem.statevalue = dimvalue;
-				deviceItem.dim(dimvalue);
+				//deviceItem.statevalue = dimvalue; //TODO: Stefan, why did you have this?
+				DeviceList.list.device(deviceId).dim(dimvalue);
 			}
 
 			function sliderValue(){
-				if(state == DeviceList.METHOD_DIM){
-					return parseInt(statevalue, 10);
+				if(deviceState == DeviceList.METHOD_DIM){
+					return parseInt(deviceStateValue, 10);
 				}
-				else if(state == DeviceList.METHOD_TURNOFF){
+				else if(deviceState == DeviceList.METHOD_TURNOFF){
 					return slider.minimum;
 				}
-				else if(state == DeviceList.METHOD_TURNON){
+				else if(deviceState == DeviceList.METHOD_TURNON){
 					return slider.maximum;
 				}
 				return slider.minimum;
@@ -112,14 +107,14 @@ Item{
 	}
 
 	function setElementHeight(){
-		var height = (!hideFavorites || deviceItem.favorite) ? MainScripts.DEVICEROWHEIGHT : 0;  //must set height to 0 to avoid space when hidden
+		var height = (!hideFavorites || deviceIsFavorite) ? MainScripts.DEVICEROWHEIGHT : 0;  //must set height to 0 to avoid space when hidden
 		if(slider.visible){
 			height = height + MainScripts.SLIDERHEIGHT;
 		}
 		return height;
 	}
 
-	function statusIcon(state, deviceItem){ //TODO remove deviceItem later on
+	function statusIcon(state){ //TODO remove deviceItem later on
 		//return state + " " + parseInt(deviceItem.statevalue, 10)
 		if(state == 1){
 			return "\u263C";
