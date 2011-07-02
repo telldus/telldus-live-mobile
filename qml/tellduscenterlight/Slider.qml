@@ -48,7 +48,7 @@ Item {
 			 id: mouse
 			 anchors.fill: parent; drag.target: parent
 			 drag.axis: Drag.XAxis; drag.minimumX: 2; drag.maximumX: slider.xMax+2
-			 onPositionChanged: { device.statevalue = (maximum - minimum) * (handle.x-2) / slider.xMax + minimum; }
+			 //onPositionChanged: { device.statevalue = (maximum - minimum) * (handle.x-2) / slider.xMax + minimum; } //TODO: Why this Stefan?
 			 onReleased: { slider.slided((handle.x-2)/slider.xMax*255) }
 		 }
 	 }
