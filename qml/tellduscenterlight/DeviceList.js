@@ -128,7 +128,7 @@ var list = function() {
 	}
 
 	Device.prototype.id = function() { return this._id; }
-	Device.prototype.isFavorite = function() { return this._favorite; }
+	Device.prototype.isFavorite = function() { return (this._favorite == true || this._favorite == 'true'); }
 	Device.prototype.setIsFavorite = function(favorite) {
 		if (this._favorite == favorite) {
 			return;
