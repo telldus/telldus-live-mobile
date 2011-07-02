@@ -84,24 +84,28 @@ Item{
 			visible: MainScripts.methodContains(deviceMethods, "dim")
 			statevalue: deviceStateValue
 			state: deviceState
-			value: sliderValue();
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
 				//deviceItem.statevalue = dimvalue; //TODO: Stefan, why did you have this?
 				DeviceList.list.device(deviceId).dim(dimvalue);
 			}
 
-			function sliderValue(){
-				if(deviceState == DeviceList.METHOD_DIM){
-					return parseInt(deviceStateValue, 10);
+			Item {
+				//This is a pseudo-item only for listening for changes in the model data
+				property int state: deviceState
+				onStateChanged: {
+					if (state == DeviceList.METHOD_TURNON) {
+						slider.value = slider.maximum;
+					} else if (state == DeviceList.METHOD_TURNOFF) {
+						slider.value = slider.minimum;
+					}
 				}
-				else if(deviceState == DeviceList.METHOD_TURNOFF){
-					return slider.minimum;
+				property string stateValue: deviceStateValue
+				onStateValueChanged: {
+					if (state == DeviceList.METHOD_DIM) {
+						slider.value = parseInt(stateValue, 10);
+					}
 				}
-				else if(deviceState == DeviceList.METHOD_TURNON){
-					return slider.maximum;
-				}
-				return slider.minimum;
 			}
 		}
 	}
