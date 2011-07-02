@@ -92,7 +92,7 @@ var list = function() {
 	function favoriteCount(){
 		var numFavorites = 0;
 		for(var i in _list){
-			if(_list[i].isFavorite() === 'true'){
+			if(_list[i].isFavorite()){
 				numFavorites = numFavorites + 1;
 			}
 		}
