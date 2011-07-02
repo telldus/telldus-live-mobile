@@ -34,6 +34,7 @@ private slots:
 
 private:
 	void doCall();
+	void setupManager();
 	class PrivateData;
 	PrivateData *d;
 };

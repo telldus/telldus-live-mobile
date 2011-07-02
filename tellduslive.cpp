@@ -30,18 +30,12 @@ TelldusLive::TelldusLive(QObject *parent) :
 	QObject(parent)
 {
 	d = new PrivateData;
-	d->manager = new KQOAuthManager(this);
+	d->manager = 0;
+	d->request = 0;
 	d->requestPending = false;
 	d->base = "https://api.telldus.com";
 	d->key = "";
 	d->secret = "";
-
-	connect(d->manager, SIGNAL(temporaryTokenReceived(QString,QString)), this, SLOT(onTemporaryTokenReceived(QString, QString)));
-	connect(d->manager, SIGNAL(authorizationReceived(QString,QString)), this, SLOT( onAuthorizationReceived(QString, QString)));
-	connect(d->manager, SIGNAL(accessTokenReceived(QString,QString)), this, SLOT(onAccessTokenReceived(QString,QString)));
-	connect(d->manager, SIGNAL(requestReady(QByteArray)), this, SLOT(onRequestReady(QByteArray)));
-
-	d->request = new KQOAuthRequest(this);
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
@@ -51,6 +45,7 @@ TelldusLive::TelldusLive(QObject *parent) :
 	} else {
 		d->state = PrivateData::Authorized;
 	}
+	this->setupManager();
 }
 
 TelldusLive::~TelldusLive() {
@@ -176,6 +171,7 @@ void TelldusLive::logout() {
 	s.setValue("oauthToken", "");
 	s.setValue("oauthTokenSecret", "");
 	d->state = PrivateData::Unauthorized;
+	this->setupManager();
 	emit authorizedChanged();
 }
 
@@ -208,3 +204,19 @@ void TelldusLive::doCall() {
 	d->manager->executeRequest(d->request);
 }
 
+void TelldusLive::setupManager() {
+	if (d->manager) {
+		delete d->manager;
+	}
+	if (d->request) {
+		delete d->request;
+	}
+	d->manager = new KQOAuthManager(this);
+	connect(d->manager, SIGNAL(temporaryTokenReceived(QString,QString)), this, SLOT(onTemporaryTokenReceived(QString, QString)));
+	connect(d->manager, SIGNAL(authorizationReceived(QString,QString)), this, SLOT( onAuthorizationReceived(QString, QString)));
+	connect(d->manager, SIGNAL(accessTokenReceived(QString,QString)), this, SLOT(onAccessTokenReceived(QString,QString)));
+	connect(d->manager, SIGNAL(requestReady(QByteArray)), this, SLOT(onRequestReady(QByteArray)));
+
+	d->request = new KQOAuthRequest(this);
+
+}
