@@ -154,7 +154,9 @@ var list = function() {
 		_telldusLive.call('device/bell', {id: this._id}, 0 );
 	}
 	Device.prototype.dim = function(dimvalue) {
-		_telldusLive.call('device/dim', {id: this._id, level: dimvalue}, function(arg){ this.updateStatus(arg, METHOD_DIM); }, this );
+		_telldusLive.call('device/dim', {id: this._id, level: dimvalue}, function(arg){
+			this.d.updateStatus(arg, METHOD_DIM, this.value);
+		}, {d: this, value: dimvalue} );
 	}
 
 	Device.prototype.update = function(data) {
@@ -171,17 +173,22 @@ var list = function() {
 		}
 	}
 
-	Device.prototype.updateStatus = function(arg, newState){
+	Device.prototype.updateStatus = function(arg, newState, newStateValue){
 		if(arg.status == 'success'){
-			if (this._state == newState) {
+			if (this._state == newState && newStateValue == undefined) {
 				return;
 			}
 			this._state = newState;
+			if (newState == METHOD_DIM) {
+				this._statevalue = newStateValue;
+			}
+
 			var id = this._id;
 			db.transaction(function(tx) {
-				tx.executeSql('UPDATE Device SET state = ? WHERE id = ?', [newState, id]);
+				tx.executeSql('UPDATE Device SET state = ?, statevalue = ? WHERE id = ?', [this._state, this._statevalue, id]);
 			});
 			this.onChanged.emit('state');
+			this.onChanged.emit('statevalue');
 		}
 	}
 
