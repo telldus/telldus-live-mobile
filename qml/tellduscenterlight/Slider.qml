@@ -34,7 +34,22 @@ Item {
 			 GradientStop { position: 0.0; color: "#66343434" }
 			 GradientStop { position: 1.0; color: "#66000000" }
 		 }
-	 }
+
+		MouseArea {
+			id: clickableSlider
+			anchors.fill: parent
+			onClicked: {
+				var newSliderLeftPosition = mouseX - handle.width/2;
+				if(newSliderLeftPosition < 0){
+					newSliderLeftPosition = 0;
+				}
+				if(newSliderLeftPosition > slider.xMax){
+					newSliderLeftPosition = slider.xMax;
+				}
+				slider.slided(newSliderLeftPosition/slider.xMax*slider.maximum);
+			}
+		}
+	}
 
 	 Rectangle {
 		 id: handle; smooth: true
@@ -48,8 +63,7 @@ Item {
 			 id: mouse
 			 anchors.fill: parent; drag.target: parent
 			 drag.axis: Drag.XAxis; drag.minimumX: 2; drag.maximumX: slider.xMax+2
-			 //onPositionChanged: { device.statevalue = (maximum - minimum) * (handle.x-2) / slider.xMax + minimum; } //TODO: Why this Stefan?
-			 onReleased: { slider.slided((handle.x-2)/slider.xMax*255) }
+			 onReleased: { slider.slided((handle.x-2)/slider.xMax*slider.maximum) }
 		 }
 	 }
  }

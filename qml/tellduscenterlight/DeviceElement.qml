@@ -86,7 +86,6 @@ Item{
 			state: deviceState
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
-				//deviceItem.statevalue = dimvalue; //TODO: Stefan, why did you have this?
 				DeviceList.list.device(deviceId).dim(dimvalue);
 			}
 
