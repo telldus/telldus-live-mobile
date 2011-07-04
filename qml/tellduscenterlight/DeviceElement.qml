@@ -82,8 +82,8 @@ Item{
 			anchors.top: buttonrow.bottom
 			height: MainScripts.SLIDERHEIGHT
 			visible: MainScripts.methodContains(deviceMethods, "dim")
-			statevalue: deviceStateValue
-			state: deviceState
+			//statevalue: deviceStateValue
+			//state: deviceState
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
 				DeviceList.list.device(deviceId).dim(dimvalue);

@@ -11,8 +11,8 @@ Item {
 	 property int xMax: width - handle.width - 4
 	 onXMaxChanged: updatePos();
 	 onMinimumChanged: updatePos();
-	 property string statevalue: '1'
-	 property int state: 0
+	 //property string statevalue: '1'
+	 //property int state: 0
 
 	 signal slided(int dimvalue)
 

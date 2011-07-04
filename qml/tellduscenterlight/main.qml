@@ -96,29 +96,6 @@ Rectangle {
 			text: MainScripts.getFriendlyText(selectedPane)
 		}
 		z: 2
-
-		//TEST:
-		MouseArea{
-			anchors.fill: parent
-			onClicked: {
-				var test = 'inget';
-				if(main.height/main.width < 1){
-					test = 'landscape';
-				}
-				else{
-					test = 'portrait';
-				}
-				message.showMessage("should be " + test);
-				if(main.orientation == 'landscape'){
-					console.log("to portrait");
-					main.orientation = 'portrait';
-				}
-				else{
-					console.log("to landscape");
-					main.orientation = 'landscape';
-				}
-			}
-		}
 	}
 
 	Item{
