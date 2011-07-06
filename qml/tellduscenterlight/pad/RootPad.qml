@@ -83,6 +83,17 @@ Rectangle {
 	}
 
 	ListView {
+		id: sensorlist
+		height: parent.height
+		anchors.left: toolbar.right
+		width: 300 //TODO
+		model: SensorListModel{ }
+		delegate: SensorElement{ }
+		z: 1
+		visible: selectedPane == MainScripts.FULL_SENSOR
+	}
+
+	ListView {
 		id: favoritelist
 		anchors.right: parent.right
 		height: parent.height

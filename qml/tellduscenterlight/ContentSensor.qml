@@ -4,7 +4,7 @@ Content {
 	id: contentSensor
 
 	ListView {
-		id: favoritelist
+		id: sensorlist
 		anchors.horizontalCenter: parent.horizontalCenter
 		height: parent.height
 		width: parent.width
