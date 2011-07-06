@@ -25,5 +25,10 @@
         <file>qml/tellduscenterlight/SensorListModel.qml</file>
         <file>qml/tellduscenterlight/Sensor.qml</file>
         <file>qml/tellduscenterlight/Content.qml</file>
+        <file>qml/tellduscenterlight/phone/qmldir</file>
+        <file>qml/tellduscenterlight/pad/qmldir</file>
+        <file>qml/tellduscenterlight/pad/RootPad.qml</file>
+        <file>qml/tellduscenterlight/phone/RootPhone.qml</file>
+        <file>qml/tellduscenterlight/pad/ToolbarPad.qml</file>
     </qresource>
 </RCC>

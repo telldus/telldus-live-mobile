@@ -2,6 +2,11 @@ var FAVORITE = 1;
 var DEVICE = 2;
 var SENSOR = 3;
 var SETTING = 4;
+var FULL_FAVORITE_LAYOUT = 5;
+var FULL_DEVICE = 6;
+var FULL_SENSOR = 7;
+var SCHEDULER = 8;
+var FULL_SETTING = 9;
 
 function getFriendlyText(mode){
 	if(mode == FAVORITE){
@@ -16,6 +21,28 @@ function getFriendlyText(mode){
 	else if(mode == SETTING){
 		return "\u2692 Settings";
 	}
+	else if(mode == FULL_FAVORITE_LAYOUT){
+		return "\u2328";  //TODO icons instead
+	}
+	else if(mode == FULL_DEVICE){
+		return "\u2615";  //TODO icons instead
+	}
+	else if(mode == FULL_SENSOR){
+		return "\u2614";  //TODO icons instead
+	}
+	else if(mode == SCHEDULER){
+		return "\u1F552";  //TODO icons instead
+	}
+	else if(mode == FULL_SETTING){
+		return "\u2692";  //TODO icons instead
+	}
+}
+
+function getIconSource(mode){
+	if(mode == FULL_FAVORITE_LAYOUT){
+		//TODO
+	}
+	return ''
 }
 
 function methodContains(methods, method){

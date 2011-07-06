@@ -29,6 +29,12 @@ Rectangle {
 		text: MainScripts.getFriendlyText(pane)
 	}
 
+	Image{
+		id: toolbarimage
+		anchors.centerIn: parent
+		source: MainScripts.getIconSource(pane)
+	}
+
 	states: [
 		State {
 			name: "disabled"; when: !telldusLive.isAuthorized && pane != 4  //TODO avoid this setting-thing here
