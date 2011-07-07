@@ -5,10 +5,13 @@ import "../mainscripts.js" as MainScripts
 Item{
 	id: menuOption
 	property alias text: optiontext.text
-	property string showArrow: ''
-
+	property string align: ''
+	property bool showArrow: false
+	property int optionWidth: leftarrow.width + optiontext.width + MainScripts.MARGIN_TEXT
+	property string optionValue: ''
 	height: MainScripts.MENUOPTIONHEIGHT
-	width: leftarrow.width + optiontext.width + MainScripts.MARGIN_TEXT
+	width: optionWidth > parent.width ? optionWidth : parent.width
+
 	Rectangle{
 		id: menuOptionRect
 		anchors.fill: parent
@@ -38,13 +41,13 @@ Item{
 				else{
 					menuOptionRect.color = "lightgray"
 				}
-				console.log("GÖR NÅGOT")
+				deviceMenu.optionSelected(menuOption.optionValue)
 			}
 		}
 		Text{
 			id: leftarrow //TODO image
 			text: "\u21E6"
-			visible: showArrow == 'right'
+			visible: showArrow && align == 'right'
 			anchors.right: optiontext.left
 			anchors.verticalCenter: optiontext.verticalCenter
 		}
@@ -52,7 +55,7 @@ Item{
 		Text{
 			id: rightarrow //TODO image
 			text: "\u21E8"
-			visible: showArrow == 'left'
+			visible: showArrow && align == 'left'
 			anchors.left: optiontext.right
 			anchors.verticalCenter: optiontext.verticalCenter
 		}

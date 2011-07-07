@@ -31,5 +31,6 @@
         <file>qml/tellduscenterlight/pad/ToolbarPad.qml</file>
         <file>qml/tellduscenterlight/pad/MenuOption.qml</file>
         <file>qml/tellduscenterlight/ActionButton.qml</file>
+        <file>qml/tellduscenterlight/pad/DefaultMenu.qml</file>
     </qresource>
 </RCC>

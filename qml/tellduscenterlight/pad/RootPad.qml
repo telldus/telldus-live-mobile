@@ -146,34 +146,27 @@ Rectangle {
 		visible: deviceMenu.visible
 	}
 
-	Rectangle{
-		//TODO menu -> component
-		//TODO hide this again, when "lost focus"...
-
+	DefaultMenu{
 		id: deviceMenu
-		property string align: ''
-		width: menuColumn.width
-		height: menuColumn.height
 
-		Rectangle{
-			height: menuColumn.height
-			width: menuColumn.width
-			color: "lightgray"
-
-			Column{
-
-				id: menuColumn
-
-				MenuOption{
-					text: "Option 1"
-					showArrow: deviceMenu.align
-				}
-
-				MenuOption{
-					text: "Option 2"
-				}
+		model: ListModel{
+			ListElement{
+				menuText: "Add to favorites"
+				menuShowArrow: true
+				menuOptionValue: 'addfavorite'
+			}
+			ListElement{
+				menuText: "Add to group"
+				menuOptionValue: 'addtogroup'
+			}
+			ListElement{
+				menuText: "Edit device"
+				menuOptionValue: 'editdevice'
 			}
 		}
-		visible: selectedDevice > 0
+
+		onOptionSelected: {
+			console.log("Value to compare with: ", value)
+		}
 	}
 }
