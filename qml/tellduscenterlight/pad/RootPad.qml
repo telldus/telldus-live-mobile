@@ -142,6 +142,7 @@ Rectangle {
 		anchors.fill: parent
 		onClicked: {
 			selectedDevice = 0
+			addToGroupMenu.visible = false
 		}
 		visible: deviceMenu.visible
 	}
@@ -151,22 +152,44 @@ Rectangle {
 
 		model: ListModel{
 			ListElement{
-				menuText: "Add to favorites"
-				menuShowArrow: true
-				menuOptionValue: 'addfavorite'
+				text: "Header"
+				showArrow: true
+				isHeader: true
 			}
 			ListElement{
-				menuText: "Add to group"
-				menuOptionValue: 'addtogroup'
+				text: "Add to favorites"
+				optionValue: 'addfavorite'
 			}
 			ListElement{
-				menuText: "Edit device"
-				menuOptionValue: 'editdevice'
+				text: "Add to group"
+				optionValue: 'addtogroup'
+			}
+			ListElement{
+				text: "Edit device"
+				optionValue: 'editdevice'
 			}
 		}
 
 		onOptionSelected: {
-			console.log("Value to compare with: ", value)
+			addToGroupMenu.visible = false
+			if(value == "addtogroup"){
+				addToGroupMenu.visible = true
+			}
 		}
+		visible: selectedDevice > 0
+	}
+
+	DefaultMenu{
+		id: addToGroupMenu
+		anchors.top: deviceMenu.bottom
+		anchors.topMargin: 10 //TODO
+		anchors.horizontalCenter: deviceMenu.horizontalCenter
+		model: ListModel{
+			ListElement{
+				text: "Include in group"
+				isHeader: true
+			}
+		}
+		visible: false
 	}
 }

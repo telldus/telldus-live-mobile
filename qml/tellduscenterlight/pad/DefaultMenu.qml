@@ -6,6 +6,7 @@ Rectangle{
 	property string align: ''
 	property variant model: undefined
 	signal optionSelected(string value)
+	property bool menuShowArrow: false
 	width: menuColumn.width
 	height: menuColumn.height
 
@@ -19,13 +20,13 @@ Rectangle{
 			Repeater{
 				model: deviceMenu.model
 				MenuOption{
-					text: menuText
-					showArrow: menuShowArrow == undefined ? false : menuShowArrow
-					optionValue: menuOptionValue
+					text: model.text
+					showArrow: model.showArrow == undefined ? false : model.showArrow
+					optionValue: model.optionValue == undefined ? 'false' : model.optionValue
 					align: deviceMenu.align
+					isHeader: model.isHeader == undefined ? false : model.isHeader
 				}
 			}
 		}
 	}
-	visible: selectedDevice > 0
 }

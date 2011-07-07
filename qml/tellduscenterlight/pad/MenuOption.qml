@@ -6,6 +6,7 @@ Item{
 	id: menuOption
 	property alias text: optiontext.text
 	property string align: ''
+	property bool isHeader: false
 	property bool showArrow: false
 	property int optionWidth: leftarrow.width + optiontext.width + MainScripts.MARGIN_TEXT
 	property string optionValue: ''
@@ -15,14 +16,16 @@ Item{
 	Rectangle{
 		id: menuOptionRect
 		anchors.fill: parent
-		color: "lightgray"
+		color: isHeader ? "black" : "lightgray"
 		Text{
 			id: optiontext
 			anchors.centerIn: parent
+			color: isHeader ? "white" : "black"
 		}
 		MouseArea{
 			id: optionMouseArea
 			anchors.fill: parent
+			visible: !isHeader
 			hoverEnabled: true
 			onEntered: {
 				menuOptionRect.color = "darkgray"
