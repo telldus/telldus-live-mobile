@@ -5,9 +5,10 @@ import "../mainscripts.js" as MainScripts
 Item{
 	id: menuOption
 	property alias text: optiontext.text
+	property string showArrow: ''
 
 	height: MainScripts.MENUOPTIONHEIGHT
-	width: optiontext.width + MainScripts.MARGIN_TEXT
+	width: leftarrow.width + optiontext.width + MainScripts.MARGIN_TEXT
 	Rectangle{
 		id: menuOptionRect
 		anchors.fill: parent
@@ -39,6 +40,21 @@ Item{
 				}
 				console.log("GÖR NÅGOT")
 			}
+		}
+		Text{
+			id: leftarrow //TODO image
+			text: "\u21E6"
+			visible: showArrow == 'right'
+			anchors.right: optiontext.left
+			anchors.verticalCenter: optiontext.verticalCenter
+		}
+
+		Text{
+			id: rightarrow //TODO image
+			text: "\u21E8"
+			visible: showArrow == 'left'
+			anchors.left: optiontext.right
+			anchors.verticalCenter: optiontext.verticalCenter
 		}
 	}
 }

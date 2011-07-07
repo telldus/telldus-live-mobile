@@ -4,8 +4,8 @@ import "phone"
 
 Item{
 	property string devicetype: 'pad'
-	width: 480  //TODO
-	height: 800 //TODO
+	width: devicetype == 'phone' ? 480 : 1024   //TODO
+	height: devicetype == 'phone' ? 800 : 768 //TODO
 
 	Loader {
 		id: root

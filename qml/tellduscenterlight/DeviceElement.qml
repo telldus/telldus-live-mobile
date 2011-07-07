@@ -16,11 +16,13 @@ Item{
 			if(selectedPane == MainScripts.FULL_DEVICE){
 				selectedDevice = deviceId;
 				var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
+				deviceMenu.align = 'right'
 				if(newX >= main.width){
 					newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x - deviceMenu.width;  //place to the left instead, so that it's visible
+					deviceMenu.align = 'left'
 				}
 
-				deviceMenu.x = newX //TODO would rather use binding somehow
+				deviceMenu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
 				deviceMenu.y = deviceElement.y + deviceElement.height/4
 			}
 		}

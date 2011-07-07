@@ -146,11 +146,14 @@ Rectangle {
 		visible: deviceMenu.visible
 	}
 
-	Item{
+	Rectangle{
 		//TODO menu -> component
 		//TODO hide this again, when "lost focus"...
 
 		id: deviceMenu
+		property string align: ''
+		width: menuColumn.width
+		height: menuColumn.height
 
 		Rectangle{
 			height: menuColumn.height
@@ -163,6 +166,7 @@ Rectangle {
 
 				MenuOption{
 					text: "Option 1"
+					showArrow: deviceMenu.align
 				}
 
 				MenuOption{
