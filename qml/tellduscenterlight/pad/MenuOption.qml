@@ -51,16 +51,20 @@ Item{
 			id: leftarrow //TODO image
 			text: "\u21E6"
 			visible: showArrow && align == 'right'
-			anchors.right: optiontext.left
+			anchors.right: parent.left
+			anchors.rightMargin: -5 - leftarrow.width //TODO
 			anchors.verticalCenter: optiontext.verticalCenter
+			color: isHeader ? "white" : "black"
 		}
 
 		Text{
 			id: rightarrow //TODO image
 			text: "\u21E8"
 			visible: showArrow && align == 'left'
-			anchors.left: optiontext.right
+			anchors.left: parent.right
+			anchors.leftMargin: -5 - rightarrow.width //TODO
 			anchors.verticalCenter: optiontext.verticalCenter
+			color: isHeader ? "white" : "black"
 		}
 	}
 }
