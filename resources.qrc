@@ -33,5 +33,7 @@
         <file>qml/tellduscenterlight/ActionButton.qml</file>
         <file>qml/tellduscenterlight/pad/DefaultMenu.qml</file>
         <file>qml/tellduscenterlight/pad/FavoriteLayout.qml</file>
+        <file>qml/tellduscenterlight/pad/favoritelayoutscripts.js</file>
+        <file>qml/tellduscenterlight/pad/VisualDevice.qml</file>
     </qresource>
 </RCC>

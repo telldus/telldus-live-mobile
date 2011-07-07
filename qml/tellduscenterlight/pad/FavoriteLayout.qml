@@ -1,5 +1,6 @@
 import Qt 4.7
 import "../mainscripts.js" as MainScripts
+import "favoritelayoutscripts.js" as FavoriteLayoutScripts
 
 Rectangle {
    Rectangle{
@@ -17,5 +18,11 @@ Rectangle {
 	   width: parent.width - tabSelection.width
 	   //button for each tab
 	   //then another button för adding new tab, and possibly upload image (menu options), or option for this in lower right corner or something
+
+	   //clickable components...
+   }
+
+   Component.onCompleted: {
+	   FavoriteLayoutScripts.fillVisualObjects()
    }
 }
