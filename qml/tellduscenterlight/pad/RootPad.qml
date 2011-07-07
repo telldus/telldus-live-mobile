@@ -1,4 +1,5 @@
 import Qt 4.7
+import QtWebKit 1.0
 import ".."
 import "../DeviceList.js" as DeviceList
 import "../Sensors.js" as Sensors
@@ -175,6 +176,10 @@ Rectangle {
 			if(value == "addtogroup"){
 				addToGroupMenu.visible = true
 			}
+			if(value == "editdevice"){
+				editDevice.visible = true
+				editDevice.update()
+			}
 		}
 		visible: selectedDevice > 0
 	}
@@ -201,5 +206,44 @@ Rectangle {
 			}
 		}
 		visible: false
+	}
+
+	Rectangle{
+		id: editDevice
+		color: "white"
+		anchors.fill: parent
+
+		WebView{
+			id: webview
+			anchors.fill: parent
+			scale: 1
+			smooth: true
+		}
+
+		Rectangle{
+			color: "red"
+			anchors.right: parent.right
+			anchors.top:  parent.top
+			height: 50
+			width: 50
+			Text{
+				anchors.centerIn: parent
+				text: "X"
+				font.pointSize: 20
+			}
+			MouseArea{
+				anchors.fill: parent
+				onClicked: {
+					editDevice.visible = false
+				}
+			}
+		}
+
+
+		visible: false
+
+		function update(){
+			webview.url = "http://example.com/deviceid=" + selectedDevice
+		}
 	}
 }
