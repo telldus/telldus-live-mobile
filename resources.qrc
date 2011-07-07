@@ -33,5 +33,6 @@
         <file>qml/tellduscenterlight/pad/DefaultMenu.qml</file>
         <file>qml/tellduscenterlight/phone/RootHarmattan.qml</file>
         <file>qml/tellduscenterlight/Header.qml</file>
+        <file>qml/tellduscenterlight/pad/FavoriteLayout.qml</file>
     </qresource>
 </RCC>

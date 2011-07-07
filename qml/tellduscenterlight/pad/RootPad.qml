@@ -11,10 +11,6 @@ Rectangle {
 	property int selectedPane: defaultSelectedMode()
 	property int selectedDevice: 0
 
-	onSelectedDeviceChanged: {
-		//console.log("CHANGED!!!")
-	}
-
 	Component.onCompleted: {  //TODO what of this can be reused?
 		DeviceList.list.setTelldusLive( telldusLive )
 		Sensors.list.setTelldusLive( telldusLive )
@@ -110,6 +106,15 @@ Rectangle {
 			hideFavorites: true
 		}
 		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT
+	}
+
+	FavoriteLayout{
+		id: favoriteLayout
+		visible: selectedPane == MainScripts.FULL_FAVORITE_LAYOUT
+		anchors.left: toolbar.right
+		anchors.top: parent.top
+		width: parent.width - MainScripts.TOOLBARWIDTH
+		height: parent.height
 	}
 
 	function defaultSelectedMode(){
@@ -238,7 +243,6 @@ Rectangle {
 				}
 			}
 		}
-
 
 		visible: false
 
