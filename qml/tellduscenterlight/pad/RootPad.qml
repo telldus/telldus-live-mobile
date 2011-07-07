@@ -185,9 +185,19 @@ Rectangle {
 		anchors.topMargin: 10 //TODO
 		anchors.horizontalCenter: deviceMenu.horizontalCenter
 		model: ListModel{
+			//TODO model dynamic, depending on groups...
 			ListElement{
 				text: "Include in group"
 				isHeader: true
+			}
+			ListElement{
+				text: "Group 1"
+			}
+			ListElement{
+				text: "Group 2"
+			}
+			ListElement{
+				text: "Group 3"
 			}
 		}
 		visible: false
