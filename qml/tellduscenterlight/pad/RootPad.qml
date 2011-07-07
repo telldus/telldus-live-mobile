@@ -8,13 +8,17 @@ Rectangle {
 	id: main
 
 	property int selectedPane: defaultSelectedMode()
+	property int selectedDevice: 0
+
+	onSelectedDeviceChanged: {
+		//console.log("CHANGED!!!")
+	}
 
 	Component.onCompleted: {  //TODO what of this can be reused?
 		DeviceList.list.setTelldusLive( telldusLive )
 		Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 	}
-
 
 	DeviceListModel {
 		id: deviceModel
@@ -61,7 +65,7 @@ Rectangle {
 		ListView {
 			id: devicelist
 			height: parent.height
-			width: 300
+			width: 300 //TODO
 
 			model: DeviceListModel {}
 
@@ -71,7 +75,7 @@ Rectangle {
 		ListView {
 			id: grouplist
 			height: parent.height
-			width: 300
+			width: 300 //TODO
 			anchors.left: devicelist.right
 
 			model: DeviceListModel {}
@@ -97,7 +101,7 @@ Rectangle {
 		id: favoritelist
 		anchors.right: parent.right
 		height: parent.height
-		width: 300
+		width: 300 //TODO
 
 		model: DeviceListModel {}
 
@@ -132,5 +136,40 @@ Rectangle {
 		else{
 			return MainScripts.SETTING
 		}*/
+	}
+
+	MouseArea{
+		anchors.fill: parent
+		onClicked: {
+			selectedDevice = 0
+		}
+		visible: deviceMenu.visible
+	}
+
+	Item{
+		//TODO menu -> component
+		//TODO hide this again, when "lost focus"...
+
+		id: deviceMenu
+
+		Rectangle{
+			height: menuColumn.height
+			width: menuColumn.width
+			color: "lightgray"
+
+			Column{
+
+				id: menuColumn
+
+				MenuOption{
+					text: "Option 1"
+				}
+
+				MenuOption{
+					text: "Option 2"
+				}
+			}
+		}
+		visible: selectedDevice > 0
 	}
 }

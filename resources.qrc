@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/tellduscenterlight/Button.qml</file>
         <file>qml/tellduscenterlight/ContentDevice.qml</file>
         <file>qml/tellduscenterlight/ContentFavorite.qml</file>
         <file>qml/tellduscenterlight/ContentSensor.qml</file>
@@ -30,5 +29,7 @@
         <file>qml/tellduscenterlight/pad/RootPad.qml</file>
         <file>qml/tellduscenterlight/phone/RootPhone.qml</file>
         <file>qml/tellduscenterlight/pad/ToolbarPad.qml</file>
+        <file>qml/tellduscenterlight/pad/MenuOption.qml</file>
+        <file>qml/tellduscenterlight/ActionButton.qml</file>
     </qresource>
 </RCC>

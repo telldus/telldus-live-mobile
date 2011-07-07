@@ -9,6 +9,23 @@ Item{
 	property bool hideFavorites: false
 	visible: !hideFavorites || deviceIsFavorite
 
+	MouseArea{
+		anchors.fill: parent
+		onClicked: {
+			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
+			if(selectedPane == MainScripts.FULL_DEVICE){
+				selectedDevice = deviceId;
+				var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
+				if(newX >= main.width){
+					newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x - deviceMenu.width;  //place to the left instead, so that it's visible
+				}
+
+				deviceMenu.x = newX //TODO would rather use binding somehow
+				deviceMenu.y = deviceElement.y + deviceElement.height/4
+			}
+		}
+	}
+
 	Item{
 		anchors.fill: parent
 
