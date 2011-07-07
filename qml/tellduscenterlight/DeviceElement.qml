@@ -47,7 +47,7 @@ Item{
 		Row{
 			id: buttonrow
 
-			Button{
+			ActionButton{
 				text: "OFF"
 				visible: MainScripts.methodContains(deviceMethods, "off")
 				onClicked: {
@@ -56,7 +56,7 @@ Item{
 				}
 			}
 
-			Button{
+			ActionButton{
 				text: "ON"
 				visible: MainScripts.methodContains(deviceMethods, "on")
 				onClicked: {
@@ -65,7 +65,7 @@ Item{
 				}
 			}
 
-			Button{
+			ActionButton{
 				text: "BELL"
 				visible: MainScripts.methodContains(deviceMethods, "bell")
 				onClicked: {
