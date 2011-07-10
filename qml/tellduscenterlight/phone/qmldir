@@ -1,2 +1,6 @@
+ContentDevice ../ContentDevice.qml
+ContentFavorite ../ContentFavorite.qml
+ContentSensor ../ContentSensor.qml
+ContentSetting ../ContentSetting.qml
 Root ./RootPhone.qml
 
