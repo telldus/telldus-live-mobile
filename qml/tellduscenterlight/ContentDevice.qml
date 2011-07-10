@@ -1,11 +1,12 @@
-import Qt 4.7
+import QtQuick 1.1
+import com.nokia.meego 1.0
 import "mainscripts.js" as MainScripts
 
 Content {
 	id: contentDevice
 
 	Flickable{
-
+		id: flickableContent
 		width: parent.width
 		height: parent.height
 		contentHeight: contentArea.height
@@ -58,4 +59,5 @@ Content {
 			}
 		}
 	}
+	ScrollDecorator{ flickableItem: flickableContent }
 }
