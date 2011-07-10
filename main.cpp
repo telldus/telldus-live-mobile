@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
 	viewer.rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 
 	viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-	viewer.setSource(QUrl("qrc:/qml/tellduscenterlight/main.qml"));
-	viewer.showExpanded();
+	viewer.setSource(QUrl("qrc:/qml/tellduscenterlight/phone/RootHarmattan.qml"));
+	viewer.showFullScreen();
 
 	return app.exec();
 }
