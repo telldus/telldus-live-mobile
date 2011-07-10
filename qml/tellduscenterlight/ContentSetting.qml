@@ -1,5 +1,6 @@
-import Qt 4.7
+import QtQuick 1.1
 import QtWebKit 1.0
+import com.nokia.meego 1.0
 
 Content {
 	id: contentSetting
@@ -23,13 +24,11 @@ Content {
 	}
 
 	WebView{
-		//TODO load as resource when needed
 		id: webview
 		anchors.fill: parent
-		//anchors.centerIn: parent
 		scale: 1
 		smooth: true
-		visible: !telldusLive.isAuthorized  //(but load as needed)
+		visible: !telldusLive.isAuthorized
 		z: 1
 	}
 	Item {
@@ -44,10 +43,12 @@ Content {
 			opacity: 0.3
 			color: "#000"
 		}
-		Text{
+		BusyIndicator {
 			anchors.centerIn: parent
-			text: "Loading..."
+			platformStyle: BusyIndicatorStyle { size: "large" }
+			running: state == 'visible'
 		}
+
 		states: State {
 			name: 'visible'
 			when: webview.progress < 1
