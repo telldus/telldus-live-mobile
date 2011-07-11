@@ -47,6 +47,11 @@ var list = function() {
 			device.update(deviceInfo);
 		} else {
 			device = new Device(deviceInfo);
+			if(device.id == 10 || device.id == 11){
+				//TODO dynamic
+				device.layoutTab = 2;
+			}
+
 			_list[device.id()] = device;
 			deviceAdded.emit(device);
 		}
@@ -157,6 +162,15 @@ var list = function() {
 		_telldusLive.call('device/dim', {id: this._id, level: dimvalue}, function(arg){
 			this.d.updateStatus(arg, METHOD_DIM, this.value);
 		}, {d: this, value: dimvalue} );
+	}
+	Device.prototype.layoutX = function(){
+		return 100;
+	}
+	Device.prototype.layoutY = function(){
+		return 300;
+	}
+	Device.prototype.layoutTab = function(){
+		return 1;
 	}
 
 	Device.prototype.update = function(data) {

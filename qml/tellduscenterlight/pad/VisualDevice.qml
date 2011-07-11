@@ -1,10 +1,20 @@
 import Qt 4.7
+import ".."
+import "../DeviceList.js" as DeviceList
+import "../mainscripts.js" as MainScripts
 
 Rectangle {
 	id: visualDevice
 	height: 40
 	width: 40
-	color: "red"
+	color: statusColor()
+
+	property int deviceId: 0
+	property string deviceName: ''
+	property int deviceMethods: 0
+	property int deviceState: 0
+	property string deviceStateValue: ''
+
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
 	//TODO edit mode? When it's ok to move around stuff?
@@ -34,7 +44,6 @@ Rectangle {
 			}
 		}
 		onPressAndHold: {
-			console.log("Pressed and held"); //TODO: menu with delete option
 			visualDeviceMenu.visible = true
 		}
 	}
@@ -59,6 +68,7 @@ Rectangle {
 			addToGroupMenu.visible = false
 			if(value == "removefromlayout"){
 				visualDevice.destroy()
+				//TODO remove from list too
 			}
 		}
 		visible: false
@@ -78,6 +88,73 @@ Rectangle {
 			width: parent.width
 			anchors.top: parent.top
 			z:2
+			Text{
+				anchors.centerIn: parent
+				text: "Next run time: 23:45 070911"
+			}
+
+			Row{  //TODO possibly reuse?
+				id: buttonrow
+
+				ActionButton{
+					text: "OFF"
+					visible: MainScripts.methodContains(deviceMethods, "off")
+					onClicked: {
+						console.log("CLICKED off");
+						DeviceList.list.device(deviceId).turnOff();
+					}
+				}
+
+				ActionButton{
+					text: "ON"
+					visible: MainScripts.methodContains(deviceMethods, "on")
+					onClicked: {
+						console.log("CLICKED on");
+						DeviceList.list.device(deviceId).turnOn();
+					}
+				}
+
+				ActionButton{
+					text: "BELL"
+					visible: MainScripts.methodContains(deviceMethods, "bell")
+					onClicked: {
+						console.log("CLICKED BELL");
+						DeviceList.list.device(deviceId).bell();
+					}
+				}
+
+			}
+
+			Slider{
+				id: slider
+				width: parent.width
+				anchors.top: buttonrow.bottom
+				height: MainScripts.SLIDERHEIGHT
+				visible: MainScripts.methodContains(deviceMethods, "dim")
+				onSlided: {
+					console.log("DIMMED to " + dimvalue);
+					DeviceList.list.device(deviceId).dim(dimvalue);
+				}
+
+				Item {
+					//This is a pseudo-item only for listening for changes in the model data
+					property int state: deviceState
+					onStateChanged: {
+						if (state == DeviceList.METHOD_TURNON) {
+							slider.value = slider.maximum;
+						} else if (state == DeviceList.METHOD_TURNOFF) {
+							slider.value = slider.minimum;
+						}
+					}
+					property string stateValue: deviceStateValue
+					onStateValueChanged: {
+						if (state == DeviceList.METHOD_DIM) {
+							slider.value = parseInt(stateValue, 10);
+						}
+					}
+				}
+			}
+
 		}
 		Rectangle{
 			id: bubblebottom
@@ -92,5 +169,13 @@ Rectangle {
 
 		visible:false
 
+	}
+
+	function statusColor(){  //TODO to icon
+		if(deviceState == DeviceList.METHOD_TURNON){
+			return "blue";
+		}
+
+		return "red";
 	}
 }
