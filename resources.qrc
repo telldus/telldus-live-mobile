@@ -34,7 +34,7 @@
         <file>qml/tellduscenterlight/phone/RootHarmattan.qml</file>
         <file>qml/tellduscenterlight/Header.qml</file>
         <file>qml/tellduscenterlight/pad/FavoriteLayout.qml</file>
-        <file>qml/tellduscenterlight/pad/favoritelayoutscripts.js</file>
         <file>qml/tellduscenterlight/pad/VisualDevice.qml</file>
+        <file>qml/tellduscenterlight/pad/FavoriteLayoutObjects.qml</file>
     </qresource>
 </RCC>

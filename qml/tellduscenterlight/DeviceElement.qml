@@ -223,13 +223,13 @@ Item{
 
 	function statusIcon(state){ //TODO remove deviceItem later on
 		//return state + " " + parseInt(deviceItem.statevalue, 10)
-		if(state == 1){
+		if(state == DeviceList.METHOD_TURNON){
 			return "\u263C";
 		}
-		else if(state == 2){
+		else if(state == DeviceList.METHOD_TURNOFF){
 			return "\u263D";
 		}
-		else if(state == 16){
+		else if(state == DeviceList.METHOD_BELL){
 			return "\u2601";
 		}
 		return "";
