@@ -14,6 +14,7 @@ Rectangle {
 	property int deviceMethods: 0
 	property int deviceState: 0
 	property string deviceStateValue: ''
+	property int tabId: 1 //TODO
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
@@ -40,6 +41,7 @@ Rectangle {
 		onReleased: {
 			if(movedX != visualDevice.x || movedY != visualDevice.y){
 				console.log("HAS MOVED")
+				DeviceList.list.device(deviceId).layoutPosition(movedX, movedY, tabId);
 				//TODO store this value
 			}
 		}
@@ -90,7 +92,7 @@ Rectangle {
 			z:2
 			Text{
 				anchors.centerIn: parent
-				text: "Next run time: 23:45 070911"
+				text: "Next run time: 23:45 070911" //TODO
 			}
 
 			Row{  //TODO possibly reuse?

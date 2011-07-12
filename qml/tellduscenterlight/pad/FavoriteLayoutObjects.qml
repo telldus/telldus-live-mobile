@@ -1,33 +1,35 @@
 import Qt 4.7
 import ".."
+import "VisualDeviceList.js" as VisualDeviceList
 import "../DeviceList.js" as DeviceList
-import "../DeviceListModel.js" as Script
+//import "../DeviceListModel.js" as Script
 
 ListModel {
 	id: favoriteLayoutObjects
 
 	Component.onCompleted: {
-		Script.init(DeviceList.list);
-		DeviceList.list.deviceAdded.connect(deviceAdded);
+		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
+		VisualDeviceList.visualDevicelist.init(DeviceList.list);  //TODO can this be done in other way?
+		//TODO remove the visual object too...
 	}
 
 	property int favoriteCount: 0
 
-	function deviceAdded(device){
+	function visualDeviceAdded(device){
 		var visualDevice = Qt.createComponent("VisualDevice.qml");
 
-		//TODO do like this at all? Or own list somehow?
+		//TODO do like this at all? Or own list somehow? is this the right "level"?
 
-		if(device.layoutTab() > 0){ //Check for correct tab, property of this favoriteLayoutObjects...
+		if(device.tabId() > 0){ //Check for correct tab, property of this favoriteLayoutObjects...
 			var visualObject = visualDevice.createObject(tabArea);
 			visualObject.x = device.layoutX();
 			visualObject.y = device.layoutY();
 
-			visualObject.deviceId = device.id();
-			visualObject.deviceName = device.name();
-			visualObject.deviceMethods = device.methods();
-			visualObject.deviceState = device.state();
-			visualObject.deviceStateValue = device.statevalue();
+			visualObject.deviceId = device.device().id();
+			visualObject.deviceName = device.device().name();
+			visualObject.deviceMethods = device.device().methods();
+			visualObject.deviceState = device.device().state();
+			visualObject.deviceStateValue = device.device().statevalue();
 		}
 	}
 }
