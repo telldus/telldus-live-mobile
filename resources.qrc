@@ -35,5 +35,6 @@
         <file>qml/tellduscenterlight/pad/FavoriteLayout.qml</file>
         <file>qml/tellduscenterlight/pad/VisualDevice.qml</file>
         <file>qml/tellduscenterlight/pad/FavoriteLayoutObjects.qml</file>
+        <file>qml/tellduscenterlight/pad/VisualDeviceList.js</file>
     </qresource>
 </RCC>

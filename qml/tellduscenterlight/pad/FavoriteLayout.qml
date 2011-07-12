@@ -1,8 +1,10 @@
 import Qt 4.7
 import "../mainscripts.js" as MainScripts
+import "VisualDeviceList.js" as VisualDeviceList
 import ".."
 
 Rectangle {
+	property int tabId: 1 //TODO
 	Rectangle{
 		id: tabSelection
 		color: "darkgray"
@@ -24,11 +26,53 @@ Rectangle {
 	}
 
 	FavoriteLayoutObjects{
-		id: deviceListModel  //TODO has to be named like this when using DeviceListModel.js...
+		id: visualDeviceListModel  //TODO has to be named deviceListModel when using DeviceListModel.js...
 	}
 
-   Component.onCompleted: {
-	   //console.log("Countet: " + deviceListModel.count);
-	   //FavoriteLayoutScripts.fillVisualObjects()
-   }
+	DeviceListModel{
+		id: deviceListModel
+	}
+
+	ListView{
+		//TODO list, drag from here -> layout = place it...
+		model: deviceListModel
+
+		delegate: Item{
+			id: availableListDelegate
+			height: deviceText.height
+			width: 100
+			Text{
+				id: deviceText
+				text: model.deviceName
+			}
+
+			MouseArea{
+				anchors.fill: parent
+				property int initialX: 0
+				property int initialY: 0
+
+				drag.target: availableListDelegate
+				drag.axis: Drag.XandYAxis
+				drag.minimumX: 0
+				drag.maximumX: 800 //TODO
+
+				onPressed: {
+					initialX = availableListDelegate.x;
+					initialY = availableListDelegate.y;
+				}
+
+				onReleased: {
+					if(true || availableListDelegate.x < width && availableListDelegate.y < height){ //TODO, check if dropped within correct bounds
+						VisualDeviceList.visualDevicelist.addVisualDevice(availableListDelegate.x - availableListDelegate.width/2, availableListDelegate.y - availableListDelegate.height/2, model.deviceId, tabId);
+						availableListDelegate.x = initialX; //reset item location
+						availableListDelegate.y = initialY;
+
+						//VisualDeviceList.list.device(model.deviceId).layoutPosition(availableListDelegate.x + availableListDelegate.width/2, availableListDelegate.y + availableListDelegate.height/2, 1);
+						//TODO move item back
+					}
+				}
+			}
+			//visible: model.tabId != 0 //only show if not already added to a layout (TODO to THIS layout?)
+		}
+	}
 }
