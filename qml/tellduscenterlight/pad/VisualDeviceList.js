@@ -81,13 +81,21 @@ var visualDevicelist = function() {
 	VisualDevice.prototype.layoutY = function() { return this._layoutY; }
 	VisualDevice.prototype.tabId = function() { return this._tabId; }
 
-	VisualDevice.prototype.layoutPosition = function(newX, newY, tabId, visualDeviceId){
-		//TODO why is visualDeviceId neccessary? why not this._id?
+	VisualDevice.prototype.layoutPosition = function(newX, newY, tabId){
+		var visualDeviceId = this._id;
 		this._layoutX = newX;
 		this._layoutY = newY;
 		this._tabId = tabId;
 		db.transaction(function(tx) {
 			tx.executeSql('UPDATE VisualDevice SET layoutX = ?, layoutY = ?, tabId = ? WHERE id = ?', [newX, newY, tabId, visualDeviceId]);
+		});
+	}
+
+	VisualDevice.prototype.deleteDevice = function(){
+		var visualDeviceId = this._id; //this is needed, can't use "this" down there
+		console.log("id:", this._id );
+		db.transaction(function(tx) {
+			tx.executeSql('DELETE FROM VisualDevice WHERE id = ?', [visualDeviceId]);
 		});
 	}
 
