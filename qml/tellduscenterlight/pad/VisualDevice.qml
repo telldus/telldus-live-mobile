@@ -40,7 +40,7 @@ Rectangle {
 		}
 		onReleased: {
 			if(movedX != visualDevice.x || movedY != visualDevice.y){
-				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).layoutPosition(visualDevice.x, visualDevice.y, tabId, visualDevice.visualDeviceId);
+				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).layoutPosition(visualDevice.x, visualDevice.y, tabId);
 			}
 		}
 		onPressAndHold: {
@@ -67,8 +67,8 @@ Rectangle {
 		onOptionSelected: {
 			addToGroupMenu.visible = false
 			if(value == "removefromlayout"){
-				visualDevice.destroy()
-				//TODO remove from list too
+				visualDevice.destroy();
+				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).deleteDevice();
 			}
 		}
 		visible: false
