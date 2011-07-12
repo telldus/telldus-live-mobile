@@ -24,7 +24,8 @@ ListModel {
 			var visualObject = visualDevice.createObject(tabArea);
 			visualObject.x = device.layoutX();
 			visualObject.y = device.layoutY();
-
+			visualObject.tabId = device.tabId();
+			visualObject.visualDeviceId = device.id();
 			visualObject.deviceId = device.device().id();
 			visualObject.deviceName = device.device().name();
 			visualObject.deviceMethods = device.device().methods();

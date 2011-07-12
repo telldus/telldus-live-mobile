@@ -2,6 +2,7 @@ import Qt 4.7
 import ".."
 import "../DeviceList.js" as DeviceList
 import "../mainscripts.js" as MainScripts
+import "VisualDeviceList.js" as VisualDeviceList
 
 Rectangle {
 	id: visualDevice
@@ -10,6 +11,7 @@ Rectangle {
 	color: statusColor()
 
 	property int deviceId: 0
+	property int visualDeviceId: 0
 	property string deviceName: ''
 	property int deviceMethods: 0
 	property int deviceState: 0
@@ -31,18 +33,14 @@ Rectangle {
 		onPressed: {
 			movedX = visualDevice.x
 			movedY = visualDevice.y
-			console.log(mouseX)
 		}
 
 		onClicked: {
-			console.log("clicked") //TODO show info bubble
 			infoBubble.visible = !infoBubble.visible
 		}
 		onReleased: {
 			if(movedX != visualDevice.x || movedY != visualDevice.y){
-				console.log("HAS MOVED")
-				DeviceList.list.device(deviceId).layoutPosition(movedX, movedY, tabId);
-				//TODO store this value
+				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).layoutPosition(visualDevice.x, visualDevice.y, tabId, visualDevice.visualDeviceId);
 			}
 		}
 		onPressAndHold: {

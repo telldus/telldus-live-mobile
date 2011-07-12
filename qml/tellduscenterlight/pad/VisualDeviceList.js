@@ -24,17 +24,17 @@ var visualDevicelist = function() {
 		} else {
 		*/
 			device = new VisualDevice(deviceInfo);
-
 			_visualList[device.id()] = device;
 			visualDeviceAdded.emit(device);  //TODO
 		// }
 	}
 
 	function addVisualDevice(xvalue, yvalue, deviceId, tabId){
-		addDevice({'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId});
 		db.transaction(function(tx) {
 			tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId) VALUES(?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId]);
+			//TODO return an ID to add below!!!
 		});
+		addDevice({'id': 999, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId});  //TODO replace this temp value
 	}
 
 	function deviceAdded(device){
@@ -53,6 +53,13 @@ var visualDevicelist = function() {
 				addDevice(deviceObj);
 			}
 		});
+	}
+
+	function visualDevice(id) {
+		if (!_visualList[id]) {
+			return undefined;
+		}
+		return _visualList[id];
 	}
 
 	function VisualDevice(data) {
@@ -74,9 +81,20 @@ var visualDevicelist = function() {
 	VisualDevice.prototype.layoutY = function() { return this._layoutY; }
 	VisualDevice.prototype.tabId = function() { return this._tabId; }
 
+	VisualDevice.prototype.layoutPosition = function(newX, newY, tabId, visualDeviceId){
+		//TODO why is visualDeviceId neccessary? why not this._id?
+		this._layoutX = newX;
+		this._layoutY = newY;
+		this._tabId = tabId;
+		db.transaction(function(tx) {
+			tx.executeSql('UPDATE VisualDevice SET layoutX = ?, layoutY = ?, tabId = ? WHERE id = ?', [newX, newY, tabId, visualDeviceId]);
+		});
+	}
+
 	return {
 		visualDeviceAdded: visualDeviceAdded,
 		addVisualDevice: addVisualDevice,
-		init: init
+		init: init,
+		visualDevice: visualDevice
 	}
 }();
