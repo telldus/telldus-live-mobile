@@ -34,7 +34,9 @@ Rectangle {
 	}
 
 	ListView{
-		//TODO list, drag from here -> layout = place it...
+		anchors.left: parent.left
+		anchors.top: parent.top
+		height: parent.height
 		model: deviceListModel
 
 		delegate: Item{
