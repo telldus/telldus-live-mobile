@@ -112,13 +112,16 @@ var tabAreaList = function(){
 	var _tabAreaList = {};
 	var _parentTabArea
 	var _tabComponent
+	var _tabButtonRow
+	var _tabSelectionButton
 
 	var db = openDatabaseSync("TelldusCenterLight", "1.0", "Settings used by TelldusCenter Light", 1000000);  //TODO same database? different? Use same instance?
 
-	function init(tabComponent, tabArea){
-		//TODO fill tabAreaList...
+	function init(tabComponent, tabArea, tabButtonRow, tabSelectionButton){
 		_parentTabArea = tabArea;
 		_tabComponent = tabComponent;
+		_tabButtonRow = tabButtonRow;
+		_tabSelectionButton = tabSelectionButton
 
 		db.transaction(function(tx) {
 			//tx.executeSql('DROP TABLE IF EXISTS TabArea');
@@ -155,6 +158,11 @@ var tabAreaList = function(){
 		tabAreaObject.name = tabInfo.name;
 		tabAreaObject.backgroundimage = tabInfo.backgroundimage;
 		_tabAreaList[tabInfo.id] = tabAreaObject;
+
+		var tabButtonObject = _tabSelectionButton.createObject(_tabButtonRow);
+		tabButtonObject.name = tabInfo.name;
+		tabButtonObject.selectionTabId = tabInfo.id;
+		tabAreaObject.button = tabButtonObject;  //TODO delete too
 	}
 
 	function tab(id) {
