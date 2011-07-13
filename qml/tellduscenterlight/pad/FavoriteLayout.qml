@@ -4,30 +4,43 @@ import "VisualDeviceList.js" as VisualDeviceList
 import ".."
 
 Rectangle {
-	property int tabId: 1 //TODO
+	property int selectedTabId: 1 //default
+
 	id: favoriteLayout
 
 	Rectangle{
 		id: tabSelection
+		property alias tabButtonRow: tabButtonRow
 		color: "darkgray"
-		height: parent.height
+		height: tabButtonRow.height //parent.height/2
+		anchors.left: parent.left
+		anchors.top: parent.top
 		width: MainScripts.TOOLBARWIDTH  //TODO
-	}
+		Column{
+			id: tabButtonRow
+			//height: parent.height
+			width: parent.width
 
-	/*
-	Rectangle{
-		id: tabArea
-		color: "gray"
-		anchors.left: tabSelection.right
-		anchors.top: tabSelection.top
-		height: parent.height
-		width: parent.width - tabSelection.width
-		//button for each tab
+			TabButton{
+				name: "Add new layout"
+				onClicked: {
+					console.log("ADD new layout");
+					//TODO
+				}
+			}
+		}
+		//TODO button for each tab
 		//then another button för adding new tab, and possibly upload image (menu options), or option for this in lower right corner or something
 
-		//clickable components...
+		Component{
+			id: tabSelectionButton
+			TabButton{
+				onClicked: {
+					favoriteLayout.selectedTabId = selectionTabId;
+				}
+			}
+		}
 	}
-	*/
 
 	Component{
 		id: tabArea
@@ -35,11 +48,13 @@ Rectangle {
 			property int tabId
 			property string name: ''
 			property string backgroundimage: ''
+			property variant button
 			color: "gray"
 			anchors.left: tabSelection.right
 			anchors.top: tabSelection.top
 			height: parent.height
 			width: parent.width - tabSelection.width
+			visible: tabId == selectedTabId
 		}
 	}
 
@@ -52,9 +67,10 @@ Rectangle {
 	}
 
 	ListView{
+		id: availableFavoriteList
 		anchors.left: parent.left
-		anchors.top: parent.top
-		height: parent.height
+		anchors.top: tabSelection.bottom
+		height: parent.height/2
 		model: deviceListModel
 
 		delegate: Item{

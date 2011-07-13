@@ -37,5 +37,6 @@
         <file>qml/tellduscenterlight/pad/VisualDevice.qml</file>
         <file>qml/tellduscenterlight/pad/FavoriteLayoutObjects.qml</file>
         <file>qml/tellduscenterlight/pad/VisualDeviceList.js</file>
+        <file>qml/tellduscenterlight/pad/TabButton.qml</file>
     </qresource>
 </RCC>
