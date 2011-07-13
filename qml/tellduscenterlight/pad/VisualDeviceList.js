@@ -171,6 +171,7 @@ var tabAreaList = function(){
 
 	return{
 		init: init,
-		tab: tab
+		tab: tab,
+		insertTabArea: insertTabArea
 	}
 }();

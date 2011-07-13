@@ -25,7 +25,7 @@ Rectangle {
 				name: "Add new layout"
 				onClicked: {
 					console.log("ADD new layout");
-					//TODO
+					VisualDeviceList.tabAreaList.insertTabArea('New layout', '');
 				}
 			}
 		}
