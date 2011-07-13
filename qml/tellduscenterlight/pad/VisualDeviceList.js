@@ -30,11 +30,12 @@ var visualDevicelist = function() {
 	}
 
 	function addVisualDevice(xvalue, yvalue, deviceId, tabId){
+		var insertId = 0;
 		db.transaction(function(tx) {
-			tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId) VALUES(?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId]);
-			//TODO return an ID to add below!!!
+			var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId) VALUES(?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId]);
+			insertId = result.insertId;
 		});
-		addDevice({'id': 999, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId});  //TODO replace this temp value
+		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId});
 	}
 
 	function deviceAdded(device){
@@ -44,7 +45,7 @@ var visualDevicelist = function() {
 			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId FROM VisualDevice WHERE deviceId = ?', [device.id()]);
 			for(var i = 0; i < rs.rows.length; ++i) {
 				var deviceObj = {
-					'id': rs.rows.item(i).id,  //TODO remove?
+					'id': rs.rows.item(i).id,
 					'deviceId': rs.rows.item(i).deviceId,
 					'layoutX': parseInt(rs.rows.item(i).layoutX, 10),
 					'layoutY': parseInt(rs.rows.item(i).layoutY, 10),
@@ -112,19 +113,51 @@ var tabAreaList = function(){
 	var _parentTabArea
 	var _tabComponent
 
+	var db = openDatabaseSync("TelldusCenterLight", "1.0", "Settings used by TelldusCenter Light", 1000000);  //TODO same database? different? Use same instance?
+
 	function init(tabComponent, tabArea){
 		//TODO fill tabAreaList...
 		_parentTabArea = tabArea;
 		_tabComponent = tabComponent;
+
+		db.transaction(function(tx) {
+			//tx.executeSql('DROP TABLE IF EXISTS TabArea');
+			tx.executeSql('CREATE TABLE IF NOT EXISTS TabArea(id INTEGER PRIMARY KEY, name TEXT, backgroundimage TEXT)');
+			var rs = tx.executeSql('SELECT id, name, backgroundimage FROM TabArea');
+			for(var i = 0; i < rs.rows.length; ++i) {
+				var tabObj = {
+					'id': rs.rows.item(i).id,
+					'name': rs.rows.item(i).name,
+					'backgroundimage': rs.rows.item(i).backgroundimage
+				};
+				addTab(tabObj);
+			}
+			if(rs.rows.length == 0){
+				//no tab areas exists, create a default first one
+				insertTabArea('New layout', '');
+			}
+		});
 	}
 
+	function insertTabArea(name, backgroundimage){
+		var insertId = 0;
+		db.transaction(function(tx) {
+			var result = tx.executeSql('INSERT INTO TabArea (name, backgroundimage) VALUES(?, ?)', [name, backgroundimage]);
+			insertId = result.insertId;
+		});
+		console.log("Adding", insertId, "for", name);
+		addTab({'id': insertId, 'name': name, 'backgroundimage': backgroundimage});
+	}
+
+	function addTab(tabInfo) {
+		var tabAreaObject = _tabComponent.createObject(_parentTabArea);
+		tabAreaObject.tabId = tabInfo.id;
+		tabAreaObject.name = tabInfo.name;
+		tabAreaObject.backgroundimage = tabInfo.backgroundimage;
+		_tabAreaList[tabInfo.id] = tabAreaObject;
+	}
 
 	function tab(id) {
-		if (!_tabAreaList[id]) {
-			var tabAreaObject = _tabComponent.createObject(_parentTabArea);
-			_tabAreaList[id] = tabAreaObject;
-			return tabAreaObject;
-		}
 		return _tabAreaList[id];
 	}
 

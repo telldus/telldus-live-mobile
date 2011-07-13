@@ -32,7 +32,9 @@ Rectangle {
 	Component{
 		id: tabArea
 		Rectangle{
-			//sid: tabArea
+			property int tabId
+			property string name: ''
+			property string backgroundimage: ''
 			color: "gray"
 			anchors.left: tabSelection.right
 			anchors.top: tabSelection.top
