@@ -72,11 +72,12 @@ Rectangle {
 		anchors.top: tabSelection.bottom
 		height: parent.height/2
 		model: deviceListModel
+		z: 100 //over everything
 
 		delegate: Item{
 			id: availableListDelegate
 			height: deviceText.height
-			width: 100
+			width: 100 //TODO
 			Text{
 				id: deviceText
 				text: model.deviceName
@@ -87,10 +88,14 @@ Rectangle {
 				property int initialX: 0
 				property int initialY: 0
 
+				property variant mappedCoord: favoriteLayout.mapToItem(availableFavoriteList, 0, 0); //TODO doesn't work for first list element for some reason...
+
 				drag.target: availableListDelegate
 				drag.axis: Drag.XandYAxis
-				drag.minimumX: 0
-				drag.maximumX: 800 //TODO
+				drag.minimumX: mappedCoord.x
+				drag.maximumX: mappedCoord.x + favoriteLayout.width - deviceText.width
+				drag.minimumY: mappedCoord.y
+				drag.maximumY: mappedCoord.y + favoriteLayout.height - availableListDelegate.height
 
 				onPressed: {
 					initialX = availableListDelegate.x;
@@ -98,17 +103,33 @@ Rectangle {
 				}
 
 				onReleased: {
-					if(true || availableListDelegate.x < width && availableListDelegate.y < height){ //TODO, check if dropped within correct bounds
-						VisualDeviceList.visualDevicelist.addVisualDevice(availableListDelegate.x - availableListDelegate.width/2, availableListDelegate.y - availableListDelegate.height/2, model.deviceId, tabId);
-						availableListDelegate.x = initialX; //reset item location
-						availableListDelegate.y = initialY;
 
-						//VisualDeviceList.list.device(model.deviceId).layoutPosition(availableListDelegate.x + availableListDelegate.width/2, availableListDelegate.y + availableListDelegate.height/2, 1);
-						//TODO move item back
+					var newX = availableListDelegate.x - availableListDelegate.width/2;
+					var newY = availableListDelegate.y - availableListDelegate.height/2;
+					var mapped = availableFavoriteList.mapToItem(favoriteLayout, newX, newY);
+					newX = mapped.x;
+					newY = mapped.y;
+
+					var maxWidth = favoriteLayout.width - 100; //TODO constants!
+					var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;
+					if(newX > maxWidth){
+						newX = maxWidth;
 					}
+					if(newY > maxHeight){
+						newY = maxHeight;
+					}
+					if(newY < 0){
+						newY = 0;
+					}
+
+					if(newX >= 0){
+						//do nothing if dropped on list again
+						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, model.deviceId, selectedTabId);
+					}
+					availableListDelegate.x = initialX; //reset item location
+					availableListDelegate.y = initialY;
 				}
 			}
-			//visible: model.tabId != 0 //only show if not already added to a layout (TODO to THIS layout?)
 		}
 	}
 }
