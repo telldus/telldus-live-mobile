@@ -5,6 +5,8 @@ import ".."
 
 Rectangle {
 	property int tabId: 1 //TODO
+	id: favoriteLayout
+
 	Rectangle{
 		id: tabSelection
 		color: "darkgray"
@@ -12,6 +14,7 @@ Rectangle {
 		width: MainScripts.TOOLBARWIDTH  //TODO
 	}
 
+	/*
 	Rectangle{
 		id: tabArea
 		color: "gray"
@@ -23,6 +26,19 @@ Rectangle {
 		//then another button för adding new tab, and possibly upload image (menu options), or option for this in lower right corner or something
 
 		//clickable components...
+	}
+	*/
+
+	Component{
+		id: tabArea
+		Rectangle{
+			//sid: tabArea
+			color: "gray"
+			anchors.left: tabSelection.right
+			anchors.top: tabSelection.top
+			height: parent.height
+			width: parent.width - tabSelection.width
+		}
 	}
 
 	FavoriteLayoutObjects{

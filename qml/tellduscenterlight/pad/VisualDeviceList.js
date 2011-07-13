@@ -106,3 +106,30 @@ var visualDevicelist = function() {
 		visualDevice: visualDevice
 	}
 }();
+
+var tabAreaList = function(){
+	var _tabAreaList = {};
+	var _parentTabArea
+	var _tabComponent
+
+	function init(tabComponent, tabArea){
+		//TODO fill tabAreaList...
+		_parentTabArea = tabArea;
+		_tabComponent = tabComponent;
+	}
+
+
+	function tab(id) {
+		if (!_tabAreaList[id]) {
+			var tabAreaObject = _tabComponent.createObject(_parentTabArea);
+			_tabAreaList[id] = tabAreaObject;
+			return tabAreaObject;
+		}
+		return _tabAreaList[id];
+	}
+
+	return{
+		init: init,
+		tab: tab
+	}
+}();
