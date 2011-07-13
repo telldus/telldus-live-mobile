@@ -6,8 +6,8 @@ import "VisualDeviceList.js" as VisualDeviceList
 
 Rectangle {
 	id: visualDevice
-	height: 40
-	width: 40
+	height: MainScripts.VISUALDEVICEHEIGHT
+	width: MainScripts.VISUALDEVICEWIDTH
 	color: statusColor()
 
 	property int deviceId: 0
@@ -29,7 +29,9 @@ Rectangle {
 		drag.target: visualDevice
 		drag.axis: Drag.XandYAxis
 		drag.minimumX: 0
-		drag.maximumX: 800 //TODO
+		drag.maximumX: favoriteLayout.width - visualDevice.width - MainScripts.TOOLBARWIDTH
+		drag.minimumY: 0
+		drag.maximumY: favoriteLayout.height - visualDevice.height
 		onPressed: {
 			movedX = visualDevice.x
 			movedY = visualDevice.y
