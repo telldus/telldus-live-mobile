@@ -5,7 +5,6 @@ Page {
 	id: content
 	clip:  true
 
-	anchors.margins: 16
 	height: parent.height
 	width: parent.width
 
