@@ -112,7 +112,6 @@ var visualDevicelist = function() {
 
 	VisualDevice.prototype.deleteDevice = function(){
 		var visualDeviceId = this._id; //this is needed, can't use "this" down there
-		console.log("id:", this._id );
 		db.transaction(function(tx) {
 			tx.executeSql('DELETE FROM VisualDevice WHERE id = ?', [visualDeviceId]);
 		});
@@ -176,7 +175,6 @@ var tabAreaList = function(){
 			var result = tx.executeSql('INSERT INTO TabArea (name, backgroundimage) VALUES(?, ?)', [name, backgroundimage]);
 			insertId = result.insertId;
 		});
-		console.log("Adding", insertId, "for", name);
 		addTab({'id': insertId, 'name': name, 'backgroundimage': backgroundimage});
 	}
 
@@ -187,7 +185,6 @@ var tabAreaList = function(){
 		}
 
 		tabArea.name = newName; //TODO bind or even update this?
-		console.log("update", id, "to", newName)
 		db.transaction(function(tx) {
 			tx.executeSql('UPDATE TabArea SET name = ? WHERE id = ?', [newName, id]);
 		});
