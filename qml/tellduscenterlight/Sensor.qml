@@ -13,8 +13,22 @@ Item {
 	property string humidity: ''
 	property bool hasHumidity: false
 
+	onSensorIdChanged: {
+		initSensor(sensorId);
+	}
+
 	Component.onCompleted: {
+		initSensor(sensorId);
+	}
+
+	function initSensor(sensorId){
+		console.log(sensorId);
+
 		var jsSensor = Sensors.list.sensor(sensorId);
+		if(jsSensor == null){  //TODO another way to avoid nulls?
+			return; //not ready yet
+		}
+
 		sensor.name = jsSensor.name();
 		var date = new Date(jsSensor.updated()*1000);
 		sensor.lastUpdated = date.toISOString();
@@ -46,5 +60,6 @@ Item {
 				updateValue(what);
 			}
 		}, jsSensor);
+
 	}
 }
