@@ -86,10 +86,31 @@ Rectangle {
 		anchors.horizontalCenter: visualDevice.horizontalCenter
 
 		Rectangle{
+			id: infoSensor
 			color: "white"
-			height: 200
+			height: 200 //TODO
 			width: parent.width
 			anchors.top: parent.top
+			visible: type == MainScripts.SENSOR
+
+			Sensor {
+				id: sensorItem
+				sensorId: deviceId //type == MainScripts.SENSOR ? deviceId : -1
+			}
+
+			Text{
+				anchors.centerIn: parent
+				text: sensorItem.name
+			}
+		}
+
+		Rectangle{
+			id: infoDevice
+			color: "white"
+			height: 200 //TODO
+			width: parent.width
+			anchors.top: parent.top
+			visible: type == MainScripts.DEVICE
 			z:2
 			Text{
 				anchors.centerIn: parent
