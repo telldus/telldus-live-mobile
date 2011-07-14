@@ -2,6 +2,8 @@ import Qt 4.7
 import ".."
 import "VisualDeviceList.js" as VisualDeviceList
 import "../DeviceList.js" as DeviceList
+import "../Sensors.js" as Sensors
+import "../mainscripts.js" as MainScripts
 
 ListModel {
 	id: favoriteLayoutObjects
@@ -9,7 +11,7 @@ ListModel {
 	Component.onCompleted: {
 		VisualDeviceList.tabAreaList.init(tabArea, favoriteLayout, tabSelection.tabButtonRow, tabSelectionButton);
 		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
-		VisualDeviceList.visualDevicelist.init(DeviceList.list);  //TODO can this be done in other way?
+		VisualDeviceList.visualDevicelist.init(DeviceList.list, Sensors.list);  //TODO can this be done in other way?
 		//TODO remove the visual object too on device removal...
 	}
 
@@ -26,11 +28,19 @@ ListModel {
 			visualObject.y = device.layoutY();
 			visualObject.tabId = device.tabId();
 			visualObject.visualDeviceId = device.id();
-			visualObject.deviceId = device.device().id();
-			visualObject.deviceName = device.device().name();
-			visualObject.deviceMethods = device.device().methods();
-			visualObject.deviceState = device.device().state();
-			visualObject.deviceStateValue = device.device().statevalue();
+			visualObject.type = device.type();
+
+			if(device.type() == MainScripts.DEVICE){
+				visualObject.deviceId = device.device().id();
+				visualObject.deviceName = device.device().name();
+				visualObject.deviceMethods = device.device().methods();
+				visualObject.deviceState = device.device().state();
+				visualObject.deviceStateValue = device.device().statevalue();
+			}
+			else if(device.type() == MainScripts.SENSOR){
+				visualObject.deviceId = device.sensor().id();
+				visualObject.deviceName = device.sensor().name();
+			}
 		}
 	}
 }
