@@ -12,6 +12,7 @@ Item{
 	property string optionValue: ''
 	height: MainScripts.MENUOPTIONHEIGHT
 	width: optionWidth > parent.width ? optionWidth : parent.width
+	signal released()
 
 	Rectangle{
 		id: menuOptionRect
@@ -45,6 +46,7 @@ Item{
 					menuOptionRect.color = "lightgray"
 				}
 				deviceMenu.optionSelected(menuOption.optionValue)
+				menuOption.released()
 			}
 		}
 		Text{

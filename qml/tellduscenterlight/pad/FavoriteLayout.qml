@@ -16,6 +16,7 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.top: parent.top
 		width: MainScripts.TOOLBARWIDTH  //TODO
+		z: 99
 		Column{
 			id: tabButtonRow
 			//height: parent.height
@@ -35,8 +36,17 @@ Rectangle {
 		Component{
 			id: tabSelectionButton
 			TabButton{
+				z: 99
 				onClicked: {
 					favoriteLayout.selectedTabId = selectionTabId;
+				}
+				onReleased: {
+					VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
+					selectedTabId = 1; //TODO default, but what if this is deleted?
+				}
+
+				onNameChanged: {
+					VisualDeviceList.tabAreaList.updateTabAreaName(selectionTabId, name);
 				}
 			}
 		}
