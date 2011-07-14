@@ -17,15 +17,8 @@ Content {
 			width: parent.width
 			anchors.horizontalCenter: parent.horizontalCenter
 
-			Rectangle{
-				height: MainScripts.HEADERHEIGHT
-				width: parent.width
-				color: "lightgray"
-				Text{
-					anchors.centerIn: parent
-					text: "Devices"
-				}
-				z: 3
+			Header {
+				text: "Devices"
 			}
 
 			Repeater {
@@ -36,15 +29,8 @@ Content {
 				DeviceElement{}
 			}
 
-			Rectangle{
-				height: MainScripts.HEADERHEIGHT
-				width: parent.width
-				color: "lightgray"
-				Text{
-					anchors.centerIn: parent
-					text: "Groups"
-				}
-				z: 3
+			Header {
+				text: "Groups"
 			}
 
 			Repeater {

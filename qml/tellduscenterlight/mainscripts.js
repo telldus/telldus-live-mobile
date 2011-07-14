@@ -66,7 +66,7 @@ function methodContains(methods, method){
 }
 
 var DEVICEROWHEIGHT = 50 * SCALEFACTOR;
-var HEADERHEIGHT = 20 * SCALEFACTOR;
+var HEADERHEIGHT = 88 * SCALEFACTOR;
 var SLIDERHEIGHT = 20 * SCALEFACTOR;
 var TOOLBARHEIGHT = 50 * SCALEFACTOR;
 var TOOLBARWIDTH = 100 * SCALEFACTOR; //TODO this should be dependent on the widest button text... Possible?
