@@ -142,6 +142,16 @@ var tabAreaList = function(){
 		});
 	}
 
+	function deleteTabArea(id){
+		var tabArea = _tabAreaList[id];
+		tabArea.button.destroy(); //delete selection button
+		tabArea.destroy();  //delete area
+		_tabAreaList[id] = null;
+		db.transaction(function(tx) {
+			tx.executeSql('DELETE FROM TabArea WHERE id = ?', [id]);
+		});
+	}
+
 	function insertTabArea(name, backgroundimage){
 		var insertId = 0;
 		db.transaction(function(tx) {
@@ -150,6 +160,19 @@ var tabAreaList = function(){
 		});
 		console.log("Adding", insertId, "for", name);
 		addTab({'id': insertId, 'name': name, 'backgroundimage': backgroundimage});
+	}
+
+	function updateTabAreaName(id, newName){
+		var tabArea = _tabAreaList[id];
+		if(!tabArea){
+			return;
+		}
+
+		tabArea.name = newName; //TODO bind or even update this?
+		console.log("update", id, "to", newName)
+		db.transaction(function(tx) {
+			tx.executeSql('UPDATE TabArea SET name = ? WHERE id = ?', [newName, id]);
+		});
 	}
 
 	function addTab(tabInfo) {
@@ -172,6 +195,8 @@ var tabAreaList = function(){
 	return{
 		init: init,
 		tab: tab,
-		insertTabArea: insertTabArea
+		insertTabArea: insertTabArea,
+		updateTabAreaName: updateTabAreaName,
+		deleteTabArea: deleteTabArea
 	}
 }();
