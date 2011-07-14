@@ -11,7 +11,6 @@
         <file>qml/tellduscenterlight/mainscripts.js</file>
         <file>qml/tellduscenterlight/SensorElement.qml</file>
         <file>qml/tellduscenterlight/Signal.js</file>
-        <file>qml/tellduscenterlight/Slider.qml</file>
         <file>qml/tellduscenterlight/Toolbar.qml</file>
         <file>qml/tellduscenterlight/ToolbarButton.qml</file>
         <file>qml/tellduscenterlight/DeviceListModel.qml</file>
