@@ -17,6 +17,7 @@ Rectangle {
 	property int deviceState: 0
 	property string deviceStateValue: ''
 	property int tabId: 1 //TODO
+	property int type
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
@@ -176,6 +177,9 @@ Rectangle {
 	function statusColor(){  //TODO to icon
 		if(deviceState == DeviceList.METHOD_TURNON){
 			return "blue";
+		}
+		if(type == MainScripts.SENSOR){
+			return "green";
 		}
 
 		return "red";

@@ -1,18 +1,22 @@
 .pragma library
 
 Qt.include("../Signal.js");
+Qt.include("../mainscripts.js")
 
 var visualDevicelist = function() {
 
 	var _visualList = {};
 	var visualDeviceAdded = new Signal();
 	var deviceList = null;
+	var sensorList = null;
 
 	var db = openDatabaseSync("TelldusCenterLight", "1.0", "Settings used by TelldusCenter Light", 1000000);  //TODO same database? different? Use same instance?
 
-	function init(rawDeviceList) {
+	function init(rawDeviceList, rawSensorList) {
 		deviceList = rawDeviceList;
 		deviceList.deviceAdded.connect(deviceAdded);
+		sensorList = rawSensorList;
+		sensorList.sensorAdded.connect(sensorAdded)
 	}
 
 	function addDevice(deviceInfo) {
@@ -29,27 +33,40 @@ var visualDevicelist = function() {
 		// }
 	}
 
-	function addVisualDevice(xvalue, yvalue, deviceId, tabId){
+	function addVisualDevice(xvalue, yvalue, deviceId, tabId, type){
+		if(type == undefined){
+			type = DEVICE;
+		}
+
 		var insertId = 0;
 		db.transaction(function(tx) {
-			var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId) VALUES(?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId]);
+			var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId, type) VALUES(?, ?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId, type]);
 			insertId = result.insertId;
 		});
-		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId});
+		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId, 'type': type});
 	}
 
 	function deviceAdded(device){
+		added(device, DEVICE);
+	}
+
+	function sensorAdded(sensor){
+		added(sensor, SENSOR);
+	}
+
+	function added(device, type){
 		db.transaction(function(tx) {
 			//tx.executeSql('DROP TABLE IF EXISTS VisualDevice');
-			tx.executeSql('CREATE TABLE IF NOT EXISTS VisualDevice(id INTEGER PRIMARY KEY, deviceId INTEGER, layoutX INTEGER, layoutY INTEGER, tabId INTEGER)');
-			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId FROM VisualDevice WHERE deviceId = ?', [device.id()]);
+			tx.executeSql('CREATE TABLE IF NOT EXISTS VisualDevice(id INTEGER PRIMARY KEY, deviceId INTEGER, layoutX INTEGER, layoutY INTEGER, tabId INTEGER, type INTEGER)');
+			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId, type FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id(), type]);
 			for(var i = 0; i < rs.rows.length; ++i) {
 				var deviceObj = {
 					'id': rs.rows.item(i).id,
 					'deviceId': rs.rows.item(i).deviceId,
 					'layoutX': parseInt(rs.rows.item(i).layoutX, 10),
 					'layoutY': parseInt(rs.rows.item(i).layoutY, 10),
-					'tabId': parseInt(rs.rows.item(i).tabId, 10)
+					'tabId': parseInt(rs.rows.item(i).tabId, 10),
+					'type': parseInt(rs.rows.item(i).type, 10)
 				};
 				addDevice(deviceObj);
 			}
@@ -73,14 +90,15 @@ var visualDevicelist = function() {
 				this['_' + i] = data[i];
 			}
 		}
-		//this.onChanged = new Signal();
 	}
 
 	VisualDevice.prototype.id = function() { return this._id; }
-	VisualDevice.prototype.device = function() { return deviceList.device(this._deviceId); }
+	VisualDevice.prototype.device = function() { if(this._type==DEVICE){ return deviceList.device(this._deviceId); } }
+	VisualDevice.prototype.sensor = function() { if(this._type==SENSOR){ return sensorList.sensor(this._deviceId); } }
 	VisualDevice.prototype.layoutX = function() { return this._layoutX; }
 	VisualDevice.prototype.layoutY = function() { return this._layoutY; }
 	VisualDevice.prototype.tabId = function() { return this._tabId; }
+	VisualDevice.prototype.type = function() { return this._type; }
 
 	VisualDevice.prototype.layoutPosition = function(newX, newY, tabId){
 		var visualDeviceId = this._id;
