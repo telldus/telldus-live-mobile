@@ -44,7 +44,6 @@ Rectangle {
 					VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
 					selectedTabId = 1; //TODO default, but what if this is deleted?
 				}
-
 				onNameChanged: {
 					VisualDeviceList.tabAreaList.updateTabAreaName(selectionTabId, name);
 				}
@@ -88,6 +87,7 @@ Rectangle {
 			id: availableListDelegate
 			height: deviceText.height
 			width: 100 //TODO
+			visible: model.deviceIsFavorite
 			Text{
 				id: deviceText
 				text: model.deviceName
