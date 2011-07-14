@@ -1,22 +1,9 @@
-import Qt 4.7
+import QtQuick 1.1
+import com.nokia.meego 1.0
 
-Rectangle {
-	id: buttonRect
-	height: img.height
-	width: img.width
-
+Button {
 	property string text: ''
 	signal clicked()
 
-	Image {
-		id: img
-		width: sourceSize.width * SCALEFACTOR
-		height: sourceSize.height * SCALEFACTOR
-		source: text.toLowerCase() + '.png'
-	}
-	MouseArea {
-		id: buttonMouseArea
-		anchors.fill: parent
-		onClicked: buttonRect.clicked()
-	}
+	iconSource: text.toLowerCase() + '.png'
 }
