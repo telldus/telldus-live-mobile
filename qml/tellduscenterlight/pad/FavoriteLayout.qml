@@ -30,8 +30,6 @@ Rectangle {
 				}
 			}
 		}
-		//TODO button for each tab
-		//then another button för adding new tab, and possibly upload image (menu options), or option for this in lower right corner or something
 
 		Component{
 			id: tabSelectionButton
