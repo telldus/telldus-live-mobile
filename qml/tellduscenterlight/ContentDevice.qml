@@ -16,6 +16,7 @@ Content {
 			id: contentArea
 			width: parent.width
 			anchors.horizontalCenter: parent.horizontalCenter
+			spacing: 11
 
 			Header {
 				text: "Devices"

@@ -1,15 +1,18 @@
-import Qt 4.7
+import QtQuick 1.1
+import com.nokia.meego 1.0
 import "mainscripts.js" as MainScripts
 import "DeviceList.js" as DeviceList
 
 Item{
 	id: deviceElement
-	height: setElementHeight()
-	width: parent == undefined ? 0 : parent.width
+	height: layout.height
+	anchors.left: parent == undefined ? undefined : parent.left
+	anchors.right: parent == undefined ? undefined : parent.right
+	anchors.margins: 16
 	property bool hideFavorites: false
 	visible: !hideFavorites || deviceIsFavorite
 
-	MouseArea{
+	/*MouseArea{ //TODO tablet
 		anchors.fill: parent
 		onClicked: {
 			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
@@ -26,42 +29,124 @@ Item{
 				deviceMenu.y = deviceElement.y + deviceElement.height/4
 			}
 		}
-	}
+	}*/
 
-	Item{
-		anchors.fill: parent
+	Column {
+		id: layout
+		width: parent.width
+		spacing: 16
 
-		/*
-		Image{
-			id: status
-			source: "/bla/bla"
-		}
-		*/
-		Text{
-			id: status
-			text: statusIcon(deviceState)
-			font.pointSize: 25
-		}
-
-		Text{
-			text: deviceName
-			anchors.left: status.right
-			color: "red"
-		}
-
-		Text{
-			id: favoriteicon
-			anchors.right: parent.right
-			text: deviceIsFavorite==true ? "\u2605" : "\u2606"
-			font.pointSize: 30
-			MouseArea{
-				anchors.fill: parent
-				onClicked: {
-					DeviceList.list.device(deviceId).setIsFavorite(!deviceIsFavorite)
+		Item {
+			id: firstRowItem
+			height:  firstRow.height
+			width: parent.width
+			Row {
+				id: firstRow
+				spacing: 10
+				Text{
+					id: status
+					text: statusIcon(deviceState)
+					font.pointSize: 40
+				}
+				Text{
+					anchors.verticalCenter: parent.verticalCenter
+					text: deviceName
+					font.pixelSize: 26
+					font.family: "Nokia Pure Text"
 				}
 			}
-			visible: !hideFavorites
+			Text{
+				id: favoriteicon
+				anchors.right: parent.right
+				text: deviceIsFavorite==true ? "\u2605" : "\u2606"
+				font.pointSize: 40
+				MouseArea{
+					anchors.fill: parent
+					onClicked: {
+						DeviceList.list.device(deviceId).setIsFavorite(!deviceIsFavorite)
+					}
+				}
+				visible: !hideFavorites
+			}
 		}
+		ButtonRow {
+			exclusive: false
+
+			ActionButton{
+				text: "OFF"
+				visible: MainScripts.methodContains(deviceMethods, "off")
+				onClicked: {
+					console.log("CLICKED off");
+					DeviceList.list.device(deviceId).turnOff();
+				}
+			}
+
+			ActionButton{
+				text: "ON"
+				visible: MainScripts.methodContains(deviceMethods, "on")
+				onClicked: {
+					console.log("CLICKED on");
+					DeviceList.list.device(deviceId).turnOn();
+				}
+			}
+
+			ActionButton{
+				text: "BELL"
+				visible: MainScripts.methodContains(deviceMethods, "bell")
+				onClicked: {
+					console.log("CLICKED BELL");
+					DeviceList.list.device(deviceId).bell();
+				}
+			}
+		}
+		Slider {
+			id: dimSlider
+			stepSize:1
+			valueIndicatorVisible: true
+			minimumValue:0
+			maximumValue:255
+			width: parent.width
+			visible: MainScripts.methodContains(deviceMethods, "dim")
+
+			function formatValue ( v ) {
+				return Math.round(v/255*100) + "%";
+			}
+
+			onPressedChanged: {
+				if (pressed) {
+					return;
+				}
+				DeviceList.list.device(deviceId).dim(value);
+				console.log("DIMMED to " + value);
+			}
+			Item {
+				//This is a pseudo-item only for listening for changes in the model data
+				property int state: deviceState
+				onStateChanged: {
+					if (state == DeviceList.METHOD_TURNON) {
+						dimSlider.value = dimSlider.maximumValue;
+					} else if (state == DeviceList.METHOD_TURNOFF) {
+						dimSlider.value = dimSlider.minimumValue;
+					}
+				}
+				property string stateValue: deviceStateValue
+				onStateValueChanged: {
+					if (state == DeviceList.METHOD_DIM) {
+						dimSlider.value = parseInt(stateValue, 10);
+					}
+				}
+			}
+		}
+	}
+
+	/*Item{
+		anchors.fill: parent
+		anchors.margins: 16
+
+
+
+
+
 
 		Row{
 			id: buttonrow
@@ -126,7 +211,7 @@ Item{
 				}
 			}
 		}
-	}
+	}*/
 
 	function setElementHeight(){
 		var height = (!hideFavorites || deviceIsFavorite) ? MainScripts.DEVICEROWHEIGHT : 0;  //must set height to 0 to avoid space when hidden
