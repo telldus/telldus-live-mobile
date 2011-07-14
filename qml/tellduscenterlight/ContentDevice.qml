@@ -34,7 +34,7 @@ Content {
 			}
 
 			Repeater {
-				model: 10
+				model: 0
 				/*model: ListModel{
 				id: groupModel
 				//TODO set something to get groupModel when avail
