@@ -26,7 +26,6 @@ Rectangle {
 			TabButton{
 				name: "Add new layout"
 				onClicked: {
-					console.log("ADD new layout");
 					VisualDeviceList.tabAreaList.insertTabArea('New layout', '');
 				}
 			}

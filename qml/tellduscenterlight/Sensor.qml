@@ -22,8 +22,6 @@ Item {
 	}
 
 	function initSensor(sensorId){
-		console.log(sensorId);
-
 		var jsSensor = Sensors.list.sensor(sensorId);
 		if(jsSensor == null){  //TODO another way to avoid nulls?
 			return; //not ready yet
