@@ -92,6 +92,8 @@ Rectangle{
 					tabEditMenu.visible = false
 				}
 			}
+
+			//TODO upload background image somehow...
 		}
 
 		visible: false

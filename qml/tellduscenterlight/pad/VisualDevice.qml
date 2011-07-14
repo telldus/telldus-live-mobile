@@ -23,6 +23,33 @@ Rectangle {
 
 	//TODO edit mode? When it's ok to move around stuff?
 
+	Sensor {
+		id: sensorItem
+		sensorId: deviceId //type == MainScripts.SENSOR ? deviceId : -1
+	}
+
+	Text{
+
+		anchors.centerIn: parent
+		text: shortSensorText()
+
+		visible: type == MainScripts.SENSOR
+
+		function shortSensorText(){
+			var shortString = "";
+			if(sensorItem.hasHumidity){
+				shortString = sensorItem.humidity + ' %';
+			}
+			if(sensorItem.hasHumidity && sensorItem.hasTemperature){
+				shortString = shortString + ', '
+			}
+			if(sensorItem.hasTemperature){
+				shortString = shortString + sensorItem.temperature + ' C';
+			}
+			return shortString;
+		}
+	}
+
 	MouseArea {
 		property int movedX: 0
 		property int movedY: 0
@@ -92,15 +119,21 @@ Rectangle {
 			width: parent.width
 			anchors.top: parent.top
 			visible: type == MainScripts.SENSOR
+			z: 3
 
-			Sensor {
-				id: sensorItem
-				sensorId: deviceId //type == MainScripts.SENSOR ? deviceId : -1
-			}
-
-			Text{
+			Column{
 				anchors.centerIn: parent
-				text: sensorItem.name
+				Text{
+					text: sensorItem.name
+				}
+				Text{
+					text: "Temperature: " + sensorItem.temperature + " C"
+					visible: sensorItem.hasTemperature
+				}
+				Text{
+					text: "Humidity: " + sensorItem.humidity + " %"
+					visible: sensorItem.hasHumidity
+				}
 			}
 		}
 
@@ -112,73 +145,79 @@ Rectangle {
 			anchors.top: parent.top
 			visible: type == MainScripts.DEVICE
 			z:2
-			Text{
+
+			Column{
+
 				anchors.centerIn: parent
-				text: "Next run time: 23:45 070911" //TODO
-			}
-
-			Row{  //TODO possibly reuse?
-				id: buttonrow
-
-				ActionButton{
-					text: "OFF"
-					visible: MainScripts.methodContains(deviceMethods, "off")
-					onClicked: {
-						console.log("CLICKED off");
-						DeviceList.list.device(deviceId).turnOff();
-					}
+				Text{
+					text: deviceName
 				}
 
-				ActionButton{
-					text: "ON"
-					visible: MainScripts.methodContains(deviceMethods, "on")
-					onClicked: {
-						console.log("CLICKED on");
-						DeviceList.list.device(deviceId).turnOn();
-					}
+				Text{
+					text: "Next run time: 23:45 070911" //TODO
 				}
 
-				ActionButton{
-					text: "BELL"
-					visible: MainScripts.methodContains(deviceMethods, "bell")
-					onClicked: {
-						console.log("CLICKED BELL");
-						DeviceList.list.device(deviceId).bell();
-					}
-				}
+				Row{  //TODO possibly reuse?
+					id: buttonrow
 
-			}
-
-			Slider{
-				id: slider
-				width: parent.width
-				anchors.top: buttonrow.bottom
-				height: MainScripts.SLIDERHEIGHT
-				visible: MainScripts.methodContains(deviceMethods, "dim")
-				onSlided: {
-					console.log("DIMMED to " + dimvalue);
-					DeviceList.list.device(deviceId).dim(dimvalue);
-				}
-
-				Item {
-					//This is a pseudo-item only for listening for changes in the model data
-					property int state: deviceState
-					onStateChanged: {
-						if (state == DeviceList.METHOD_TURNON) {
-							slider.value = slider.maximum;
-						} else if (state == DeviceList.METHOD_TURNOFF) {
-							slider.value = slider.minimum;
+					ActionButton{
+						text: "OFF"
+						visible: MainScripts.methodContains(deviceMethods, "off")
+						onClicked: {
+							console.log("CLICKED off");
+							DeviceList.list.device(deviceId).turnOff();
 						}
 					}
-					property string stateValue: deviceStateValue
-					onStateValueChanged: {
-						if (state == DeviceList.METHOD_DIM) {
-							slider.value = parseInt(stateValue, 10);
+
+					ActionButton{
+						text: "ON"
+						visible: MainScripts.methodContains(deviceMethods, "on")
+						onClicked: {
+							console.log("CLICKED on");
+							DeviceList.list.device(deviceId).turnOn();
+						}
+					}
+
+					ActionButton{
+						text: "BELL"
+						visible: MainScripts.methodContains(deviceMethods, "bell")
+						onClicked: {
+							console.log("CLICKED BELL");
+							DeviceList.list.device(deviceId).bell();
 						}
 					}
 				}
-			}
 
+				Slider{
+					id: slider
+					width: parent.width
+					//anchors.top: buttonrow.bottom
+					height: MainScripts.SLIDERHEIGHT
+					visible: MainScripts.methodContains(deviceMethods, "dim")
+					onSlided: {
+						console.log("DIMMED to " + dimvalue);
+						DeviceList.list.device(deviceId).dim(dimvalue);
+					}
+
+					Item {
+						//This is a pseudo-item only for listening for changes in the model data
+						property int state: deviceState
+						onStateChanged: {
+							if (state == DeviceList.METHOD_TURNON) {
+								slider.value = slider.maximum;
+							} else if (state == DeviceList.METHOD_TURNOFF) {
+								slider.value = slider.minimum;
+							}
+						}
+						property string stateValue: deviceStateValue
+						onStateValueChanged: {
+							if (state == DeviceList.METHOD_DIM) {
+								slider.value = parseInt(stateValue, 10);
+							}
+						}
+					}
+				}
+			}
 		}
 		Rectangle{
 			id: bubblebottom
