@@ -11,8 +11,11 @@ Rectangle {
 	Text{
 		id: label
 		color: "white"
+		font.family: "Nokia Pure Text"
 		font.weight: Font.Bold
 		font.pixelSize: 26
-		anchors.centerIn: parent
+		anchors.verticalCenter: parent.verticalCenter
+		anchors.left: parent.left
+		anchors.leftMargin: 16
 	}
 }
