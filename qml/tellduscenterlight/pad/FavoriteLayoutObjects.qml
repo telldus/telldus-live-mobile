@@ -14,7 +14,6 @@ ListModel {
 		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
 		VisualDeviceList.visualDevicelist.visualDeviceRemoved.connect(visualDeviceRemoved);
 		VisualDeviceList.visualDevicelist.init(DeviceList.list, Sensors.list);  //TODO can this be done in other way?
-		//TODO remove the visual object too on device removal...
 	}
 
 	function visualDeviceAdded(device){

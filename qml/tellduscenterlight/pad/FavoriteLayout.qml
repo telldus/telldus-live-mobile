@@ -84,13 +84,13 @@ Rectangle {
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
 		model: deviceListModel
-		z: 100 //over everything
+		z: 160 //over everything
 		header: Text {
 			font.bold: true
 			text: 'Devices'
 		}
 
-		delegate: Item{
+		delegate: Rectangle{
 			id: availableListDelegate
 			height: deviceText.height
 			width: 100 //TODO
@@ -160,9 +160,9 @@ Rectangle {
 			font.bold: true
 			text: 'Sensors'
 		}
-		z: 100 //over everything
+		z: 160 //over everything
 
-		delegate: Item{
+		delegate: Rectangle{
 			id: availableSensorDelegate
 			height: sensorText.height
 			width: 100 //TODO
