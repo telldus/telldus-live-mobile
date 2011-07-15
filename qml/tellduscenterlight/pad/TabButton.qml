@@ -97,5 +97,14 @@ Rectangle{
 		}
 
 		visible: false
+
+		onVisibleChanged: {
+			if(visible){
+				favoriteLayout.visibleMenu = tabEditMenu
+			}
+			else{
+				favoriteLayout.visibleMenu = undefined
+			}
+		}
 	}
 }

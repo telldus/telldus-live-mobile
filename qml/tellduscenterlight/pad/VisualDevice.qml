@@ -7,8 +7,9 @@ import "VisualDeviceList.js" as VisualDeviceList
 Rectangle {
 	id: visualDevice
 	height: MainScripts.VISUALDEVICEHEIGHT
-	width: MainScripts.VISUALDEVICEWIDTH
+	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : MainScripts.VISUALDEVICEWIDTH
 	color: statusColor()
+	z: selectedVisualDevice == visualDeviceId ? 150 : 5
 
 	property int deviceId: 0
 	property int visualDeviceId: 0
@@ -18,6 +19,7 @@ Rectangle {
 	property string deviceStateValue: ''
 	property int tabId: 1 //TODO
 	property int type
+	property int rotationAngle: (visualDevice.x - infoBubble.width/2)/2 * -1
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
@@ -61,6 +63,7 @@ Rectangle {
 		drag.minimumY: 0
 		drag.maximumY: favoriteLayout.height - visualDevice.height
 		onPressed: {
+			favoriteLayout.selectedVisualDevice = visualDeviceId
 			movedX = visualDevice.x
 			movedY = visualDevice.y
 		}
@@ -97,20 +100,90 @@ Rectangle {
 		onOptionSelected: {
 			addToGroupMenu.visible = false
 			if(value == "removefromlayout"){
+				favoriteLayout.visibleMenu = undefined
 				visualDevice.destroy();
 				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).deleteDevice();
 			}
 		}
 		visible: false
+
+		onVisibleChanged: {
+			if(visible){
+				favoriteLayout.visibleMenu = visualDeviceMenu
+			}
+			else{
+				favoriteLayout.visibleMenu = undefined
+			}
+		}
 	}
 
 	Rectangle{
 		id: infoBubble
-		height: 200 //TODO
-		width: 200 //TODO
-		anchors.bottom: visualDevice.top
-		anchors.bottomMargin: 110
-		anchors.horizontalCenter: visualDevice.horizontalCenter
+		height: MainScripts.INFOBUBBLEHEIGHT
+		width: MainScripts.INFOBUBBLEWIDTH
+
+		//transform: Rotation { origin.x: infoBubble.width/2; origin.y: infoBubble.height; angle: rotationAngle > 0 ? rotationAngle : 0 }
+		//anchors.bottom: visualDevice.top
+		//anchors.bottomMargin: 110
+
+		states: [
+			State {
+				name: ""
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: visualDevice.horizontalCenter
+					anchors.bottom: visualDevice.top
+				}
+			},
+			State {
+				name: "upperleft"; when: visualDevice.x - MainScripts.INFOBUBBLEWIDTH/2 < 0 && (visualDevice.y - MainScripts.INFOBUBBLEHEIGHT) < 0
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.left: visualDevice.right
+					anchors.bottom: undefined //TODO why is this needed
+					anchors.top: visualDevice.bottom
+				}
+			},
+			State {
+				name: "upperright"; when: (visualDevice.x + MainScripts.VISUALDEVICEWIDTH/2 + MainScripts.INFOBUBBLEWIDTH/2 + MainScripts.TOOLBARWIDTH) > favoriteLayout.width && (visualDevice.y - MainScripts.INFOBUBBLEHEIGHT) < 0
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.right: visualDevice.left
+					anchors.bottom: undefined //TODO why is this needed
+					anchors.top: visualDevice.bottom
+				}
+			}
+			,
+			State {
+				name: "uppercenter"; when: (visualDevice.y - infoBubble.height) < 0
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: visualDevice.horizontalCenter
+					anchors.bottom: undefined //TODO why is this needed
+					anchors.top: visualDevice.bottom
+				}
+			},
+			State {
+				name: "lowerleft"; when: visualDevice.x - MainScripts.INFOBUBBLEWIDTH/2 < 0
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.left: visualDevice.right
+					anchors.top: undefined //TODO why is this needed
+					anchors.bottom: visualDevice.top
+				}
+			},
+			State {
+				name: "lowerright"; when: (visualDevice.x + MainScripts.VISUALDEVICEWIDTH/2 + MainScripts.INFOBUBBLEWIDTH/2 + MainScripts.TOOLBARWIDTH) > favoriteLayout.width
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.right: visualDevice.left
+				}
+			}
+		]
 
 		Rectangle{
 			id: infoSensor
@@ -219,6 +292,7 @@ Rectangle {
 				}
 			}
 		}
+		/*
 		Rectangle{
 			id: bubblebottom
 			height: 141  //TODO check out transformOrigin if this should be used at all
@@ -229,6 +303,7 @@ Rectangle {
 			anchors.horizontalCenter: parent.horizontalCenter
 			z:1
 		}
+		*/
 
 		visible:false
 

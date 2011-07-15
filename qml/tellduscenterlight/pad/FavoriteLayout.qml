@@ -6,6 +6,8 @@ import ".."
 
 Rectangle {
 	property int selectedTabId: 1 //default
+	property int selectedVisualDevice
+	property variant visibleMenu
 
 	id: favoriteLayout
 
@@ -83,13 +85,13 @@ Rectangle {
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
 		model: deviceListModel
-		z: 100 //over everything
+		z: 160 //over everything
 		header: Text {
 			font.bold: true
 			text: 'Devices'
 		}
 
-		delegate: Item{
+		delegate: Rectangle{
 			id: availableListDelegate
 			height: deviceText.height
 			width: 100 //TODO
@@ -109,7 +111,7 @@ Rectangle {
 				drag.target: availableListDelegate
 				drag.axis: Drag.XandYAxis
 				drag.minimumX: mappedCoord.x
-				drag.maximumX: mappedCoord.x + favoriteLayout.width - deviceText.width
+				drag.maximumX: mappedCoord.x + favoriteLayout.width - availableListDelegate.width
 				drag.minimumY: mappedCoord.y
 				drag.maximumY: mappedCoord.y + favoriteLayout.height - availableListDelegate.height
 
@@ -159,9 +161,9 @@ Rectangle {
 			font.bold: true
 			text: 'Sensors'
 		}
-		z: 100 //over everything
+		z: 160 //over everything
 
-		delegate: Item{
+		delegate: Rectangle{
 			id: availableSensorDelegate
 			height: sensorText.height
 			width: 100 //TODO
@@ -182,7 +184,7 @@ Rectangle {
 				drag.target: availableSensorDelegate
 				drag.axis: Drag.XandYAxis
 				drag.minimumX: mappedCoord.x
-				drag.maximumX: mappedCoord.x + favoriteLayout.width - sensorText.width
+				drag.maximumX: mappedCoord.x + favoriteLayout.width - availableSensorDelegate.width
 				drag.minimumY: mappedCoord.y
 				drag.maximumY: mappedCoord.y + favoriteLayout.height - availableSensorDelegate.height
 
@@ -221,5 +223,13 @@ Rectangle {
 				}
 			}
 		}
+	}
+
+	MouseArea{
+		anchors.fill: parent
+		onClicked: {
+			visibleMenu.visible = false
+		}
+		visible: visibleMenu != undefined
 	}
 }

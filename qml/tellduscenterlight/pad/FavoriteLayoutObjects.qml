@@ -7,12 +7,13 @@ import "../mainscripts.js" as MainScripts
 
 ListModel {
 	id: favoriteLayoutObjects
+	property variant visualList: {}
 
 	Component.onCompleted: {
 		VisualDeviceList.tabAreaList.init(tabArea, favoriteLayout, tabSelection.tabButtonRow, tabSelectionButton);
 		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
+		VisualDeviceList.visualDevicelist.visualDeviceRemoved.connect(visualDeviceRemoved);
 		VisualDeviceList.visualDevicelist.init(DeviceList.list, Sensors.list);  //TODO can this be done in other way?
-		//TODO remove the visual object too on device removal...
 	}
 
 	function visualDeviceAdded(device){
@@ -41,6 +42,12 @@ ListModel {
 				visualObject.deviceId = device.sensor().id();
 				visualObject.deviceName = device.sensor().name();
 			}
+			favoriteLayout.selectedVisualDevice = visualObject.visualDeviceId
+			VisualDeviceList.addVisualObject(visualObject);
 		}
+	}
+
+	function visualDeviceRemoved(visualDeviceId){
+		VisualDeviceList.removeVisualObject(visualDeviceId);
 	}
 }

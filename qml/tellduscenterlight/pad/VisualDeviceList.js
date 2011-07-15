@@ -7,6 +7,7 @@ var visualDevicelist = function() {
 
 	var _visualList = {};
 	var visualDeviceAdded = new Signal();
+	var visualDeviceRemoved = new Signal();
 	var deviceList = null;
 	var sensorList = null;
 
@@ -15,22 +16,10 @@ var visualDevicelist = function() {
 	function init(rawDeviceList, rawSensorList) {
 		deviceList = rawDeviceList;
 		deviceList.deviceAdded.connect(deviceAdded);
+		deviceList.deviceRemoved.connect(deviceRemoved);
 		sensorList = rawSensorList;
-		sensorList.sensorAdded.connect(sensorAdded)
-	}
-
-	function addDevice(deviceInfo) {
-		var device = null;
-		/*
-		if (_visualList[deviceInfo.id]) {
-			device = _list[deviceInfo.id];
-			device.update(deviceInfo);
-		} else {
-		*/
-			device = new VisualDevice(deviceInfo);
-			_visualList[device.id()] = device;
-			visualDeviceAdded.emit(device);  //TODO
-		// }
+		sensorList.sensorAdded.connect(sensorAdded);
+		sensorList.sensorRemoved.connect(sensorRemoved);
 	}
 
 	function addVisualDevice(xvalue, yvalue, deviceId, tabId, type){
@@ -71,6 +60,44 @@ var visualDevicelist = function() {
 				addDevice(deviceObj);
 			}
 		});
+	}
+
+	function addDevice(deviceInfo) {
+		var device = null;
+		/*
+		if (_visualList[deviceInfo.id]) {
+			device = _list[deviceInfo.id];
+			device.update(deviceInfo);
+		} else {
+		*/
+			device = new VisualDevice(deviceInfo);
+			_visualList[device.id()] = device;
+			visualDeviceAdded.emit(device);  //TODO
+		// }
+	}
+
+	function deviceRemoved(device){
+		removed(device, DEVICE);
+	}
+
+	function sensorRemoved(device){
+		removed(device, SENSOR);
+	}
+
+	function removed(device, type){
+		db.transaction(function(tx) {
+			var rs = tx.executeSql('SELECT id FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id(), type]);
+			for(var i = 0; i < rs.rows.length; ++i) {
+				removeDevice(rs.rows.item(i).id);  //remove all visualDevices
+			}
+			tx.executeSql('DELETE FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id(), type]);
+		});
+
+	}
+
+	function removeDevice(visualDeviceId){
+		_visualList[visualDeviceId] = null; //TODO more?
+		visualDeviceRemoved.emit(visualDeviceId)
 	}
 
 	function visualDevice(id) {
@@ -119,6 +146,7 @@ var visualDevicelist = function() {
 
 	return {
 		visualDeviceAdded: visualDeviceAdded,
+		visualDeviceRemoved: visualDeviceRemoved,
 		addVisualDevice: addVisualDevice,
 		init: init,
 		visualDevice: visualDevice
@@ -215,3 +243,15 @@ var tabAreaList = function(){
 		deleteTabArea: deleteTabArea
 	}
 }();
+
+//TODO model or something? CHANGE THIS when tested, this step neccessary?
+var visualObjectList = {};
+
+function addVisualObject(visualObject) {
+	visualObjectList[visualObject.visualDeviceId] = visualObject;
+}
+
+function removeVisualObject(visualDeviceId) {
+	visualObjectList[visualDeviceId].destroy();
+	visualObjectList[visualDeviceId] = null;
+}
