@@ -28,14 +28,20 @@ SOURCES += main.cpp \
 	tellduslive.cpp
 
 # Please do not modify the following two lines. Required for deployment.
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
+include(deployment.pri)
+qtcAddDeployment()
 include(qt-json/qt-json.pri)
 include(../kqoauth/kqoauth.pri)
-qtcAddDeployment()
 
 CONFIG -= debug_and_release debug
 CONFIG += release
-QT += network script
+
+CONFIG += qdeclarative-boostable
+QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
+QMAKE_LFLAGS += -pie -rdynamic
+
+LIBS += -lmdeclarativecache
+QT += network script declarative
 
 OTHER_FILES += \
 	qtc_packaging/debian_fremantle/rules \
