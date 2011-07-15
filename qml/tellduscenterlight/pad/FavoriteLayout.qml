@@ -111,7 +111,7 @@ Rectangle {
 				drag.target: availableListDelegate
 				drag.axis: Drag.XandYAxis
 				drag.minimumX: mappedCoord.x
-				drag.maximumX: mappedCoord.x + favoriteLayout.width - deviceText.width
+				drag.maximumX: mappedCoord.x + favoriteLayout.width - availableListDelegate.width
 				drag.minimumY: mappedCoord.y
 				drag.maximumY: mappedCoord.y + favoriteLayout.height - availableListDelegate.height
 
@@ -184,7 +184,7 @@ Rectangle {
 				drag.target: availableSensorDelegate
 				drag.axis: Drag.XandYAxis
 				drag.minimumX: mappedCoord.x
-				drag.maximumX: mappedCoord.x + favoriteLayout.width - sensorText.width
+				drag.maximumX: mappedCoord.x + favoriteLayout.width - availableSensorDelegate.width
 				drag.minimumY: mappedCoord.y
 				drag.maximumY: mappedCoord.y + favoriteLayout.height - availableSensorDelegate.height
 

@@ -7,7 +7,7 @@ import "VisualDeviceList.js" as VisualDeviceList
 Rectangle {
 	id: visualDevice
 	height: MainScripts.VISUALDEVICEHEIGHT
-	width: MainScripts.VISUALDEVICEWIDTH
+	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : MainScripts.VISUALDEVICEWIDTH
 	color: statusColor()
 	z: selectedVisualDevice == visualDeviceId ? 150 : 5
 
