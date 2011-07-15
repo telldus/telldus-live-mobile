@@ -119,8 +119,8 @@ Rectangle {
 
 	Rectangle{
 		id: infoBubble
-		height: 200 //TODO
-		width: 200 //TODO
+		height: MainScripts.INFOBUBBLEHEIGHT
+		width: MainScripts.INFOBUBBLEWIDTH
 
 		//transform: Rotation { origin.x: infoBubble.width/2; origin.y: infoBubble.height; angle: rotationAngle > 0 ? rotationAngle : 0 }
 		//anchors.bottom: visualDevice.top
@@ -136,8 +136,7 @@ Rectangle {
 				}
 			},
 			State {
-				//TODO CONSTANTS and MEASURES!
-				name: "upperleft"; when: visualDevice.x -100 < 0 && (visualDevice.y - infoBubble.height) < 0 // - infoBubble.width/2 < 0
+				name: "upperleft"; when: visualDevice.x - MainScripts.INFOBUBBLEWIDTH/2 < 0 && (visualDevice.y - MainScripts.INFOBUBBLEHEIGHT) < 0
 				AnchorChanges {
 					target: infoBubble
 					anchors.horizontalCenter: undefined
@@ -147,7 +146,7 @@ Rectangle {
 				}
 			},
 			State {
-				name: "upperright"; when: visualDevice.x + 10 + 200 > favoriteLayout.width && (visualDevice.y - infoBubble.height) < 0 // visualDevice.width/2 + infoBubble.width/2 > 500
+				name: "upperright"; when: (visualDevice.x + MainScripts.VISUALDEVICEWIDTH/2 + MainScripts.INFOBUBBLEWIDTH/2 + MainScripts.TOOLBARWIDTH) > favoriteLayout.width && (visualDevice.y - MainScripts.INFOBUBBLEHEIGHT) < 0
 				AnchorChanges {
 					target: infoBubble
 					anchors.horizontalCenter: undefined
@@ -158,7 +157,7 @@ Rectangle {
 			}
 			,
 			State {
-				name: "uppercenter"; when: (visualDevice.y - infoBubble.height) < 0 // - infoBubble.width/2 < 0
+				name: "uppercenter"; when: (visualDevice.y - infoBubble.height) < 0
 				AnchorChanges {
 					target: infoBubble
 					anchors.horizontalCenter: visualDevice.horizontalCenter
@@ -167,7 +166,7 @@ Rectangle {
 				}
 			},
 			State {
-				name: "lowerleft"; when: visualDevice.x -100 < 0 // - infoBubble.width/2 < 0
+				name: "lowerleft"; when: visualDevice.x - MainScripts.INFOBUBBLEWIDTH/2 < 0
 				AnchorChanges {
 					target: infoBubble
 					anchors.horizontalCenter: undefined
@@ -177,7 +176,7 @@ Rectangle {
 				}
 			},
 			State {
-				name: "lowerright"; when: visualDevice.x + 10 + 200 > favoriteLayout.width // visualDevice.width/2 + infoBubble.width/2 > 500
+				name: "lowerright"; when: (visualDevice.x + MainScripts.VISUALDEVICEWIDTH/2 + MainScripts.INFOBUBBLEWIDTH/2 + MainScripts.TOOLBARWIDTH) > favoriteLayout.width
 				AnchorChanges {
 					target: infoBubble
 					anchors.horizontalCenter: undefined
