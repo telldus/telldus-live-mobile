@@ -104,6 +104,15 @@ Rectangle {
 			}
 		}
 		visible: false
+
+		onVisibleChanged: {
+			if(visible){
+				favoriteLayout.visibleMenu = visualDeviceMenu
+			}
+			else{
+				favoriteLayout.visibleMenu = undefined
+			}
+		}
 	}
 
 	Rectangle{
