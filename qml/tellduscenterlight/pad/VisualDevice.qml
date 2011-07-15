@@ -19,6 +19,7 @@ Rectangle {
 	property string deviceStateValue: ''
 	property int tabId: 1 //TODO
 	property int type
+	property int rotationAngle: (visualDevice.x - infoBubble.width/2)/2 * -1
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
@@ -99,6 +100,7 @@ Rectangle {
 		onOptionSelected: {
 			addToGroupMenu.visible = false
 			if(value == "removefromlayout"){
+				favoriteLayout.visibleMenu = undefined
 				visualDevice.destroy();
 				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).deleteDevice();
 			}
@@ -119,9 +121,70 @@ Rectangle {
 		id: infoBubble
 		height: 200 //TODO
 		width: 200 //TODO
-		anchors.bottom: visualDevice.top
-		anchors.bottomMargin: 110
-		anchors.horizontalCenter: visualDevice.horizontalCenter
+
+		//transform: Rotation { origin.x: infoBubble.width/2; origin.y: infoBubble.height; angle: rotationAngle > 0 ? rotationAngle : 0 }
+		//anchors.bottom: visualDevice.top
+		//anchors.bottomMargin: 110
+
+		states: [
+			State {
+				name: ""
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: visualDevice.horizontalCenter
+					anchors.bottom: visualDevice.top
+				}
+			},
+			State {
+				//TODO CONSTANTS and MEASURES!
+				name: "upperleft"; when: visualDevice.x -100 < 0 && (visualDevice.y - infoBubble.height) < 0 // - infoBubble.width/2 < 0
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.left: visualDevice.right
+					anchors.bottom: undefined //TODO why is this needed
+					anchors.top: visualDevice.bottom
+				}
+			},
+			State {
+				name: "upperright"; when: visualDevice.x + 10 + 200 > favoriteLayout.width && (visualDevice.y - infoBubble.height) < 0 // visualDevice.width/2 + infoBubble.width/2 > 500
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.right: visualDevice.left
+					anchors.bottom: undefined //TODO why is this needed
+					anchors.top: visualDevice.bottom
+				}
+			}
+			,
+			State {
+				name: "uppercenter"; when: (visualDevice.y - infoBubble.height) < 0 // - infoBubble.width/2 < 0
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: visualDevice.horizontalCenter
+					anchors.bottom: undefined //TODO why is this needed
+					anchors.top: visualDevice.bottom
+				}
+			},
+			State {
+				name: "lowerleft"; when: visualDevice.x -100 < 0 // - infoBubble.width/2 < 0
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.left: visualDevice.right
+					anchors.top: undefined //TODO why is this needed
+					anchors.bottom: visualDevice.top
+				}
+			},
+			State {
+				name: "lowerright"; when: visualDevice.x + 10 + 200 > favoriteLayout.width // visualDevice.width/2 + infoBubble.width/2 > 500
+				AnchorChanges {
+					target: infoBubble
+					anchors.horizontalCenter: undefined
+					anchors.right: visualDevice.left
+				}
+			}
+		]
 
 		Rectangle{
 			id: infoSensor
@@ -230,6 +293,7 @@ Rectangle {
 				}
 			}
 		}
+		/*
 		Rectangle{
 			id: bubblebottom
 			height: 141  //TODO check out transformOrigin if this should be used at all
@@ -240,6 +304,7 @@ Rectangle {
 			anchors.horizontalCenter: parent.horizontalCenter
 			z:1
 		}
+		*/
 
 		visible:false
 
