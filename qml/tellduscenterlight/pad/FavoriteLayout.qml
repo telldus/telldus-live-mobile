@@ -6,6 +6,7 @@ import ".."
 
 Rectangle {
 	property int selectedTabId: 1 //default
+	property int selectedVisualDevice
 
 	id: favoriteLayout
 

@@ -9,6 +9,7 @@ Rectangle {
 	height: MainScripts.VISUALDEVICEHEIGHT
 	width: MainScripts.VISUALDEVICEWIDTH
 	color: statusColor()
+	z: selectedVisualDevice == visualDeviceId ? 150 : 5
 
 	property int deviceId: 0
 	property int visualDeviceId: 0
@@ -61,6 +62,7 @@ Rectangle {
 		drag.minimumY: 0
 		drag.maximumY: favoriteLayout.height - visualDevice.height
 		onPressed: {
+			favoriteLayout.selectedVisualDevice = visualDeviceId
 			movedX = visualDevice.x
 			movedY = visualDevice.y
 		}
