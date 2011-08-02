@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include "qmlapplicationviewer.h"
-#include <QDeclarativeContext>
+#include <QtDeclarative>
+#include "tellduscenter.h"
 #include "tellduslive.h"
 
 int main(int argc, char *argv[])
@@ -14,21 +15,14 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationName("TelldusCenter Light");
 	QCoreApplication::setApplicationVersion("Android-1.0");
 
-	QmlApplicationViewer viewer;
-	viewer.setWindowTitle("TelldusCenter Light");
+	QmlApplicationViewer *viewer = new QmlApplicationViewer();
+	viewer->setWindowTitle("TelldusCenter Light");
 
-	double scaleFactor = 1.0;
-#ifdef Q_WS_MAEMO_5
-	scaleFactor = 2.0;
-#endif
+	TelldusCenter tc(viewer);
 
-	TelldusLive telldusLive;
-	viewer.rootContext()->setContextProperty("telldusLive", &telldusLive);
-	viewer.rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
-
-	viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-	viewer.setSource(QUrl("qrc:/qml/tellduscenterlight/main.qml"));
-	viewer.showExpanded();
+	viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+	viewer->setSource(QUrl("qrc:/qml/tellduscenterlight/main.qml"));
+	viewer->showExpanded();
 
 	return app.exec();
 }
