@@ -8,6 +8,7 @@ class TelldusCenter::PrivateData {
 public:
 	QDeclarativeView *view;
 	TelldusLive telldusLive;
+	TListModel *deviceModel;
 };
 
 TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
@@ -15,6 +16,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 {
 	d = new PrivateData;
 	d->view = view;
+	d->deviceModel = new TListModel("device", this);
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
@@ -25,6 +27,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 #endif
 
 	d->view->rootContext()->setContextProperty("telldusLive", &d->telldusLive);
+	d->view->rootContext()->setContextProperty("deviceModel", d->deviceModel);
 	d->view->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 
 }
