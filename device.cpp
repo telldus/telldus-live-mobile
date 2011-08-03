@@ -36,10 +36,6 @@ void Device::setName(const QString &name) {
 	emit nameChanged();
 }
 
-QString Device::stateValue() const {
-	return "";
-}
-
 int Device::state() const {
 	return 1;
 }
@@ -48,5 +44,8 @@ int Device::methods() const {
 	return 3;
 }
 
+QString Device::stateValue() const {
+	return d->stateValue;
+}
 
 
