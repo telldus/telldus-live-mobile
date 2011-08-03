@@ -17,6 +17,11 @@ Device::~Device() {
 	delete d;
 }
 
+bool Device::isFavorite() const {
+	return d->isFavorite;
+}
+
+
 QString Device::name() const {
 	return d->name;
 }
@@ -38,9 +43,6 @@ int Device::methods() const {
 	return 3;
 }
 
-bool Device::isFavorite() const {
-	return d->isFavorite;
-}
 
 void Device::setIsFavorite(bool isFavorite) {
 	d->isFavorite = isFavorite;
