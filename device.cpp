@@ -26,6 +26,10 @@ void Device::setIsFavorite(bool isFavorite) {
 	emit isFavoriteChanged();
 }
 
+int Device::methods() const {
+	return 3;
+}
+
 
 QString Device::name() const {
 	return d->name;
@@ -38,10 +42,6 @@ void Device::setName(const QString &name) {
 
 int Device::state() const {
 	return 1;
-}
-
-int Device::methods() const {
-	return 3;
 }
 
 QString Device::stateValue() const {
