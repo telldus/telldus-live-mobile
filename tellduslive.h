@@ -5,6 +5,8 @@
 #include <QUrl>
 #include <QScriptValue>
 
+typedef QMap<QString, QVariant> TelldusLiveParams;
+
 class TelldusLive : public QObject
 {
 	Q_OBJECT
@@ -15,6 +17,7 @@ public:
 	~TelldusLive();
 
 	bool isAuthorized();
+	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member);
 
 signals:
 	void authorizedChanged();

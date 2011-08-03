@@ -5,14 +5,17 @@
 #include <QSettings>
 #include <QScriptEngine>
 #include <QQueue>
+#include <QMetaMethod>
 #include <QDebug>
 
 class TelldusLiveCall {
 public:
 	QString endpoint;
-	QScriptValue params;
+	KQOAuthParameters params;
 	QScriptValue callback;
 	QScriptValue thisObject;
+	QObject *receiver;
+	QByteArray member;
 };
 
 class TelldusLive::PrivateData {
@@ -117,7 +120,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		d->requestPending = false;
 	}
 
-	if (!call.callback.isValid()) {
+	if (!call.callback.isValid() && !call.receiver) {
 		//Callback not valid, no need to parse response
 		return;
 	}
@@ -130,10 +133,17 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		return;
 	}
 
-	QScriptValue parameters = call.callback.engine()->toScriptValue(result);
-	call.callback.call(call.thisObject, QScriptValueList() << parameters);
-	if (call.callback.engine()->hasUncaughtException()) {
-		qDebug() << call.callback.engine()->uncaughtException().toString();
+	if (call.receiver) {
+		QByteArray normalizedSignature = QMetaObject::normalizedSignature(call.member.mid(1).constData());
+		int methodIndex = call.receiver->metaObject()->indexOfMethod(normalizedSignature);
+		QMetaMethod method = call.receiver->metaObject()->method(methodIndex);
+		method.invoke(call.receiver, Qt::QueuedConnection, Q_ARG(QVariantMap, result));
+	} else {
+		QScriptValue parameters = call.callback.engine()->toScriptValue(result);
+		call.callback.call(call.thisObject, QScriptValueList() << parameters);
+		if (call.callback.engine()->hasUncaughtException()) {
+			qDebug() << call.callback.engine()->uncaughtException().toString();
+		}
 	}
 }
 
@@ -145,6 +155,7 @@ void TelldusLive::call(const QString &endpoint, const QScriptValue &params, cons
 	qDebug() << "Queue call to" << endpoint;
 
 	TelldusLiveCall call;
+	call.receiver = 0;
 
 	if (expression.isFunction()) {
 		call.callback = expression;
@@ -159,12 +170,38 @@ void TelldusLive::call(const QString &endpoint, const QScriptValue &params, cons
 		}
 	}
 	call.endpoint = endpoint;
-	call.params = params;
+	
+	if (params.isObject()) {
+		QMap<QString, QVariant> paramsMap = params.toVariant().toMap();
+		for(QMap<QString, QVariant>::const_iterator it = paramsMap.constBegin(); it != paramsMap.constEnd(); ++it) {
+			call.params.insert(it.key(), it.value().toString());
+		}
+
+	}
 	d->queue.enqueue(call);
 	if (!d->requestPending) {
 		this->doCall();
 	}
 }
+
+void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member) {
+	qDebug() << "Queue call to" << endpoint;
+
+	TelldusLiveCall call;
+	call.endpoint = endpoint;
+	call.receiver = receiver;
+	call.member = member;
+
+	for(QMap<QString, QVariant>::const_iterator it = params.constBegin(); it != params.constEnd(); ++it) {
+		call.params.insert(it.key(), it.value().toString());
+	}
+
+	d->queue.enqueue(call);
+	if (!d->requestPending) {
+		this->doCall();
+	}
+}
+
 
 void TelldusLive::logout() {
 	QSettings s;
@@ -191,15 +228,7 @@ void TelldusLive::doCall() {
 	d->request->setTokenSecret(tokenSecret);
 	d->request->setHttpMethod(KQOAuthRequest::GET);
 
-	if (call.params.isObject()) {
-		KQOAuthParameters callParams;
-		QMap<QString, QVariant> paramsMap = call.params.toVariant().toMap();
-		for(QMap<QString, QVariant>::const_iterator it = paramsMap.constBegin(); it != paramsMap.constEnd(); ++it) {
-			callParams.insert(it.key(), it.value().toString());
-		}
-
-		d->request->setAdditionalParameters(callParams);
-	}
+	d->request->setAdditionalParameters(call.params);
 
 	d->manager->executeRequest(d->request);
 }
