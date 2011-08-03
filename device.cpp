@@ -3,6 +3,7 @@
 class Device::PrivateData {
 public:
 	bool isFavorite;
+	QString name;
 };
 
 Device::Device(QObject *parent) :
@@ -17,11 +18,12 @@ Device::~Device() {
 }
 
 QString Device::name() const {
-	return "Wee";
+	return d->name;
 }
 
 void Device::setName(const QString &name) {
-	//TODO
+	d->name = name;
+	emit nameChanged();
 }
 
 QString Device::stateValue() const {
