@@ -1,14 +1,14 @@
 #include "tellduscenter.h"
 #include <QtDeclarative>
 #include "tellduslive.h"
-#include "tlistmodel.h"
+#include "devicemodel.h"
 #include "device.h"
 
 class TelldusCenter::PrivateData {
 public:
 	QDeclarativeView *view;
 	TelldusLive telldusLive;
-	TListModel *deviceModel;
+	DeviceModel *deviceModel;
 };
 
 TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
@@ -16,7 +16,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 {
 	d = new PrivateData;
 	d->view = view;
-	d->deviceModel = new TListModel("device", this);
+	d->deviceModel = new DeviceModel(this);
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
@@ -47,18 +47,7 @@ void TelldusCenter::authorizationChanged() {
 }
 
 void TelldusCenter::onDevicesList(const QVariantMap &result) {
-	QVariantList deviceList = result["device"].toList();
-	foreach(QVariant v, deviceList) {
-		QVariantMap dev = v.toMap();
 
-		Device *device = new Device(this);
-		device->setId(dev["id"].toInt());
-		device->setMethods(dev["methods"].toInt());
-		device->setName(dev["name"].toString());
-		device->setOnline(dev["online"].toBool());
-		device->setState(dev["state"].toInt());
-		device->setStateValue(dev["statevalue"].toString());
-		d->deviceModel->append(device);
-	}
+	d->deviceModel->addDevices(result["device"].toList());
 
 }

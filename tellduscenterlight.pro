@@ -28,7 +28,8 @@ SOURCES += main.cpp \
 	tellduslive.cpp \
 	tlistmodel.cpp \
 	device.cpp \
-	tellduscenter.cpp
+	tellduscenter.cpp \
+    devicemodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -78,7 +79,8 @@ HEADERS += \
 	tellduslive.h \
 	tlistmodel.h \
 	device.h \
-	tellduscenter.h
+	tellduscenter.h \
+    devicemodel.h
 
 RESOURCES += \
 	resources.qrc
