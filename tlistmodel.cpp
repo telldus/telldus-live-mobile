@@ -26,8 +26,8 @@ QVariant TListModel::data(const QModelIndex &index, int role) const {
 	return QVariant::fromValue(d->list.at(index.row()));
 }
 
-QVariant TListModel::get(int index) const {
-	return this->data(this->index(index), Qt::DisplayRole);
+QVariant TListModel::get(int row) const {
+	return this->data(this->index(row), Qt::DisplayRole);
 }
 
 void TListModel::append(QObject *v) {

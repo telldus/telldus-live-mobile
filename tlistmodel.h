@@ -19,7 +19,7 @@ signals:
 
 public slots:
 	void append(QObject *v);
-	QVariant get(int index) const;
+	QVariant get(int row) const;
 
 
 private:
