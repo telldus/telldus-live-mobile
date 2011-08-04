@@ -7,14 +7,14 @@ Item{
 	height: setElementHeight()
 	width: parent == undefined ? 0 : parent.width
 	property bool hideFavorites: false
-	visible: !hideFavorites || deviceIsFavorite
+	visible: !hideFavorites || device.isFavorite
 
 	MouseArea{
 		anchors.fill: parent
 		onClicked: {
 			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
 			if(selectedPane == MainScripts.FULL_DEVICE){
-				selectedDevice = deviceId;
+				selectedDevice = device.id;
 				var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
 				deviceMenu.align = 'right'
 				if(newX >= main.width){
@@ -39,12 +39,12 @@ Item{
 		*/
 		Text{
 			id: status
-			text: statusIcon(deviceState)
+			text: statusIcon(device.state)
 			font.pointSize: 25
 		}
 
 		Text{
-			text: deviceName
+			text: device.name
 			anchors.left: status.right
 			color: "red"
 		}
@@ -52,12 +52,12 @@ Item{
 		Text{
 			id: favoriteicon
 			anchors.right: parent.right
-			text: deviceIsFavorite==true ? "\u2605" : "\u2606"
+			text: device.isFavorite==true ? "\u2605" : "\u2606"
 			font.pointSize: 30
 			MouseArea{
 				anchors.fill: parent
 				onClicked: {
-					DeviceList.list.device(deviceId).setIsFavorite(!deviceIsFavorite)
+					device.isFavorite = !device.isFavorite
 				}
 			}
 			visible: !hideFavorites
@@ -68,7 +68,7 @@ Item{
 
 			ActionButton{
 				text: "OFF"
-				visible: MainScripts.methodContains(deviceMethods, "off")
+				visible: MainScripts.methodContains(device.methods, "off")
 				onClicked: {
 					console.log("CLICKED off");
 					DeviceList.list.device(deviceId).turnOff();
@@ -77,7 +77,7 @@ Item{
 
 			ActionButton{
 				text: "ON"
-				visible: MainScripts.methodContains(deviceMethods, "on")
+				visible: MainScripts.methodContains(device.methods, "on")
 				onClicked: {
 					console.log("CLICKED on");
 					DeviceList.list.device(deviceId).turnOn();
@@ -86,7 +86,7 @@ Item{
 
 			ActionButton{
 				text: "BELL"
-				visible: MainScripts.methodContains(deviceMethods, "bell")
+				visible: MainScripts.methodContains(device.methods, "bell")
 				onClicked: {
 					console.log("CLICKED BELL");
 					DeviceList.list.device(deviceId).bell();
@@ -100,7 +100,7 @@ Item{
 			width: parent.width
 			anchors.top: buttonrow.bottom
 			height: MainScripts.SLIDERHEIGHT
-			visible: MainScripts.methodContains(deviceMethods, "dim")
+			visible: MainScripts.methodContains(device.methods, "dim")
 			//statevalue: deviceStateValue
 			//state: deviceState
 			onSlided: {
@@ -110,7 +110,7 @@ Item{
 
 			Item {
 				//This is a pseudo-item only for listening for changes in the model data
-				property int state: deviceState
+				property int state: device.state
 				onStateChanged: {
 					if (state == DeviceList.METHOD_TURNON) {
 						slider.value = slider.maximum;
@@ -118,7 +118,7 @@ Item{
 						slider.value = slider.minimum;
 					}
 				}
-				property string stateValue: deviceStateValue
+				property string stateValue: device.stateValue
 				onStateValueChanged: {
 					if (state == DeviceList.METHOD_DIM) {
 						slider.value = parseInt(stateValue, 10);
@@ -129,7 +129,7 @@ Item{
 	}
 
 	function setElementHeight(){
-		var height = (!hideFavorites || deviceIsFavorite) ? MainScripts.DEVICEROWHEIGHT : 0;  //must set height to 0 to avoid space when hidden
+		var height = (!hideFavorites || device.isFavorite) ? MainScripts.DEVICEROWHEIGHT : 0;  //must set height to 0 to avoid space when hidden
 		if(slider.visible){
 			height = height + MainScripts.SLIDERHEIGHT;
 		}

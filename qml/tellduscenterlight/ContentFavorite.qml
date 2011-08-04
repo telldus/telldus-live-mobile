@@ -9,7 +9,7 @@ Content{
 		height: parent.height
 		width: parent.width
 
-		model: DeviceListModel {}
+		model: deviceModel
 
 		delegate: DeviceElement {
 			hideFavorites: true

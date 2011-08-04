@@ -28,9 +28,7 @@ Content {
 			}
 
 			Repeater {
-				model: DeviceListModel{
-					id: deviceModel
-				}
+				model: deviceModel
 
 				DeviceElement{}
 			}

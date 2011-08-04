@@ -33,14 +33,7 @@ function deviceAdded(device) {
 
 	}, {d: device, m: deviceListModel});
 
-	deviceListModel.append( {
-		'deviceId': device.id(),
-		'deviceName': device.name(),
-		'deviceIsFavorite': device.isFavorite(),
-		'deviceMethods': device.methods(),
-		'deviceState': device.state(),
-		'deviceStateValue': device.statevalue()
-	});
+	deviceListModel.append( device );
 }
 
 function deviceRemoved(device) {
