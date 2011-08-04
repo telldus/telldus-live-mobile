@@ -3,7 +3,7 @@
 class Device::PrivateData {
 public:
 	bool isFavorite;
-	QString name;
+	QString name, stateValue;
 	int methods, state;
 };
 
@@ -60,4 +60,8 @@ QString Device::stateValue() const {
 	return d->stateValue;
 }
 
+void Device::setStateValue(const QString &stateValue) {
+	d->stateValue = stateValue;
+	emit stateValueChanged();
+}
 
