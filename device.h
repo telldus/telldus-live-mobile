@@ -8,7 +8,7 @@ class Device : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY isFavoriteChanged)
-	Q_PROPERTY(int methods READ methods NOTIFY methodsChanged)
+	Q_PROPERTY(int methods READ methods WRITE setMethods NOTIFY methodsChanged)
 	Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 	Q_PROPERTY(int state READ state NOTIFY stateChanged)
 	Q_PROPERTY(QString stateValue READ stateValue NOTIFY stateValueChanged)
@@ -18,7 +18,9 @@ public:
 
 	bool isFavorite() const;
 	void setIsFavorite(bool isFavorite);
+
 	int methods() const;
+	void setMethods(int methods);
 
 	QString name() const;
 	void setName(const QString &name);
