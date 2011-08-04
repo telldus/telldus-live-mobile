@@ -3,8 +3,8 @@
 class Device::PrivateData {
 public:
 	bool isFavorite;
+	int id, methods, state;
 	QString name, stateValue;
-	int methods, state;
 };
 
 Device::Device(QObject *parent) :
@@ -12,12 +12,22 @@ Device::Device(QObject *parent) :
 {
 	d = new PrivateData;
 	d->isFavorite = false;
+	d->id = 0;
 	d->methods = 0;
 	d->state = 2;
 }
 
 Device::~Device() {
 	delete d;
+}
+
+int Device::id() const {
+	return d->id;
+}
+
+void Device::setId(int id) {
+	d->id = id;
+	emit idChanged();
 }
 
 bool Device::isFavorite() const {
