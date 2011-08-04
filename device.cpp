@@ -2,7 +2,7 @@
 
 class Device::PrivateData {
 public:
-	bool isFavorite;
+	bool isFavorite, online;
 	int id, methods, state;
 	QString name, stateValue;
 };
@@ -12,6 +12,7 @@ Device::Device(QObject *parent) :
 {
 	d = new PrivateData;
 	d->isFavorite = false;
+	d->online = false;
 	d->id = 0;
 	d->methods = 0;
 	d->state = 2;
@@ -55,6 +56,15 @@ QString Device::name() const {
 void Device::setName(const QString &name) {
 	d->name = name;
 	emit nameChanged();
+}
+
+bool Device::online() const {
+	return d->online;
+}
+
+void Device::setOnline(bool online) {
+	d->online = online;
+	emit onlineChanged();
 }
 
 int Device::state() const {
