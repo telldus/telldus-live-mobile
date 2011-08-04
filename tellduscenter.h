@@ -2,6 +2,7 @@
 #define TELLDUSCENTER_H
 
 #include <QObject>
+#include <QVariantList>
 
 class QDeclarativeView;
 
@@ -15,6 +16,10 @@ public:
 signals:
 
 public slots:
+
+private slots:
+	void authorizationChanged();
+	void onDevicesList(const QVariantMap &result);
 
 private:
 	class PrivateData;
