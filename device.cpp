@@ -4,7 +4,7 @@ class Device::PrivateData {
 public:
 	bool isFavorite;
 	QString name;
-	int methods;
+	int methods, state;
 };
 
 Device::Device(QObject *parent) :
@@ -13,6 +13,7 @@ Device::Device(QObject *parent) :
 	d = new PrivateData;
 	d->isFavorite = false;
 	d->methods = 0;
+	d->state = 2;
 }
 
 Device::~Device() {
@@ -47,7 +48,12 @@ void Device::setName(const QString &name) {
 }
 
 int Device::state() const {
-	return 1;
+	return d->state;
+}
+
+void Device::setState(int state) {
+	d->state = state;
+	emit stateChanged();
 }
 
 QString Device::stateValue() const {
