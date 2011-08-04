@@ -14,8 +14,6 @@
         <file>qml/tellduscenterlight/Slider.qml</file>
         <file>qml/tellduscenterlight/Toolbar.qml</file>
         <file>qml/tellduscenterlight/ToolbarButton.qml</file>
-        <file>qml/tellduscenterlight/DeviceListModel.qml</file>
-        <file>qml/tellduscenterlight/DeviceListModel.js</file>
         <file>qml/tellduscenterlight/off.png</file>
         <file>qml/tellduscenterlight/on.png</file>
         <file>qml/tellduscenterlight/bell.png</file>
