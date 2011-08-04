@@ -2,6 +2,7 @@ import Qt 4.7
 import "../DeviceList.js" as DeviceList
 import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
+import "../Device.js" as Device
 import ".."
 
 Rectangle {
@@ -15,15 +16,12 @@ Rectangle {
 	property string orientation: main.height/main.width < 1 ? 'landscape' : 'portrait'
 
 	Component.onCompleted: {
-		DeviceList.list.setTelldusLive( telldusLive )
+		Device.setupCache(deviceModel)
 		Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 		message.showMessage("LOADED"); //TODO do something with this
 	}
 
-	DeviceListModel {
-		id: deviceModel
-	}
 	SensorListModel {
 		id: sensorModel
 	}

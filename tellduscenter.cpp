@@ -20,6 +20,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
+	qRegisterMetaType<QModelIndex>("QModelIndex");
 
 	double scaleFactor = 1.0;
 #ifdef Q_WS_MAEMO_5
