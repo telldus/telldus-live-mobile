@@ -14,11 +14,12 @@ public:
 
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+	void append(QObject *v);
+	void append(const QList<QObject *> &objects);
 
 signals:
 
 public slots:
-	void append(QObject *v);
 	QVariant get(int row) const;
 
 

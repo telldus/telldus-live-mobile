@@ -31,9 +31,17 @@ QVariant TListModel::get(int row) const {
 }
 
 void TListModel::append(QObject *v) {
-	beginInsertRows( QModelIndex(), d->list.size(), d->list.size() );
-	v->setParent(this);
-	d->list << v;
+	QList<QObject *> list;
+	list << v;
+	this->append(list);
+}
+
+void TListModel::append(const QList<QObject *> &objects) {
+	beginInsertRows( QModelIndex(), d->list.size(), d->list.size() + objects.size() - 1);
+	foreach(QObject *object, objects) {
+		object->setParent(this);
+		d->list << object;
+	}
 	endInsertRows();
 }
 
