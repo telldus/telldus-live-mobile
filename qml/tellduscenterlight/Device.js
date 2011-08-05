@@ -2,10 +2,14 @@ var db = openDatabaseSync("TelldusCenterLight", "1.0", "Settings used by Telldus
 
 function setupCache(deviceModel) {
 	deviceModel.rowsInserted.connect(function(index, start, end) {
+		var devices = [];
 		for(var i = start; i <= end; ++i) {
 			var device = deviceModel.get(i);
+			devices.push(device);
 			device.isFavoriteChanged.connect(device, function() { save([this]) });
 		}
+		//Save them to the cache
+		save(devices);
 	});
 
 	db.transaction(function(tx) {
