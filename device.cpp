@@ -114,6 +114,10 @@ void Device::setStateValue(const QString &stateValue) {
 	emit stateValueChanged();
 }
 
+void Device::turnOff() {
+	sendMethod(2);
+}
+
 void Device::turnOn() {
 	sendMethod(1);
 }
