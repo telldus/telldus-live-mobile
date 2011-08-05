@@ -71,7 +71,7 @@ Item{
 				visible: MainScripts.methodContains(device.methods, "off")
 				onClicked: {
 					console.log("CLICKED off");
-					DeviceList.list.device(deviceId).turnOff();
+					device.turnOff();
 				}
 			}
 
@@ -80,7 +80,7 @@ Item{
 				visible: MainScripts.methodContains(device.methods, "on")
 				onClicked: {
 					console.log("CLICKED on");
-					DeviceList.list.device(deviceId).turnOn();
+					device.turnOn();
 				}
 			}
 
@@ -89,7 +89,7 @@ Item{
 				visible: MainScripts.methodContains(device.methods, "bell")
 				onClicked: {
 					console.log("CLICKED BELL");
-					DeviceList.list.device(deviceId).bell();
+					device.bell();
 				}
 			}
 			anchors.right: favoriteicon.left
@@ -105,7 +105,7 @@ Item{
 			//state: deviceState
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
-				DeviceList.list.device(deviceId).dim(dimvalue);
+				device.dim(dimvalue);
 			}
 
 			Item {
