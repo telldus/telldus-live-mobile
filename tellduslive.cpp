@@ -16,6 +16,7 @@ public:
 	QScriptValue thisObject;
 	QObject *receiver;
 	QByteArray member;
+	QVariantMap extra;
 };
 
 class TelldusLive::PrivateData {
@@ -141,7 +142,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		QByteArray normalizedSignature = QMetaObject::normalizedSignature(call.member.mid(1).constData());
 		int methodIndex = call.receiver->metaObject()->indexOfMethod(normalizedSignature);
 		QMetaMethod method = call.receiver->metaObject()->method(methodIndex);
-		method.invoke(call.receiver, Qt::QueuedConnection, Q_ARG(QVariantMap, result));
+		method.invoke(call.receiver, Qt::QueuedConnection, Q_ARG(QVariantMap, result), Q_ARG(QVariantMap, call.extra));
 	} else {
 		QScriptValue parameters = call.callback.engine()->toScriptValue(result);
 		call.callback.call(call.thisObject, QScriptValueList() << parameters);
@@ -188,13 +189,14 @@ void TelldusLive::call(const QString &endpoint, const QScriptValue &params, cons
 	}
 }
 
-void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member) {
+void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra) {
 	qDebug() << "Queue call to" << endpoint;
 
 	TelldusLiveCall call;
 	call.endpoint = endpoint;
 	call.receiver = receiver;
 	call.member = member;
+	call.extra = extra;
 
 	for(QMap<QString, QVariant>::const_iterator it = params.constBegin(); it != params.constEnd(); ++it) {
 		call.params.insert(it.key(), it.value().toString());

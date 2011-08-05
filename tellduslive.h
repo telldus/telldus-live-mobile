@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QUrl>
 #include <QScriptValue>
+#include <QMap>
+#include <QVariant>
 
 typedef QMap<QString, QVariant> TelldusLiveParams;
 
@@ -15,7 +17,7 @@ public:
 	~TelldusLive();
 
 	bool isAuthorized();
-	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member);
+	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap());
 
 	static TelldusLive *instance();
 
