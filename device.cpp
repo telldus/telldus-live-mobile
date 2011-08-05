@@ -27,6 +27,10 @@ void Device::bell() {
 	sendMethod(4);
 }
 
+void Device::dim(char level) {
+	sendMethod(16, QString::number(level));
+}
+
 int Device::id() const {
 	return d->id;
 }
