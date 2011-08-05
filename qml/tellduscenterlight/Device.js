@@ -11,6 +11,34 @@ function setupCache(deviceModel) {
 		//Save them to the cache
 		save(devices);
 	});
+	deviceModel.devicesLoaded.connect(function(devices) {
+		db.transaction(function(tx) {
+			var ids = [];
+			for (var i = 0; i < deviceModel.length; ++i) {
+				//See if the device is in the one got from the server
+				var found = false;
+				for (var j in devices) {
+					if (devices[j].id == deviceModel.get(i).id) {
+						found = true;
+						break;
+					}
+				}
+				if (found) {
+					continue;
+				}
+				ids.push(deviceModel.get(i).id);
+				tx.executeSql('DELETE FROM Device WHERE id = ?', [deviceModel.get(i).id]);
+			}
+			for(var i in ids) {
+				for (var j = 0; j < deviceModel.length; ++j) {
+					if (deviceModel.get(j).id == ids[i]) {
+						deviceModel.splice(j, 1);
+						break;
+					}
+				}
+			}
+		});
+	});
 
 	db.transaction(function(tx) {
 		//tx.executeSql('DROP TABLE IF EXISTS Device');
