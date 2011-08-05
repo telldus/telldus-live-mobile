@@ -16,7 +16,9 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 
 		Device *device = new Device(this);
 		device->setId(dev["id"].toInt());
-		device->setIsFavorite(dev["isfavorite"].toBool());
+		if (dev.contains("isfavorite")) {
+			device->setIsFavorite(dev["isfavorite"].toBool());
+		}
 		device->setMethods(dev["methods"].toInt());
 		device->setName(dev["name"].toString());
 		device->setOnline(dev["online"].toBool());
