@@ -14,8 +14,12 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 	foreach(QVariant v, deviceList) {
 		QVariantMap dev = v.toMap();
 
-		Device *device = new Device(this);
-		device->setId(dev["id"].toInt());
+		Device *device = this->findDevice(dev["id"].toInt());
+		if (!device) {
+			device = new Device(this);
+			device->setId(dev["id"].toInt());
+			list << device;
+		}
 		if (dev.contains("isfavorite")) {
 			device->setIsFavorite(dev["isfavorite"].toBool());
 		}
@@ -24,10 +28,11 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 		device->setOnline(dev["online"].toBool());
 		device->setState(dev["state"].toInt());
 		device->setStateValue(dev["statevalue"].toString());
-		list << device;
 	}
-	//Appends all in one go
-	this->append(list);
+	if (list.size()) {
+		//Appends all in one go
+		this->append(list);
+	}
 }
 
 void DeviceModel::authorizationChanged() {
