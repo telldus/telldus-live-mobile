@@ -1,4 +1,5 @@
 #include "device.h"
+#include "tellduslive.h"
 
 class Device::PrivateData {
 public:
@@ -58,6 +59,25 @@ void Device::setName(const QString &name) {
 	emit nameChanged();
 }
 
+void Device::onActionResponse(const QVariantMap &result, const QVariantMap &data) {
+	if (result["status"].toString() != "success") {
+		return;
+	}
+	int method = data["method"].toInt();
+	if (method == 16) {
+		QString value = data["value"].toString();
+		if (value == "255") {
+			method = 1;
+		} else if (value == "0") {
+			method = 2;
+		}
+		setStateValue(value);
+	} else if (method == 4) {
+		return;
+	}
+	setState(method);
+}
+
 bool Device::online() const {
 	return d->online;
 }
@@ -65,6 +85,15 @@ bool Device::online() const {
 void Device::setOnline(bool online) {
 	d->online = online;
 	emit onlineChanged();
+}
+
+void Device::sendMethod(int method, const QString &value) {
+	TelldusLive *telldusLive = TelldusLive::instance();
+	TelldusLiveParams params;
+	params["id"] = this->id();
+	params["method"] = method;
+	params["value"] = value;
+	telldusLive->call("device/command", params, this, SLOT(onActionResponse(QVariantMap,QVariantMap)), params);
 }
 
 int Device::state() const {

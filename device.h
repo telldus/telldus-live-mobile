@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMetaType>
+#include <QVariantMap>
 
 class Device : public QObject
 {
@@ -49,6 +50,12 @@ signals:
 	void stateValueChanged();
 
 public slots:
+
+protected:
+	void sendMethod(int action, const QString &value = "");
+
+protected slots:
+	void onActionResponse(const QVariantMap &result, const QVariantMap &data);
 
 private:
 	class PrivateData;
