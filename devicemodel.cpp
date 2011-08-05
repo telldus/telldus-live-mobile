@@ -39,6 +39,19 @@ void DeviceModel::authorizationChanged() {
 	}
 }
 
+Device *DeviceModel::findDevice(int id) const {
+	for(int i = 0; i < this->rowCount(); ++i) {
+		Device *device = qobject_cast<Device *>(this->get(i).value<QObject *>());
+		if (!device) {
+			continue;
+		}
+		if (device->id() == id) {
+			return device;
+		}
+	}
+	return 0;
+}
+
 void DeviceModel::onDevicesList(const QVariantMap &result) {
 	this->addDevices(result["device"].toList());
 }
