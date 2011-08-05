@@ -49,3 +49,11 @@ int TListModel::rowCount(const QModelIndex &parent) const {
 	Q_UNUSED(parent)
 	return d->list.size();
 }
+
+void TListModel::splice(int row, int count) {
+	beginRemoveRows(QModelIndex(), row, row+count-1);
+	for(int i = 0; i < count; ++i) {
+		d->list.removeAt(row);
+	}
+	endRemoveRows();
+}
