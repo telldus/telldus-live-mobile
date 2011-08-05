@@ -50,6 +50,7 @@ signals:
 	void stateValueChanged();
 
 public slots:
+	void turnOn();
 
 protected:
 	void sendMethod(int action, const QString &value = "");
