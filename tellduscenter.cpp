@@ -7,7 +7,6 @@
 class TelldusCenter::PrivateData {
 public:
 	QDeclarativeView *view;
-	TelldusLive telldusLive;
 	DeviceModel *deviceModel;
 };
 
@@ -27,7 +26,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	scaleFactor = 2.0;
 #endif
 
-	d->view->rootContext()->setContextProperty("telldusLive", &d->telldusLive);
+	d->view->rootContext()->setContextProperty("telldusLive", TelldusLive::instance());
 	d->view->rootContext()->setContextProperty("deviceModel", d->deviceModel);
 	d->view->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 

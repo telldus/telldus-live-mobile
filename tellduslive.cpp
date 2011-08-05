@@ -27,7 +27,11 @@ public:
 	QString base, key, secret;
 	QQueue<TelldusLiveCall> queue;
 	bool requestPending;
+
+	static TelldusLive *instance;
 };
+
+TelldusLive *TelldusLive::PrivateData::instance = 0;
 
 TelldusLive::TelldusLive(QObject *parent) :
 	QObject(parent)
@@ -247,5 +251,11 @@ void TelldusLive::setupManager() {
 	connect(d->manager, SIGNAL(requestReady(QByteArray)), this, SLOT(onRequestReady(QByteArray)));
 
 	d->request = new KQOAuthRequest(this);
+}
 
+TelldusLive * TelldusLive::instance() {
+	if (PrivateData::instance == 0) {
+		PrivateData::instance = new TelldusLive();
+	}
+	return PrivateData::instance;
 }

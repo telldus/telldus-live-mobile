@@ -12,12 +12,12 @@ class TelldusLive : public QObject
 	Q_OBJECT
 	Q_PROPERTY(bool isAuthorized READ isAuthorized NOTIFY authorizedChanged)
 public:
-	explicit TelldusLive(QObject *parent = 0);
-
 	~TelldusLive();
 
 	bool isAuthorized();
 	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member);
+
+	static TelldusLive *instance();
 
 signals:
 	void authorizedChanged();
@@ -36,6 +36,7 @@ private slots:
 	void onRequestReady(const QByteArray &response);
 
 private:
+	explicit TelldusLive(QObject *parent = 0);
 	void doCall();
 	void setupManager();
 	class PrivateData;
