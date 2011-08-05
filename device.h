@@ -50,6 +50,7 @@ signals:
 	void stateValueChanged();
 
 public slots:
+	void bell();
 	void turnOff();
 	void turnOn();
 

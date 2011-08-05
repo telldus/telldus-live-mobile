@@ -23,6 +23,10 @@ Device::~Device() {
 	delete d;
 }
 
+void Device::bell() {
+	sendMethod(4);
+}
+
 int Device::id() const {
 	return d->id;
 }
