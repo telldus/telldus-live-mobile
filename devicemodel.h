@@ -13,8 +13,9 @@ public:
 
 signals:
 
-public slots:
-
+private slots:
+	void authorizationChanged();
+	void onDevicesList(const QVariantMap &result);
 };
 
 #endif // DEVICEMODEL_H

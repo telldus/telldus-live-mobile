@@ -29,25 +29,8 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	d->view->rootContext()->setContextProperty("telldusLive", TelldusLive::instance());
 	d->view->rootContext()->setContextProperty("deviceModel", d->deviceModel);
 	d->view->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
-
-	connect(&d->telldusLive, SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
-	this->authorizationChanged();
 }
 
 TelldusCenter::~TelldusCenter() {
 	delete d;
-}
-
-void TelldusCenter::authorizationChanged() {
-	if (d->telldusLive.isAuthorized()) {
-		TelldusLiveParams params;
-		params["supportedMethods"] = 23; //TODO: Use constants
-		d->telldusLive.call("devices/list", params, this, SLOT(onDevicesList(QVariantMap)));
-	}
-}
-
-void TelldusCenter::onDevicesList(const QVariantMap &result) {
-
-	d->deviceModel->addDevices(result["device"].toList());
-
 }

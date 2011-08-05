@@ -17,10 +17,6 @@ signals:
 
 public slots:
 
-private slots:
-	void authorizationChanged();
-	void onDevicesList(const QVariantMap &result);
-
 private:
 	class PrivateData;
 	PrivateData *d;

@@ -1,9 +1,12 @@
 #include "devicemodel.h"
 #include "device.h"
+#include "tellduslive.h"
 
 DeviceModel::DeviceModel(QObject *parent) :
     TListModel("device", parent)
 {
+	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
+	this->authorizationChanged();
 }
 
 void DeviceModel::addDevices(const QVariantList &deviceList) {
@@ -23,4 +26,17 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 	}
 	//Appends all in one go
 	this->append(list);
+}
+
+void DeviceModel::authorizationChanged() {
+	TelldusLive *telldusLive = TelldusLive::instance();
+	if (telldusLive->isAuthorized()) {
+		TelldusLiveParams params;
+		params["supportedMethods"] = 23; //TODO: Use constants
+		telldusLive->call("devices/list", params, this, SLOT(onDevicesList(QVariantMap)));
+	}
+}
+
+void DeviceModel::onDevicesList(const QVariantMap &result) {
+	this->addDevices(result["device"].toList());
 }
