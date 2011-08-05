@@ -4,7 +4,7 @@ function setupCache(deviceModel) {
 	deviceModel.rowsInserted.connect(function(index, start, end) {
 		for(var i = start; i <= end; ++i) {
 			var device = deviceModel.get(i);
-			device.isFavoriteChanged.connect(device, function() { save(this) });
+			device.isFavoriteChanged.connect(device, function() { save([this]) });
 		}
 	});
 
@@ -27,11 +27,13 @@ function setupCache(deviceModel) {
 	});
 }
 
-function save(device) {
+function save(devices) {
 	db.transaction(function(tx) {
-		tx.executeSql('REPLACE INTO Device (id, name, methods, favorite, state, statevalue) VALUES(?, ?, ?, ?, ?, ?)',
-			[device.id, device.name, device.methods, device.isFavorite, device.state, device.statevalue]
-		);
+		for(var i = 0; i < devices.length; ++i) {
+			tx.executeSql('REPLACE INTO Device (id, name, methods, favorite, state, statevalue) VALUES(?, ?, ?, ?, ?, ?)',
+				[devices[i].id, devices[i].name, devices[i].methods, devices[i].isFavorite, devices[i].state, devices[i].statevalue]
+			);
+		}
 	});
 }
 
