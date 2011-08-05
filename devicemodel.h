@@ -15,6 +15,7 @@ public:
 	Q_INVOKABLE Device *findDevice(int id) const;
 
 signals:
+	void devicesLoaded(const QVariantList &devices);
 
 private slots:
 	void authorizationChanged();

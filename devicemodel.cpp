@@ -54,4 +54,5 @@ Device *DeviceModel::findDevice(int id) const {
 
 void DeviceModel::onDevicesList(const QVariantMap &result) {
 	this->addDevices(result["device"].toList());
+	emit devicesLoaded(result["device"].toList());
 }
