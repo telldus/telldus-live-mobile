@@ -30,7 +30,8 @@ SOURCES += main.cpp \
 	device.cpp \
 	sensor.cpp \
 	tellduscenter.cpp \
-    devicemodel.cpp
+	devicemodel.cpp \
+	sensormodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -82,7 +83,8 @@ HEADERS += \
 	device.h \
 	sensor.h \
 	tellduscenter.h \
-    devicemodel.h
+	devicemodel.h \
+	sensormodel.h
 
 RESOURCES += \
 	resources.qrc
