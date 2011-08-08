@@ -1,7 +1,8 @@
 import Qt 4.7
 import QtWebKit 1.0
 import ".."
-import "../DeviceList.js" as DeviceList
+//import "../DeviceList.js" as DeviceList
+import "../Device.js" as Device
 import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
 
@@ -12,14 +13,17 @@ Rectangle {
 	property int selectedDevice: 0
 
 	Component.onCompleted: {  //TODO what of this can be reused?
-		DeviceList.list.setTelldusLive( telldusLive )
+		//DeviceList.list.setTelldusLive( telldusLive )
+		Device.setupCache(deviceModel)
 		Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 	}
 
-	DeviceListModel {
+	/*DeviceListModel {
 		id: deviceModel
 	}
+	*/
+
 	SensorListModel {
 		id: sensorModel
 	}
@@ -64,7 +68,7 @@ Rectangle {
 			height: parent.height
 			width: 300 //TODO
 
-			model: DeviceListModel {}
+			model: deviceModel //DeviceListModel {}
 
 			delegate: DeviceElement { }
 		}
@@ -75,7 +79,7 @@ Rectangle {
 			width: 300 //TODO
 			anchors.left: devicelist.right
 
-			model: DeviceListModel {}
+			model: deviceModel //DeviceListModel {}
 
 			delegate: DeviceElement { //TODO groups only
 			}
@@ -100,7 +104,7 @@ Rectangle {
 		height: parent.height
 		width: 300 //TODO
 
-		model: DeviceListModel {}
+		model: deviceModel //DeviceListModel {}
 
 		delegate: DeviceElement {
 			hideFavorites: true

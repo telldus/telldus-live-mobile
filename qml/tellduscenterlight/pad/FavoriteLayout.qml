@@ -71,9 +71,10 @@ Rectangle {
 		id: visualDeviceListModel  //TODO has to be named deviceListModel when using DeviceListModel.js...
 	}
 
-	DeviceListModel{
+	/*DeviceListModel{
 		id: deviceListModel
 	}
+	*/
 
 	SensorListModel {
 		id: sensorModel
@@ -84,8 +85,8 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
-		model: deviceListModel
-		z: 160 //over everything
+		model: deviceModel //deviceListModel
+		z: 160 //above everything
 		header: Text {
 			font.bold: true
 			text: 'Devices'
@@ -95,10 +96,10 @@ Rectangle {
 			id: availableListDelegate
 			height: deviceText.height
 			width: 100 //TODO
-			visible: model.deviceIsFavorite
+			visible: device.isFavorite
 			Text{
 				id: deviceText
-				text: model.deviceName
+				text: device.name
 			}
 
 			MouseArea{
@@ -142,7 +143,8 @@ Rectangle {
 
 					if(newX >= 0){
 						//do nothing if dropped on list again
-						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, model.deviceId, selectedTabId);
+						//TODO model.deviceId här kanske, eller det sker senare?
+						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, selectedTabId);
 					}
 					availableListDelegate.x = initialX; //reset item location
 					availableListDelegate.y = initialY;

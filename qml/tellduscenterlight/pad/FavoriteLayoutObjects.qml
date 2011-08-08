@@ -1,7 +1,7 @@
 import Qt 4.7
 import ".."
 import "VisualDeviceList.js" as VisualDeviceList
-import "../DeviceList.js" as DeviceList
+//import "../DeviceList.js" as DeviceList
 import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
 
@@ -13,7 +13,7 @@ ListModel {
 		VisualDeviceList.tabAreaList.init(tabArea, favoriteLayout, tabSelection.tabButtonRow, tabSelectionButton);
 		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
 		VisualDeviceList.visualDevicelist.visualDeviceRemoved.connect(visualDeviceRemoved);
-		VisualDeviceList.visualDevicelist.init(DeviceList.list, Sensors.list);  //TODO can this be done in other way?
+		VisualDeviceList.visualDevicelist.init(deviceModel, Sensors.list);  //DeviceList.list TODO can this be done in other way?
 	}
 
 	function visualDeviceAdded(device){
@@ -32,11 +32,11 @@ ListModel {
 			visualObject.type = device.type();
 
 			if(device.type() == MainScripts.DEVICE){
-				visualObject.deviceId = device.device().id();
-				visualObject.deviceName = device.device().name();
-				visualObject.deviceMethods = device.device().methods();
-				visualObject.deviceState = device.device().state();
-				visualObject.deviceStateValue = device.device().statevalue();
+				visualObject.deviceId = device.device().id;
+				visualObject.deviceName = device.device().name;
+				visualObject.deviceMethods = device.device().methods;
+				visualObject.deviceState = device.device().state;
+				visualObject.deviceStateValue = device.device().stateValue;
 			}
 			else if(device.type() == MainScripts.SENSOR){
 				visualObject.deviceId = device.sensor().id();

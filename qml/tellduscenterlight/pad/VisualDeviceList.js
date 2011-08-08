@@ -15,11 +15,31 @@ var visualDevicelist = function() {
 
 	function init(rawDeviceList, rawSensorList) {
 		deviceList = rawDeviceList;
-		deviceList.deviceAdded.connect(deviceAdded);
-		deviceList.deviceRemoved.connect(deviceRemoved);
+
+		deviceList.rowsInserted.connect(function(index, start, end) {
+			var devices = [];
+			for(var i = start; i <= end; ++i) {
+				var device = deviceList.get(i);
+				added(device, DEVICE)
+			}
+		});
+
+		deviceList.rowsRemoved.connect(function(index, start, end) {
+			var devices = [];
+			for(var i = start; i <= end; ++i) {
+				var device = deviceList.get(i);
+				removed(device, DEVICE)
+			}
+		});
+
+		for(var i=0; i<deviceList.count; ++i){
+			added(deviceList.get(i), DEVICE); //Add all existing
+		}
+
 		sensorList = rawSensorList;
-		sensorList.sensorAdded.connect(sensorAdded);
-		sensorList.sensorRemoved.connect(sensorRemoved);
+		sensorList.sensorAdded.connect(sensorAdded);  //TODO, change to CPP-list
+		sensorList.sensorRemoved.connect(sensorRemoved);	//TODO, change to CPP-list
+		//TODO, add all existing, change to CPP-list
 	}
 
 	function addVisualDevice(xvalue, yvalue, deviceId, tabId, type){
@@ -35,19 +55,16 @@ var visualDevicelist = function() {
 		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId, 'type': type});
 	}
 
-	function deviceAdded(device){
-		added(device, DEVICE);
-	}
-
 	function sensorAdded(sensor){
 		added(sensor, SENSOR);
 	}
 
 	function added(device, type){
+
 		db.transaction(function(tx) {
 			//tx.executeSql('DROP TABLE IF EXISTS VisualDevice');
 			tx.executeSql('CREATE TABLE IF NOT EXISTS VisualDevice(id INTEGER PRIMARY KEY, deviceId INTEGER, layoutX INTEGER, layoutY INTEGER, tabId INTEGER, type INTEGER)');
-			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId, type FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id(), type]);
+			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId, type FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id, type]);
 			for(var i = 0; i < rs.rows.length; ++i) {
 				var deviceObj = {
 					'id': rs.rows.item(i).id,
@@ -57,6 +74,7 @@ var visualDevicelist = function() {
 					'tabId': parseInt(rs.rows.item(i).tabId, 10),
 					'type': parseInt(rs.rows.item(i).type, 10)
 				};
+
 				addDevice(deviceObj);
 			}
 		});
@@ -71,13 +89,9 @@ var visualDevicelist = function() {
 		} else {
 		*/
 			device = new VisualDevice(deviceInfo);
-			_visualList[device.id()] = device;
+			_visualList[device.id] = device;
 			visualDeviceAdded.emit(device);  //TODO
 		// }
-	}
-
-	function deviceRemoved(device){
-		removed(device, DEVICE);
 	}
 
 	function sensorRemoved(device){
@@ -86,11 +100,11 @@ var visualDevicelist = function() {
 
 	function removed(device, type){
 		db.transaction(function(tx) {
-			var rs = tx.executeSql('SELECT id FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id(), type]);
+			var rs = tx.executeSql('SELECT id FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id, type]);
 			for(var i = 0; i < rs.rows.length; ++i) {
 				removeDevice(rs.rows.item(i).id);  //remove all visualDevices
 			}
-			tx.executeSql('DELETE FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id(), type]);
+			tx.executeSql('DELETE FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id, type]);
 		});
 
 	}
@@ -108,7 +122,6 @@ var visualDevicelist = function() {
 	}
 
 	function VisualDevice(data) {
-
 		//Parse new values
 		for (var i in data) {
 			if(data[i] == undefined){
@@ -120,7 +133,7 @@ var visualDevicelist = function() {
 	}
 
 	VisualDevice.prototype.id = function() { return this._id; }
-	VisualDevice.prototype.device = function() { if(this._type==DEVICE){ return deviceList.device(this._deviceId); } }
+	VisualDevice.prototype.device = function() { if(this._type==DEVICE){ return deviceList.findDevice(this._deviceId); } }  //this._deviceId TODO does this work?
 	VisualDevice.prototype.sensor = function() { if(this._type==SENSOR){ return sensorList.sensor(this._deviceId); } }
 	VisualDevice.prototype.layoutX = function() { return this._layoutX; }
 	VisualDevice.prototype.layoutY = function() { return this._layoutY; }
