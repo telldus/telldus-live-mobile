@@ -28,6 +28,7 @@ SOURCES += main.cpp \
 	tellduslive.cpp \
 	tlistmodel.cpp \
 	device.cpp \
+	sensor.cpp \
 	tellduscenter.cpp \
     devicemodel.cpp
 
@@ -79,6 +80,7 @@ HEADERS += \
 	tellduslive.h \
 	tlistmodel.h \
 	device.h \
+	sensor.h \
 	tellduscenter.h \
     devicemodel.h
 
