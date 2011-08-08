@@ -175,7 +175,7 @@ void TelldusLive::call(const QString &endpoint, const QScriptValue &params, cons
 		}
 	}
 	call.endpoint = endpoint;
-	
+
 	if (params.isObject()) {
 		QMap<QString, QVariant> paramsMap = params.toVariant().toMap();
 		for(QMap<QString, QVariant>::const_iterator it = paramsMap.constBegin(); it != paramsMap.constEnd(); ++it) {

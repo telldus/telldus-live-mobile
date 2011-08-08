@@ -1,6 +1,5 @@
 import Qt 4.7
 import "../DeviceList.js" as DeviceList
-import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
 import "../Device.js" as Device
 import ".."
@@ -17,13 +16,8 @@ Rectangle {
 
 	Component.onCompleted: {
 		Device.setupCache(deviceModel)
-		Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 		message.showMessage("LOADED"); //TODO do something with this
-	}
-
-	SensorListModel {
-		id: sensorModel
 	}
 
 	Connections{

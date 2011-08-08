@@ -17,10 +17,6 @@
         <file>qml/tellduscenterlight/off.png</file>
         <file>qml/tellduscenterlight/on.png</file>
         <file>qml/tellduscenterlight/bell.png</file>
-        <file>qml/tellduscenterlight/Sensors.js</file>
-        <file>qml/tellduscenterlight/SensorListModel.js</file>
-        <file>qml/tellduscenterlight/SensorListModel.qml</file>
-        <file>qml/tellduscenterlight/Sensor.qml</file>
         <file>qml/tellduscenterlight/Content.qml</file>
         <file>qml/tellduscenterlight/phone/qmldir</file>
         <file>qml/tellduscenterlight/pad/qmldir</file>
