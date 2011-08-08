@@ -1,8 +1,6 @@
 import Qt 4.7
 import ".."
 import "VisualDeviceList.js" as VisualDeviceList
-//import "../DeviceList.js" as DeviceList
-//import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
 
 ListModel {
@@ -13,15 +11,13 @@ ListModel {
 		VisualDeviceList.tabAreaList.init(tabArea, favoriteLayout, tabSelection.tabButtonRow, tabSelectionButton);
 		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
 		VisualDeviceList.visualDevicelist.visualDeviceRemoved.connect(visualDeviceRemoved);
-		VisualDeviceList.visualDevicelist.init(deviceModel, sensorModel);  //DeviceList.list, Sensors.list TODO can this be done in other way?
+		VisualDeviceList.visualDevicelist.init(deviceModel, sensorModel);  //TODO can this be done in other way?
 	}
 
 	function visualDeviceAdded(device){
 		var visualDevice = Qt.createComponent("VisualDevice.qml");
 
 		var tabAreaObject = VisualDeviceList.tabAreaList.tab(device.tabId());
-
-		//TODO do like this at all? Or own list somehow? is this the right "level"?
 
 		if(device.tabId() > 0){ //Check for correct tab, property of this favoriteLayoutObjects...
 			var visualObject = visualDevice.createObject(tabAreaObject);
@@ -41,6 +37,10 @@ ListModel {
 			else if(device.type() == MainScripts.SENSOR){
 				visualObject.deviceId = device.sensor().id;
 				visualObject.deviceName = device.sensor().name;
+				visualObject.hasHumidity = device.sensor().hasHumidity;
+				visualObject.hasTemperature = device.sensor().hasTemperature;
+				visualObject.humidity = device.sensor().humidity;
+				visualObject.temperature = device.sensor().temperature;
 			}
 			favoriteLayout.selectedVisualDevice = visualObject.visualDeviceId
 			VisualDeviceList.addVisualObject(visualObject);

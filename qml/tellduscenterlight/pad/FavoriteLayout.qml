@@ -1,7 +1,6 @@
 import Qt 4.7
 import "../mainscripts.js" as MainScripts
 import "VisualDeviceList.js" as VisualDeviceList
-import "../Sensors.js" as Sensors
 import ".."
 
 Rectangle {
@@ -69,15 +68,6 @@ Rectangle {
 
 	FavoriteLayoutObjects{
 		id: visualDeviceListModel  //TODO has to be named deviceListModel when using DeviceListModel.js...
-	}
-
-	/*DeviceListModel{
-		id: deviceListModel
-	}
-	*/
-
-	SensorListModel {
-		id: sensorModel
 	}
 
 	ListView{
@@ -172,8 +162,7 @@ Rectangle {
 
 			Text{
 				id: sensorText
-				text: Sensors.list.sensor(model.sensor).name();
-				//TODO använd Sensor som visare av själva datan...
+				text: sensor.name
 			}
 
 			MouseArea{

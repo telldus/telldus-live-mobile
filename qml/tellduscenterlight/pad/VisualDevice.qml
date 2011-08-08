@@ -20,15 +20,14 @@ Rectangle {
 	property int tabId: 1 //TODO
 	property int type
 	property int rotationAngle: (visualDevice.x - infoBubble.width/2)/2 * -1
+	property bool hasHumidity
+	property bool hasTemperature
+	property string humidity
+	property string temperature
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
 	//TODO edit mode? When it's ok to move around stuff?
-
-	Sensor {
-		id: sensorItem
-		sensorId: deviceId //type == MainScripts.SENSOR ? deviceId : -1
-	}
 
 	Text{
 
@@ -39,14 +38,14 @@ Rectangle {
 
 		function shortSensorText(){
 			var shortString = "";
-			if(sensorItem.hasHumidity){
-				shortString = sensorItem.humidity + ' %';
+			if(hasHumidity){
+				shortString = humidity + ' %';
 			}
-			if(sensorItem.hasHumidity && sensorItem.hasTemperature){
+			if(hasHumidity && hasTemperature){
 				shortString = shortString + ', '
 			}
-			if(sensorItem.hasTemperature){
-				shortString = shortString + sensorItem.temperature + ' C';
+			if(hasTemperature){
+				shortString = shortString + temperature + ' C';
 			}
 			return shortString;
 		}
@@ -197,15 +196,15 @@ Rectangle {
 			Column{
 				anchors.centerIn: parent
 				Text{
-					text: sensorItem.name
+					text: deviceName
 				}
 				Text{
-					text: "Temperature: " + sensorItem.temperature + " C"
-					visible: sensorItem.hasTemperature
+					text: "Temperature: " + temperature + " C"
+					visible: hasTemperature
 				}
 				Text{
-					text: "Humidity: " + sensorItem.humidity + " %"
-					visible: sensorItem.hasHumidity
+					text: "Humidity: " + humidity + " %"
+					visible: hasHumidity
 				}
 			}
 		}

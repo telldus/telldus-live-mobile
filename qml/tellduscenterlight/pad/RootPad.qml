@@ -1,10 +1,8 @@
 import Qt 4.7
 import QtWebKit 1.0
 import ".."
-//import "../DeviceList.js" as DeviceList
 import "../Device.js" as Device
 //TODO import "../Sensor.js" as Sensor
-//import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
 
 Rectangle {
@@ -14,18 +12,10 @@ Rectangle {
 	property int selectedDevice: 0
 
 	Component.onCompleted: {  //TODO what of this can be reused?
-		//DeviceList.list.setTelldusLive( telldusLive )
 		Device.setupCache(deviceModel)
-		Sensor.setupCache(sensorModel)
 		//Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 	}
-
-	/*
-	SensorListModel {
-		id: sensorModel
-	}
-	*/
 
 	anchors.fill: parent
 
@@ -67,7 +57,7 @@ Rectangle {
 			height: parent.height
 			width: 300 //TODO
 
-			model: deviceModel //DeviceListModel {}
+			model: deviceModel
 
 			delegate: DeviceElement { }
 		}
@@ -78,7 +68,7 @@ Rectangle {
 			width: 300 //TODO
 			anchors.left: devicelist.right
 
-			model: deviceModel //DeviceListModel {}
+			model: deviceModel
 
 			delegate: DeviceElement { //TODO groups only
 			}
@@ -91,7 +81,7 @@ Rectangle {
 		height: parent.height
 		anchors.left: toolbar.right
 		width: 300 //TODO
-		model: SensorListModel{ }
+		model: sensorModel
 		delegate: SensorElement{ }
 		z: 1
 		visible: selectedPane == MainScripts.FULL_SENSOR
@@ -103,7 +93,7 @@ Rectangle {
 		height: parent.height
 		width: 300 //TODO
 
-		model: deviceModel //DeviceListModel {}
+		model: deviceModel
 
 		delegate: DeviceElement {
 			hideFavorites: true
