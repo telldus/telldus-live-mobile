@@ -2,7 +2,7 @@ import Qt 4.7
 import ".."
 import "VisualDeviceList.js" as VisualDeviceList
 //import "../DeviceList.js" as DeviceList
-import "../Sensors.js" as Sensors
+//import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
 
 ListModel {
@@ -13,7 +13,7 @@ ListModel {
 		VisualDeviceList.tabAreaList.init(tabArea, favoriteLayout, tabSelection.tabButtonRow, tabSelectionButton);
 		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
 		VisualDeviceList.visualDevicelist.visualDeviceRemoved.connect(visualDeviceRemoved);
-		VisualDeviceList.visualDevicelist.init(deviceModel, Sensors.list);  //DeviceList.list TODO can this be done in other way?
+		VisualDeviceList.visualDevicelist.init(deviceModel, sensorModel);  //DeviceList.list, Sensors.list TODO can this be done in other way?
 	}
 
 	function visualDeviceAdded(device){
@@ -39,8 +39,8 @@ ListModel {
 				visualObject.deviceStateValue = device.device().stateValue;
 			}
 			else if(device.type() == MainScripts.SENSOR){
-				visualObject.deviceId = device.sensor().id();
-				visualObject.deviceName = device.sensor().name();
+				visualObject.deviceId = device.sensor().id;
+				visualObject.deviceName = device.sensor().name;
 			}
 			favoriteLayout.selectedVisualDevice = visualObject.visualDeviceId
 			VisualDeviceList.addVisualObject(visualObject);

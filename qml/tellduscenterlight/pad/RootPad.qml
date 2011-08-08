@@ -3,7 +3,8 @@ import QtWebKit 1.0
 import ".."
 //import "../DeviceList.js" as DeviceList
 import "../Device.js" as Device
-import "../Sensors.js" as Sensors
+//TODO import "../Sensor.js" as Sensor
+//import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
 
 Rectangle {
@@ -15,18 +16,16 @@ Rectangle {
 	Component.onCompleted: {  //TODO what of this can be reused?
 		//DeviceList.list.setTelldusLive( telldusLive )
 		Device.setupCache(deviceModel)
-		Sensors.list.setTelldusLive( telldusLive )
+		Sensor.setupCache(sensorModel)
+		//Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 	}
 
-	/*DeviceListModel {
-		id: deviceModel
-	}
-	*/
-
+	/*
 	SensorListModel {
 		id: sensorModel
 	}
+	*/
 
 	anchors.fill: parent
 
