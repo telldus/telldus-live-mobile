@@ -15,6 +15,8 @@ TListModel::TListModel(const QByteArray &role, QObject *parent) :
 	QHash<int, QByteArray> roles;
 	roles[Qt::UserRole+1] = role;
 	setRoleNames(roles);
+	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
+	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
 }
 
 TListModel::~TListModel() {

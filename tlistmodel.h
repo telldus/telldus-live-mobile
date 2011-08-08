@@ -8,6 +8,7 @@ class TListModel : public QAbstractListModel
 {
 	Q_OBJECT
 	Q_PROPERTY(int length READ rowCount)
+	Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
 public:
 	explicit TListModel(const QByteArray &role = "", QObject *parent = 0);
 	~TListModel();
@@ -19,6 +20,9 @@ public:
 
 	Q_INVOKABLE QVariant get(int row) const;
 	Q_INVOKABLE void splice(int row, int count);
+
+signals:
+	void countChanged();
 
 private:
 	class PrivateData;
