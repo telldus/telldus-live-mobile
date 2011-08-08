@@ -9,7 +9,7 @@ Rectangle {
 	id: main
 
 	property int selectedPane: defaultSelectedMode()
-	property bool favoriteVisible: deviceModel.favoriteCount > 0
+	property bool favoriteVisible: favoriteModel.count > 0
 	property bool deviceVisible: deviceModel.count > 0
 	property bool sensorVisible: sensorModel.count > 0
 	property string orientation: main.height/main.width < 1 ? 'landscape' : 'portrait'

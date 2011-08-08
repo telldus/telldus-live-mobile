@@ -7,7 +7,6 @@ Item{
 	height: setElementHeight()
 	width: parent == undefined ? 0 : parent.width
 	property bool hideFavorites: false
-	visible: !hideFavorites || device.isFavorite
 
 	MouseArea{
 		anchors.fill: parent
@@ -129,7 +128,7 @@ Item{
 	}
 
 	function setElementHeight(){
-		var height = (!hideFavorites || device.isFavorite) ? MainScripts.DEVICEROWHEIGHT : 0;  //must set height to 0 to avoid space when hidden
+		var height = MainScripts.DEVICEROWHEIGHT;
 		if(slider.visible){
 			height = height + MainScripts.SLIDERHEIGHT;
 		}

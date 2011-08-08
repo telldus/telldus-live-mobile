@@ -3,7 +3,7 @@
 #include "tellduslive.h"
 
 DeviceModel::DeviceModel(QObject *parent) :
-    TListModel("device", parent)
+	TListModel("device", parent)
 {
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();

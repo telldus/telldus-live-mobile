@@ -3,6 +3,7 @@
 #include "tellduslive.h"
 #include "devicemodel.h"
 #include "sensormodel.h"
+#include "favoritemodel.h"
 #include "device.h"
 #include "sensor.h"
 
@@ -11,6 +12,7 @@ public:
 	QDeclarativeView *view;
 	DeviceModel *deviceModel;
 	SensorModel *sensorModel;
+	FavoriteModel *favoriteModel;
 };
 
 TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
@@ -19,6 +21,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	d = new PrivateData;
 	d->view = view;
 	d->deviceModel = new DeviceModel(this);
+	d->favoriteModel = new FavoriteModel(d->deviceModel, this);
 	d->sensorModel = new SensorModel(this);
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
@@ -33,6 +36,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 
 	d->view->rootContext()->setContextProperty("telldusLive", TelldusLive::instance());
 	d->view->rootContext()->setContextProperty("deviceModel", d->deviceModel);
+	d->view->rootContext()->setContextProperty("favoriteModel", d->favoriteModel);
 	d->view->rootContext()->setContextProperty("sensorModel", d->sensorModel);
 	d->view->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 }
