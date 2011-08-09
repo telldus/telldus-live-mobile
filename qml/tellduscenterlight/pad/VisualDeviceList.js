@@ -60,7 +60,6 @@ var visualDevicelist = function() {
 		if(type == undefined){
 			type = DEVICE;
 		}
-
 		var insertId = 0;
 		db.transaction(function(tx) {
 			var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId, type) VALUES(?, ?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId, type]);

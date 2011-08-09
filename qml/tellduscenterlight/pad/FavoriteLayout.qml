@@ -207,7 +207,7 @@ Rectangle {
 
 					if(newX >= 0){
 						//do nothing if dropped on list again
-						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, model.sensor, selectedTabId, MainScripts.SENSOR);
+						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, sensor.id, selectedTabId, MainScripts.SENSOR);
 					}
 					availableSensorDelegate.x = initialX; //reset item location
 					availableSensorDelegate.y = initialY;

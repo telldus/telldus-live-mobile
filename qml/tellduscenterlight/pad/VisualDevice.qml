@@ -13,17 +13,18 @@ Rectangle {
 
 	property int deviceId: 0
 	property int visualDeviceId: 0
-	property string deviceName: ''
-	property int deviceMethods: 0
-	property int deviceState: 0
-	property string deviceStateValue: ''
+	property variant device: undefined
+	property string deviceName: device == undefined ? '' : device.name
+	property int deviceMethods: device == undefined || type != MainScripts.DEVICE ? 0 : device.methods
+	property int deviceState: device == undefined || type != MainScripts.DEVICE ? 0 : device.state
+	property string deviceStateValue: device == undefined || type != MainScripts.DEVICE ? '' : device.stateValue
 	property int tabId: 1 //TODO
 	property int type
 	property int rotationAngle: (visualDevice.x - infoBubble.width/2)/2 * -1
-	property bool hasHumidity
-	property bool hasTemperature
-	property string humidity
-	property string temperature
+	property bool hasHumidity: device == undefined || type != MainScripts.SENSOR ? false : device.hasHumidity
+	property bool hasTemperature: device == undefined || type != MainScripts.SENSOR ? false : device.hasTemperature
+	property string humidity: device == undefined || type != MainScripts.SENSOR ? '' : device.humidity
+	property string temperature: device == undefined || type != MainScripts.SENSOR ? '' : device.temperature
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
