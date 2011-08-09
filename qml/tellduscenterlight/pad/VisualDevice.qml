@@ -312,6 +312,9 @@ Rectangle {
 		if(deviceState == MainScripts.METHOD_TURNON){
 			return "blue";
 		}
+		if(deviceState == MainScripts.METHOD_DIM){
+			return "yellow";
+		}
 		if(type == MainScripts.SENSOR){
 			return "green";
 		}

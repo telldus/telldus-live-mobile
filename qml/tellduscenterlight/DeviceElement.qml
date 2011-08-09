@@ -143,7 +143,7 @@ Item{
 		else if(state == DeviceList.METHOD_TURNOFF){
 			return "\u263D";
 		}
-		else if(state == DeviceList.METHOD_BELL){
+		else if(state == DeviceList.METHOD_DIM){
 			return "\u2601";
 		}
 		return "";
