@@ -8,7 +8,7 @@ Rectangle {
 	height: MainScripts.VISUALDEVICEHEIGHT
 	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : MainScripts.VISUALDEVICEWIDTH
 	color: statusColor()
-	z: selectedVisualDevice == visualDeviceId ? 150 : 5
+	z: infoBubble.visible || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
 
 	property int deviceId: 0
 	property int visualDeviceId: 0

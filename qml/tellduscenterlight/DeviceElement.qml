@@ -13,7 +13,7 @@ Item{
 		onClicked: {
 			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
 			if(selectedPane == MainScripts.FULL_DEVICE){
-				selectedDevice = device.id;
+				selectedDevice = device;
 				var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
 				deviceMenu.align = 'right'
 				if(newX >= main.width){

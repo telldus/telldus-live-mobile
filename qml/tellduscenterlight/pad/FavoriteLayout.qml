@@ -84,7 +84,7 @@ Rectangle {
 
 		delegate: Rectangle{
 			id: availableListDelegate
-			height: deviceText.height
+			height: device.isFavorite ? deviceText.height : 0
 			width: 100 //TODO
 			visible: device.isFavorite
 			Text{
@@ -133,7 +133,6 @@ Rectangle {
 
 					if(newX >= 0){
 						//do nothing if dropped on list again
-						//TODO model.deviceId här kanske, eller det sker senare?
 						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, selectedTabId);
 					}
 					availableListDelegate.x = initialX; //reset item location

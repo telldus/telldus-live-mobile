@@ -9,7 +9,7 @@ Rectangle {
 	id: main
 
 	property int selectedPane: defaultSelectedMode()
-	property int selectedDevice: 0
+	property variant selectedDevice: undefined
 
 	Component.onCompleted: {  //TODO what of this can be reused?
 		Device.setupCache(deviceModel)
@@ -140,7 +140,7 @@ Rectangle {
 	MouseArea{
 		anchors.fill: parent
 		onClicked: {
-			selectedDevice = 0
+			selectedDevice = undefined
 			addToGroupMenu.visible = false
 		}
 		visible: deviceMenu.visible
@@ -156,7 +156,7 @@ Rectangle {
 				isHeader: true
 			}
 			ListElement{
-				text: "Add to favorites"
+				text: "Toggle favorite"
 				optionValue: 'addfavorite'
 			}
 			ListElement{
@@ -174,12 +174,21 @@ Rectangle {
 			if(value == "addtogroup"){
 				addToGroupMenu.visible = true
 			}
-			if(value == "editdevice"){
+			else if(value == "editdevice"){
 				editDevice.visible = true
 				editDevice.update()
 			}
+			else if(value == "addfavorite"){
+				if(selectedDevice.isFavorite){
+					selectedDevice.isFavorite = false;
+				}
+				else{
+					selectedDevice.isFavorite = true;
+				}
+				selectedDevice = undefined;
+			}
 		}
-		visible: selectedDevice > 0
+		visible: selectedDevice != undefined
 	}
 
 	DefaultMenu{
@@ -240,7 +249,7 @@ Rectangle {
 		visible: false
 
 		function update(){
-			webview.url = "http://example.com/deviceid=" + selectedDevice
+			webview.url = "http://example.com/deviceid=" + selectedDevice.id
 		}
 	}
 }
