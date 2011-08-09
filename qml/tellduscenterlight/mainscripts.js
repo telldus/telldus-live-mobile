@@ -8,6 +8,11 @@ var FULL_SENSOR = 7;
 var SCHEDULER = 8;
 var FULL_SETTING = 9;
 
+var METHOD_TURNON = 1;
+var METHOD_TURNOFF = 2;
+var METHOD_BELL = 4;
+var METHOD_DIM = 16;
+
 function getFriendlyText(mode){
 	if(mode == FAVORITE){
 		return "\u2605 Favorites";

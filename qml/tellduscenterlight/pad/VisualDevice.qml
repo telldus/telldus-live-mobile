@@ -1,6 +1,5 @@
 import Qt 4.7
 import ".."
-import "../DeviceList.js" as DeviceList
 import "../mainscripts.js" as MainScripts
 import "VisualDeviceList.js" as VisualDeviceList
 
@@ -238,7 +237,7 @@ Rectangle {
 						visible: MainScripts.methodContains(deviceMethods, "off")
 						onClicked: {
 							console.log("CLICKED off");
-							DeviceList.list.device(deviceId).turnOff();
+							device.turnOff();
 						}
 					}
 
@@ -247,7 +246,7 @@ Rectangle {
 						visible: MainScripts.methodContains(deviceMethods, "on")
 						onClicked: {
 							console.log("CLICKED on");
-							DeviceList.list.device(deviceId).turnOn();
+							device.turnOn();
 						}
 					}
 
@@ -256,7 +255,7 @@ Rectangle {
 						visible: MainScripts.methodContains(deviceMethods, "bell")
 						onClicked: {
 							console.log("CLICKED BELL");
-							DeviceList.list.device(deviceId).bell();
+							device.bell();
 						}
 					}
 				}
@@ -269,22 +268,22 @@ Rectangle {
 					visible: MainScripts.methodContains(deviceMethods, "dim")
 					onSlided: {
 						console.log("DIMMED to " + dimvalue);
-						DeviceList.list.device(deviceId).dim(dimvalue);
+						device.dim(dimvalue);
 					}
 
 					Item {
 						//This is a pseudo-item only for listening for changes in the model data
 						property int state: deviceState
 						onStateChanged: {
-							if (state == DeviceList.METHOD_TURNON) {
+							if (state == MainScripts.METHOD_TURNON) {
 								slider.value = slider.maximum;
-							} else if (state == DeviceList.METHOD_TURNOFF) {
+							} else if (state == MainScripts.METHOD_TURNOFF) {
 								slider.value = slider.minimum;
 							}
 						}
 						property string stateValue: deviceStateValue
 						onStateValueChanged: {
-							if (state == DeviceList.METHOD_DIM) {
+							if (state == MainScripts.METHOD_DIM) {
 								slider.value = parseInt(stateValue, 10);
 							}
 						}
@@ -310,7 +309,7 @@ Rectangle {
 	}
 
 	function statusColor(){  //TODO to icon
-		if(deviceState == DeviceList.METHOD_TURNON){
+		if(deviceState == MainScripts.METHOD_TURNON){
 			return "blue";
 		}
 		if(type == MainScripts.SENSOR){
