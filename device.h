@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMetaType>
 #include <QVariantMap>
+#include <QDateTime>
 
 class Device : public QObject
 {
@@ -13,6 +14,7 @@ class Device : public QObject
 	Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY isFavoriteChanged)
 	Q_PROPERTY(int methods READ methods WRITE setMethods NOTIFY methodsChanged)
 	Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+	Q_PROPERTY(QDateTime nextRunTime READ nextRunTime NOTIFY nextRunTimeChanged)
 	Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
 	Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
 	Q_PROPERTY(QString stateValue READ stateValue WRITE setStateValue NOTIFY stateValueChanged)
@@ -35,6 +37,8 @@ public:
 	QString name() const;
 	void setName(const QString &name);
 
+	QDateTime nextRunTime() const;
+
 	bool online() const;
 	void setOnline(bool online);
 
@@ -53,6 +57,7 @@ signals:
 	void isFavoriteChanged();
 	void methodsChanged();
 	void nameChanged();
+	void nextRunTimeChanged();
 	void onlineChanged();
 	void stateChanged();
 	void stateValueChanged();

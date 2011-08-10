@@ -1,4 +1,5 @@
 #include "device.h"
+#include "schedulermodel.h"
 #include "tellduslive.h"
 
 class Device::PrivateData {
@@ -67,6 +68,10 @@ QString Device::name() const {
 void Device::setName(const QString &name) {
 	d->name = name;
 	emit nameChanged();
+}
+
+QDateTime Device::nextRunTime() const {
+	return SchedulerModel::instance()->nextRunTimeForDevice(d->id);
 }
 
 void Device::onActionResponse(const QVariantMap &result, const QVariantMap &data) {
