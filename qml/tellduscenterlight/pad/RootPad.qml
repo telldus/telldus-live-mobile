@@ -69,8 +69,7 @@ Rectangle {
 
 			model: groupModel
 
-			delegate: DeviceElement { //TODO groups only
-			}
+			delegate: DeviceElement {}
 		}
 		visible: selectedPane == MainScripts.FULL_DEVICE
 	}
@@ -171,6 +170,12 @@ Rectangle {
 	}
 
 	DefaultMenu{
+		id: groupMenu
+		//TODO the devices belonging to the group, model: device.
+		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE
+	}
+
+	DefaultMenu{
 		id: deviceMenu
 
 		model: ListModel{
@@ -212,7 +217,7 @@ Rectangle {
 				selectedDevice = undefined;
 			}
 		}
-		visible: selectedDevice != undefined
+		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.DEVICETYPE
 	}
 
 	DefaultMenu{
@@ -220,22 +225,16 @@ Rectangle {
 		anchors.top: deviceMenu.bottom
 		anchors.topMargin: 10 //TODO
 		anchors.horizontalCenter: deviceMenu.horizontalCenter
-		model: ListModel{
-			//TODO model dynamic, depending on groups...
-			ListElement{
-				text: "Include in group"
-				isHeader: true
-			}
-			ListElement{
-				text: "Group 1"
-			}
-			ListElement{
-				text: "Group 2"
-			}
-			ListElement{
-				text: "Group 3"
-			}
+
+		model: groupModel
+
+		onOptionSelected: {
+			addToGroupMenu.visible = false
+			console.log("TODO Add device " + selectedDevice.id + " to group " + value)
+
+			selectedDevice = undefined
 		}
+
 		visible: false
 	}
 

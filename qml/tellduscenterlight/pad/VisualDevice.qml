@@ -208,7 +208,7 @@ Rectangle {
 					visible: hasHumidity
 				}
 				Text{
-					text: "Last updated: " + lastUpdated
+					text: "Last updated: " + Qt.formatDateTime(lastUpdated)
 					visible: lastUpdated != ''
 				}
 			}

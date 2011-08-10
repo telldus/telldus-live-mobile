@@ -20,9 +20,9 @@ Rectangle{
 			Repeater{
 				model: deviceMenu.model
 				MenuOption{
-					text: model.text
+					text: model.text != undefined ? model.text : model.device.name
 					showArrow: model.showArrow == undefined ? false : model.showArrow
-					optionValue: model.optionValue == undefined ? 'false' : model.optionValue
+					optionValue: model.device != undefined ? model.device.id : (model.optionValue == undefined ? 'false' : model.optionValue)
 					align: deviceMenu.align
 					isHeader: model.isHeader == undefined ? false : model.isHeader
 				}

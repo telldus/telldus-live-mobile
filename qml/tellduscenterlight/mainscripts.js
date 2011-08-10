@@ -13,6 +13,9 @@ var METHOD_TURNOFF = 2;
 var METHOD_BELL = 4;
 var METHOD_DIM = 16;
 
+var DEVICETYPE = 0;
+var GROUPTYPE = 1;
+
 function getFriendlyText(mode){
 	if(mode == FAVORITE){
 		return "\u2605 Favorites";
