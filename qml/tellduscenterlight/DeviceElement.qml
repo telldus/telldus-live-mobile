@@ -1,6 +1,7 @@
 import Qt 4.7
 import "mainscripts.js" as MainScripts
 import "DeviceList.js" as DeviceList
+import Telldus 1.0
 
 Item{
 	id: deviceElement

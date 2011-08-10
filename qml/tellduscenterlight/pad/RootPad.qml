@@ -11,7 +11,7 @@ Rectangle {
 	property variant selectedDevice: undefined
 
 	Component.onCompleted: {  //TODO what of this can be reused?
-		Device.setupCache(deviceModel)
+		Device.setupCache(rawDeviceModel)
 		//Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 	}
@@ -67,7 +67,7 @@ Rectangle {
 			width: 300 //TODO
 			anchors.left: devicelist.right
 
-			model: deviceModel
+			model: groupModel
 
 			delegate: DeviceElement { //TODO groups only
 			}

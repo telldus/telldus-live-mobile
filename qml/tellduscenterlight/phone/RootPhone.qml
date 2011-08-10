@@ -15,7 +15,7 @@ Rectangle {
 	property string orientation: main.height/main.width < 1 ? 'landscape' : 'portrait'
 
 	Component.onCompleted: {
-		Device.setupCache(deviceModel)
+		Device.setupCache(rawDeviceModel)
 		selectedPane = defaultSelectedMode()
 		message.showMessage("LOADED"); //TODO do something with this
 	}
