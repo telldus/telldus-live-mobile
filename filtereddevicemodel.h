@@ -23,6 +23,7 @@ protected slots:
 
 protected:
 	bool filterAcceptsRow ( int sourceRow, const QModelIndex & ) const;
+	bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 
 private:
 	Device::Type type;
