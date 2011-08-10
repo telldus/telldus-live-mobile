@@ -24,6 +24,7 @@ Rectangle {
 	property bool hasTemperature: device == undefined || type != MainScripts.SENSOR ? false : device.hasTemperature
 	property string humidity: device == undefined || type != MainScripts.SENSOR ? '' : device.humidity
 	property string temperature: device == undefined || type != MainScripts.SENSOR ? '' : device.temperature
+	property string lastUpdated: device == undefined || type != MainScripts.SENSOR ? '' : device.lastUpdated
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
@@ -205,6 +206,10 @@ Rectangle {
 				Text{
 					text: "Humidity: " + humidity + " %"
 					visible: hasHumidity
+				}
+				Text{
+					text: "Last updated: " + lastUpdated
+					visible: lastUpdated != ''
 				}
 			}
 		}
