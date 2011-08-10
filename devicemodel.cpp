@@ -28,6 +28,7 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 		device->setOnline(dev["online"].toBool());
 		device->setState(dev["state"].toInt());
 		device->setStateValue(dev["statevalue"].toString());
+		device->setType(dev["type"].toString());
 	}
 	if (list.size()) {
 		//Appends all in one go
