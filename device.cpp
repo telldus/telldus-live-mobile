@@ -6,10 +6,11 @@ public:
 	bool isFavorite, online;
 	int id, methods, state;
 	QString name, stateValue;
+	Type type;
 };
 
 Device::Device(QObject *parent) :
-    QObject(parent)
+	QObject(parent)
 {
 	d = new PrivateData;
 	d->isFavorite = false;
@@ -17,6 +18,7 @@ Device::Device(QObject *parent) :
 	d->id = 0;
 	d->methods = 0;
 	d->state = 2;
+	d->type = DeviceType;
 }
 
 Device::~Device() {
@@ -130,3 +132,19 @@ void Device::turnOn() {
 	sendMethod(1);
 }
 
+Device::Type Device::type() const {
+	return d->type;
+}
+
+void Device::setType(Device::Type type) {
+	d->type = type;
+	emit typeChanged();
+}
+
+void Device::setType(const QString &type) {
+	if (type == "group") {
+		setType(GroupType);
+	} else {
+		setType(DeviceType);
+	}
+}

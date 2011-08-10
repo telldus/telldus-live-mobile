@@ -8,6 +8,7 @@
 class Device : public QObject
 {
 	Q_OBJECT
+	Q_ENUMS(Type)
 	Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY isFavoriteChanged)
 	Q_PROPERTY(int methods READ methods WRITE setMethods NOTIFY methodsChanged)
@@ -15,9 +16,12 @@ class Device : public QObject
 	Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
 	Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
 	Q_PROPERTY(QString stateValue READ stateValue WRITE setStateValue NOTIFY stateValueChanged)
+	Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
 public:
 	explicit Device(QObject *parent = 0);
 	~Device();
+
+	enum Type { DeviceType, GroupType };
 
 	int id() const;
 	void setId(int id);
@@ -40,6 +44,10 @@ public:
 	QString stateValue() const;
 	void setStateValue(const QString &stateValue);
 
+	Type type() const;
+	void setType(Type type);
+	void setType(const QString &type);
+
 signals:
 	void idChanged();
 	void isFavoriteChanged();
@@ -48,6 +56,7 @@ signals:
 	void onlineChanged();
 	void stateChanged();
 	void stateValueChanged();
+	void typeChanged();
 
 public slots:
 	void bell();
