@@ -29,6 +29,7 @@ SOURCES += main.cpp \
 	tlistmodel.cpp \
 	device.cpp \
 	sensor.cpp \
+	schedulerjob.cpp \
 	tellduscenter.cpp \
 	devicemodel.cpp \
 	sensormodel.cpp \
@@ -78,6 +79,7 @@ HEADERS += \
 	tlistmodel.h \
 	device.h \
 	sensor.h \
+	schedulerjob.h \
 	tellduscenter.h \
 	devicemodel.h \
 	sensormodel.h \
