@@ -24,7 +24,7 @@ bool FavoriteModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const {
 	return device->isFavorite();
 }
 
-void FavoriteModel::rowsAdded(const QModelIndex &parent, int start, int end) {
+void FavoriteModel::rowsAdded(const QModelIndex &, int start, int end) {
 	DeviceModel *model = qobject_cast<DeviceModel *>(this->sourceModel());
 	if (!model) {
 		return;

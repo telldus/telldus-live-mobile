@@ -24,7 +24,7 @@ bool FilteredDeviceModel::filterAcceptsRow(int sourceRow, const QModelIndex &) c
 	return device->type() == type;
 }
 
-void FilteredDeviceModel::rowsAdded(const QModelIndex &parent, int start, int end) {
+void FilteredDeviceModel::rowsAdded(const QModelIndex &, int start, int end) {
 	DeviceModel *model = qobject_cast<DeviceModel *>(this->sourceModel());
 	if (!model) {
 		return;
