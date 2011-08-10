@@ -94,7 +94,9 @@ Rectangle {
 
 		model: favoriteModel
 
-		delegate: DeviceElement {}
+		delegate: DeviceElement {
+			hideFavoriteToggle: true
+		}
 		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT
 	}
 

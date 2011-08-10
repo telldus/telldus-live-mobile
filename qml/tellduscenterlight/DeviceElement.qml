@@ -4,6 +4,7 @@ import "DeviceList.js" as DeviceList
 
 Item{
 	id: deviceElement
+	property bool hideFavoriteToggle: false
 	height: setElementHeight()
 	width: parent == undefined ? 0 : parent.width
 
@@ -58,6 +59,7 @@ Item{
 					device.isFavorite = !device.isFavorite
 				}
 			}
+			visible: !hideFavoriteToggle
 		}
 
 		Row{
