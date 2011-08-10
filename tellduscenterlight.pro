@@ -71,13 +71,7 @@ OTHER_FILES += \
 	android/res/drawable-ldpi/icon.png \
 	android/res/drawable-mdpi/icon.png \
 	android/AndroidManifest.xml \
-	qml/tellduscenterlight/ContentDevice.js \
-    qtc_packaging/debian_harmattan/rules \
-    qtc_packaging/debian_harmattan/README \
-    qtc_packaging/debian_harmattan/copyright \
-    qtc_packaging/debian_harmattan/control \
-    qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog
+	qml/tellduscenterlight/ContentDevice.js
 
 HEADERS += \
 	tellduslive.h \
