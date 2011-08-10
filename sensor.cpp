@@ -16,10 +16,20 @@ Sensor::Sensor(QObject *parent) :
 	d->hasTemperature = false;
 	d->hasHumidity = false;
 	d->id = 0;
+	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(fetchData()));
 }
 
 Sensor::~Sensor() {
 	delete d;
+}
+
+void Sensor::fetchData() {
+	TelldusLive *telldusLive = TelldusLive::instance();
+	if (telldusLive->isAuthorized() && d->id > 0) {
+		TelldusLiveParams params;
+		params["id"] = d->id;
+		telldusLive->call("sensor/info", params, this, SLOT(onInfoReceived(QVariantMap)));
+	}
 }
 
 QString Sensor::humidity() const {
@@ -43,6 +53,7 @@ int Sensor::id() const {
 
 void Sensor::setId(int id) {
 	d->id = id;
+	fetchData();
 	emit idChanged();
 }
 
@@ -62,6 +73,18 @@ QString Sensor::name() const {
 void Sensor::setName(const QString &name) {
 	d->name = name;
 	emit nameChanged();
+}
+
+void Sensor::onInfoReceived(const QVariantMap &info) {
+	foreach(QVariant v, info["data"].toList()) {
+		QVariantMap info = v.toMap();
+		if (info["name"].toString() == "temp") {
+			setTemperature(info["value"].toString());
+
+		} else if (info["name"].toString() == "humidity") {
+			setHumidity(info["value"].toString());
+		}
+	}
 }
 
 QString Sensor::temperature() const {

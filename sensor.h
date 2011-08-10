@@ -46,6 +46,10 @@ signals:
 	void nameChanged();
 	void temperatureChanged();
 
+private slots:
+	void fetchData();
+	void onInfoReceived(const QVariantMap &);
+
 private:
 	class PrivateData;
 	PrivateData *d;
