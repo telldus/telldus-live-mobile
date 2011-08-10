@@ -86,18 +86,41 @@ Rectangle {
 		visible: selectedPane == MainScripts.FULL_SENSOR
 	}
 
-	ListView {
-		id: favoritelist
+	Rectangle{
+		color: 'grey'
+		anchors.right: floatingFavorites.left
+		height: parent.height
+		width: 20 //TODO
+
+		visible: parent.width < 1000 && selectedPane != MainScripts.FULL_FAVORITE_LAYOUT //TODO
+
+		MouseArea{
+			anchors.fill: parent
+			onClicked: {
+				floatingFavorites.floatingFavoritesToggled = !floatingFavorites.floatingFavoritesToggled
+			}
+		}
+	}
+
+	Rectangle{
+		id: floatingFavorites
+		property bool floatingFavoritesToggled: false
+		color: 'white'
 		anchors.right: parent.right
 		height: parent.height
-		width: 300 //TODO
+		width: (parent.width > 1000 || floatingFavoritesToggled) ? 300 : 0 //TODO
+		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT && (parent.width > 1000 || floatingFavoritesToggled) //TODO
 
-		model: favoriteModel
+		ListView {
+			id: favoritelist
 
-		delegate: DeviceElement {
-			hideFavoriteToggle: true
+			anchors.fill: parent
+			model: favoriteModel
+
+			delegate: DeviceElement {
+				hideFavoriteToggle: true
+			}
 		}
-		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT
 	}
 
 	FavoriteLayout{
