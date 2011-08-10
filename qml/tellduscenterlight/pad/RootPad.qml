@@ -111,6 +111,8 @@ Rectangle {
 		width: (parent.width > 1000 || floatingFavoritesToggled) ? 300 : 0 //TODO
 		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT && (parent.width > 1000 || floatingFavoritesToggled) //TODO
 
+		Behavior on width { PropertyAnimation{} }
+
 		ListView {
 			id: favoritelist
 
