@@ -21,6 +21,8 @@ protected slots:
 
 protected:
 	bool filterAcceptsRow ( int sourceRow, const QModelIndex & ) const;
+	bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+
 };
 
 #endif // FAVORITEMODEL_H
