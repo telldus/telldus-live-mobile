@@ -1,5 +1,6 @@
 #include "device.h"
 #include "schedulermodel.h"
+#include "schedulerjob.h"
 #include "tellduslive.h"
 
 class Device::PrivateData {
@@ -20,6 +21,10 @@ Device::Device(QObject *parent) :
 	d->methods = 0;
 	d->state = 2;
 	d->type = DeviceType;
+
+	SchedulerModel *sm = SchedulerModel::instance();
+	connect(sm, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(schedulerJobsChanged(QModelIndex,int,int)));
+	connect(sm, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(schedulerJobsChanged(QModelIndex,int,int)));
 }
 
 Device::~Device() {
@@ -153,3 +158,15 @@ void Device::setType(const QString &type) {
 		setType(DeviceType);
 	}
 }
+
+void Device::schedulerJobsChanged(const QModelIndex &, int start, int end) {
+	SchedulerModel *model = SchedulerModel::instance();
+	for (int i = start; i <= end; ++i ) {
+		SchedulerJob *job = qobject_cast<SchedulerJob *>(model->get(i).value<QObject *>());
+		if (job->deviceId() == d->id) {
+			emit nextRunTimeChanged();
+			return;
+		}
+	}
+}
+

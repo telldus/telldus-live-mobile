@@ -5,6 +5,7 @@
 #include <QMetaType>
 #include <QVariantMap>
 #include <QDateTime>
+#include <QModelIndex>
 
 class Device : public QObject
 {
@@ -74,6 +75,7 @@ protected:
 
 protected slots:
 	void onActionResponse(const QVariantMap &result, const QVariantMap &data);
+	void schedulerJobsChanged( const QModelIndex & parent, int start, int end );
 
 private:
 	class PrivateData;
