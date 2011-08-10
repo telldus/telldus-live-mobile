@@ -11,8 +11,6 @@ Content{
 
 		model: favoriteModel
 
-		delegate: DeviceElement {
-			hideFavorites: true
-		}
+		delegate: DeviceElement {}
 	}
 }

@@ -2,7 +2,6 @@ import Qt 4.7
 import QtWebKit 1.0
 import ".."
 import "../Device.js" as Device
-//TODO import "../Sensor.js" as Sensor
 import "../mainscripts.js" as MainScripts
 
 Rectangle {
@@ -93,11 +92,9 @@ Rectangle {
 		height: parent.height
 		width: 300 //TODO
 
-		model: deviceModel
+		model: favoriteModel
 
-		delegate: DeviceElement {
-			hideFavorites: true
-		}
+		delegate: DeviceElement {}
 		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT
 	}
 

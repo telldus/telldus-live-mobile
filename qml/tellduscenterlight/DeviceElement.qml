@@ -6,7 +6,6 @@ Item{
 	id: deviceElement
 	height: setElementHeight()
 	width: parent == undefined ? 0 : parent.width
-	property bool hideFavorites: false
 
 	MouseArea{
 		anchors.fill: parent
@@ -59,7 +58,6 @@ Item{
 					device.isFavorite = !device.isFavorite
 				}
 			}
-			visible: !hideFavorites
 		}
 
 		Row{

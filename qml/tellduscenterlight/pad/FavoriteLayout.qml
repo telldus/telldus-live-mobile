@@ -75,7 +75,7 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
-		model: deviceModel //deviceListModel
+		model: favoriteModel
 		z: 160 //above everything
 		header: Text {
 			font.bold: true
@@ -84,9 +84,8 @@ Rectangle {
 
 		delegate: Rectangle{
 			id: availableListDelegate
-			height: device.isFavorite ? deviceText.height : 0
+			height: deviceText.height
 			width: 100 //TODO
-			visible: device.isFavorite
 			Text{
 				id: deviceText
 				text: device.name
