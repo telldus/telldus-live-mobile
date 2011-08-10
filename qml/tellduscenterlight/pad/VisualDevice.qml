@@ -231,7 +231,7 @@ Rectangle {
 				}
 
 				Text{
-					text: "Next run time: 23:45 070911" //TODO
+					text: "Next run time: " + (device == undefined ? 'undef' : Qt.formatDateTime(device.nextRunTime))
 				}
 
 				Row{  //TODO possibly reuse?
