@@ -6,7 +6,6 @@
         <file>qml/tellduscenterlight/ContentSetting.qml</file>
         <file>qml/tellduscenterlight/DeviceElement.qml</file>
         <file>qml/tellduscenterlight/DeviceList.js</file>
-        <file>qml/tellduscenterlight/GroupElement.qml</file>
         <file>qml/tellduscenterlight/main.qml</file>
         <file>qml/tellduscenterlight/mainscripts.js</file>
         <file>qml/tellduscenterlight/SensorElement.qml</file>

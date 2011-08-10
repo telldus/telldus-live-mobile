@@ -42,17 +42,12 @@ Content {
 					text: "Groups"
 				}
 				z: 3
+				visible: groupModel.count > 0
 			}
 
 			Repeater {
-				model: 10
-				/*model: ListModel{
-				id: groupModel
-				//TODO set something to get groupModel when avail
-			}
-			*/
-				GroupElement{ }
-				//visible: om mer än en grupp finns
+				model: groupModel
+				DeviceElement{ }
 			}
 		}
 	}
