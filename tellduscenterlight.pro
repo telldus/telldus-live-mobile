@@ -32,7 +32,8 @@ SOURCES += main.cpp \
 	tellduscenter.cpp \
 	devicemodel.cpp \
 	sensormodel.cpp \
-	favoritemodel.cpp
+	favoritemodel.cpp \
+	filtereddevicemodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -86,7 +87,8 @@ HEADERS += \
 	tellduscenter.h \
 	devicemodel.h \
 	sensormodel.h \
-	favoritemodel.h
+	favoritemodel.h \
+	filtereddevicemodel.h
 
 RESOURCES += \
 	resources.qrc
