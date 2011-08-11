@@ -8,7 +8,7 @@ Content {
 		anchors.horizontalCenter: parent.horizontalCenter
 		height: parent.height
 		width: parent.width
-		model: SensorListModel{ }
+		model: sensorModel
 		delegate: SensorElement{ }
 		z: 1
 	}

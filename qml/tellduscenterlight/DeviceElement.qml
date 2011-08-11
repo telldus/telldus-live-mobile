@@ -2,6 +2,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "mainscripts.js" as MainScripts
 import "DeviceList.js" as DeviceList
+import Telldus 1.0
 
 Item{
 	id: deviceElement
@@ -9,24 +10,22 @@ Item{
 	anchors.left: parent == undefined ? undefined : parent.left
 	anchors.right: parent == undefined ? undefined : parent.right
 	anchors.margins: 16
-	property bool hideFavorites: false
-	visible: !hideFavorites || deviceIsFavorite
+	property bool hideFavoriteToggle: false
 
 	/*MouseArea{ //TODO tablet
 		anchors.fill: parent
 		onClicked: {
 			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
 			if(selectedPane == MainScripts.FULL_DEVICE){
-				selectedDevice = deviceId;
-				var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
-				deviceMenu.align = 'right'
-				if(newX >= main.width){
-					newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x - deviceMenu.width;  //place to the left instead, so that it's visible
-					deviceMenu.align = 'left'
+				selectedDevice = device;
+				grouplist.wasHeld = false;
+				var menu = deviceMenu;
+				if(device.type == MainScripts.GROUPTYPE){
+					menu = groupContentMenu;
 				}
-
-				deviceMenu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
-				deviceMenu.y = deviceElement.y + deviceElement.height/4
+				var newX = menuX(deviceElement, menu);
+				menu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
+				menu.y = deviceElement.y + deviceElement.height/4
 			}
 		}
 	}*/
@@ -45,12 +44,12 @@ Item{
 				spacing: 10
 				Text{
 					id: status
-					text: statusIcon(deviceState)
+					text: statusIcon(device.state)
 					font.pointSize: 40
 				}
 				Text{
 					anchors.verticalCenter: parent.verticalCenter
-					text: deviceName
+					text: device.name
 					font.pixelSize: 26
 					font.family: "Nokia Pure Text"
 				}
@@ -58,15 +57,15 @@ Item{
 			Text{
 				id: favoriteicon
 				anchors.right: parent.right
-				text: deviceIsFavorite==true ? "\u2605" : "\u2606"
+				text: device.isFavorite==true ? "\u2605" : "\u2606"
 				font.pointSize: 40
 				MouseArea{
 					anchors.fill: parent
 					onClicked: {
-						DeviceList.list.device(deviceId).setIsFavorite(!deviceIsFavorite)
+						device.isFavorite = !device.isFavorite
 					}
 				}
-				visible: !hideFavorites
+				visible: !hideFavoriteToggle
 			}
 		}
 		ButtonRow {
@@ -74,28 +73,28 @@ Item{
 
 			ActionButton{
 				text: "OFF"
-				visible: MainScripts.methodContains(deviceMethods, "off")
+				visible: MainScripts.methodContains(device.methods, "off")
 				onClicked: {
 					console.log("CLICKED off");
-					DeviceList.list.device(deviceId).turnOff();
+					device.turnOff();
 				}
 			}
 
 			ActionButton{
 				text: "ON"
-				visible: MainScripts.methodContains(deviceMethods, "on")
+				visible: MainScripts.methodContains(device.methods, "on")
 				onClicked: {
 					console.log("CLICKED on");
-					DeviceList.list.device(deviceId).turnOn();
+					device.turnOn();
 				}
 			}
 
 			ActionButton{
 				text: "BELL"
-				visible: MainScripts.methodContains(deviceMethods, "bell")
+				visible: MainScripts.methodContains(device.methods, "bell")
 				onClicked: {
 					console.log("CLICKED BELL");
-					DeviceList.list.device(deviceId).bell();
+					device.bell();
 				}
 			}
 		}
@@ -106,7 +105,7 @@ Item{
 			minimumValue:0
 			maximumValue:255
 			width: parent.width
-			visible: MainScripts.methodContains(deviceMethods, "dim")
+			visible: MainScripts.methodContains(device.methods, "dim")
 
 			function formatValue ( v ) {
 				return Math.round(v/255*100) + "%";
@@ -116,12 +115,12 @@ Item{
 				if (pressed) {
 					return;
 				}
-				DeviceList.list.device(deviceId).dim(value);
+				device.dim(value);
 				console.log("DIMMED to " + value);
 			}
 			Item {
 				//This is a pseudo-item only for listening for changes in the model data
-				property int state: deviceState
+				property int state: device.state
 				onStateChanged: {
 					if (state == DeviceList.METHOD_TURNON) {
 						dimSlider.value = dimSlider.maximumValue;
@@ -129,7 +128,7 @@ Item{
 						dimSlider.value = dimSlider.minimumValue;
 					}
 				}
-				property string stateValue: deviceStateValue
+				property string stateValue: device.stateValue
 				onStateValueChanged: {
 					if (state == DeviceList.METHOD_DIM) {
 						dimSlider.value = parseInt(stateValue, 10);
@@ -153,28 +152,28 @@ Item{
 
 			ActionButton{
 				text: "OFF"
-				visible: MainScripts.methodContains(deviceMethods, "off")
+				visible: MainScripts.methodContains(device.methods, "off")
 				onClicked: {
 					console.log("CLICKED off");
-					DeviceList.list.device(deviceId).turnOff();
+					device.turnOff();
 				}
 			}
 
 			ActionButton{
 				text: "ON"
-				visible: MainScripts.methodContains(deviceMethods, "on")
+				visible: MainScripts.methodContains(device.methods, "on")
 				onClicked: {
 					console.log("CLICKED on");
-					DeviceList.list.device(deviceId).turnOn();
+					device.turnOn();
 				}
 			}
 
 			ActionButton{
 				text: "BELL"
-				visible: MainScripts.methodContains(deviceMethods, "bell")
+				visible: MainScripts.methodContains(device.methods, "bell")
 				onClicked: {
 					console.log("CLICKED BELL");
-					DeviceList.list.device(deviceId).bell();
+					device.bell();
 				}
 			}
 			anchors.right: favoriteicon.left
@@ -185,17 +184,17 @@ Item{
 			width: parent.width
 			anchors.top: buttonrow.bottom
 			height: MainScripts.SLIDERHEIGHT
-			visible: MainScripts.methodContains(deviceMethods, "dim")
+			visible: MainScripts.methodContains(device.methods, "dim")
 			//statevalue: deviceStateValue
 			//state: deviceState
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
-				DeviceList.list.device(deviceId).dim(dimvalue);
+				device.dim(dimvalue);
 			}
 
 			Item {
 				//This is a pseudo-item only for listening for changes in the model data
-				property int state: deviceState
+				property int state: device.state
 				onStateChanged: {
 					if (state == DeviceList.METHOD_TURNON) {
 						slider.value = slider.maximum;
@@ -203,7 +202,7 @@ Item{
 						slider.value = slider.minimum;
 					}
 				}
-				property string stateValue: deviceStateValue
+				property string stateValue: device.stateValue
 				onStateValueChanged: {
 					if (state == DeviceList.METHOD_DIM) {
 						slider.value = parseInt(stateValue, 10);
@@ -214,7 +213,7 @@ Item{
 	}*/
 
 	function setElementHeight(){
-		var height = (!hideFavorites || deviceIsFavorite) ? MainScripts.DEVICEROWHEIGHT : 0;  //must set height to 0 to avoid space when hidden
+		var height = MainScripts.DEVICEROWHEIGHT;
 		if(slider.visible){
 			height = height + MainScripts.SLIDERHEIGHT;
 		}
@@ -229,7 +228,7 @@ Item{
 		else if(state == DeviceList.METHOD_TURNOFF){
 			return "\u263D";
 		}
-		else if(state == DeviceList.METHOD_BELL){
+		else if(state == DeviceList.METHOD_DIM){
 			return "\u2601";
 		}
 		return "";

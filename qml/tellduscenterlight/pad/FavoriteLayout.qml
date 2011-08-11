@@ -1,7 +1,6 @@
 import Qt 4.7
 import "../mainscripts.js" as MainScripts
 import "VisualDeviceList.js" as VisualDeviceList
-import "../Sensors.js" as Sensors
 import ".."
 
 Rectangle {
@@ -71,21 +70,13 @@ Rectangle {
 		id: visualDeviceListModel  //TODO has to be named deviceListModel when using DeviceListModel.js...
 	}
 
-	DeviceListModel{
-		id: deviceListModel
-	}
-
-	SensorListModel {
-		id: sensorModel
-	}
-
 	ListView{
 		id: availableFavoriteList
 		anchors.left: parent.left
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
-		model: deviceListModel
-		z: 160 //over everything
+		model: favoriteModel
+		z: 160 //above everything
 		header: Text {
 			font.bold: true
 			text: 'Devices'
@@ -95,10 +86,9 @@ Rectangle {
 			id: availableListDelegate
 			height: deviceText.height
 			width: 100 //TODO
-			visible: model.deviceIsFavorite
 			Text{
 				id: deviceText
-				text: model.deviceName
+				text: device.name
 			}
 
 			MouseArea{
@@ -142,7 +132,7 @@ Rectangle {
 
 					if(newX >= 0){
 						//do nothing if dropped on list again
-						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, model.deviceId, selectedTabId);
+						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, selectedTabId);
 					}
 					availableListDelegate.x = initialX; //reset item location
 					availableListDelegate.y = initialY;
@@ -170,8 +160,7 @@ Rectangle {
 
 			Text{
 				id: sensorText
-				text: Sensors.list.sensor(model.sensor).name();
-				//TODO använd Sensor som visare av själva datan...
+				text: sensor.name
 			}
 
 			MouseArea{
@@ -216,7 +205,7 @@ Rectangle {
 
 					if(newX >= 0){
 						//do nothing if dropped on list again
-						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, model.sensor, selectedTabId, MainScripts.SENSOR);
+						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, sensor.id, selectedTabId, MainScripts.SENSOR);
 					}
 					availableSensorDelegate.x = initialX; //reset item location
 					availableSensorDelegate.y = initialY;

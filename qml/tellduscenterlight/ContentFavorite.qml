@@ -9,10 +9,10 @@ Content{
 		height: parent.height
 		width: parent.width
 
-		model: DeviceListModel {}
+		model: favoriteModel
 
 		delegate: DeviceElement {
-			hideFavorites: true
+			hideFavoriteToggle: true
 		}
 	}
 }

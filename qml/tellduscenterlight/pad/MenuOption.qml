@@ -11,7 +11,7 @@ Item{
 	property int optionWidth: leftarrow.width + optiontext.width + MainScripts.MARGIN_TEXT
 	property string optionValue: ''
 	height: MainScripts.MENUOPTIONHEIGHT
-	width: optionWidth > parent.width ? optionWidth : parent.width
+	width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
 	signal released()
 
 	Rectangle{

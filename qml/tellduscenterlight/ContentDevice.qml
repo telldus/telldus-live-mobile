@@ -23,9 +23,7 @@ Content {
 			}
 
 			Repeater {
-				model: DeviceListModel{
-					id: deviceModel
-				}
+				model: deviceModel
 
 				DeviceElement{}
 			}
@@ -35,14 +33,8 @@ Content {
 			}
 
 			Repeater {
-				model: 0
-				/*model: ListModel{
-				id: groupModel
-				//TODO set something to get groupModel when avail
-			}
-			*/
-				GroupElement{ }
-				//visible: om mer än en grupp finns
+				model: groupModel
+				DeviceElement{ }
 			}
 		}
 	}

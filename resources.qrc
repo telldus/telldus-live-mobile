@@ -6,22 +6,15 @@
         <file>qml/tellduscenterlight/ContentSetting.qml</file>
         <file>qml/tellduscenterlight/DeviceElement.qml</file>
         <file>qml/tellduscenterlight/DeviceList.js</file>
-        <file>qml/tellduscenterlight/GroupElement.qml</file>
         <file>qml/tellduscenterlight/main.qml</file>
         <file>qml/tellduscenterlight/mainscripts.js</file>
         <file>qml/tellduscenterlight/SensorElement.qml</file>
         <file>qml/tellduscenterlight/Signal.js</file>
         <file>qml/tellduscenterlight/Toolbar.qml</file>
         <file>qml/tellduscenterlight/ToolbarButton.qml</file>
-        <file>qml/tellduscenterlight/DeviceListModel.qml</file>
-        <file>qml/tellduscenterlight/DeviceListModel.js</file>
         <file>qml/tellduscenterlight/off.png</file>
         <file>qml/tellduscenterlight/on.png</file>
         <file>qml/tellduscenterlight/bell.png</file>
-        <file>qml/tellduscenterlight/Sensors.js</file>
-        <file>qml/tellduscenterlight/SensorListModel.js</file>
-        <file>qml/tellduscenterlight/SensorListModel.qml</file>
-        <file>qml/tellduscenterlight/Sensor.qml</file>
         <file>qml/tellduscenterlight/Content.qml</file>
         <file>qml/tellduscenterlight/phone/qmldir</file>
         <file>qml/tellduscenterlight/pad/qmldir</file>
@@ -38,5 +31,6 @@
         <file>qml/tellduscenterlight/pad/FavoriteLayoutObjects.qml</file>
         <file>qml/tellduscenterlight/pad/VisualDeviceList.js</file>
         <file>qml/tellduscenterlight/pad/TabButton.qml</file>
+        <file>qml/tellduscenterlight/Device.js</file>
     </qresource>
 </RCC>

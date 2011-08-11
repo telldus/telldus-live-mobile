@@ -1,8 +1,8 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../DeviceList.js" as DeviceList
-import "../Sensors.js" as Sensors
 import "../mainscripts.js" as MainScripts
+import "../Device.js" as Device
 
 PageStackWindow {
 	showStatusBar: true
@@ -10,8 +10,7 @@ PageStackWindow {
 	initialPage: mainPage
 
 	Component.onCompleted: {
-		DeviceList.list.setTelldusLive( telldusLive )
-		Sensors.list.setTelldusLive( telldusLive )
+		Device.setupCache(rawDeviceModel)
 	}
 
 	ToolBarLayout {

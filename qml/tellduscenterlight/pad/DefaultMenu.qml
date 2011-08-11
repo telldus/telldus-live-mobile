@@ -7,6 +7,7 @@ Rectangle{
 	property variant model: undefined
 	signal optionSelected(string value)
 	property bool menuShowArrow: false
+	property string headerText: ''
 	width: menuColumn.width
 	height: menuColumn.height
 
@@ -17,12 +18,21 @@ Rectangle{
 
 		Column{
 			id: menuColumn
+
+			MenuOption{
+				text: headerText
+				showArrow: menuShowArrow
+				align: deviceMenu.align
+				isHeader: true
+				visible: headerText != ''
+			}
+
 			Repeater{
 				model: deviceMenu.model
 				MenuOption{
-					text: model.text
+					text: model.text != undefined ? model.text : model.device.name
 					showArrow: model.showArrow == undefined ? false : model.showArrow
-					optionValue: model.optionValue == undefined ? 'false' : model.optionValue
+					optionValue: model.device != undefined ? model.device.id : (model.optionValue == undefined ? 'false' : model.optionValue)
 					align: deviceMenu.align
 					isHeader: model.isHeader == undefined ? false : model.isHeader
 				}

@@ -1,27 +1,19 @@
 import Qt 4.7
 import QtWebKit 1.0
 import ".."
-import "../DeviceList.js" as DeviceList
-import "../Sensors.js" as Sensors
+import "../Device.js" as Device
 import "../mainscripts.js" as MainScripts
 
 Rectangle {
 	id: main
 
 	property int selectedPane: defaultSelectedMode()
-	property int selectedDevice: 0
+	property variant selectedDevice: undefined
 
 	Component.onCompleted: {  //TODO what of this can be reused?
-		DeviceList.list.setTelldusLive( telldusLive )
-		Sensors.list.setTelldusLive( telldusLive )
+		Device.setupCache(rawDeviceModel)
+		//Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
-	}
-
-	DeviceListModel {
-		id: deviceModel
-	}
-	SensorListModel {
-		id: sensorModel
 	}
 
 	anchors.fill: parent
@@ -64,7 +56,7 @@ Rectangle {
 			height: parent.height
 			width: 300 //TODO
 
-			model: DeviceListModel {}
+			model: deviceModel
 
 			delegate: DeviceElement { }
 		}
@@ -73,12 +65,12 @@ Rectangle {
 			id: grouplist
 			height: parent.height
 			width: 300 //TODO
+			property bool wasHeld: false
 			anchors.left: devicelist.right
 
-			model: DeviceListModel {}
+			model: groupModel
 
-			delegate: DeviceElement { //TODO groups only
-			}
+			delegate: DeviceElement {}
 		}
 		visible: selectedPane == MainScripts.FULL_DEVICE
 	}
@@ -88,24 +80,49 @@ Rectangle {
 		height: parent.height
 		anchors.left: toolbar.right
 		width: 300 //TODO
-		model: SensorListModel{ }
+		model: sensorModel
 		delegate: SensorElement{ }
 		z: 1
 		visible: selectedPane == MainScripts.FULL_SENSOR
 	}
 
-	ListView {
-		id: favoritelist
+	Rectangle{
+		color: 'grey'
+		anchors.right: floatingFavorites.left
+		height: parent.height
+		width: 20 //TODO
+
+		visible: parent.width < 1000 && selectedPane != MainScripts.FULL_FAVORITE_LAYOUT //TODO
+
+		MouseArea{
+			anchors.fill: parent
+			onClicked: {
+				floatingFavorites.floatingFavoritesToggled = !floatingFavorites.floatingFavoritesToggled
+			}
+		}
+	}
+
+	Rectangle{
+		id: floatingFavorites
+		property bool floatingFavoritesToggled: false
+		color: 'white'
 		anchors.right: parent.right
 		height: parent.height
-		width: 300 //TODO
+		width: (parent.width > 1000 || floatingFavoritesToggled) ? 300 : 0 //TODO
+		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT && (parent.width > 1000 || floatingFavoritesToggled) //TODO
 
-		model: DeviceListModel {}
+		Behavior on width { PropertyAnimation{} }
 
-		delegate: DeviceElement {
-			hideFavorites: true
+		ListView {
+			id: favoritelist
+
+			anchors.fill: parent
+			model: favoriteModel
+
+			delegate: DeviceElement {
+				hideFavoriteToggle: true
+			}
 		}
-		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT
 	}
 
 	FavoriteLayout{
@@ -147,23 +164,90 @@ Rectangle {
 	MouseArea{
 		anchors.fill: parent
 		onClicked: {
-			selectedDevice = 0
+			selectedDevice = undefined
 			addToGroupMenu.visible = false
 		}
-		visible: deviceMenu.visible
+		visible: selectedDevice != undefined //deviceMenu.visible
+	}
+
+	DefaultMenu{
+		id: groupContentMenu
+		headerText: "Devices"
+		//TODO the devices belonging to the group, as in favorite list
+		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE && !grouplist.wasHeld;
+	}
+
+	Rectangle{
+		id: groupAddRemoveMenu
+		height: menuColumn.height
+		width: menuColumn.width
+		color: "lightgray"
+		property string align: ''
+		property variant selectedGroup
+
+		Column{
+			id: menuColumn
+
+			MenuOption{
+				text: "Add/Remove"
+				showArrow: true
+				align: groupAddRemoveMenu.align
+				isHeader: true
+			}
+
+			Repeater{
+				model: deviceModel
+				Rectangle{
+					property int optionWidth: optiontext.width + MainScripts.MARGIN_TEXT + 50 //TODO
+					height: MainScripts.MENUOPTIONHEIGHT
+					width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
+					color: "lightgray"
+					Rectangle{
+						id: checkbox
+						anchors.left: parent.left
+						anchors.leftMargin: 10 //TODO
+						width: 20 //TODO
+						height: 20 //TODO
+						Text{
+							anchors.centerIn: parent
+							text: "X"
+							visible: groupAddRemoveMenu.selectedGroup != undefined && groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)
+						}
+						MouseArea{
+							anchors.fill: parent
+							onClicked: {
+								if(groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)){
+									groupAddRemoveMenu.selectedGroup.removeDevice(modelData.id);
+								}
+								else{
+									groupAddRemoveMenu.selectedGroup.addDevice(modelData.id);
+								}
+							}
+						}
+					}
+
+					Text{
+						id: optiontext
+						anchors.left: checkbox.right
+						anchors.leftMargin: 10 //TODO
+						anchors.verticalCenter: checkbox.verticalCenter
+						color: "black"
+						text: modelData.name
+					}
+				}
+			}
+		}
+		//TODO all devices, with checkbox
+		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE && grouplist.wasHeld
 	}
 
 	DefaultMenu{
 		id: deviceMenu
+		headerText: "Header"
 
 		model: ListModel{
 			ListElement{
-				text: "Header"
-				showArrow: true
-				isHeader: true
-			}
-			ListElement{
-				text: "Add to favorites"
+				text: "Toggle favorite"
 				optionValue: 'addfavorite'
 			}
 			ListElement{
@@ -181,12 +265,21 @@ Rectangle {
 			if(value == "addtogroup"){
 				addToGroupMenu.visible = true
 			}
-			if(value == "editdevice"){
+			else if(value == "editdevice"){
 				editDevice.visible = true
 				editDevice.update()
 			}
+			else if(value == "addfavorite"){
+				if(selectedDevice.isFavorite){
+					selectedDevice.isFavorite = false;
+				}
+				else{
+					selectedDevice.isFavorite = true;
+				}
+				selectedDevice = undefined;
+			}
 		}
-		visible: selectedDevice > 0
+		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.DEVICETYPE
 	}
 
 	DefaultMenu{
@@ -194,22 +287,16 @@ Rectangle {
 		anchors.top: deviceMenu.bottom
 		anchors.topMargin: 10 //TODO
 		anchors.horizontalCenter: deviceMenu.horizontalCenter
-		model: ListModel{
-			//TODO model dynamic, depending on groups...
-			ListElement{
-				text: "Include in group"
-				isHeader: true
-			}
-			ListElement{
-				text: "Group 1"
-			}
-			ListElement{
-				text: "Group 2"
-			}
-			ListElement{
-				text: "Group 3"
-			}
+
+		model: groupModel
+
+		onOptionSelected: {
+			addToGroupMenu.visible = false
+			console.log("TODO Add device " + selectedDevice.id + " to group " + value)
+
+			selectedDevice = undefined
 		}
+
 		visible: false
 	}
 
@@ -247,7 +334,7 @@ Rectangle {
 		visible: false
 
 		function update(){
-			webview.url = "http://example.com/deviceid=" + selectedDevice
+			webview.url = "http://example.com/deviceid=" + selectedDevice.id
 		}
 	}
 }

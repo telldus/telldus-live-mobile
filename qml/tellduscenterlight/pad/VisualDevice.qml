@@ -1,6 +1,5 @@
 import Qt 4.7
 import ".."
-import "../DeviceList.js" as DeviceList
 import "../mainscripts.js" as MainScripts
 import "VisualDeviceList.js" as VisualDeviceList
 
@@ -9,26 +8,27 @@ Rectangle {
 	height: MainScripts.VISUALDEVICEHEIGHT
 	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : MainScripts.VISUALDEVICEWIDTH
 	color: statusColor()
-	z: selectedVisualDevice == visualDeviceId ? 150 : 5
+	z: infoBubble.visible || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
 
 	property int deviceId: 0
 	property int visualDeviceId: 0
-	property string deviceName: ''
-	property int deviceMethods: 0
-	property int deviceState: 0
-	property string deviceStateValue: ''
+	property variant device: undefined
+	property string deviceName: device == undefined ? '' : device.name
+	property int deviceMethods: device == undefined || type != MainScripts.DEVICE ? 0 : device.methods
+	property int deviceState: device == undefined || type != MainScripts.DEVICE ? 0 : device.state
+	property string deviceStateValue: device == undefined || type != MainScripts.DEVICE ? '' : device.stateValue
 	property int tabId: 1 //TODO
 	property int type
 	property int rotationAngle: (visualDevice.x - infoBubble.width/2)/2 * -1
+	property bool hasHumidity: device == undefined || type != MainScripts.SENSOR ? false : device.hasHumidity
+	property bool hasTemperature: device == undefined || type != MainScripts.SENSOR ? false : device.hasTemperature
+	property string humidity: device == undefined || type != MainScripts.SENSOR ? '' : device.humidity
+	property string temperature: device == undefined || type != MainScripts.SENSOR ? '' : device.temperature
+	property string lastUpdated: device == undefined || type != MainScripts.SENSOR ? '' : device.lastUpdated
 
 	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
 
 	//TODO edit mode? When it's ok to move around stuff?
-
-	Sensor {
-		id: sensorItem
-		sensorId: deviceId //type == MainScripts.SENSOR ? deviceId : -1
-	}
 
 	Text{
 
@@ -39,14 +39,14 @@ Rectangle {
 
 		function shortSensorText(){
 			var shortString = "";
-			if(sensorItem.hasHumidity){
-				shortString = sensorItem.humidity + ' %';
+			if(hasHumidity){
+				shortString = humidity + ' %';
 			}
-			if(sensorItem.hasHumidity && sensorItem.hasTemperature){
+			if(hasHumidity && hasTemperature){
 				shortString = shortString + ', '
 			}
-			if(sensorItem.hasTemperature){
-				shortString = shortString + sensorItem.temperature + ' C';
+			if(hasTemperature){
+				shortString = shortString + temperature + ' C';
 			}
 			return shortString;
 		}
@@ -84,13 +84,9 @@ Rectangle {
 	DefaultMenu{
 		//TODO here or only one for whole layout?
 		id: visualDeviceMenu
+		headerText: "Device options"
 
 		model: ListModel{
-			ListElement{
-				text: "Device options"
-				showArrow: true
-				isHeader: true
-			}
 			ListElement{
 				text: "Remove from layout"
 				optionValue: 'removefromlayout'
@@ -105,6 +101,7 @@ Rectangle {
 				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).deleteDevice();
 			}
 		}
+
 		visible: false
 
 		onVisibleChanged: {
@@ -197,15 +194,19 @@ Rectangle {
 			Column{
 				anchors.centerIn: parent
 				Text{
-					text: sensorItem.name
+					text: deviceName
 				}
 				Text{
-					text: "Temperature: " + sensorItem.temperature + " C"
-					visible: sensorItem.hasTemperature
+					text: "Temperature: " + temperature + " C"
+					visible: hasTemperature
 				}
 				Text{
-					text: "Humidity: " + sensorItem.humidity + " %"
-					visible: sensorItem.hasHumidity
+					text: "Humidity: " + humidity + " %"
+					visible: hasHumidity
+				}
+				Text{
+					text: "Last updated: " + lastUpdated
+					visible: lastUpdated != ''
 				}
 			}
 		}
@@ -227,7 +228,7 @@ Rectangle {
 				}
 
 				Text{
-					text: "Next run time: 23:45 070911" //TODO
+					text: "Next run time: " + (device == undefined ? 'undef' : Qt.formatDateTime(device.nextRunTime))
 				}
 
 				Row{  //TODO possibly reuse?
@@ -238,7 +239,7 @@ Rectangle {
 						visible: MainScripts.methodContains(deviceMethods, "off")
 						onClicked: {
 							console.log("CLICKED off");
-							DeviceList.list.device(deviceId).turnOff();
+							device.turnOff();
 						}
 					}
 
@@ -247,7 +248,7 @@ Rectangle {
 						visible: MainScripts.methodContains(deviceMethods, "on")
 						onClicked: {
 							console.log("CLICKED on");
-							DeviceList.list.device(deviceId).turnOn();
+							device.turnOn();
 						}
 					}
 
@@ -256,7 +257,7 @@ Rectangle {
 						visible: MainScripts.methodContains(deviceMethods, "bell")
 						onClicked: {
 							console.log("CLICKED BELL");
-							DeviceList.list.device(deviceId).bell();
+							device.bell();
 						}
 					}
 				}
@@ -269,22 +270,22 @@ Rectangle {
 					visible: MainScripts.methodContains(deviceMethods, "dim")
 					onSlided: {
 						console.log("DIMMED to " + dimvalue);
-						DeviceList.list.device(deviceId).dim(dimvalue);
+						device.dim(dimvalue);
 					}
 
 					Item {
 						//This is a pseudo-item only for listening for changes in the model data
 						property int state: deviceState
 						onStateChanged: {
-							if (state == DeviceList.METHOD_TURNON) {
+							if (state == MainScripts.METHOD_TURNON) {
 								slider.value = slider.maximum;
-							} else if (state == DeviceList.METHOD_TURNOFF) {
+							} else if (state == MainScripts.METHOD_TURNOFF) {
 								slider.value = slider.minimum;
 							}
 						}
 						property string stateValue: deviceStateValue
 						onStateValueChanged: {
-							if (state == DeviceList.METHOD_DIM) {
+							if (state == MainScripts.METHOD_DIM) {
 								slider.value = parseInt(stateValue, 10);
 							}
 						}
@@ -310,8 +311,11 @@ Rectangle {
 	}
 
 	function statusColor(){  //TODO to icon
-		if(deviceState == DeviceList.METHOD_TURNON){
+		if(deviceState == MainScripts.METHOD_TURNON){
 			return "blue";
+		}
+		if(deviceState == MainScripts.METHOD_DIM){
+			return "yellow";
 		}
 		if(type == MainScripts.SENSOR){
 			return "green";

@@ -25,7 +25,17 @@ symbian:TARGET.CAPABILITY += NetworkServices
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-	tellduslive.cpp
+	tellduslive.cpp \
+	tlistmodel.cpp \
+	device.cpp \
+	sensor.cpp \
+	schedulerjob.cpp \
+	tellduscenter.cpp \
+	devicemodel.cpp \
+	sensormodel.cpp \
+	favoritemodel.cpp \
+	filtereddevicemodel.cpp \
+	schedulermodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
@@ -78,7 +88,17 @@ OTHER_FILES += \
 	qtc_packaging/debian_harmattan/changelog
 
 HEADERS += \
-	tellduslive.h
+	tellduslive.h \
+	tlistmodel.h \
+	device.h \
+	sensor.h \
+	schedulerjob.h \
+	tellduscenter.h \
+	devicemodel.h \
+	sensormodel.h \
+	favoritemodel.h \
+	filtereddevicemodel.h \
+	schedulermodel.h
 
 RESOURCES += \
 	resources.qrc
