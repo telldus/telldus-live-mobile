@@ -30,9 +30,8 @@ public:
 
 	Q_INVOKABLE void addDevice(int deviceId); //add device to group
 	void addDevices(const QString &devices);
-	void addDevices(const QList<int> &devices);
 
-	Q_INVOKABLE TListModel *devices() const;
+	Q_INVOKABLE QAbstractItemModel *devices() const;
 
 	Q_INVOKABLE bool hasDevice(int deviceId) const;  //group has device
 

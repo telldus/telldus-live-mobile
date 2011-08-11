@@ -1,5 +1,6 @@
 #include "device.h"
 #include "devicemodel.h"
+#include "groupdevicemodel.h"
 #include "schedulermodel.h"
 #include "schedulerjob.h"
 #include "tellduslive.h"
@@ -11,7 +12,7 @@ public:
 	int id, methods, state;
 	QString name, stateValue;
 	Type type;
-	TListModel *groupModel;
+	GroupDeviceModel *groupModel;
 };
 
 Device::Device(QObject *parent) :
@@ -24,7 +25,7 @@ Device::Device(QObject *parent) :
 	d->methods = 0;
 	d->state = 2;
 	d->type = DeviceType;
-	d->groupModel = new TListModel("device", this);
+	d->groupModel = new GroupDeviceModel(this);
 
 	SchedulerModel *sm = SchedulerModel::instance();
 	connect(sm, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(schedulerJobsChanged(QModelIndex,int,int)));
@@ -36,7 +37,7 @@ Device::~Device() {
 }
 
 void Device::addDevice(int deviceId) {
-	addDevices(QList<int>() << deviceId);
+	d->groupModel->addDevices(QList<int>() << deviceId);
 }
 
 void Device::addDevices(const QString &devices) {
@@ -44,23 +45,10 @@ void Device::addDevices(const QString &devices) {
 	foreach(QString deviceId, devices.split(',')) {
 		list << deviceId.toInt();
 	}
-	addDevices(list);
+	d->groupModel->addDevices(list);
 }
 
-void Device::addDevices(const QList<int> &devices) {
-	DeviceModel *deviceModel = DeviceModel::instance();
-	QList<QObject *> list;
-	foreach(int deviceId, devices) {
-		Device *device = deviceModel->findDevice(deviceId);
-		if (!device) {
-			continue;
-		}
-		list << device;
-	}
-	d->groupModel->append(list);
-}
-
-TListModel * Device::devices() const {
+QAbstractItemModel * Device::devices() const {
 	return d->groupModel;
 }
 
@@ -73,16 +61,7 @@ void Device::dim(char level) {
 }
 
 bool Device::hasDevice(int deviceId) const {
-	for(int i = 0; i < d->groupModel->rowCount(); ++i) {
-		Device *device = qobject_cast<Device *>(d->groupModel->get(i).value<QObject *>());
-		if (!device) {
-			continue;
-		}
-		if (device->id() == deviceId) {
-			return true;
-		}
-	}
-	return false;
+	return d->groupModel->hasDevice(deviceId);
 }
 
 int Device::id() const {
@@ -149,7 +128,7 @@ bool Device::online() const {
 }
 
 void Device::removeDevice(int deviceId) {
-	//TODO
+	d->groupModel->removeDevices(QList<int>() << deviceId);
 }
 
 void Device::setOnline(bool online) {
