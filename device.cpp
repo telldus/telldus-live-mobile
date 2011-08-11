@@ -39,6 +39,14 @@ void Device::addDevice(int deviceId) {
 	addDevices(QList<int>() << deviceId);
 }
 
+void Device::addDevices(const QString &devices) {
+	QList<int> list;
+	foreach(QString deviceId, devices.split(',')) {
+		list << deviceId.toInt();
+	}
+	addDevices(list);
+}
+
 void Device::addDevices(const QList<int> &devices) {
 	DeviceModel *deviceModel = DeviceModel::instance();
 	QList<QObject *> list;

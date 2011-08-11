@@ -35,6 +35,9 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 		device->setState(dev["state"].toInt());
 		device->setStateValue(dev["statevalue"].toString());
 		device->setType(dev["type"].toString());
+		if (dev.contains("devices")) {
+			device->addDevices(dev["devices"].toString());
+		}
 	}
 	if (list.size()) {
 		//Appends all in one go

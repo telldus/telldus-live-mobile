@@ -29,6 +29,7 @@ public:
 	enum Type { DeviceType, GroupType };
 
 	Q_INVOKABLE void addDevice(int deviceId); //add device to group
+	void addDevices(const QString &devices);
 	void addDevices(const QList<int> &devices);
 
 	Q_INVOKABLE TListModel *devices() const;
