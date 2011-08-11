@@ -84,13 +84,9 @@ Rectangle {
 	DefaultMenu{
 		//TODO here or only one for whole layout?
 		id: visualDeviceMenu
+		headerText: "Device options"
 
 		model: ListModel{
-			ListElement{
-				text: "Device options"
-				showArrow: true
-				isHeader: true
-			}
 			ListElement{
 				text: "Remove from layout"
 				optionValue: 'removefromlayout'
@@ -208,7 +204,7 @@ Rectangle {
 					visible: hasHumidity
 				}
 				Text{
-					text: "Last updated: " + Qt.formatDateTime(lastUpdated)
+					text: "Last updated: " + lastUpdated
 					visible: lastUpdated != ''
 				}
 			}

@@ -177,13 +177,9 @@ Rectangle {
 
 	DefaultMenu{
 		id: deviceMenu
+		headerText: "Header"
 
 		model: ListModel{
-			ListElement{
-				text: "Header"
-				showArrow: true
-				isHeader: true
-			}
 			ListElement{
 				text: "Toggle favorite"
 				optionValue: 'addfavorite'
