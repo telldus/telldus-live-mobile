@@ -7,6 +7,8 @@
 #include <QDateTime>
 #include <QModelIndex>
 
+class TListModel;
+
 class Device : public QObject
 {
 	Q_OBJECT
@@ -27,6 +29,8 @@ public:
 	enum Type { DeviceType, GroupType };
 
 	Q_INVOKABLE void addDevice(int deviceId) const; //add device to group
+
+	Q_INVOKABLE TListModel *devices() const;
 
 	Q_INVOKABLE bool hasDevice(int deviceId) const;  //group has device
 

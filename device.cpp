@@ -1,7 +1,9 @@
 #include "device.h"
+#include "devicemodel.h"
 #include "schedulermodel.h"
 #include "schedulerjob.h"
 #include "tellduslive.h"
+#include <QStringList>
 
 class Device::PrivateData {
 public:
@@ -9,6 +11,7 @@ public:
 	int id, methods, state;
 	QString name, stateValue;
 	Type type;
+	TListModel *groupModel;
 };
 
 Device::Device(QObject *parent) :
@@ -21,6 +24,7 @@ Device::Device(QObject *parent) :
 	d->methods = 0;
 	d->state = 2;
 	d->type = DeviceType;
+	d->groupModel = new TListModel("device", this);
 
 	SchedulerModel *sm = SchedulerModel::instance();
 	connect(sm, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(schedulerJobsChanged(QModelIndex,int,int)));
@@ -34,6 +38,10 @@ Device::~Device() {
 void Device::addDevice(int deviceId) const
 {
 	//TODO
+}
+
+TListModel * Device::devices() const {
+	return d->groupModel;
 }
 
 void Device::bell() {
@@ -185,4 +193,3 @@ void Device::schedulerJobsChanged(const QModelIndex &, int start, int end) {
 		}
 	}
 }
-
