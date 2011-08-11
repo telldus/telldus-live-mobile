@@ -64,10 +64,17 @@ void Device::dim(char level) {
 	sendMethod(16, QString::number(level));
 }
 
-bool Device::hasDevice(int deviceId) const
-{
-	//TODO
-	return true;
+bool Device::hasDevice(int deviceId) const {
+	for(int i = 0; i < d->groupModel->rowCount(); ++i) {
+		Device *device = qobject_cast<Device *>(d->groupModel->get(i).value<QObject *>());
+		if (!device) {
+			continue;
+		}
+		if (device->id() == deviceId) {
+			return true;
+		}
+	}
+	return false;
 }
 
 int Device::id() const {
