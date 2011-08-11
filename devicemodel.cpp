@@ -2,6 +2,12 @@
 #include "device.h"
 #include "tellduslive.h"
 
+class DeviceModel::PrivateData {
+public:
+	static DeviceModel *instance;
+};
+DeviceModel *DeviceModel::PrivateData::instance = 0;
+
 DeviceModel::DeviceModel(QObject *parent) :
 	TListModel("device", parent)
 {
@@ -56,6 +62,13 @@ Device *DeviceModel::findDevice(int id) const {
 		}
 	}
 	return 0;
+}
+
+DeviceModel * DeviceModel::instance() {
+	if (PrivateData::instance == 0) {
+		PrivateData::instance = new DeviceModel;
+	}
+	return PrivateData::instance;
 }
 
 void DeviceModel::onDevicesList(const QVariantMap &result) {
