@@ -25,7 +25,7 @@ Rectangle{
 		width: 300 //TODO
 		anchors.top: groupContentMenuHeader.bottom
 
-		model: deviceModel //groupContentMenu.selectedGroup != undefined ? groupContentMenu.selectedGroup.deviceModel : undefined
+		model: deviceModel //TODO not all devices of course: groupContentMenu.selectedGroup != undefined ? groupContentMenu.selectedGroup.deviceModel : undefined
 
 		delegate: DeviceElement {
 			hideFavoriteToggle: true

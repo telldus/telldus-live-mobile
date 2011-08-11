@@ -217,12 +217,14 @@ Rectangle {
 		anchors.top: deviceMenu.bottom
 		anchors.topMargin: 10 //TODO
 		anchors.horizontalCenter: deviceMenu.horizontalCenter
+		headerText: "Select group"
 
 		model: groupModel
 
 		onOptionSelected: {
 			addToGroupMenu.visible = false
-			console.log("TODO Add device " + selectedDevice.id + " to group " + value)
+			var group = rawDeviceModel.findDevice(value);
+			group.addDevice(selectedDevice.id)
 
 			selectedDevice = undefined
 		}

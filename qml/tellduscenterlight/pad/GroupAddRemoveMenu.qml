@@ -24,8 +24,7 @@ Rectangle{
 			model: rawDeviceModel   //TODO groups too?
 			Rectangle{
 				property int optionWidth: optiontext.width + MainScripts.MARGIN_TEXT + 50 //TODO
-				height: MainScripts.MENUOPTIONHEIGHT
-				//width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
+				height: groupAddRemoveMenu.selectedGroup != undefined && modelData.id == groupAddRemoveMenu.selectedGroup.id ? 0 : MainScripts.MENUOPTIONHEIGHT  //some protection for group in group loop
 				width: optionWidth > parent.width ? optionWidth : parent.width
 				color: "lightgray"
 				Rectangle{
@@ -69,5 +68,4 @@ Rectangle{
 			}
 		}
 	}
-	//visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE && grouplist.wasHeld
 }
