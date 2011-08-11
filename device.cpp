@@ -39,6 +39,19 @@ void Device::addDevice(int deviceId) {
 	//TODO
 }
 
+void Device::addDevices(const QList<int> &devices) {
+	DeviceModel *deviceModel = DeviceModel::instance();
+	QList<QObject *> list;
+	foreach(int deviceId, devices) {
+		Device *device = deviceModel->findDevice(deviceId);
+		if (!device) {
+			continue;
+		}
+		list << device;
+	}
+	d->groupModel->append(list);
+}
+
 TListModel * Device::devices() const {
 	return d->groupModel;
 }
