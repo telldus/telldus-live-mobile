@@ -9,6 +9,7 @@ Rectangle {
 
 	property int selectedPane: defaultSelectedMode()
 	property variant selectedDevice: undefined
+	property variant groupAddRemoveMenu: undefined //TODO better way?
 
 	Component.onCompleted: {  //TODO what of this can be reused?
 		Device.setupCache(rawDeviceModel)
@@ -166,6 +167,9 @@ Rectangle {
 		onClicked: {
 			selectedDevice = undefined
 			addToGroupMenu.visible = false
+			if(groupAddRemoveMenu != undefined){
+				groupAddRemoveMenu.destroy();
+			}
 		}
 		visible: selectedDevice != undefined //deviceMenu.visible
 	}
@@ -194,7 +198,7 @@ Rectangle {
 			width: 300 //TODO
 			anchors.top: groupContentMenuHeader.bottom
 
-			model: groupContentMenu.selectedGroup != undefined ? groupContentMenu.selectedGroup.deviceModel : undefined
+			model: deviceModel //groupContentMenu.selectedGroup != undefined ? groupContentMenu.selectedGroup.deviceModel : undefined
 
 			delegate: DeviceElement {
 				hideFavoriteToggle: true
@@ -204,68 +208,11 @@ Rectangle {
 		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE && !grouplist.wasHeld;
 	}
 
-	Rectangle{
+	/*
+	GroupAddRemoveMenu{
 		id: groupAddRemoveMenu
-		height: menuColumn.height
-		width: menuColumn.width
-		color: "lightgray"
-		property string align: ''
-		property variant selectedGroup
-
-		Column{
-			id: menuColumn
-
-			MenuOption{
-				text: "Add/Remove"
-				showArrow: true
-				align: groupAddRemoveMenu.align
-				isHeader: true
-			}
-
-			Repeater{
-				model: deviceModel
-				Rectangle{
-					property int optionWidth: optiontext.width + MainScripts.MARGIN_TEXT + 50 //TODO
-					height: MainScripts.MENUOPTIONHEIGHT
-					width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
-					color: "lightgray"
-					Rectangle{
-						id: checkbox
-						anchors.left: parent.left
-						anchors.leftMargin: 10 //TODO
-						width: 20 //TODO
-						height: 20 //TODO
-						Text{
-							anchors.centerIn: parent
-							text: "X"
-							visible: groupAddRemoveMenu.selectedGroup != undefined && groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)
-						}
-						MouseArea{
-							anchors.fill: parent
-							onClicked: {
-								if(groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)){
-									groupAddRemoveMenu.selectedGroup.removeDevice(modelData.id);
-								}
-								else{
-									groupAddRemoveMenu.selectedGroup.addDevice(modelData.id);
-								}
-							}
-						}
-					}
-
-					Text{
-						id: optiontext
-						anchors.left: checkbox.right
-						anchors.leftMargin: 10 //TODO
-						anchors.verticalCenter: checkbox.verticalCenter
-						color: "black"
-						text: modelData.name
-					}
-				}
-			}
-		}
-		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE && grouplist.wasHeld
 	}
+	*/
 
 	DefaultMenu{
 		id: deviceMenu

@@ -30,10 +30,15 @@ Item{
 			if(selectedPane == MainScripts.FULL_DEVICE){
 				grouplist.wasHeld = true;
 				selectedDevice = device;
+				var comp = Qt.createComponent("pad/GroupAddRemoveMenu.qml");
+
+				var groupAddRemoveMenu = comp.createObject(main, {}); //TODO set initial values here (and remove undefined-checks)...
+
 				groupAddRemoveMenu.selectedGroup = device;
 				var newX = menuX(deviceElement, groupAddRemoveMenu);
 				groupAddRemoveMenu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
 				groupAddRemoveMenu.y = deviceElement.y + deviceElement.height/4
+				main.groupAddRemoveMenu = groupAddRemoveMenu;
 			}
 		}
 	}
