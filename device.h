@@ -26,6 +26,10 @@ public:
 
 	enum Type { DeviceType, GroupType };
 
+	Q_INVOKABLE void addDevice(int deviceId) const; //add device to group
+
+	Q_INVOKABLE bool hasDevice(int deviceId) const;  //group has device
+
 	int id() const;
 	void setId(int id);
 
@@ -42,6 +46,8 @@ public:
 
 	bool online() const;
 	void setOnline(bool online);
+
+	Q_INVOKABLE void removeDevice(int deviceId) const; //remove device from group
 
 	int state() const;
 	void setState(int state);

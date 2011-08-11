@@ -15,15 +15,24 @@ Item{
 			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
 			if(selectedPane == MainScripts.FULL_DEVICE){
 				selectedDevice = device;
-				var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
-				deviceMenu.align = 'right'
-				if(newX >= main.width){
-					newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x - deviceMenu.width;  //place to the left instead, so that it's visible
-					deviceMenu.align = 'left'
+				grouplist.wasHeld = false;
+				var menu = deviceMenu;
+				if(device.type == MainScripts.GROUPTYPE){
+					menu = groupContentMenu;
 				}
-
-				deviceMenu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
-				deviceMenu.y = deviceElement.y + deviceElement.height/4
+				var newX = menuX(deviceElement, menu);
+				menu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
+				menu.y = deviceElement.y + deviceElement.height/4
+			}
+		}
+		onPressAndHold: {
+			if(selectedPane == MainScripts.FULL_DEVICE){
+				grouplist.wasHeld = true;
+				selectedDevice = device;
+				groupAddRemoveMenu.selectedGroup = device;
+				var newX = menuX(deviceElement, groupAddRemoveMenu);
+				groupAddRemoveMenu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
+				groupAddRemoveMenu.y = deviceElement.y + deviceElement.height/4
 			}
 		}
 	}
@@ -126,6 +135,17 @@ Item{
 				}
 			}
 		}
+	}
+
+	function menuX(deviceElement, menu){
+		var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
+		menu.align = 'right'
+		if(newX >= main.width){
+			newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x - menu.width;  //place to the left instead, so that it's visible
+			menu.align = 'left'
+		}
+		return newX;
+
 	}
 
 	function setElementHeight(){

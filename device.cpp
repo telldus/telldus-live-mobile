@@ -31,12 +31,23 @@ Device::~Device() {
 	delete d;
 }
 
+void Device::addDevice(int deviceId) const
+{
+	//TODO
+}
+
 void Device::bell() {
 	sendMethod(4);
 }
 
 void Device::dim(char level) {
 	sendMethod(16, QString::number(level));
+}
+
+bool Device::hasDevice(int deviceId) const
+{
+	//TODO
+	return true;
 }
 
 int Device::id() const {
@@ -100,6 +111,11 @@ void Device::onActionResponse(const QVariantMap &result, const QVariantMap &data
 
 bool Device::online() const {
 	return d->online;
+}
+
+void Device::removeDevice(int deviceId) const
+{
+	//TODO
 }
 
 void Device::setOnline(bool online) {

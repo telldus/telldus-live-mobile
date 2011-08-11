@@ -101,6 +101,7 @@ Rectangle {
 				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).deleteDevice();
 			}
 		}
+
 		visible: false
 
 		onVisibleChanged: {
