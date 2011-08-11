@@ -35,7 +35,8 @@ SOURCES += main.cpp \
 	sensormodel.cpp \
 	favoritemodel.cpp \
 	filtereddevicemodel.cpp \
-	schedulermodel.cpp
+	schedulermodel.cpp \
+	abstractfiltereddevicemodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -86,7 +87,8 @@ HEADERS += \
 	sensormodel.h \
 	favoritemodel.h \
 	filtereddevicemodel.h \
-	schedulermodel.h
+	schedulermodel.h \
+	abstractfiltereddevicemodel.h
 
 RESOURCES += \
 	resources.qrc

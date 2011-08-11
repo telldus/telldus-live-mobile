@@ -1,29 +1,19 @@
 #ifndef FILTEREDDEVICEMODEL_H
 #define FILTEREDDEVICEMODEL_H
 
-#include <QSortFilterProxyModel>
+#include "abstractfiltereddevicemodel.h"
 
 #include "device.h"
 
-class DeviceModel;
-
-class FilteredDeviceModel : public QSortFilterProxyModel
+class FilteredDeviceModel : public AbstractFilteredDeviceModel
 {
 	Q_OBJECT
-	Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
 public:
 	explicit FilteredDeviceModel(DeviceModel *model, Device::Type type, QObject *parent = 0);
 
-signals:
-	void countChanged();
-
-protected slots:
-	void rowsAdded( const QModelIndex & parent, int start, int end );
-	void deviceChanged();
-
 protected:
-	bool filterAcceptsRow ( int sourceRow, const QModelIndex & ) const;
-	bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+	bool filterAcceptsDevice ( Device * ) const;
+	void deviceAdded( Device * );
 
 private:
 	Device::Type type;
