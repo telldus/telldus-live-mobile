@@ -32,5 +32,6 @@
         <file>qml/tellduscenterlight/pad/TabButton.qml</file>
         <file>qml/tellduscenterlight/Device.js</file>
         <file>qml/tellduscenterlight/pad/GroupAddRemoveMenu.qml</file>
+        <file>qml/tellduscenterlight/pad/GroupContentMenu.qml</file>
     </qresource>
 </RCC>

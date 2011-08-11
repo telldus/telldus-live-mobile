@@ -21,11 +21,12 @@ Rectangle{
 		}
 
 		Repeater{
-			model: deviceModel
+			model: rawDeviceModel   //TODO groups too?
 			Rectangle{
 				property int optionWidth: optiontext.width + MainScripts.MARGIN_TEXT + 50 //TODO
 				height: MainScripts.MENUOPTIONHEIGHT
-				width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
+				//width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
+				width: optionWidth > parent.width ? optionWidth : parent.width
 				color: "lightgray"
 				Rectangle{
 					id: checkbox
@@ -34,6 +35,7 @@ Rectangle{
 					width: 20 //TODO
 					height: 20 //TODO
 					Text{
+						id: checked
 						anchors.centerIn: parent
 						text: "X"
 						visible: groupAddRemoveMenu.selectedGroup != undefined && groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)
@@ -41,11 +43,16 @@ Rectangle{
 					MouseArea{
 						anchors.fill: parent
 						onClicked: {
-							if(groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)){
+							if(checked.visible){
+							//if(groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)){  //TODO why didn't this work? Change back when fixed
 								groupAddRemoveMenu.selectedGroup.removeDevice(modelData.id);
+								checked.visible = false;
+								console.log("visible false");
 							}
 							else{
 								groupAddRemoveMenu.selectedGroup.addDevice(modelData.id);
+								checked.visible = true;
+								console.log("visible true");
 							}
 						}
 					}

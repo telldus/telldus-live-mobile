@@ -15,11 +15,14 @@ Item{
 			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
 			if(selectedPane == MainScripts.FULL_DEVICE){
 				selectedDevice = device;
-				grouplist.wasHeld = false;
+				//grouplist.wasHeld = false;
 				var menu = deviceMenu;
 				if(device.type == MainScripts.GROUPTYPE){
+					var comp = Qt.createComponent("pad/GroupContentMenu.qml");
+					var groupContentMenu = comp.createObject(main);
 					menu = groupContentMenu;
 					groupContentMenu.selectedGroup = device;
+					main.groupContentMenu = groupContentMenu;
 				}
 				var newX = menuX(deviceElement, menu);
 				menu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
@@ -27,15 +30,19 @@ Item{
 			}
 		}
 		onPressAndHold: {
-			if(selectedPane == MainScripts.FULL_DEVICE){
-				grouplist.wasHeld = true;
+			if(selectedPane == MainScripts.FULL_DEVICE && device.type == MainScripts.GROUPTYPE){
+				//grouplist.wasHeld = true;
+				if(main.groupAddRemoveMenu != undefined){
+					main.groupAddRemoveMenu.destroy(); //remove already displayed menu
+				}
+
 				selectedDevice = device;
 				var comp = Qt.createComponent("pad/GroupAddRemoveMenu.qml");
 
-				var groupAddRemoveMenu = comp.createObject(main, {}); //TODO set initial values here (and remove undefined-checks)...
+				var groupAddRemoveMenu = comp.createObject(main, {"selectedGroup": device}); //TODO set initial values here (and remove undefined-checks)...
+				var newX = menuX(deviceElement, groupAddRemoveMenu);
 
 				groupAddRemoveMenu.selectedGroup = device;
-				var newX = menuX(deviceElement, groupAddRemoveMenu);
 				groupAddRemoveMenu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
 				groupAddRemoveMenu.y = deviceElement.y + deviceElement.height/4
 				main.groupAddRemoveMenu = groupAddRemoveMenu;

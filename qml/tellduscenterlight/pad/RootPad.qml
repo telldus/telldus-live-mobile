@@ -10,6 +10,7 @@ Rectangle {
 	property int selectedPane: defaultSelectedMode()
 	property variant selectedDevice: undefined
 	property variant groupAddRemoveMenu: undefined //TODO better way?
+	property variant groupContentMenu: undefined
 
 	Component.onCompleted: {  //TODO what of this can be reused?
 		Device.setupCache(rawDeviceModel)
@@ -66,7 +67,7 @@ Rectangle {
 			id: grouplist
 			height: parent.height
 			width: 300 //TODO
-			property bool wasHeld: false
+			//property bool wasHeld: false
 			anchors.left: devicelist.right
 
 			model: groupModel
@@ -165,54 +166,10 @@ Rectangle {
 	MouseArea{
 		anchors.fill: parent
 		onClicked: {
-			selectedDevice = undefined
-			addToGroupMenu.visible = false
-			if(groupAddRemoveMenu != undefined){
-				groupAddRemoveMenu.destroy();
-			}
+			hideMenus();
 		}
 		visible: selectedDevice != undefined //deviceMenu.visible
 	}
-
-	Rectangle{
-		id: groupContentMenu
-
-		height: 200 //TODO
-		width: 300 //TODO
-		color: "lightgray"
-		property string align: ''
-		clip: true
-		property variant selectedGroup
-
-		MenuOption{
-			id: groupContentMenuHeader
-			text: "Devices"
-			showArrow: true
-			align: groupContentMenu.align
-			isHeader: true
-			z: 5
-		}
-		ListView {
-			id: groupdevicelist
-			height: parent.height - groupContentMenuHeader.height
-			width: 300 //TODO
-			anchors.top: groupContentMenuHeader.bottom
-
-			model: deviceModel //groupContentMenu.selectedGroup != undefined ? groupContentMenu.selectedGroup.deviceModel : undefined
-
-			delegate: DeviceElement {
-				hideFavoriteToggle: true
-			}
-		}
-		//TODO change alignment for this menu
-		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE && !grouplist.wasHeld;
-	}
-
-	/*
-	GroupAddRemoveMenu{
-		id: groupAddRemoveMenu
-	}
-	*/
 
 	DefaultMenu{
 		id: deviceMenu
@@ -308,6 +265,17 @@ Rectangle {
 
 		function update(){
 			webview.url = "http://example.com/deviceid=" + selectedDevice.id
+		}
+	}
+
+	function hideMenus(){
+		selectedDevice = undefined
+		addToGroupMenu.visible = false
+		if(groupAddRemoveMenu != undefined){
+			groupAddRemoveMenu.destroy();
+		}
+		if(groupContentMenu != undefined){
+			groupContentMenu.destroy();
 		}
 	}
 }
