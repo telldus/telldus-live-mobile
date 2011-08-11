@@ -28,7 +28,7 @@ public:
 
 	enum Type { DeviceType, GroupType };
 
-	Q_INVOKABLE void addDevice(int deviceId) const; //add device to group
+	Q_INVOKABLE void addDevice(int deviceId); //add device to group
 
 	Q_INVOKABLE TListModel *devices() const;
 
@@ -51,7 +51,7 @@ public:
 	bool online() const;
 	void setOnline(bool online);
 
-	Q_INVOKABLE void removeDevice(int deviceId) const; //remove device from group
+	Q_INVOKABLE void removeDevice(int deviceId); //remove device from group
 
 	int state() const;
 	void setState(int state);

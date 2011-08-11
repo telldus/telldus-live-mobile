@@ -35,8 +35,7 @@ Device::~Device() {
 	delete d;
 }
 
-void Device::addDevice(int deviceId) const
-{
+void Device::addDevice(int deviceId) {
 	//TODO
 }
 
@@ -121,8 +120,7 @@ bool Device::online() const {
 	return d->online;
 }
 
-void Device::removeDevice(int deviceId) const
-{
+void Device::removeDevice(int deviceId) {
 	//TODO
 }
 
