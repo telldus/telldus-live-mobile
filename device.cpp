@@ -36,7 +36,7 @@ Device::~Device() {
 }
 
 void Device::addDevice(int deviceId) {
-	//TODO
+	addDevices(QList<int>() << deviceId);
 }
 
 void Device::addDevices(const QList<int> &devices) {
