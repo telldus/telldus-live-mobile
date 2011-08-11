@@ -19,6 +19,7 @@ Item{
 				var menu = deviceMenu;
 				if(device.type == MainScripts.GROUPTYPE){
 					menu = groupContentMenu;
+					groupContentMenu.selectedGroup = device;
 				}
 				var newX = menuX(deviceElement, menu);
 				menu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
