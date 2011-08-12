@@ -13,7 +13,7 @@ public:
 
 protected:
 	bool filterAcceptsDevice ( Device * ) const;
-	void deviceAdded( Device * );
+	virtual void deviceAdded( Device * ) const;
 
 private:
 	Device::Type type;

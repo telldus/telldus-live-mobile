@@ -13,6 +13,6 @@ bool FilteredDeviceModel::filterAcceptsDevice(Device *device) const {
 	return device->type() == type;
 }
 
-void FilteredDeviceModel::deviceAdded(Device *device) {
+void FilteredDeviceModel::deviceAdded(Device *device) const {
 	connect(device, SIGNAL(typeChanged()), this, SLOT(deviceChanged()));
 }
