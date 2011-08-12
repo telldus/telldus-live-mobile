@@ -114,186 +114,130 @@ Rectangle {
 		}
 	}
 
-	Rectangle{
+	Popup{
 		id: infoBubble
-		height: MainScripts.INFOBUBBLEHEIGHT
-		width: MainScripts.INFOBUBBLEWIDTH
+		assignTo: visualDevice
 
-		//transform: Rotation { origin.x: infoBubble.width/2; origin.y: infoBubble.height; angle: rotationAngle > 0 ? rotationAngle : 0 }
-		//anchors.bottom: visualDevice.top
-		//anchors.bottomMargin: 110
+		content: Component {
+			Item {
+				height: MainScripts.INFOBUBBLEHEIGHT
+				width: MainScripts.INFOBUBBLEWIDTH
+				Item {
+					id: infoSensor
+					//height: 200 //TODO
+					//width: parent.width
+					//color: "white"
+					anchors.top: parent.top
+					visible: type == MainScripts.SENSOR
+					z: 3
 
-		states: [
-			State {
-				name: ""
-				AnchorChanges {
-					target: infoBubble
-					anchors.horizontalCenter: visualDevice.horizontalCenter
-					anchors.bottom: visualDevice.top
-				}
-			},
-			State {
-				name: "upperleft"; when: visualDevice.x - MainScripts.INFOBUBBLEWIDTH/2 < 0 && (visualDevice.y - MainScripts.INFOBUBBLEHEIGHT) < 0
-				AnchorChanges {
-					target: infoBubble
-					anchors.horizontalCenter: undefined
-					anchors.left: visualDevice.right
-					anchors.bottom: undefined //TODO why is this needed
-					anchors.top: visualDevice.bottom
-				}
-			},
-			State {
-				name: "upperright"; when: (visualDevice.x + MainScripts.VISUALDEVICEWIDTH/2 + MainScripts.INFOBUBBLEWIDTH/2 + MainScripts.TOOLBARWIDTH) > favoriteLayout.width && (visualDevice.y - MainScripts.INFOBUBBLEHEIGHT) < 0
-				AnchorChanges {
-					target: infoBubble
-					anchors.horizontalCenter: undefined
-					anchors.right: visualDevice.left
-					anchors.bottom: undefined //TODO why is this needed
-					anchors.top: visualDevice.bottom
-				}
-			}
-			,
-			State {
-				name: "uppercenter"; when: (visualDevice.y - infoBubble.height) < 0
-				AnchorChanges {
-					target: infoBubble
-					anchors.horizontalCenter: visualDevice.horizontalCenter
-					anchors.bottom: undefined //TODO why is this needed
-					anchors.top: visualDevice.bottom
-				}
-			},
-			State {
-				name: "lowerleft"; when: visualDevice.x - MainScripts.INFOBUBBLEWIDTH/2 < 0
-				AnchorChanges {
-					target: infoBubble
-					anchors.horizontalCenter: undefined
-					anchors.left: visualDevice.right
-					anchors.top: undefined //TODO why is this needed
-					anchors.bottom: visualDevice.top
-				}
-			},
-			State {
-				name: "lowerright"; when: (visualDevice.x + MainScripts.VISUALDEVICEWIDTH/2 + MainScripts.INFOBUBBLEWIDTH/2 + MainScripts.TOOLBARWIDTH) > favoriteLayout.width
-				AnchorChanges {
-					target: infoBubble
-					anchors.horizontalCenter: undefined
-					anchors.right: visualDevice.left
-				}
-			}
-		]
-
-		Rectangle{
-			id: infoSensor
-			color: "white"
-			height: 200 //TODO
-			width: parent.width
-			anchors.top: parent.top
-			visible: type == MainScripts.SENSOR
-			z: 3
-
-			Column{
-				anchors.centerIn: parent
-				Text{
-					text: deviceName
-				}
-				Text{
-					text: "Temperature: " + temperature + " C"
-					visible: hasTemperature
-				}
-				Text{
-					text: "Humidity: " + humidity + " %"
-					visible: hasHumidity
-				}
-				Text{
-					text: "Last updated: " + lastUpdated
-					visible: lastUpdated != ''
-				}
-			}
-		}
-
-		Rectangle{
-			id: infoDevice
-			color: "white"
-			height: 200 //TODO
-			width: parent.width
-			anchors.top: parent.top
-			visible: type == MainScripts.DEVICE
-			z:2
-
-			Column{
-
-				anchors.centerIn: parent
-				Text{
-					text: deviceName
-				}
-
-				Text{
-					text: "Next run time: " + (device == undefined ? 'undef' : Qt.formatDateTime(device.nextRunTime))
-				}
-
-				Row{  //TODO possibly reuse?
-					id: buttonrow
-
-					ActionButton{
-						text: "OFF"
-						visible: MainScripts.methodContains(deviceMethods, "off")
-						onClicked: {
-							console.log("CLICKED off");
-							device.turnOff();
+					Column{
+						//anchors.centerIn: parent
+						Text{
+							color: "white"
+							text: deviceName
 						}
-					}
-
-					ActionButton{
-						text: "ON"
-						visible: MainScripts.methodContains(deviceMethods, "on")
-						onClicked: {
-							console.log("CLICKED on");
-							device.turnOn();
+						Text{
+							color: "white"
+							text: "Temperature: " + temperature + " C"
+							visible: hasTemperature
 						}
-					}
-
-					ActionButton{
-						text: "BELL"
-						visible: MainScripts.methodContains(deviceMethods, "bell")
-						onClicked: {
-							console.log("CLICKED BELL");
-							device.bell();
+						Text{
+							color: "white"
+							text: "Humidity: " + humidity + " %"
+							visible: hasHumidity
+						}
+						Text{
+							color: "white"
+							text: "Last updated: " + lastUpdated
+							visible: lastUpdated != ''
 						}
 					}
 				}
 
-				Slider{
-					id: slider
+				Rectangle{
+					id: infoDevice
+					color: "white"
+					height: 200 //TODO
 					width: parent.width
-					//anchors.top: buttonrow.bottom
-					height: MainScripts.SLIDERHEIGHT
-					visible: MainScripts.methodContains(deviceMethods, "dim")
-					onSlided: {
-						console.log("DIMMED to " + dimvalue);
-						device.dim(dimvalue);
-					}
+					anchors.top: parent.top
+					visible: type == MainScripts.DEVICE
+					z:2
 
-					Item {
-						//This is a pseudo-item only for listening for changes in the model data
-						property int state: deviceState
-						onStateChanged: {
-							if (state == MainScripts.METHOD_TURNON) {
-								slider.value = slider.maximum;
-							} else if (state == MainScripts.METHOD_TURNOFF) {
-								slider.value = slider.minimum;
+					Column{
+
+						anchors.centerIn: parent
+						Text{
+							text: deviceName
+						}
+
+						Text{
+							text: "Next run time: " + (device == undefined ? 'undef' : Qt.formatDateTime(device.nextRunTime))
+						}
+
+						Row{  //TODO possibly reuse?
+							id: buttonrow
+
+							ActionButton{
+								text: "OFF"
+								visible: MainScripts.methodContains(deviceMethods, "off")
+								onClicked: {
+									console.log("CLICKED off");
+									device.turnOff();
+								}
+							}
+
+							ActionButton{
+								text: "ON"
+								visible: MainScripts.methodContains(deviceMethods, "on")
+								onClicked: {
+									console.log("CLICKED on");
+									device.turnOn();
+								}
+							}
+
+							ActionButton{
+								text: "BELL"
+								visible: MainScripts.methodContains(deviceMethods, "bell")
+								onClicked: {
+									console.log("CLICKED BELL");
+									device.bell();
+								}
 							}
 						}
-						property string stateValue: deviceStateValue
-						onStateValueChanged: {
-							if (state == MainScripts.METHOD_DIM) {
-								slider.value = parseInt(stateValue, 10);
+
+						Slider{
+							id: slider
+							width: parent.width
+							//anchors.top: buttonrow.bottom
+							height: MainScripts.SLIDERHEIGHT
+							visible: MainScripts.methodContains(deviceMethods, "dim")
+							onSlided: {
+								console.log("DIMMED to " + dimvalue);
+								device.dim(dimvalue);
+							}
+
+							Item {
+								//This is a pseudo-item only for listening for changes in the model data
+								property int state: deviceState
+								onStateChanged: {
+									if (state == MainScripts.METHOD_TURNON) {
+										slider.value = slider.maximum;
+									} else if (state == MainScripts.METHOD_TURNOFF) {
+										slider.value = slider.minimum;
+									}
+								}
+								property string stateValue: deviceStateValue
+								onStateValueChanged: {
+									if (state == MainScripts.METHOD_DIM) {
+										slider.value = parseInt(stateValue, 10);
+									}
+								}
 							}
 						}
 					}
 				}
-			}
-		}
-		/*
+				/*
 		Rectangle{
 			id: bubblebottom
 			height: 141  //TODO check out transformOrigin if this should be used at all
@@ -306,8 +250,9 @@ Rectangle {
 		}
 		*/
 
-		visible:false
 
+			}
+		}
 	}
 
 	function statusColor(){  //TODO to icon
