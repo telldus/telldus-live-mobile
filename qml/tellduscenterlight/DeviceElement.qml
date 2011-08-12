@@ -18,9 +18,9 @@ Item{
 				var menu = deviceMenu;
 				if(device.type == MainScripts.GROUPTYPE){
 					var comp = Qt.createComponent("pad/GroupContentMenu.qml");
-					var groupContentMenu = comp.createObject(main);
+					var groupContentMenu = comp.createObject(main, {"selectedGroup": device});
 					menu = groupContentMenu;
-					groupContentMenu.selectedGroup = device;
+					//groupContentMenu.selectedGroup = device;
 					main.groupContentMenu = groupContentMenu;
 				}
 				menuX(deviceElement, menu);

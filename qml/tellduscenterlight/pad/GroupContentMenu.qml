@@ -26,9 +26,27 @@ Rectangle{
 	}
 
 	MenuOption{
+		id: groupContentMenuHeaderSensor
+		text: "Sensors"
+		showArrow: true
+		align: groupContentMenu.align
+		isHeader: true
+		z: 5
+		visible: true //TODO selectedGroup.sensors != undefined && selectedGroup.sensors.count > 0
+	}
+	ListView {
+		id: groupsensorlist
+		height: parent.height - groupContentMenuHeader.height
+		width: 300 //TODO
+		anchors.top: groupContentMenuHeader.bottom
+		model: selectedGroup.groupContentMenuHeaderSensor
+
+		delegate: SensorElement {}
+	}
+	MenuOption{
 		id: groupContentMenuHeader
 		text: "Devices"
-		showArrow: true
+		showArrow: !groupContentMenuHeaderSensor.visible
 		align: groupContentMenu.align
 		isHeader: true
 		z: 5
@@ -39,7 +57,7 @@ Rectangle{
 		width: 300 //TODO
 		anchors.top: groupContentMenuHeader.bottom
 
-		model: deviceModel //TODO not all devices of course: groupContentMenu.selectedGroup != undefined ? groupContentMenu.selectedGroup.deviceModel : undefined
+		model: selectedGroup.devices
 
 		delegate: DeviceElement {
 			hideFavoriteToggle: true

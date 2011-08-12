@@ -45,8 +45,8 @@ Rectangle{
 					MouseArea{
 						anchors.fill: parent
 						onClicked: {
-							if(checked.visible){
-							//if(groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)){  //TODO why didn't this work? Change back when fixed
+							//if(checked.visible){
+							if(groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)){  //TODO why didn't this work? Change back when fixed
 								groupAddRemoveMenu.selectedGroup.removeDevice(modelData.id);
 								checked.visible = false;
 								console.log("visible false");
