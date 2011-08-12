@@ -49,12 +49,10 @@ Rectangle{
 							if(groupAddRemoveMenu.selectedGroup.hasDevice(modelData.id)){  //TODO why didn't this work? Change back when fixed
 								groupAddRemoveMenu.selectedGroup.removeDevice(modelData.id);
 								checked.visible = false;
-								console.log("visible false");
 							}
 							else{
 								groupAddRemoveMenu.selectedGroup.addDevice(modelData.id);
 								checked.visible = true;
-								console.log("visible true");
 							}
 						}
 					}

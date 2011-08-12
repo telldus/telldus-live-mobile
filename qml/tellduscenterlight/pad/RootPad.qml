@@ -221,7 +221,7 @@ Rectangle {
 
 		onOptionSelected: {
 			addToGroupMenu.visible = false
-			var group = rawDeviceModel.findDevice(value);
+			var group = deviceModelController.findDevice(value);
 			group.addDevice(selectedDevice.id)
 
 			selectedDevice = undefined
