@@ -3,6 +3,7 @@
 #include "tellduslive.h"
 #include "devicemodel.h"
 #include "filtereddevicemodel.h"
+#include "groupdevicemodel.h"
 #include "sensormodel.h"
 #include "favoritemodel.h"
 #include "device.h"
@@ -30,6 +31,7 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
 	qmlRegisterType<Sensor>("Telldus", 1, 0, "Sensor");
+	qmlRegisterType<GroupDeviceModel>("Telldus", 1, 0, "GroupDeviceModel");
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 
 	double scaleFactor = 1.0;

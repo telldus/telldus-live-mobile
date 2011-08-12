@@ -48,7 +48,7 @@ void Device::addDevices(const QString &devices) {
 	d->groupModel->addDevices(list);
 }
 
-QAbstractItemModel * Device::devices() const {
+GroupDeviceModel * Device::devices() const {
 	return d->groupModel;
 }
 

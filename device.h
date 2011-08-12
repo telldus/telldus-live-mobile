@@ -7,7 +7,7 @@
 #include <QDateTime>
 #include <QModelIndex>
 
-class TListModel;
+class GroupDeviceModel;
 
 class Device : public QObject
 {
@@ -31,7 +31,7 @@ public:
 	Q_INVOKABLE void addDevice(int deviceId); //add device to group
 	void addDevices(const QString &devices);
 
-	Q_INVOKABLE QAbstractItemModel *devices() const;
+	Q_INVOKABLE GroupDeviceModel *devices() const;
 
 	Q_INVOKABLE bool hasDevice(int deviceId) const;  //group has device
 
