@@ -77,7 +77,7 @@ signals:
 
 public slots:
 	void bell();
-	void dim(char level);
+	void dim(unsigned char level);
 	void turnOff();
 	void turnOn();
 

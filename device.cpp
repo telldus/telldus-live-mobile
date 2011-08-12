@@ -56,7 +56,7 @@ void Device::bell() {
 	sendMethod(4);
 }
 
-void Device::dim(char level) {
+void Device::dim(unsigned char level) {
 	sendMethod(16, QString::number(level));
 }
 
