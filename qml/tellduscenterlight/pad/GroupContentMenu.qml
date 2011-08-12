@@ -25,6 +25,7 @@ Rectangle{
 		}
 	}
 
+	/*
 	MenuOption{
 		id: groupContentMenuHeaderSensor
 		text: "Sensors"
@@ -32,7 +33,7 @@ Rectangle{
 		align: groupContentMenu.align
 		isHeader: true
 		z: 5
-		visible: true //TODO selectedGroup.sensors != undefined && selectedGroup.sensors.count > 0
+		visible: selectedGroup.sensors != undefined && selectedGroup.sensors.count > 0
 	}
 	ListView {
 		id: groupsensorlist
@@ -43,10 +44,11 @@ Rectangle{
 
 		delegate: SensorElement {}
 	}
+	*/
 	MenuOption{
 		id: groupContentMenuHeader
 		text: "Devices"
-		showArrow: !groupContentMenuHeaderSensor.visible
+		showArrow: true //!groupContentMenuHeaderSensor.visible
 		align: groupContentMenu.align
 		isHeader: true
 		z: 5
@@ -57,7 +59,7 @@ Rectangle{
 		width: 300 //TODO
 		anchors.top: groupContentMenuHeader.bottom
 
-		model: selectedGroup.devices
+		model: selectedGroup != undefined ? selectedGroup.devices() : undefined //TODO why is this needed?
 
 		delegate: DeviceElement {
 			hideFavoriteToggle: true

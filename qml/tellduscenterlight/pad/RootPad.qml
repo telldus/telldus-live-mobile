@@ -92,7 +92,6 @@ Rectangle {
 		anchors.right: floatingFavorites.left
 		height: parent.height
 		width: 20 //TODO
-		z: 100
 		visible: parent.width < 1000 && selectedPane != MainScripts.FULL_FAVORITE_LAYOUT //TODO
 
 		MouseArea{
@@ -110,7 +109,6 @@ Rectangle {
 		anchors.right: parent.right
 		height: parent.height
 		width: (parent.width > 1000 || floatingFavoritesToggled) ? 300 : 0 //TODO
-		z: 100
 		visible: selectedPane != MainScripts.FULL_FAVORITE_LAYOUT && (parent.width > 1000 || floatingFavoritesToggled) //TODO
 
 		Behavior on width { PropertyAnimation{} }
