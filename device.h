@@ -26,7 +26,7 @@ public:
 	explicit Device(QObject *parent = 0);
 	~Device();
 
-	enum Type { DeviceType, GroupType };
+	enum Type { DeviceType, GroupType, AnyType };
 
 	Q_INVOKABLE void addDevice(int deviceId); //add device to group
 	void addDevices(const QString &devices);

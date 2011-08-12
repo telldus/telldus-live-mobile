@@ -13,7 +13,7 @@ Rectangle {
 	property variant groupContentMenu: undefined
 
 	Component.onCompleted: {  //TODO what of this can be reused?
-		Device.setupCache(rawDeviceModel)
+		Device.setupCache(deviceModelController)
 		//Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 	}

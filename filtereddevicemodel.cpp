@@ -10,6 +10,9 @@ FilteredDeviceModel::FilteredDeviceModel(DeviceModel *model, Device::Type device
 }
 
 bool FilteredDeviceModel::filterAcceptsDevice(Device *device) const {
+	if (type == Device::AnyType) {
+		return true;
+	}
 	return device->type() == type;
 }
 

@@ -11,7 +11,7 @@
 class TelldusCenter::PrivateData {
 public:
 	QDeclarativeView *view;
-	FilteredDeviceModel *filteredDeviceModel, *groupModel;
+	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
 	SensorModel *sensorModel;
 	FavoriteModel *favoriteModel;
 };
@@ -21,7 +21,8 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 {
 	d = new PrivateData;
 	d->view = view;
-	d->filteredDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
+	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
+	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
 	d->favoriteModel = new FavoriteModel(DeviceModel::instance(), this);
 	d->sensorModel = new SensorModel(this);
@@ -37,8 +38,9 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 #endif
 
 	d->view->rootContext()->setContextProperty("telldusLive", TelldusLive::instance());
-	d->view->rootContext()->setContextProperty("rawDeviceModel", DeviceModel::instance());
-	d->view->rootContext()->setContextProperty("deviceModel", d->filteredDeviceModel);
+	d->view->rootContext()->setContextProperty("deviceModelController", DeviceModel::instance());
+	d->view->rootContext()->setContextProperty("rawDeviceModel", d->rawDeviceModel);
+	d->view->rootContext()->setContextProperty("deviceModel", d->deviceModel);
 	d->view->rootContext()->setContextProperty("groupModel", d->groupModel);
 	d->view->rootContext()->setContextProperty("favoriteModel", d->favoriteModel);
 	d->view->rootContext()->setContextProperty("sensorModel", d->sensorModel);

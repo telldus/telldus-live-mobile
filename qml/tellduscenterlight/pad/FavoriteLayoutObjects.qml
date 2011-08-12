@@ -11,7 +11,7 @@ ListModel {
 		VisualDeviceList.tabAreaList.init(tabArea, favoriteLayout, tabSelection.tabButtonRow, tabSelectionButton);
 		VisualDeviceList.visualDevicelist.visualDeviceAdded.connect(visualDeviceAdded);
 		VisualDeviceList.visualDevicelist.visualDeviceRemoved.connect(visualDeviceRemoved);
-		VisualDeviceList.visualDevicelist.init(rawDeviceModel, sensorModel);  //TODO can this be done in other way?
+		VisualDeviceList.visualDevicelist.init(deviceModelController, sensorModel);  //TODO can this be done in other way?
 	}
 
 	function visualDeviceAdded(device){
