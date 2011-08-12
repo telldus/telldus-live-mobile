@@ -33,5 +33,6 @@
         <file>qml/tellduscenterlight/Device.js</file>
         <file>qml/tellduscenterlight/pad/GroupAddRemoveMenu.qml</file>
         <file>qml/tellduscenterlight/pad/GroupContentMenu.qml</file>
+        <file>qml/tellduscenterlight/tooltip.png</file>
     </qresource>
 </RCC>
