@@ -3,13 +3,16 @@ import Qt 4.7
 Rectangle{
 
 	id: deviceMenu
-	property string align: ''
+	property string align: (deviceMenu.x + deviceMenu.width) >= main.width ? 'left' : 'right'
 	property variant model: undefined
 	signal optionSelected(string value)
 	property bool menuShowArrow: false
 	property string headerText: ''
+	property int deviceElementLeftX: 0
+	property int deviceElementRightX: 0
 	width: menuColumn.width
 	height: menuColumn.height
+	x: deviceElementRightX + deviceMenu.width >= main.width ? deviceElementLeftX - deviceMenu.width : deviceElementRightX
 
 	Rectangle{
 		height: menuColumn.height

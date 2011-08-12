@@ -15,7 +15,6 @@ Item{
 			//TODO will this work (or is it too small, hard to avoid dim for example?), or press (for a while, "wasHeld") and then release to trigger this?
 			if(selectedPane == MainScripts.FULL_DEVICE){
 				selectedDevice = device;
-				//grouplist.wasHeld = false;
 				var menu = deviceMenu;
 				if(device.type == MainScripts.GROUPTYPE){
 					var comp = Qt.createComponent("pad/GroupContentMenu.qml");
@@ -24,14 +23,12 @@ Item{
 					groupContentMenu.selectedGroup = device;
 					main.groupContentMenu = groupContentMenu;
 				}
-				var newX = menuX(deviceElement, menu);
-				menu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
+				menuX(deviceElement, menu);
 				menu.y = deviceElement.y + deviceElement.height/4
 			}
 		}
 		onPressAndHold: {
 			if(selectedPane == MainScripts.FULL_DEVICE && device.type == MainScripts.GROUPTYPE){
-				//grouplist.wasHeld = true;
 				if(main.groupAddRemoveMenu != undefined){
 					main.groupAddRemoveMenu.destroy(); //remove already displayed menu
 				}
@@ -40,10 +37,9 @@ Item{
 				var comp = Qt.createComponent("pad/GroupAddRemoveMenu.qml");
 
 				var groupAddRemoveMenu = comp.createObject(main, {"selectedGroup": device}); //TODO set initial values here (and remove undefined-checks)...
-				var newX = menuX(deviceElement, groupAddRemoveMenu);
+				menuX(deviceElement, groupAddRemoveMenu);
 
 				groupAddRemoveMenu.selectedGroup = device;
-				groupAddRemoveMenu.x = newX //TODO would rather use binding somehow, but isn't "parent or sibling"
 				groupAddRemoveMenu.y = deviceElement.y + deviceElement.height/4
 				main.groupAddRemoveMenu = groupAddRemoveMenu;
 			}
@@ -123,8 +119,6 @@ Item{
 			anchors.top: buttonrow.bottom
 			height: MainScripts.SLIDERHEIGHT
 			visible: MainScripts.methodContains(device.methods, "dim")
-			//statevalue: deviceStateValue
-			//state: deviceState
 			onSlided: {
 				console.log("DIMMED to " + dimvalue);
 				device.dim(dimvalue);
@@ -151,14 +145,12 @@ Item{
 	}
 
 	function menuX(deviceElement, menu){
-		var newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x + deviceElement.width;
+		menu.deviceElementLeftX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x;
+		menu.deviceElementRightX = menu.deviceElementLeftX + deviceElement.width;
 		menu.align = 'right'
-		if(newX >= main.width){
-			newX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x - menu.width;  //place to the left instead, so that it's visible
+		if(menu.deviceElementRightX >= main.width){
 			menu.align = 'left'
 		}
-		return newX;
-
 	}
 
 	function setElementHeight(){

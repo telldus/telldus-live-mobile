@@ -10,6 +10,20 @@ Rectangle{
 	property string align: ''
 	clip: true
 	property variant selectedGroup
+	property int deviceElementLeftX: 0
+	property int deviceElementRightX: 0
+	x: deviceElementRightX + groupContentMenu.width >= main.width ? deviceElementLeftX - groupContentMenu.width : deviceElementRightX
+
+	onXChanged: {
+		deviceMenu.deviceElementLeftX = groupContentMenu.x
+		deviceMenu.deviceElementRightX = groupContentMenu.x + groupContentMenu.width
+		if(groupContentMenu.deviceElementRightX + groupContentMenu.width >= main.width){
+			groupContentMenu.align = 'left'
+		}
+		else{
+			groupContentMenu.align = 'right'
+		}
+	}
 
 	MenuOption{
 		id: groupContentMenuHeader
@@ -31,6 +45,4 @@ Rectangle{
 			hideFavoriteToggle: true
 		}
 	}
-	//TODO change alignment for this menu
-	//visible: selectedDevice != undefined && selectedDevice.type == MainScripts.GROUPTYPE && !grouplist.wasHeld;
 }

@@ -9,6 +9,9 @@ Rectangle{
 	color: "lightgray"
 	property string align: ''
 	property variant selectedGroup
+	property int deviceElementLeftX: 0
+	property int deviceElementRightX: 0
+	x: deviceElementRightX + groupAddRemoveMenu.width >= main.width ? deviceElementLeftX - groupAddRemoveMenu.width : deviceElementRightX
 
 	Column{
 		id: menuColumn
