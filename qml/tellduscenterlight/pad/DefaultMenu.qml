@@ -5,6 +5,7 @@ Rectangle{
 	id: deviceMenu
 	property string align: (deviceMenu.x + deviceMenu.width) >= main.width ? 'left' : 'right'
 	property variant model: undefined
+	property variant footerComponent: undefined
 	signal optionSelected(string value)
 	property bool menuShowArrow: false
 	property string headerText: ''
@@ -39,6 +40,11 @@ Rectangle{
 					align: deviceMenu.align
 					isHeader: model.isHeader == undefined ? false : model.isHeader
 				}
+			}
+
+			Loader{
+				id: footer
+				sourceComponent: footerComponent
 			}
 		}
 	}

@@ -212,10 +212,29 @@ Rectangle {
 
 	DefaultMenu{
 		id: addToGroupMenu
+		Component{
+			id: footer
+			MenuOption{
+				text: "Add to new group"
+				optionValue: "new"
+				align: deviceMenu.align
+				width: 100 //TODO
+				MouseArea{
+					anchors.fill: parent
+					onClicked: {
+						addToGroupMenu.visible = false
+						console.log("TODO ADD NEW GROUP, set name and stuff, and then add this device there");
+						selectedDevice = undefined;
+					}
+				}
+			}
+		}
+
 		anchors.top: deviceMenu.bottom
 		anchors.topMargin: 10 //TODO
 		anchors.horizontalCenter: deviceMenu.horizontalCenter
 		headerText: "Select group"
+		footerComponent: footer
 
 		model: groupModel
 
