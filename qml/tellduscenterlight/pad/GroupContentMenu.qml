@@ -61,7 +61,7 @@ Rectangle{
 
 		model: selectedGroup != undefined ? selectedGroup.devices() : undefined //TODO why is this needed?
 
-		delegate: DeviceElement {
+		delegate: DeviceElementPad {
 			hideFavoriteToggle: true
 		}
 	}

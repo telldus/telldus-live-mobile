@@ -60,7 +60,7 @@ Rectangle {
 
 			model: deviceModel
 
-			delegate: DeviceElement { }
+			delegate: DeviceElementPad { }
 		}
 
 		ListView {
@@ -71,7 +71,7 @@ Rectangle {
 
 			model: groupModel
 
-			delegate: DeviceElement {}
+			delegate: DeviceElementPad {}
 		}
 		visible: selectedPane == MainScripts.FULL_DEVICE
 	}
@@ -119,7 +119,7 @@ Rectangle {
 			anchors.fill: parent
 			model: favoriteModel
 
-			delegate: DeviceElement {
+			delegate: DeviceElementPad {
 				hideFavoriteToggle: true
 			}
 		}
