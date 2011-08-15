@@ -35,5 +35,6 @@
         <file>qml/tellduscenterlight/pad/GroupContentMenu.qml</file>
         <file>qml/tellduscenterlight/tooltip.png</file>
         <file>qml/tellduscenterlight/Popup.qml</file>
+        <file>qml/tellduscenterlight/Menu.qml</file>
     </qresource>
 </RCC>
