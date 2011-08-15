@@ -56,24 +56,24 @@ var visualDevicelist = function() {
 		}
 	}
 
-	function addVisualDevice(xvalue, yvalue, deviceId, tabId, type){
+	function addVisualDevice(xvalue, yvalue, deviceId, tabId, type, action, actionvalue){
 		if(type == undefined){
 			type = DEVICE;
 		}
 		var insertId = 0;
 		db.transaction(function(tx) {
-			var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId, type) VALUES(?, ?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId, type]);
+			var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId, type, action, actionvalue) VALUES(?, ?, ?, ?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId, type, action, actionvalue]);
 			insertId = result.insertId;
 		});
-		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId, 'type': type});
+		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId, 'type': type, 'action': action, 'actionvalue': actionvalue});
 	}
 
 	function added(device, type){
 
 		db.transaction(function(tx) {
 			//tx.executeSql('DROP TABLE IF EXISTS VisualDevice');
-			tx.executeSql('CREATE TABLE IF NOT EXISTS VisualDevice(id INTEGER PRIMARY KEY, deviceId INTEGER, layoutX INTEGER, layoutY INTEGER, tabId INTEGER, type INTEGER)');
-			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId, type FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id, type]);
+			tx.executeSql('CREATE TABLE IF NOT EXISTS VisualDevice(id INTEGER PRIMARY KEY, deviceId INTEGER, layoutX INTEGER, layoutY INTEGER, tabId INTEGER, type INTEGER, action INTEGER, actionvalue STRING)');
+			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId, type, action, actionvalue FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id, type]);
 			for(var i = 0; i < rs.rows.length; ++i) {
 				var deviceObj = {
 					'id': rs.rows.item(i).id,
@@ -81,7 +81,9 @@ var visualDevicelist = function() {
 					'layoutX': parseInt(rs.rows.item(i).layoutX, 10),
 					'layoutY': parseInt(rs.rows.item(i).layoutY, 10),
 					'tabId': parseInt(rs.rows.item(i).tabId, 10),
-					'type': parseInt(rs.rows.item(i).type, 10)
+					'type': parseInt(rs.rows.item(i).type, 10),
+					'action': parseInt(rs.rows.item(i).action, 10),
+					'actionvalue': rs.rows.item(i).actionvalue
 				};
 
 				addDevice(deviceObj);
@@ -144,6 +146,8 @@ var visualDevicelist = function() {
 	VisualDevice.prototype.layoutY = function() { return this._layoutY; }
 	VisualDevice.prototype.tabId = function() { return this._tabId; }
 	VisualDevice.prototype.type = function() { return this._type; }
+	VisualDevice.prototype.action = function() { return this._action; }
+	visualDevice.prototype.actionvalue = function() { return this._actionvalue; }
 
 	VisualDevice.prototype.layoutPosition = function(newX, newY, tabId){
 		var visualDeviceId = this._id;

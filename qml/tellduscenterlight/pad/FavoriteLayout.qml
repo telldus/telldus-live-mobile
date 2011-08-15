@@ -137,6 +137,57 @@ Rectangle {
 					availableListDelegate.x = initialX; //reset item location
 					availableListDelegate.y = initialY;
 				}
+
+				onClicked:{
+					console.log("Show popup (perhaps use Mickes?) with action icons that can be dragged...");
+					actionPopup.visible = true;
+				}
+			}
+
+			Popup{
+				id: actionPopup
+				assignTo: availableListDelegate
+				content: Component {
+					Item{
+						height: childrenRect.height
+						width: 200 //TODO
+						Text{
+							id: descText
+							text: "Drag an action to the layout panel, or drag a whole device from the list"
+							wrapMode: Text.WordWrap
+							width: parent.width
+						}
+
+						//action for on/off if supported, toggle, dim (slider and presets)...
+						Row{  //TODO possibly reuse?
+							id: buttonrow
+							anchors.top: descText.bottom
+
+							DragAction {
+								action: "off"
+							}
+							DragAction {
+								action: "on"
+							}
+							DragAction {
+								action: "bell"
+							}
+							DragAction {
+								action: "dim"
+								dimvalue: 25
+							}
+							DragAction {
+								action: "dim"
+								dimvalue: 50
+							}
+							DragAction {
+								action: "dim"
+								dimvalue: 75
+							}
+						}
+						//TODO SLIDER
+					}
+				}
 			}
 		}
 	}

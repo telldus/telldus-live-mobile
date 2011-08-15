@@ -5,11 +5,19 @@ import "VisualDeviceList.js" as VisualDeviceList
 
 Rectangle {
 	id: visualDevice
-	height: MainScripts.VISUALDEVICEHEIGHT
-	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : MainScripts.VISUALDEVICEWIDTH
-	color: statusColor()
+	height: type == MainScripts.SENSOR ? MainScripts.VISUALDEVICEHEIGHT : statusImg. height
+	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : statusImg.width
+	color: type == MainScripts.SENSOR ? 'green' : parent.color
+	Image{
+		id: statusImg
+		source: statusImage()
+		visible: type == MainScripts.DEVICE
+		opacity: deviceState == MainScripts.METHOD_DIM ? deviceStateValue/255 + 0.1 : 1
+	}
+
 	z: infoBubble.visible || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
 
+	//property int action: 0
 	property int deviceId: 0
 	property int visualDeviceId: 0
 	property variant device: undefined
@@ -237,35 +245,21 @@ Rectangle {
 						}
 					}
 				}
-				/*
-		Rectangle{
-			id: bubblebottom
-			height: 141  //TODO check out transformOrigin if this should be used at all
-			width: 141
-			rotation: 45
-			color: "white"
-			anchors.verticalCenter: parent.bottom
-			anchors.horizontalCenter: parent.horizontalCenter
-			z:1
-		}
-		*/
-
-
 			}
 		}
 	}
 
-	function statusColor(){  //TODO to icon
+	function statusImage(){
 		if(deviceState == MainScripts.METHOD_TURNON){
-			return "blue";
+			return "../state_1.png";
 		}
 		if(deviceState == MainScripts.METHOD_DIM){
-			return "yellow";
+			return "../state_1.png"; //TODO
 		}
 		if(type == MainScripts.SENSOR){
-			return "green";
+			//return "green"; //TODO
 		}
 
-		return "red";
+		return "../state_2.png";
 	}
 }
