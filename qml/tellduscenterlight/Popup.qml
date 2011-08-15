@@ -7,6 +7,7 @@ Item {
 
 	property Component content
 	property variant assignTo: parent
+	property variant containInside: assignTo.parent
 	property string preferredPosition: vertical
 
 	id: popup
@@ -20,10 +21,10 @@ Item {
 		property bool isHorizontal: popup.preferredPosition == popup.horizontal
 		property bool isVertical: !isHorizontal
 
-		property bool isRight: assignTo.x > (assignTo.parent.width - popup.width)
-		property bool isLeft: assignTo.x > (assignTo.parent.width - popup.width - assignTo.width)
+		property bool isRight: assignTo.x > (containInside.width - popup.width)
+		property bool isLeft: assignTo.x > (containInside.width - popup.width - assignTo.width)
 
-		property bool isOver: assignTo.y > (assignTo.parent.height - popup.height)
+		property bool isOver: assignTo.y > (containInside.height - popup.height)
 		property bool isUnder: assignTo.y < popup.height
 
 	}
@@ -129,7 +130,7 @@ Item {
 				name: "right"
 				when: properties.isRight && properties.isVertical
 				AnchorChanges { target:  popup; anchors.right: assignTo.right; }
-				PropertyChanges { target: popup; anchors.rightMargin: Math.max(-25, -(assignTo.parent.width - assignTo.x - assignTo.width)) }
+				PropertyChanges { target: popup; anchors.rightMargin: Math.max(-25, -(containInside.width - assignTo.x - assignTo.width)) }
 			}
 
 		]
