@@ -25,6 +25,7 @@ Rectangle {
 	property int deviceMethods: device == undefined || type != MainScripts.DEVICE ? 0 : device.methods
 	property int deviceState: device == undefined || type != MainScripts.DEVICE ? 0 : device.state
 	property string deviceStateValue: device == undefined || type != MainScripts.DEVICE ? '' : device.stateValue
+	property bool expanded: false
 	property int tabId: 1 //TODO
 	property int type
 	property int rotationAngle: (visualDevice.x - infoBubble.width/2)/2 * -1
@@ -78,6 +79,7 @@ Rectangle {
 
 		onClicked: {
 			infoBubble.visible = !infoBubble.visible
+			VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).expand(infoBubble.visible);
 		}
 		onReleased: {
 			if(movedX != visualDevice.x || movedY != visualDevice.y){
@@ -125,6 +127,7 @@ Rectangle {
 	Popup{
 		id: infoBubble
 		assignTo: visualDevice
+		visible: visualDevice.expanded
 
 		content: Component {
 			Item {

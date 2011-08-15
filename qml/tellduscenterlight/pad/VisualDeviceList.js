@@ -62,18 +62,18 @@ var visualDevicelist = function() {
 		}
 		var insertId = 0;
 		db.transaction(function(tx) {
-			var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId, type, action, actionvalue) VALUES(?, ?, ?, ?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId, type, action, actionvalue]);
+						   var result = tx.executeSql('INSERT INTO VisualDevice (deviceId, layoutX, layoutY, tabId, type, action, actionvalue, expanded) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [deviceId, xvalue, yvalue, tabId, type, action, actionvalue, 'false']);
 			insertId = result.insertId;
 		});
-		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId, 'type': type, 'action': action, 'actionvalue': actionvalue});
+		addDevice({'id': insertId, 'deviceId': deviceId, 'layoutX': xvalue, 'layoutY': yvalue, 'tabId': tabId, 'type': type, 'action': action, 'actionvalue': actionvalue, 'expanded': 'false'});
 	}
 
 	function added(device, type){
 
 		db.transaction(function(tx) {
 			//tx.executeSql('DROP TABLE IF EXISTS VisualDevice');
-			tx.executeSql('CREATE TABLE IF NOT EXISTS VisualDevice(id INTEGER PRIMARY KEY, deviceId INTEGER, layoutX INTEGER, layoutY INTEGER, tabId INTEGER, type INTEGER, action INTEGER, actionvalue STRING)');
-			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId, type, action, actionvalue FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id, type]);
+			tx.executeSql('CREATE TABLE IF NOT EXISTS VisualDevice(id INTEGER PRIMARY KEY, deviceId INTEGER, layoutX INTEGER, layoutY INTEGER, tabId INTEGER, type INTEGER, action INTEGER, actionvalue STRING, expanded BOOL)');
+			var rs = tx.executeSql('SELECT id, deviceId, layoutX, layoutY, tabId, type, action, actionvalue, expanded FROM VisualDevice WHERE deviceId = ? AND type = ?', [device.id, type]);
 			for(var i = 0; i < rs.rows.length; ++i) {
 				var deviceObj = {
 					'id': rs.rows.item(i).id,
@@ -83,7 +83,8 @@ var visualDevicelist = function() {
 					'tabId': parseInt(rs.rows.item(i).tabId, 10),
 					'type': parseInt(rs.rows.item(i).type, 10),
 					'action': parseInt(rs.rows.item(i).action, 10),
-					'actionvalue': rs.rows.item(i).actionvalue
+					'actionvalue': rs.rows.item(i).actionvalue,
+					'expanded': rs.rows.item(i).expanded
 				};
 
 				addDevice(deviceObj);
@@ -147,7 +148,8 @@ var visualDevicelist = function() {
 	VisualDevice.prototype.tabId = function() { return this._tabId; }
 	VisualDevice.prototype.type = function() { return this._type; }
 	VisualDevice.prototype.action = function() { return this._action; }
-	visualDevice.prototype.actionvalue = function() { return this._actionvalue; }
+	VisualDevice.prototype.actionvalue = function() { return this._actionvalue; }
+	VisualDevice.prototype.expanded = function() { return this._expanded; }
 
 	VisualDevice.prototype.layoutPosition = function(newX, newY, tabId){
 		var visualDeviceId = this._id;
@@ -163,6 +165,13 @@ var visualDevicelist = function() {
 		var visualDeviceId = this._id; //this is needed, can't use "this" down there
 		db.transaction(function(tx) {
 			tx.executeSql('DELETE FROM VisualDevice WHERE id = ?', [visualDeviceId]);
+		});
+	}
+
+	VisualDevice.prototype.expand = function(expand){
+		var visualDeviceId = this._id;
+		db.transaction(function(tx){
+			tx.executeSql('UPDATE VisualDevice SET expanded = ? WHERE id = ?', [expand, visualDeviceId]);
 		});
 	}
 

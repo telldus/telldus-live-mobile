@@ -26,6 +26,7 @@ ListModel {
 			visualObject.tabId = device.tabId();
 			visualObject.visualDeviceId = device.id();
 			visualObject.type = device.type();
+			visualObject.expanded = device.expanded();
 
 			if(device.type() == MainScripts.DEVICE){
 				visualObject.device = device.device();
