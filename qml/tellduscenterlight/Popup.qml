@@ -17,6 +17,11 @@ BorderImage {
 	width: contentObject.width + (border.right * 2)
 	height: contentObject.height + border.top + border.bottom
 
+	transform: [
+		Rotation { id: rotationX; origin.x: popup.width/2; origin.y: popup.height/2; axis { x: 1; y: 0; z: 0} },
+		Rotation { id: rotationY; origin.x: popup.width/2; origin.y: popup.height/2; axis { x: 0; y: 1; z: 0} }
+	]
+
 	Loader {
 		id: contentObject
 		x: popup.border.right
@@ -54,6 +59,7 @@ BorderImage {
 				name: "under";
 				when: properties.isUnder && properties.isVertical
 				AnchorChanges { target: popup; anchors.bottom: undefined; anchors.top: assignTo.bottom }
+				PropertyChanges { target: rotationX; angle: 180 }
 			}
 		]
 	}
@@ -78,6 +84,7 @@ BorderImage {
 				when: properties.isRight && properties.isVertical
 				AnchorChanges { target:  popup; anchors.left: undefined; anchors.right: assignTo.right; }
 				PropertyChanges { target: popup; anchors.rightMargin: -25 }
+				PropertyChanges { target: rotationY; angle: 180; }
 			}
 
 		]
