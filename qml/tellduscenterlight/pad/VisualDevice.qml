@@ -104,6 +104,16 @@ Item {
 				else if(visualDevice.action == "dim"){
 					device.dim(visualDevice.actionvalue/100*255);
 				}
+				else if(visualDevice.action == "toggle"){
+					console.log("device state is " + device.state);
+					if(device.state == MainScripts.METHOD_TURNOFF){
+						device.turnOn();
+					}
+					else{
+						device.turnOff();
+					}
+				}
+
 				return;
 			}
 
@@ -300,7 +310,6 @@ Item {
 	}
 
 	function statusImage(){
-		console.log("Action: " + action)
 		if(action == 'on'){
 			return "../on.png";
 		}

@@ -7,47 +7,50 @@ Item{
 	id: dragAction
 	property string action: ''
 	property int dimvalue: 100
-	property int initialX: 0
-	property int initialY: 0
-	property variant mappedCoord: favoriteLayout.mapToItem(availableFavoriteList, 0, 0); //TODO doesn't work for first list element for some reason...
-	height: dragActionImage.height
-	width: dragActionImage.width
+	height: dragActionStaticImage.height
+	width: dragActionStaticImage.width
+	property variant dragActionImage: undefined
 
 	Image {
-		id: dragActionImage
+		id: dragActionStaticImage
 
 		property string imagename: action == 'dim' ? 'on' : action //TODO change
 		source: '../' +  imagename + '.png'
 		opacity: dimvalue
 		visible: MainScripts.methodContains(device.methods, action)
 
-		width: sourceSize.width * SCALEFACTOR
+		width: MainScripts.methodContains(device.methods, action) ? sourceSize.width * SCALEFACTOR : 0
 		height: sourceSize.height * SCALEFACTOR
 		MouseArea{
 			anchors.fill: parent
 
-			drag.target: dragActionImage
+			drag.target: undefined
 			drag.axis: Drag.XandYAxis
-			drag.minimumX: mappedCoord.x
-			drag.maximumX: mappedCoord.x + favoriteLayout.width - dragActionImage.width
-			drag.minimumY: mappedCoord.y
-			drag.maximumY: mappedCoord.y + favoriteLayout.height - dragActionImage.height
+			property bool moved: false
 
 			onPressed: {
-				initialX = dragActionImage.x;
-				initialY = dragActionImage.y;
-				console.log("Initial x: " + initialX);
+				var comp = Qt.createComponent("DragActionImage.qml");
+				dragActionImage = comp.createObject(favoriteLayout);
+				dragActionImage.source = '../' +  dragActionStaticImage.imagename + '.png'
+				drag.target = dragActionImage;
+				drag.minimumX = favoritelist.width - actionPopup.width + dragAction.width/2
+				drag.maximumX = favoriteLayout.width - dragAction.width
+				drag.minimumY = 0;
+				drag.maximumY = favoriteLayout.height - dragAction.height;
+				dragActionImage.x = mapToItem(favoriteLayout, mouseX, mouseY).x - dragAction.width/2;
+				dragActionImage.y = mapToItem(favoriteLayout, mouseX, mouseY).y - dragAction.height/2;
+				var moved = false;
+			}
+
+			onPositionChanged: {
+				moved = true;
 			}
 
 			onReleased: {
-				var newX = dragActionImage.x - dragActionImage.width/2;
-				var newY = dragActionImage.y - dragActionImage.height/2;
-				var mapped = actionPopup.mapToItem(favoriteLayout, newX, newY);
-				newX = mapped.x;
-				newY = mapped.y;
-				console.log("New x: " + newX);
+				var newX = mapToItem(favoriteLayout, mouseX, mouseY).x - favoritelist.width + actionPopup.width - dragAction.width;
+				var newY = dragActionImage.y;
 
-				var maxWidth = favoriteLayout.width - 100; //TODO constants!
+				var maxWidth = favoriteLayout.width - favoritelist.width - dragActionImage.width
 				var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;
 				if(newX > maxWidth){
 					newX = maxWidth;
@@ -59,12 +62,13 @@ Item{
 					newY = 0;
 				}
 
-				if(newX >= 0){
-					//do nothing if dropped on list again
+				if(newX >= 0 && moved){
+					//do nothing if dropped on list, or if not moved
 					VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, selectedTabId, MainScripts.DEVICE, action, dimvalue);
 				}
-				dragActionImage.x = initialX; //reset item location
-				dragActionImage.y = initialY;
+				if(dragActionImage != undefined){
+					dragActionImage.destroy();
+				}
 			}
 		}
 	}
