@@ -14,6 +14,14 @@ Item {
 	width: contentLoader.width
 	height: contentLoader.height
 	visible:false
+	opacity: 0
+	Behavior on visible {
+		SequentialAnimation {
+			PropertyAction { target: popup; property: "visible"; value: true }
+			NumberAnimation { target: popup; property: "opacity"; to: visible ? 0 : 1; duration: 200 }
+			PropertyAction { target: popup; property: "visible"; }
+		}
+	}
 
 	Item {
 		id: properties
