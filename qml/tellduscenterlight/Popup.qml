@@ -15,16 +15,15 @@ Item {
 	height: contentLoader.height
 	visible:false
 
-
 	Item {
 		id: properties
 		property bool isHorizontal: popup.preferredPosition == popup.horizontal
 		property bool isVertical: !isHorizontal
 
 		property bool isRight: assignTo.x > (containInside.width - popup.width)
-		property bool isLeft: assignTo.x > (containInside.width - popup.width - assignTo.width)
+		property bool isLeft: assignTo.x > (containInside.width - popup.height - assignTo.width)
 
-		property bool isOver: assignTo.y > (containInside.height - popup.height)
+		property bool isOver: assignTo.y > (containInside.height - popup.width + 25)
 		property bool isUnder: assignTo.y < popup.height
 
 	}
@@ -43,20 +42,28 @@ Item {
 				source: "tooltip.png"
 				border { left: 45; top: 8; right: 10; bottom: 20 }
 
-				width: contentObject.width + (border.right * 2)
-				height: contentObject.height + border.top + border.bottom
+				property int hMargin: border.right * 2
+				property int vMargin: border.top + border.bottom
+
+				width: contentObject.width + hMargin
+				height: contentObject.height + vMargin
 
 				Item {
 					id: rotationProperties
-					property int origin: Math.min(popup.height, popup.width)/2
+					property int origin: Math.max(popup.height, popup.width)/2
 				}
 
 				transform: [
 					Rotation { id: rotationX; origin.x: popup.width/2; origin.y: popup.height/2; axis { x: 1; y: 0; z: 0} },
-					Rotation { id: rotationY; origin.x: popup.width/2; origin.y: popup.height/2; axis { x: 0; y: 1; z: 0} }
+					Rotation { id: rotationY; origin.x: popup.width/2; origin.y: popup.height/2; axis { x: 0; y: 1; z: 0} },
+					Rotation { id: rotationZ; origin.x: rotationProperties.origin; origin.y: rotationProperties.origin; axis { x: 0; y: 0; z: 1} }
 				]
 				Item {
 					states: [
+						State {
+							when: properties.isOver && properties.isHorizontal
+							PropertyChanges { target: rotationY; angle: 180 }
+						},
 						State {
 							when: properties.isUnder && properties.isVertical
 							PropertyChanges { target: rotationX; angle: 180 }
@@ -67,9 +74,27 @@ Item {
 				Item {
 					states: [
 						State {
+							name: "left"
+							when: properties.isLeft && properties.isHorizontal
+							PropertyChanges { target: rotationX; angle: 180 }
+							PropertyChanges { target: contentObject; x: borderImage.border.top }
+						},
+						State {
 							name: "right"
 							when: properties.isRight && properties.isVertical
 							PropertyChanges { target: rotationY; angle: 180; }
+						}
+					]
+				}
+				Item { //Only for isHorizontal
+					states: [
+						State {
+							name: ""
+						},
+						State {
+							when: properties.isHorizontal
+							PropertyChanges { target: rotationZ; angle: 90 }
+							PropertyChanges { target: borderImage; height: contentObject.width + vMargin; width: contentObject.height + hMargin }
 						}
 					]
 				}
@@ -77,7 +102,7 @@ Item {
 
 			Loader {
 				id: contentObject
-				x: borderImage.border.right
+				x: properties.isHorizontal ? borderImage.border.bottom : borderImage.border.right
 				y: borderImage.border.top
 				sourceComponent: content
 			}
@@ -89,11 +114,13 @@ Item {
 			State {
 				when: !properties.isOver && properties.isHorizontal
 				AnchorChanges { target: popup; anchors.top: assignTo.top }
+				PropertyChanges { target: popup; anchors.topMargin: -25 }
 			},
 			State {
 				name: "upper"
 				when: properties.isOver && properties.isHorizontal
-				AnchorChanges { target: popup; anchors.bottom: assignTo.bottom }
+				AnchorChanges { target: popup; anchors.top: assignTo.bottom }
+				PropertyChanges { target: popup; anchors.topMargin: -popup.width+25 }
 			},
 			State {
 				when: !properties.isUnder && properties.isVertical
@@ -119,7 +146,8 @@ Item {
 			State {
 				name: "left"
 				when: properties.isLeft && properties.isHorizontal
-				AnchorChanges { target: popup; anchors.right: assignTo.left; }
+				AnchorChanges { target: popup; anchors.left: assignTo.left; }
+				PropertyChanges { target:popup; anchors.leftMargin: -popup.height }
 			},
 			State {
 				when: !properties.isRight && properties.isVertical
