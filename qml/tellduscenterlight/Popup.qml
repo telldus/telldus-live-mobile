@@ -172,4 +172,20 @@ Item {
 		}
 
 	}
+
+	function coordInside(coord) {
+		if (coord.x < 0 || coord.y < 0) {
+			return false;
+		}
+		if (preferredPosition == vertical) {
+			if (coord.x > menu.width || coord.y > menu.height) {
+				return false;
+			}
+			return true;
+		}
+		if (coord.x > menu.height || coord.y > menu.width) {
+			return false;
+		}
+		return true;
+	}
 }
