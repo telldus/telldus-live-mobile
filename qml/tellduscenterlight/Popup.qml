@@ -48,6 +48,11 @@ Item {
 				width: contentObject.width + hMargin
 				height: contentObject.height + vMargin
 
+				MouseArea {
+					//Used to prevent clicking things behind the popup
+					anchors.fill: parent
+				}
+
 				Item {
 					id: rotationProperties
 					property int origin: Math.max(popup.height, popup.width)/2
