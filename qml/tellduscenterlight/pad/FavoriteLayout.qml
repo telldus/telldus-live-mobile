@@ -144,9 +144,9 @@ Rectangle {
 				}
 			}
 
-			Popup{
+			Menu{
 				id: actionPopup
-				assignTo: availableListDelegate
+				containInside: favoriteLayout
 				content: Component {
 					Item{
 						height: childrenRect.height
@@ -159,7 +159,7 @@ Rectangle {
 						}
 
 						//action for on/off if supported, toggle, dim (slider and presets)...
-						Row{  //TODO possibly reuse?
+						Row{
 							id: buttonrow
 							anchors.top: descText.bottom
 

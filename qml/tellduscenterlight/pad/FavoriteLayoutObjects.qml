@@ -31,16 +31,20 @@ ListModel {
 			if(device.type() == MainScripts.DEVICE){
 				visualObject.device = device.device();
 				visualObject.deviceId = device.device().id;
+				visualObject.action = device.action();
+				visualObject.actionvalue = device.actionvalue();
 			}
 			else if(device.type() == MainScripts.SENSOR){
 				visualObject.device = device.sensor();
 				visualObject.deviceId = device.sensor().id;
 			}
+			/*
 			else if(device.type() == MainScripts.ACTION){
 				visualObject.device = device.device();
 				visualObject.deviceId = device.device().id;
 				visualObject.action = device.action;
 			}
+			*/
 			favoriteLayout.selectedVisualDevice = visualObject.visualDeviceId
 			VisualDeviceList.addVisualObject(visualObject);
 		}

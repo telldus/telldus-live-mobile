@@ -3,21 +3,33 @@ import ".."
 import "../mainscripts.js" as MainScripts
 import "VisualDeviceList.js" as VisualDeviceList
 
-Rectangle {
+Item {
 	id: visualDevice
 	height: type == MainScripts.SENSOR ? MainScripts.VISUALDEVICEHEIGHT : statusImg. height
 	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : statusImg.width
-	color: type == MainScripts.SENSOR ? 'green' : parent.color
+
+	Rectangle{
+		anchors.fill: parent
+		color: 'green'
+		visible: type == MainScripts.SENSOR
+	}
+
+	Image{
+		id: statusImgDimBack
+		source: action == "dim" ? "../off.png" : "../state_2.png"
+		visible: type == MainScripts.DEVICE
+	}
 	Image{
 		id: statusImg
 		source: statusImage()
 		visible: type == MainScripts.DEVICE
-		opacity: deviceState == MainScripts.METHOD_DIM ? deviceStateValue/255 + 0.1 : 1
+		opacity: action == "dim" ? parseInt(actionvalue, 10)/255+0.1 : deviceState == MainScripts.METHOD_DIM ? deviceStateValue/255 + 0.1 : 1
 	}
 
 	z: infoBubble.visible || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
 
-	//property int action: 0
+	property string action: ''
+	property string actionvalue: ''
 	property int deviceId: 0
 	property int visualDeviceId: 0
 	property variant device: undefined
@@ -78,6 +90,23 @@ Rectangle {
 		}
 
 		onClicked: {
+			if(visualDevice.action != 0){
+				console.log("TODO bekräftande meddelande, liten popup eller så");
+				if(visualDevice.action == "on"){ //MainScripts.METHOD_TURNON
+					device.turnOn();
+				}
+				else if(visualDevice.action == "off"){
+					device.turnOff();
+				}
+				else if(visualDevice.action == "bell"){
+					device.bell();
+				}
+				else if(visualDevice.action == "dim"){
+					device.dim(visualDevice.actionvalue/100*255);
+				}
+				return;
+			}
+
 			infoBubble.visible = !infoBubble.visible
 			VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).expand(infoBubble.visible);
 		}
@@ -87,6 +116,7 @@ Rectangle {
 			}
 		}
 		onPressAndHold: {
+			console.log("Deviceaction: " + visualDevice.action)
 			visualDeviceMenu.visible = true
 		}
 	}
@@ -94,6 +124,22 @@ Rectangle {
 	DefaultMenu{
 		//TODO here or only one for whole layout?
 		id: visualDeviceMenu
+
+		Component{
+			id: footer
+
+			Slider{
+				id: actionvalueSlider
+				width: parent.parent.width
+				height: MainScripts.SLIDERHEIGHT
+				visible: MainScripts.methodContains(deviceMethods, "dim")
+				value: parseInt(visualDevice.actionvalue, 10)
+				onSlided: {
+					VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).updateActionValue(dimvalue);
+				}
+			}
+		}
+
 		headerText: "Device options"
 
 		model: ListModel{
@@ -102,6 +148,7 @@ Rectangle {
 				optionValue: 'removefromlayout'
 			}
 		}
+		footerComponent: visualDevice.action == "dim" ? footer : undefined
 
 		onOptionSelected: {
 			addToGroupMenu.visible = false
@@ -253,6 +300,19 @@ Rectangle {
 	}
 
 	function statusImage(){
+		console.log("Action: " + action)
+		if(action == 'on'){
+			return "../on.png";
+		}
+		if(action == 'off'){
+			return "../off.png";
+		}
+		if(action == 'bell'){
+			return "../bell.png";
+		}
+		if(action == 'dim'){
+			return "../on.png";
+		}
 		if(deviceState == MainScripts.METHOD_TURNON){
 			return "../state_1.png";
 		}

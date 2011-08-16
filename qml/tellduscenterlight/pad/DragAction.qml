@@ -10,6 +10,8 @@ Item{
 	property int initialX: 0
 	property int initialY: 0
 	property variant mappedCoord: favoriteLayout.mapToItem(availableFavoriteList, 0, 0); //TODO doesn't work for first list element for some reason...
+	height: dragActionImage.height
+	width: dragActionImage.width
 
 	Image {
 		id: dragActionImage
@@ -34,14 +36,16 @@ Item{
 			onPressed: {
 				initialX = dragActionImage.x;
 				initialY = dragActionImage.y;
+				console.log("Initial x: " + initialX);
 			}
 
 			onReleased: {
 				var newX = dragActionImage.x - dragActionImage.width/2;
 				var newY = dragActionImage.y - dragActionImage.height/2;
-				var mapped = availableFavoriteList.mapToItem(favoriteLayout, newX, newY);
+				var mapped = actionPopup.mapToItem(favoriteLayout, newX, newY);
 				newX = mapped.x;
 				newY = mapped.y;
+				console.log("New x: " + newX);
 
 				var maxWidth = favoriteLayout.width - 100; //TODO constants!
 				var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;
