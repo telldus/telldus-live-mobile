@@ -167,22 +167,22 @@ Rectangle {
 								action: "off"
 							}
 							DragAction {
+								action: "dim"
+								dimvalue: 25*255/100
+							}
+							DragAction {
+								action: "dim"
+								dimvalue: 50*255/100
+							}
+							DragAction {
+								action: "dim"
+								dimvalue: 75*255/100
+							}
+							DragAction {
 								action: "on"
 							}
 							DragAction {
 								action: "bell"
-							}
-							DragAction {
-								action: "dim"
-								dimvalue: 25
-							}
-							DragAction {
-								action: "dim"
-								dimvalue: 50
-							}
-							DragAction {
-								action: "dim"
-								dimvalue: 75
 							}
 						}
 						//TODO SLIDER

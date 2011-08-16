@@ -122,7 +122,6 @@ Item {
 	}
 
 	DefaultMenu{
-		//TODO here or only one for whole layout?
 		id: visualDeviceMenu
 
 		Component{
@@ -135,6 +134,7 @@ Item {
 				visible: MainScripts.methodContains(deviceMethods, "dim")
 				value: parseInt(visualDevice.actionvalue, 10)
 				onSlided: {
+					visualDevice.actionvalue = dimvalue;
 					VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).updateActionValue(dimvalue);
 				}
 			}
