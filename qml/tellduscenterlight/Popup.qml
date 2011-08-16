@@ -114,13 +114,13 @@ Item {
 			State {
 				when: !properties.isOver && properties.isHorizontal
 				AnchorChanges { target: popup; anchors.top: assignTo.top }
-				PropertyChanges { target: popup; anchors.topMargin: -25 }
+				PropertyChanges { target: popup; anchors.topMargin: Math.max(-25, -assignTo.y) }
 			},
 			State {
 				name: "upper"
 				when: properties.isOver && properties.isHorizontal
 				AnchorChanges { target: popup; anchors.top: assignTo.bottom }
-				PropertyChanges { target: popup; anchors.topMargin: -popup.width+25 }
+				PropertyChanges { target: popup; anchors.topMargin: -popup.width+Math.min(25,containInside.height - assignTo.y - assignTo.height) }
 			},
 			State {
 				when: !properties.isUnder && properties.isVertical
