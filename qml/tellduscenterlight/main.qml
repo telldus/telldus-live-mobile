@@ -11,6 +11,13 @@ Item{
 		id: root
 		source: rootPath()
 		anchors.fill: parent
+		z: 0
+	}
+
+	Item {
+		anchors.fill: parent
+		id: modalArea
+		z: 1
 	}
 
 	/*
