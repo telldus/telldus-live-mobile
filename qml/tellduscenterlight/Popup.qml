@@ -9,6 +9,8 @@ Item {
 	property variant assignTo: parent
 	property variant containInside: assignTo.parent
 	property string preferredPosition: vertical
+	property int realHeight: properties.isHorizontal ? width : height
+	property int realWidth: properties.isHorizontal ? height : width
 
 	id: popup
 	width: contentLoader.width

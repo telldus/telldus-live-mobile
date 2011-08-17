@@ -33,7 +33,7 @@ Item{
 				dragActionImage = comp.createObject(favoriteLayout);
 				dragActionImage.source = '../' +  dragActionStaticImage.imagename + '.png'
 				drag.target = dragActionImage;
-				drag.minimumX = favoritelist.width - actionPopup.width + dragAction.width/2
+				drag.minimumX = favoritelist.width - actionPopup.realWidth + dragAction.width - 4 //TODO 4 from where? Margin somewhere?
 				drag.maximumX = favoriteLayout.width - dragAction.width
 				drag.minimumY = 0;
 				drag.maximumY = favoriteLayout.height - dragAction.height;
@@ -47,10 +47,10 @@ Item{
 			}
 
 			onReleased: {
-				var newX = mapToItem(favoriteLayout, mouseX, mouseY).x - favoritelist.width + actionPopup.width - dragAction.width;
+				var newX = mapToItem(favoriteLayout, mouseX, mouseY).x - favoritelist.width + actionPopup.realWidth - dragAction.width-12;  //TODO 12? From where?
 				var newY = dragActionImage.y;
 
-				var maxWidth = favoriteLayout.width - favoritelist.width - dragActionImage.width
+				var maxWidth = favoriteLayout.width - favoritelist.width + actionPopup.realWidth - dragAction.width*2 + 4; //TODO why *2? And 4 from where?
 				var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;
 				if(newX > maxWidth){
 					newX = maxWidth;
@@ -61,11 +61,15 @@ Item{
 				if(newY < 0){
 					newY = 0;
 				}
+				if(newX < 0){
+					newX = 0;
+				}
 
-				if(newX >= 0 && moved){
-					//do nothing if dropped on list, or if not moved
+				if(moved){
+					//do nothing if not moved
 					VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, selectedTabId, MainScripts.DEVICE, action, dimvalue);
 				}
+
 				if(dragActionImage != undefined){
 					dragActionImage.destroy();
 				}
