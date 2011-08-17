@@ -5,8 +5,8 @@ import "VisualDeviceList.js" as VisualDeviceList
 
 Item {
 	id: visualDevice
-	height: type == MainScripts.SENSOR ? MainScripts.VISUALDEVICEHEIGHT : statusImg. height
-	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : statusImg.width
+	height: type == MainScripts.SENSOR ? MainScripts.VISUALDEVICEHEIGHT : action == "slider" ? slider.height : statusImg. height
+	width: type == MainScripts.SENSOR ? MainScripts.VISUALSENSORWIDTH : action == "slider" ? slider.width : statusImg.width
 
 	Rectangle{
 		anchors.fill: parent
