@@ -1,6 +1,6 @@
 import Qt 4.7
 
-Rectangle {
+Item {
 	id: buttonRect
 	height: img.height
 	width: img.width

@@ -219,66 +219,73 @@ Item {
 		assignTo: visualDevice
 		visible: visualDevice.expanded
 
-		content: Component {
+		Component{
+			id: infoSensorComp
 			Item {
-				height: MainScripts.INFOBUBBLEHEIGHT
-				width: MainScripts.INFOBUBBLEWIDTH
-				Item {
-					id: infoSensor
+				id: infoSensor
+				height: childrenRect.height
+				width: childrenRect.width
+				//anchors.top: parent.top
+				//visible: type == MainScripts.SENSOR
+				z: 3
+
+				Column{
+					//anchors.centerIn: parent
+					Text{
+						color: "white"
+						text: deviceName
+					}
+					Text{
+						color: "white"
+						text: "Temperature: " + temperature + " C"
+						visible: hasTemperature
+					}
+					Text{
+						color: "white"
+						text: "Humidity: " + humidity + " %"
+						visible: hasHumidity
+					}
+					Text{
+						color: "white"
+						text: "Last updated: " + lastUpdated
+						visible: lastUpdated != ''
+					}
+				}
+			}
+		}
+
+		Component {
+			id: infoDeviceComp
+			Item {
+				height: childrenRect.height //MainScripts.INFOBUBBLEHEIGHT
+				width: childrenRect.width //MainScripts.INFOBUBBLEWIDTH
+			//	Rectangle{
+			//		id: infoDevice
+					//color: "white"
 					//height: 200 //TODO
 					//width: parent.width
-					//color: "white"
-					anchors.top: parent.top
-					visible: type == MainScripts.SENSOR
-					z: 3
+					//anchors.top: parent.top
+					//visible: type == MainScripts.DEVICE
+
+
+					//z:2
 
 					Column{
 						//anchors.centerIn: parent
 						Text{
-							color: "white"
 							text: deviceName
-						}
-						Text{
-							color: "white"
-							text: "Temperature: " + temperature + " C"
-							visible: hasTemperature
-						}
-						Text{
-							color: "white"
-							text: "Humidity: " + humidity + " %"
-							visible: hasHumidity
-						}
-						Text{
-							color: "white"
-							text: "Last updated: " + lastUpdated
-							visible: lastUpdated != ''
-						}
-					}
-				}
-
-				Rectangle{
-					id: infoDevice
-					color: "white"
-					height: 200 //TODO
-					width: parent.width
-					anchors.top: parent.top
-					visible: type == MainScripts.DEVICE
-					z:2
-
-					Column{
-
-						anchors.centerIn: parent
-						Text{
-							text: deviceName
+							color: 'white'
 						}
 
 						Text{
 							text: "Next run time: " + (device == undefined ? 'undef' : Qt.formatDateTime(device.nextRunTime))
+							color: 'white'
+							visible: device != undefined && device.nextRunTime != 'Invalid Date' //TODO
 						}
 
 						Row{  //TODO possibly reuse?
 							id: buttonrow
-
+							anchors.horizontalCenter: parent.horizontalCenter
 							ActionButton{
 								text: "OFF"
 								visible: MainScripts.methodContains(deviceMethods, "off")
@@ -337,9 +344,11 @@ Item {
 							}
 						}
 					}
-				}
+			//	}
 			}
 		}
+
+		content: type == MainScripts.SENSOR ? infoSensorComp : infoDeviceComp
 	}
 
 	function statusImage(){
