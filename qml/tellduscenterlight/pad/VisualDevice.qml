@@ -107,7 +107,9 @@ Item {
 		property int movedX: 0
 		property int movedY: 0
 		anchors.fill: parent
-		drag.target: visualDevice
+		enabled: editable || visualDevice.action != 'slider'
+
+		drag.target: editable ? visualDevice : undefined
 		drag.axis: Drag.XandYAxis
 		drag.minimumX: 0
 		drag.maximumX: favoriteLayout.width - visualDevice.width - MainScripts.TOOLBARWIDTH
@@ -151,12 +153,14 @@ Item {
 			VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).expand(infoBubble.visible);
 		}
 		onReleased: {
-			if(movedX != visualDevice.x || movedY != visualDevice.y){
+			if(editable && movedX != visualDevice.x || movedY != visualDevice.y){
 				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).layoutPosition(visualDevice.x, visualDevice.y, tabId);
 			}
 		}
 		onPressAndHold: {
-			visualDeviceMenu.visible = true
+			if(editable){
+				visualDeviceMenu.visible = true
+			}
 		}
 	}
 

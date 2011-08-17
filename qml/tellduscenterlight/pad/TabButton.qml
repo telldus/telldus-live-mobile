@@ -21,7 +21,7 @@ Rectangle{
 			tabButton.clicked();
 		}
 		onPressAndHold: {
-			if(selectionTabId > 0){
+			if(selectionTabId > 0 && editable){
 				tabEditMenu.visible = true;
 			}
 		}

@@ -7,8 +7,20 @@ Rectangle {
 	property int selectedTabId: 1 //default
 	property int selectedVisualDevice
 	property variant visibleMenu
+	property bool editable: false
 
 	id: favoriteLayout
+
+	TabButton{
+		id: lock
+		anchors.top: parent.top
+		anchors.left: parent.left
+		width: MainScripts.TOOLBARWIDTH  //TODO
+		name: editable ? "Lock" : "Unlock"
+		onClicked: {
+			editable = !editable
+		}
+	}
 
 	Rectangle{
 		id: tabSelection
@@ -16,7 +28,7 @@ Rectangle {
 		color: "darkgray"
 		height: tabButtonRow.height //parent.height/2
 		anchors.left: parent.left
-		anchors.top: parent.top
+		anchors.top: lock.bottom
 		width: MainScripts.TOOLBARWIDTH  //TODO
 		z: 99
 		Column{
@@ -29,6 +41,7 @@ Rectangle {
 				onClicked: {
 					VisualDeviceList.tabAreaList.insertTabArea('New layout', '');
 				}
+				visible: editable
 			}
 		}
 
@@ -59,7 +72,7 @@ Rectangle {
 			property variant button
 			color: "gray"
 			anchors.left: tabSelection.right
-			anchors.top: tabSelection.top
+			anchors.top: lock.top
 			height: parent.height
 			width: parent.width - tabSelection.width
 			visible: tabId == selectedTabId
@@ -76,6 +89,7 @@ Rectangle {
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
 		model: favoriteModel
+		visible: editable
 		z: 160 //above everything
 		header: Text {
 			font.bold: true
@@ -199,6 +213,7 @@ Rectangle {
 
 	ListView{
 		id: availableSensorList
+		visible: editable
 		anchors.left: parent.left
 		anchors.top: availableFavoriteList.bottom
 		height: parent.height/3
