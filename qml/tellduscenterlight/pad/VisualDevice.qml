@@ -39,7 +39,7 @@ Item {
 
 		Item {
 			//This is a pseudo-item only for listening for changes in the model data
-			property int state: device == undefined ? 0 : device.state
+			property int state: device == undefined || device.state == undefined ? 0 : device.state
 			onStateChanged: {
 				if (state == MainScripts.METHOD_TURNON) {
 					slider.value = slider.maximum;
@@ -47,7 +47,7 @@ Item {
 					slider.value = slider.minimum;
 				}
 			}
-			property string stateValue: device == undefined ? 0 : device.stateValue
+			property string stateValue:  device == undefined || device.stateValue == undefined ? 0 : device.stateValue
 			onStateValueChanged: {
 				if (state == MainScripts.METHOD_DIM) {
 					slider.value = parseInt(stateValue, 10);
@@ -156,7 +156,6 @@ Item {
 			}
 		}
 		onPressAndHold: {
-			console.log("Deviceaction: " + visualDevice.action)
 			visualDeviceMenu.visible = true
 		}
 	}
@@ -180,7 +179,7 @@ Item {
 			}
 		}
 
-		headerText: "Device options"
+		headerText: visualDevice.deviceName
 
 		model: ListModel{
 			ListElement{
