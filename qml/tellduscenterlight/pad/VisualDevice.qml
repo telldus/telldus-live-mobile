@@ -17,13 +17,13 @@ Item {
 	Image{
 		id: statusImgDimBack
 		source: action == "dim" ? "../off.png" : "../state_2.png"
-		visible: type == MainScripts.DEVICE && action != "slider"
+		visible: type == MainScripts.DEVICE && action == ''
 	}
 	Image{
 		id: statusImg
 		source: statusImage()
 		visible: type == MainScripts.DEVICE && action != "slider"
-		opacity: action == "dim" ? parseInt(actionvalue, 10)/255+0.1 : deviceState == MainScripts.METHOD_DIM ? deviceStateValue/255 + 0.1 : 1
+		opacity: action == "dim" ? parseInt(actionvalue, 10)/255+0.1 : action == '' ? (deviceState == MainScripts.METHOD_DIM ? deviceStateValue/255 + 0.1 : 1) : 1
 	}
 
 	Slider{
@@ -39,7 +39,7 @@ Item {
 
 		Item {
 			//This is a pseudo-item only for listening for changes in the model data
-			property int state: device.state
+			property int state: device == undefined ? 0 : device.state
 			onStateChanged: {
 				if (state == MainScripts.METHOD_TURNON) {
 					slider.value = slider.maximum;
@@ -47,7 +47,7 @@ Item {
 					slider.value = slider.minimum;
 				}
 			}
-			property string stateValue: device.stateValue
+			property string stateValue: device == undefined ? 0 : device.stateValue
 			onStateValueChanged: {
 				if (state == MainScripts.METHOD_DIM) {
 					slider.value = parseInt(stateValue, 10);
