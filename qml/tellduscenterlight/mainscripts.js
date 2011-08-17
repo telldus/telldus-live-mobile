@@ -68,6 +68,10 @@ function methodContains(methods, method){
 	else if(method == "dim"){
 		methodid = 16;
 	}
+	else if(method == "toggle"){
+		return methods & 1 && methods & 2; //on AND off
+	}
+
 	//TODO stop, up, down (, execute)
 
 	return (methods & methodid);

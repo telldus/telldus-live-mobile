@@ -41,5 +41,6 @@
         <file>qml/tellduscenterlight/state_1.png</file>
         <file>qml/tellduscenterlight/state_2.png</file>
         <file>qml/tellduscenterlight/pad/DragActionImage.qml</file>
+        <file>qml/tellduscenterlight/toggle.png</file>
     </qresource>
 </RCC>

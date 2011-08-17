@@ -105,7 +105,7 @@ Item {
 					device.dim(visualDevice.actionvalue/100*255);
 				}
 				else if(visualDevice.action == "toggle"){
-					console.log("device state is " + device.state);
+					//TODO change icon somewhat depending on current state?
 					if(device.state == MainScripts.METHOD_TURNOFF){
 						device.turnOn();
 					}
@@ -321,6 +321,9 @@ Item {
 		}
 		if(action == 'dim'){
 			return "../on.png";
+		}
+		if(action == 'toggle'){
+			return "../toggle.png";
 		}
 		if(deviceState == MainScripts.METHOD_TURNON){
 			return "../state_1.png";

@@ -182,6 +182,9 @@ Rectangle {
 								action: "on"
 							}
 							DragAction {
+								action: "toggle"
+							}
+							DragAction {
 								action: "bell"
 							}
 						}
