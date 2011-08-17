@@ -100,6 +100,8 @@ Rectangle {
 			id: availableListDelegate
 			height: deviceText.height
 			width: 100 //TODO
+			property variant dragActionImage: undefined
+
 			Text{
 				id: deviceText
 				text: device.name
@@ -107,32 +109,34 @@ Rectangle {
 
 			MouseArea{
 				anchors.fill: parent
-				property int initialX: 0
-				property int initialY: 0
 
-				property variant mappedCoord: favoriteLayout.mapToItem(availableFavoriteList, 0, 0); //TODO doesn't work for first list element for some reason...
-
-				drag.target: availableListDelegate
+				drag.target: undefined
 				drag.axis: Drag.XandYAxis
-				drag.minimumX: mappedCoord.x
-				drag.maximumX: mappedCoord.x + favoriteLayout.width - availableListDelegate.width
-				drag.minimumY: mappedCoord.y
-				drag.maximumY: mappedCoord.y + favoriteLayout.height - availableListDelegate.height
+				property bool moved: false
 
 				onPressed: {
-					initialX = availableListDelegate.x;
-					initialY = availableListDelegate.y;
+					var comp = Qt.createComponent("DragActionImage.qml");
+					dragActionImage = comp.createObject(favoriteLayout);
+					dragActionImage.source = '../state_1.png'
+					drag.target = dragActionImage;
+					drag.minimumX = MainScripts.TOOLBARWIDTH
+					drag.maximumX = favoriteLayout.width - dragActionImage.width
+					drag.minimumY = 0;
+					drag.maximumY = favoriteLayout.height - dragActionImage.height;
+					dragActionImage.x = mapToItem(favoriteLayout, mouseX, mouseY).x - dragActionImage.width/2;
+					dragActionImage.y = mapToItem(favoriteLayout, mouseX, mouseY).y - dragActionImage.height/2;
+					var moved = false;
+				}
+
+				onPositionChanged: {
+					moved = true;
 				}
 
 				onReleased: {
+					var newX = mapToItem(favoriteLayout, mouseX, mouseY).x - MainScripts.TOOLBARWIDTH - dragActionImage.width/2
+					var newY = dragActionImage.y;
 
-					var newX = availableListDelegate.x - availableListDelegate.width/2;
-					var newY = availableListDelegate.y - availableListDelegate.height/2;
-					var mapped = availableFavoriteList.mapToItem(favoriteLayout, newX, newY);
-					newX = mapped.x;
-					newY = mapped.y;
-
-					var maxWidth = favoriteLayout.width - 100; //TODO constants!
+					var maxWidth = favoriteLayout.width - MainScripts.TOOLBARWIDTH - dragActionImage.width
 					var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;
 					if(newX > maxWidth){
 						newX = maxWidth;
@@ -143,13 +147,18 @@ Rectangle {
 					if(newY < 0){
 						newY = 0;
 					}
+					if(newX < 0){
+						newX = 0;
+					}
 
-					if(newX >= 0){
-						//do nothing if dropped on list again
+					if(moved){
+						//do nothing if not moved
 						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, selectedTabId);
 					}
-					availableListDelegate.x = initialX; //reset item location
-					availableListDelegate.y = initialY;
+
+					if(dragActionImage != undefined){
+						dragActionImage.destroy();
+					}
 				}
 
 				onClicked:{
@@ -226,6 +235,7 @@ Rectangle {
 
 		delegate: Rectangle{
 			id: availableSensorDelegate
+			property variant dragActionImage: undefined
 			height: sensorText.height
 			width: 100 //TODO
 
@@ -236,34 +246,35 @@ Rectangle {
 
 			MouseArea{
 				anchors.fill: parent
-				property int initialX: 0
-				property int initialY: 0
 
-				property variant mappedCoord: favoriteLayout.mapToItem(availableSensorList, 0, 0); //TODO doesn't work for first list element for some reason...
-
-				drag.target: availableSensorDelegate
+				drag.target: undefined
 				drag.axis: Drag.XandYAxis
-				drag.minimumX: mappedCoord.x
-				drag.maximumX: mappedCoord.x + favoriteLayout.width - availableSensorDelegate.width
-				drag.minimumY: mappedCoord.y
-				drag.maximumY: mappedCoord.y + favoriteLayout.height - availableSensorDelegate.height
+				property bool moved: false
 
 				onPressed: {
-					initialX = availableSensorDelegate.x;
-					initialY = availableSensorDelegate.y;
+					var comp = Qt.createComponent("DragActionImage.qml");
+					dragActionImage = comp.createObject(favoriteLayout);
+					dragActionImage.source = '../sensor.png'
+					drag.target = dragActionImage;
+					drag.minimumX = MainScripts.TOOLBARWIDTH
+					drag.maximumX = favoriteLayout.width - dragActionImage.width
+					drag.minimumY = 0;
+					drag.maximumY = favoriteLayout.height - dragActionImage.height;
+					dragActionImage.x = mapToItem(favoriteLayout, mouseX, mouseY).x - dragActionImage.width/2;
+					dragActionImage.y = mapToItem(favoriteLayout, mouseX, mouseY).y - dragActionImage.height/2;
+					var moved = false;
+				}
+
+				onPositionChanged: {
+					moved = true;
 				}
 
 				onReleased: {
+					var newX = mapToItem(favoriteLayout, mouseX, mouseY).x - MainScripts.TOOLBARWIDTH - dragActionImage.width/2
+					var newY = dragActionImage.y;
 
-					//TODO some reuse perhaps...
-					var newX = availableSensorDelegate.x - availableSensorDelegate.width/2;
-					var newY = availableSensorDelegate.y - availableSensorDelegate.height/2;
-					var mapped = availableSensorList.mapToItem(favoriteLayout, newX, newY);
-					newX = mapped.x;
-					newY = mapped.y;
-
-					var maxWidth = favoriteLayout.width - 100; //TODO constants!
-					var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;  //TODO, maybe not same height for sensors
+					var maxWidth = favoriteLayout.width - MainScripts.TOOLBARWIDTH - MainScripts.VISUALSENSORWIDTH
+					var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;
 					if(newX > maxWidth){
 						newX = maxWidth;
 					}
@@ -273,13 +284,22 @@ Rectangle {
 					if(newY < 0){
 						newY = 0;
 					}
+					if(newX < 0){
+						newX = 0;
+					}
 
-					if(newX >= 0){
-						//do nothing if dropped on list again
+					if(moved){
+						//do nothing if not moved
 						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, sensor.id, selectedTabId, MainScripts.SENSOR);
 					}
-					availableSensorDelegate.x = initialX; //reset item location
-					availableSensorDelegate.y = initialY;
+
+					if(dragActionImage != undefined){
+						dragActionImage.destroy();
+					}
+				}
+
+				onClicked:{
+					actionPopup.visible = true;
 				}
 			}
 		}
