@@ -125,7 +125,7 @@ Rectangle {
 					drag.maximumY = favoriteLayout.height - dragActionImage.height;
 					dragActionImage.x = mapToItem(favoriteLayout, mouseX, mouseY).x - dragActionImage.width/2;
 					dragActionImage.y = mapToItem(favoriteLayout, mouseX, mouseY).y - dragActionImage.height/2;
-					var moved = false;
+					moved = false;
 				}
 
 				onPositionChanged: {
@@ -262,7 +262,7 @@ Rectangle {
 					drag.maximumY = favoriteLayout.height - dragActionImage.height;
 					dragActionImage.x = mapToItem(favoriteLayout, mouseX, mouseY).x - dragActionImage.width/2;
 					dragActionImage.y = mapToItem(favoriteLayout, mouseX, mouseY).y - dragActionImage.height/2;
-					var moved = false;
+					moved = false;
 				}
 
 				onPositionChanged: {
@@ -296,10 +296,6 @@ Rectangle {
 					if(dragActionImage != undefined){
 						dragActionImage.destroy();
 					}
-				}
-
-				onClicked:{
-					actionPopup.visible = true;
 				}
 			}
 		}
