@@ -33,7 +33,7 @@ Item{
 				dragActionImage = comp.createObject(favoriteLayout);
 				dragActionImage.source = '../' +  dragActionStaticImage.imagename + '.png'
 				drag.target = dragActionImage;
-				drag.minimumX = favoritelist.width - actionPopup.realWidth + dragAction.width - 4 //TODO 4 from where? Margin somewhere?
+				drag.minimumX = MainScripts.TOOLBARWIDTH
 				drag.maximumX = favoriteLayout.width - dragAction.width
 				drag.minimumY = 0;
 				drag.maximumY = favoriteLayout.height - dragAction.height;
@@ -47,10 +47,10 @@ Item{
 			}
 
 			onReleased: {
-				var newX = mapToItem(favoriteLayout, mouseX, mouseY).x - favoritelist.width + actionPopup.realWidth - dragAction.width-12;  //TODO 12? From where?
+				var newX = mapToItem(favoriteLayout, mouseX, mouseY).x - MainScripts.TOOLBARWIDTH - dragAction.width/2
 				var newY = dragActionImage.y;
 
-				var maxWidth = favoriteLayout.width - favoritelist.width + actionPopup.realWidth - dragAction.width*2 + 4; //TODO why *2? And 4 from where?
+				var maxWidth = favoriteLayout.width - MainScripts.TOOLBARWIDTH - dragAction.width
 				var maxHeight = favoriteLayout.height-MainScripts.VISUALDEVICEHEIGHT;
 				if(newX > maxWidth){
 					newX = maxWidth;

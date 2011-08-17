@@ -149,7 +149,7 @@ Rectangle {
 				content: Component {
 					Item{
 						height: childrenRect.height
-						width: 250 //TODO
+						width: 260 //TODO
 						Text{
 							id: descText
 							text: "Drag an action to the layout panel, or drag a whole device from the list"
