@@ -68,8 +68,12 @@ function methodContains(methods, method){
 	else if(method == "dim"){
 		methodid = 16;
 	}
+	//pad specific:
 	else if(method == "toggle"){
 		return methods & 1 && methods & 2; //on AND off
+	}
+	else if(method == "slider"){
+		methodid = 16; //same as dim
 	}
 
 	//TODO stop, up, down (, execute)

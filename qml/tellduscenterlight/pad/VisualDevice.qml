@@ -17,13 +17,43 @@ Item {
 	Image{
 		id: statusImgDimBack
 		source: action == "dim" ? "../off.png" : "../state_2.png"
-		visible: type == MainScripts.DEVICE
+		visible: type == MainScripts.DEVICE && action != "slider"
 	}
 	Image{
 		id: statusImg
 		source: statusImage()
-		visible: type == MainScripts.DEVICE
+		visible: type == MainScripts.DEVICE && action != "slider"
 		opacity: action == "dim" ? parseInt(actionvalue, 10)/255+0.1 : deviceState == MainScripts.METHOD_DIM ? deviceStateValue/255 + 0.1 : 1
+	}
+
+	Slider{
+		id: slider
+		visible: action == "slider"
+		width: 100 //TODO
+		height: MainScripts.SLIDERHEIGHT
+
+		onSlided: {
+			console.log("DIMMED to " + dimvalue);
+			device.dim(dimvalue);
+		}
+
+		Item {
+			//This is a pseudo-item only for listening for changes in the model data
+			property int state: device.state
+			onStateChanged: {
+				if (state == MainScripts.METHOD_TURNON) {
+					slider.value = slider.maximum;
+				} else if (state == MainScripts.METHOD_TURNOFF) {
+					slider.value = slider.minimum;
+				}
+			}
+			property string stateValue: device.stateValue
+			onStateValueChanged: {
+				if (state == MainScripts.METHOD_DIM) {
+					slider.value = parseInt(stateValue, 10);
+				}
+			}
+		}
 	}
 
 	z: infoBubble.visible || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
@@ -325,6 +355,7 @@ Item {
 		if(action == 'toggle'){
 			return "../toggle.png";
 		}
+
 		if(deviceState == MainScripts.METHOD_TURNON){
 			return "../state_1.png";
 		}

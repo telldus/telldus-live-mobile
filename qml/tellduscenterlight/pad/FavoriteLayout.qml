@@ -139,7 +139,6 @@ Rectangle {
 				}
 
 				onClicked:{
-					console.log("Show popup (perhaps use Mickes?) with action icons that can be dragged...");
 					actionPopup.visible = true;
 				}
 			}
@@ -150,7 +149,7 @@ Rectangle {
 				content: Component {
 					Item{
 						height: childrenRect.height
-						width: 200 //TODO
+						width: 250 //TODO
 						Text{
 							id: descText
 							text: "Drag an action to the layout panel, or drag a whole device from the list"
@@ -187,8 +186,11 @@ Rectangle {
 							DragAction {
 								action: "bell"
 							}
+							DragAction{
+								action: "slider"
+								anchors.verticalCenter: parent.verticalCenter
+							}
 						}
-						//TODO SLIDER
 					}
 				}
 			}
