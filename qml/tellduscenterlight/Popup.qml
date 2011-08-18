@@ -142,7 +142,7 @@ Item {
 			}
 		]
 		transitions: Transition {
-			AnchorAnimation { duration: 100 }
+			AnchorAnimation { duration: popup.opacity == 1 ? 100 : 0 }
 		}
 	}
 
@@ -172,7 +172,7 @@ Item {
 
 		]
 		transitions: Transition {
-			AnchorAnimation { duration: 100 }
+			AnchorAnimation { duration: popup.opacity == 1 ? 100 : 0 }
 		}
 	}
 
