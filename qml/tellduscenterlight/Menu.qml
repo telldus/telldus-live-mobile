@@ -13,11 +13,11 @@ Popup {
 		parent: menu.parent
 		width: root.width
 		height: root.height
-		visible: menu.visible && modal
+		visible: menu.open && modal
 		z: menu.z-1
 	}
-	onVisibleChanged: {
-		if (visible) {
+	onOpenChanged: {
+		if (open) {
 			var coord = root.mapToItem(menu.parent,0,0)
 			shadow.x = coord.x
 			shadow.y = coord.y
@@ -26,7 +26,7 @@ Popup {
 
 	MouseArea {
 		id: mouseArea
-		enabled: menu.visible
+		enabled: menu.open
 		parent: modalArea
 		anchors.fill: parent
 		onPressed: {
@@ -35,7 +35,7 @@ Popup {
 				//Pass on mouse events
 				mouse.accepted = false;
 			} else {
-				menu.visible = false;
+				menu.hide();
 				if (!modal) {
 					mouse.accepted = false;
 				}
