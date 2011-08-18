@@ -180,11 +180,13 @@ Item {
 		transitions: Transition {
 			AnchorAnimation { duration: 100 }
 		}
-
 	}
 
 	function show() {
 		visible = true;
+	}
+	function toggle() {
+		visible = !visible;
 	}
 
 	function coordInside(coord) {
