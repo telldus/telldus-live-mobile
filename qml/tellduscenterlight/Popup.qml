@@ -10,12 +10,10 @@ Item {
 	property variant containInside: assignTo.parent != undefined ? assignTo.parent : assignTo //TODO, set to something else default (when undefined)
 	property bool open: false
 	property string preferredPosition: vertical
-	property int realHeight: properties.isHorizontal ? width : height
-	property int realWidth: properties.isHorizontal ? height : width
 
 	id: popup
-	width: contentLoader.width
-	height: contentLoader.height
+	width: properties.isHorizontal ? contentLoader.height : contentLoader.width
+	height: properties.isHorizontal ? contentLoader.width : contentLoader.height
 
 	opacity: open ? 1 : 0
 	Behavior on opacity { NumberAnimation{ duration: 200 } }
@@ -26,11 +24,11 @@ Item {
 		property bool isHorizontal: popup.preferredPosition == popup.horizontal
 		property bool isVertical: !isHorizontal
 
-		property bool isRight: assignTo.x > (containInside.width - popup.width)
-		property bool isLeft: assignTo.x > (containInside.width - popup.height - assignTo.width)
+		property bool isRight: assignTo.x > (containInside.width - contentLoader.width)
+		property bool isLeft: assignTo.x > (containInside.width - contentLoader.height - assignTo.width)
 
-		property bool isOver: assignTo.y > (containInside.height - popup.width + 25)
-		property bool isUnder: assignTo.y < popup.height
+		property bool isOver: assignTo.y > (containInside.height - contentLoader.width + 25)
+		property bool isUnder: assignTo.y < contentLoader.height
 
 	}
 
@@ -61,12 +59,12 @@ Item {
 
 				Item {
 					id: rotationProperties
-					property int origin: (popup.height > popup.width ? Math.max(popup.height, popup.width) : Math.min(popup.height, popup.width))/2
+					property int origin: (parent.height > parent.width ? Math.max(parent.height, parent.width) : Math.min(parent.height, parent.width))/2
 				}
 
 				transform: [
-					Rotation { id: rotationX; origin.x: popup.width/2; origin.y: popup.height/2; axis { x: 1; y: 0; z: 0} },
-					Rotation { id: rotationY; origin.x: popup.width/2; origin.y: popup.height/2; axis { x: 0; y: 1; z: 0} },
+					Rotation { id: rotationX; origin.x: borderImage.width/2; origin.y: borderImage.height/2; axis { x: 1; y: 0; z: 0} },
+					Rotation { id: rotationY; origin.x: borderImage.width/2; origin.y: borderImage.height/2; axis { x: 0; y: 1; z: 0} },
 					Rotation { id: rotationZ; origin.x: rotationProperties.origin; origin.y: rotationProperties.origin; axis { x: 0; y: 0; z: 1} }
 				]
 				Item {
@@ -131,7 +129,7 @@ Item {
 				name: "upper"
 				when: properties.isOver && properties.isHorizontal
 				AnchorChanges { target: popup; anchors.top: assignTo.bottom }
-				PropertyChanges { target: popup; anchors.topMargin: -popup.width+Math.min(25,containInside.height - assignTo.y - assignTo.height) }
+				PropertyChanges { target: popup; anchors.topMargin: -contentLoader.width+Math.min(25,containInside.height - assignTo.y - assignTo.height) }
 			},
 			State {
 				when: !properties.isUnder && properties.isVertical
@@ -158,7 +156,7 @@ Item {
 				name: "left"
 				when: properties.isLeft && properties.isHorizontal
 				AnchorChanges { target: popup; anchors.left: assignTo.left; }
-				PropertyChanges { target:popup; anchors.leftMargin: -popup.height }
+				PropertyChanges { target:popup; anchors.leftMargin: -contentLoader.height }
 			},
 			State {
 				when: !properties.isRight && properties.isVertical
@@ -184,7 +182,6 @@ Item {
 	function hide() {
 		open = false
 	}
-
 	function toggle() {
 		open = !open
 	}
