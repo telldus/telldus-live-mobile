@@ -216,8 +216,8 @@ Item {
 
 	Popup{
 		id: infoBubble
-		assignTo: visualDevice
-		visible: visualDevice.expanded
+		//assignTo: visualDevice
+		open: visualDevice.expanded //TODO annan property än visible att bind:a emot
 
 		Component{
 			id: infoSensorComp

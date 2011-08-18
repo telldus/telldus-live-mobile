@@ -2,24 +2,26 @@ import Qt 4.7
 import "../mainscripts.js" as MainScripts
 import ".."
 
-Rectangle{
+Menu{
 	id: groupAddRemoveMenu
+	/*
 	height: menuColumn.height
 	width: menuColumn.width
 	color: "lightgray"
 	property string align: ''
+	*/
 	property variant selectedGroup
-	property int deviceElementLeftX: 0
-	property int deviceElementRightX: 0
-	x: deviceElementRightX + groupAddRemoveMenu.width >= main.width ? deviceElementLeftX - groupAddRemoveMenu.width : deviceElementRightX
+	//property int deviceElementLeftX: 0
+	//property int deviceElementRightX: 0
+	//x: deviceElementRightX + groupAddRemoveMenu.width >= main.width ? deviceElementLeftX - groupAddRemoveMenu.width : deviceElementRightX
 
 	Column{
 		id: menuColumn
 
 		MenuOption{
 			text: "Add/Remove"
-			showArrow: true
-			align: groupAddRemoveMenu.align
+			//showArrow: true
+			//align: groupAddRemoveMenu.align
 			isHeader: true
 		}
 

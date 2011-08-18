@@ -21,7 +21,7 @@ Item{
 				//deviceMenu.assignTo = deviceElement
 				deviceMenu.show(); // visible = true
 				if(device.type == MainScripts.GROUPTYPE){
-					var comp = Qt.createComponent("GroupContentMenu.qml");
+					var comp = Qt.createComponent("pad/GroupContentMenu.qml");  //TODO this belongs to pad, move...
 					var groupContentMenu = comp.createObject(main, {"selectedGroup": device});
 					menu = groupContentMenu;
 					groupContentMenu.selectedGroup = device;
@@ -38,7 +38,7 @@ Item{
 				}
 
 				selectedDevice = device;
-				var comp = Qt.createComponent("GroupAddRemoveMenu.qml");
+				var comp = Qt.createComponent("pad/GroupAddRemoveMenu.qml");    //TODO this belongs to pad, move...
 
 				var groupAddRemoveMenu = comp.createObject(main, {"selectedGroup": device}); //TODO set initial values here (and remove undefined-checks)...
 				//menuX(deviceElement, groupAddRemoveMenu);

@@ -3,7 +3,6 @@ import Qt 4.7
 Item {
 	property variant assignTo: parent
 	property bool modal: false
-
 	property alias content: popup.content
 	property alias open: popup.open
 

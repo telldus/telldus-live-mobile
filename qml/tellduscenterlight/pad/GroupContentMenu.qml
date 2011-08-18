@@ -50,8 +50,8 @@ Menu{
 	MenuOption{
 		id: groupContentMenuHeader
 		text: "Devices"
-		showArrow: true //!groupContentMenuHeaderSensor.visible
-		align: groupContentMenu.align
+		//showArrow: true //!groupContentMenuHeaderSensor.visible
+		//align: groupContentMenu.align
 		isHeader: true
 		z: 5
 	}

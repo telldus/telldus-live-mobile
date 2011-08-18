@@ -9,7 +9,6 @@ DeviceElement{
 	DefaultMenu{
 		id: deviceMenu
 		headerText: "Header"
-		assignTo: deviceElement
 
 		model: ListModel{
 			ListElement{
@@ -54,7 +53,7 @@ DeviceElement{
 
 	DefaultMenu{
 		id: addToGroupMenu
-		assignTo: deviceMenu
+		//assignTo: deviceMenu
 		Component{
 			id: footer
 			MenuOption{
@@ -88,6 +87,8 @@ DeviceElement{
 			group.addDevice(selectedDevice.id)
 
 			selectedDevice = undefined
+			deviceMenu.hide();
+			addToGroupMenu.hide();
 		}
 
 		//visible: false

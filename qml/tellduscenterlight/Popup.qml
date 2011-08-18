@@ -7,7 +7,7 @@ Item {
 
 	property Component content
 	property variant assignTo: parent
-	property variant containInside: assignTo.parent != undefined ? assignTo.parent : assignTo //TODO, set to something else default (when undefined)
+	property variant containInside: assignTo.parent
 	property bool open: false
 	property string preferredPosition: vertical
 
