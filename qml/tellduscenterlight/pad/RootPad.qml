@@ -161,93 +161,17 @@ Rectangle {
 		}*/
 	}
 
-	MouseArea{
+	/*
+MouseArea{
 		anchors.fill: parent
 		onClicked: {
 			hideMenus();
 		}
 		visible: selectedDevice != undefined
 	}
+*/
 
-	DefaultMenu{
-		id: deviceMenu
-		headerText: "Header"
-
-		model: ListModel{
-			ListElement{
-				text: "Toggle favorite"
-				optionValue: 'addfavorite'
-			}
-			ListElement{
-				text: "Add to group"
-				optionValue: 'addtogroup'
-			}
-			ListElement{
-				text: "Edit device"
-				optionValue: 'editdevice'
-			}
-		}
-
-		onOptionSelected: {
-			addToGroupMenu.visible = false
-			if(value == "addtogroup"){
-				addToGroupMenu.visible = true
-			}
-			else if(value == "editdevice"){
-				editDevice.visible = true
-				editDevice.update()
-			}
-			else if(value == "addfavorite"){
-				if(selectedDevice.isFavorite){
-					selectedDevice.isFavorite = false;
-				}
-				else{
-					selectedDevice.isFavorite = true;
-				}
-				selectedDevice = undefined;
-			}
-		}
-		visible: selectedDevice != undefined && selectedDevice.type == MainScripts.DEVICETYPE
-	}
-
-	DefaultMenu{
-		id: addToGroupMenu
-		Component{
-			id: footer
-			MenuOption{
-				text: "Add to new group"
-				optionValue: "new"
-				align: deviceMenu.align
-				width: 100 //TODO
-				MouseArea{
-					anchors.fill: parent
-					onClicked: {
-						addToGroupMenu.visible = false
-						console.log("TODO ADD NEW GROUP, set name and stuff, and then add this device there");
-						selectedDevice = undefined;
-					}
-				}
-			}
-		}
-
-		anchors.top: deviceMenu.bottom
-		anchors.topMargin: 10 //TODO
-		anchors.horizontalCenter: deviceMenu.horizontalCenter
-		headerText: "Select group"
-		footerComponent: footer
-
-		model: groupModel
-
-		onOptionSelected: {
-			addToGroupMenu.visible = false
-			var group = deviceModelController.findDevice(value);
-			group.addDevice(selectedDevice.id)
-
-			selectedDevice = undefined
-		}
-
-		visible: false
-	}
+	//TODO KLIPPT HÄRIFRÅN
 
 	Rectangle{
 		id: editDevice
@@ -288,7 +212,7 @@ Rectangle {
 	}
 
 	function hideMenus(){
-		selectedDevice = undefined
+/* TODO		selectedDevice = undefined
 		addToGroupMenu.visible = false
 		if(groupAddRemoveMenu != undefined){
 			groupAddRemoveMenu.destroy();
@@ -296,5 +220,6 @@ Rectangle {
 		if(groupContentMenu != undefined){
 			groupContentMenu.destroy();
 		}
+		*/
 	}
 }

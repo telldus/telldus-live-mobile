@@ -1,32 +1,37 @@
 import Qt 4.7
+import ".."
 
-Rectangle{
+Menu{
 
 	id: deviceMenu
-	property string align: (deviceMenu.x + deviceMenu.width) >= main.width ? 'left' : 'right'
+	//property string align: (deviceMenu.x + deviceMenu.width) >= main.width ? 'left' : 'right'
 	property variant model: undefined
 	property variant footerComponent: undefined
 	signal optionSelected(string value)
-	property bool menuShowArrow: false
+	//property bool menuShowArrow: false
 	property string headerText: ''
-	property int deviceElementLeftX: 0
-	property int deviceElementRightX: 0
-	width: menuColumn.width
-	height: menuColumn.height
-	x: deviceElementRightX + deviceMenu.width >= main.width ? deviceElementLeftX - deviceMenu.width : deviceElementRightX
+	//property int deviceElementLeftX: 0
+	//property int deviceElementRightX: 0
+	//width: menuComp.width
+	//height: menuComp.height
+	//x: deviceElementRightX + deviceMenu.width >= main.width ? deviceElementLeftX - deviceMenu.width : deviceElementRightX
 
-	Rectangle{
-		height: menuColumn.height
-		width: menuColumn.width
-		color: "lightgray"
+//	Menu{
+//		assignTo: visualDevice
+
+		content: menuComp //menuComp
+//	}
+
+	Component{
+		id: menuComp
 
 		Column{
 			id: menuColumn
 
 			MenuOption{
 				text: headerText
-				showArrow: menuShowArrow
-				align: deviceMenu.align
+				//showArrow: menuShowArrow
+				//align: deviceMenu.align
 				isHeader: true
 				visible: headerText != ''
 			}
@@ -35,9 +40,9 @@ Rectangle{
 				model: deviceMenu.model
 				MenuOption{
 					text: model.text != undefined ? model.text : model.device.name
-					showArrow: model.showArrow == undefined ? false : model.showArrow
+					//showArrow: model.showArrow == undefined ? false : model.showArrow
 					optionValue: model.device != undefined ? model.device.id : (model.optionValue == undefined ? 'false' : model.optionValue)
-					align: deviceMenu.align
+					//align: deviceMenu.align
 					isHeader: model.isHeader == undefined ? false : model.isHeader
 				}
 			}

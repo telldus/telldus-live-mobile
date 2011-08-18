@@ -194,7 +194,7 @@ Item {
 		footerComponent: visualDevice.action == "dim" ? footer : undefined
 
 		onOptionSelected: {
-			addToGroupMenu.visible = false
+			addToGroupMenu.hide();
 			if(value == "removefromlayout"){
 				favoriteLayout.visibleMenu = undefined
 				visualDevice.destroy();

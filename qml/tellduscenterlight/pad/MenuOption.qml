@@ -5,50 +5,63 @@ import "../mainscripts.js" as MainScripts
 Item{
 	id: menuOption
 	property alias text: optiontext.text
-	property string align: ''
+	//property string align: ''
 	property bool isHeader: false
-	property bool showArrow: false
-	property int optionWidth: leftarrow.width + optiontext.width + MainScripts.MARGIN_TEXT
+	//property bool showArrow: false
+	property int optionWidth: optiontext.width + MainScripts.MARGIN_TEXT
 	property string optionValue: ''
+	property bool hideIfFavorite: false
 	height: MainScripts.MENUOPTIONHEIGHT
 	width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
 	signal released()
 
-	Rectangle{
+	Item{
 		id: menuOptionRect
 		anchors.fill: parent
-		color: isHeader ? "black" : "lightgray"
+		//TODO visible: menuOption.parent.assignTo == undefined || !deviceMenu.assignTo.hideFavoriteToggle || !hideIfFavorite
+
+		Rectangle{
+			id: menubackground
+			anchors.fill: menuOptionRect
+			visible: false //isHeader
+			color: 'black'
+		}
+
 		Text{
 			id: optiontext
 			anchors.centerIn: parent
 			color: isHeader ? "white" : "black"
+			font.bold: isHeader
 		}
 		MouseArea{
 			id: optionMouseArea
 			anchors.fill: parent
-			visible: !isHeader
+			enabled: !isHeader
 			hoverEnabled: true
 			onEntered: {
-				menuOptionRect.color = "darkgray"
+				menubackground.color = "darkgray"
+				menubackground.visible = true
 			}
 			onExited: {
-				menuOptionRect.color = "lightgray"
+				//menubackground.color = "lightgray"
+				menubackground.visible = false
 			}
 
 			onPressed: {
-				menuOptionRect.color = "blue"
+				menubackground.color = "blue"
 			}
 			onReleased: {
 				if(optionMouseArea.containsMouse){
-					menuOptionRect.color = "darkgray"
+					menubackground.color = "darkgray"
 				}
 				else{
-					menuOptionRect.color = "lightgray"
+					menubackground.color = "lightgray"
 				}
 				deviceMenu.optionSelected(menuOption.optionValue)
 				menuOption.released()
 			}
 		}
+		/*
 		Text{
 			id: leftarrow //TODO image
 			text: "\u21E6"
@@ -68,5 +81,6 @@ Item{
 			anchors.verticalCenter: optiontext.verticalCenter
 			color: isHeader ? "white" : "black"
 		}
+		*/
 	}
 }

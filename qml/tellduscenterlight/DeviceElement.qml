@@ -18,6 +18,8 @@ Item{
 			//if(selectedPane == MainScripts.FULL_DEVICE){
 				selectedDevice = device;
 				var menu = deviceMenu;
+				//deviceMenu.assignTo = deviceElement
+				deviceMenu.show(); // visible = true
 				if(device.type == MainScripts.GROUPTYPE){
 					var comp = Qt.createComponent("GroupContentMenu.qml");
 					var groupContentMenu = comp.createObject(main, {"selectedGroup": device});
@@ -25,8 +27,8 @@ Item{
 					groupContentMenu.selectedGroup = device;
 					main.groupContentMenu = groupContentMenu;
 				}
-				menuX(deviceElement, menu);
-				menu.y = deviceElement.y + deviceElement.height/4
+				//menuX(deviceElement, menu);
+				//menu.y = deviceElement.y + deviceElement.height/4
 			//}
 		}
 		onPressAndHold: {
@@ -39,7 +41,7 @@ Item{
 				var comp = Qt.createComponent("GroupAddRemoveMenu.qml");
 
 				var groupAddRemoveMenu = comp.createObject(main, {"selectedGroup": device}); //TODO set initial values here (and remove undefined-checks)...
-				menuX(deviceElement, groupAddRemoveMenu);
+				//menuX(deviceElement, groupAddRemoveMenu);
 
 				groupAddRemoveMenu.selectedGroup = device;
 				groupAddRemoveMenu.y = deviceElement.y + deviceElement.height/4
@@ -146,6 +148,7 @@ Item{
 		}
 	}
 
+	/*
 	function menuX(deviceElement, menu){
 		menu.deviceElementLeftX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x;
 		menu.deviceElementRightX = menu.deviceElementLeftX + deviceElement.width;
@@ -154,6 +157,7 @@ Item{
 			menu.align = 'left'
 		}
 	}
+	*/
 
 	function setElementHeight(){
 		var height = MainScripts.DEVICEROWHEIGHT;

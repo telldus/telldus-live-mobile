@@ -1,19 +1,20 @@
 import Qt 4.7
 import ".."
 
-Rectangle{
+Menu{
 	id: groupContentMenu
 
-	height: 200 //TODO
-	width: 300 //TODO
-	color: "lightgray"
-	property string align: ''
+	//height: 200 //TODO
+	//width: 300 //TODO
+	//color: "lightgray"
+	//property string align: ''
 	clip: true
 	property variant selectedGroup
-	property int deviceElementLeftX: 0
-	property int deviceElementRightX: 0
-	x: deviceElementRightX + groupContentMenu.width >= main.width ? deviceElementLeftX - groupContentMenu.width : deviceElementRightX
+	//property int deviceElementLeftX: 0
+	//property int deviceElementRightX: 0
+	//x: deviceElementRightX + groupContentMenu.width >= main.width ? deviceElementLeftX - groupContentMenu.width : deviceElementRightX
 
+	/*
 	onXChanged: {
 		deviceMenu.deviceElementLeftX = groupContentMenu.x
 		deviceMenu.deviceElementRightX = groupContentMenu.x + groupContentMenu.width
@@ -24,6 +25,7 @@ Rectangle{
 			groupContentMenu.align = 'right'
 		}
 	}
+	*/
 
 	/*
 	MenuOption{
