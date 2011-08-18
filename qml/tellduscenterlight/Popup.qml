@@ -183,6 +183,10 @@ Item {
 
 	}
 
+	function show() {
+		visible = true;
+	}
+
 	function coordInside(coord) {
 		if (coord.x < 0 || coord.y < 0) {
 			return false;
