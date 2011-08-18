@@ -58,7 +58,7 @@ Item{
 					menubackground.color = "lightgray"
 				}
 				deviceMenu.optionSelected(menuOption.optionValue)
-				menuOption.released()
+				menuOption.released();
 			}
 		}
 		/*
