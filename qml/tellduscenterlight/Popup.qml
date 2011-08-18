@@ -185,6 +185,10 @@ Item {
 	function show() {
 		visible = true;
 	}
+	function hide() {
+		visible = false;
+	}
+
 	function toggle() {
 		visible = !visible;
 	}
