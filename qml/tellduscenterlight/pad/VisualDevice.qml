@@ -149,7 +149,7 @@ Item {
 				return;
 			}
 
-			infoBubble.visible = !infoBubble.visible
+			infoBubble.toggle();
 			VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).expand(infoBubble.visible);
 		}
 		onReleased: {
