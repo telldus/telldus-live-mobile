@@ -61,7 +61,7 @@ Item {
 
 				Item {
 					id: rotationProperties
-					property int origin: Math.max(popup.height, popup.width)/2
+					property int origin: (popup.height > popup.width ? Math.max(popup.height, popup.width) : Math.min(popup.height, popup.width))/2
 				}
 
 				transform: [
