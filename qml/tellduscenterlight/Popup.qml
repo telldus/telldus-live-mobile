@@ -8,6 +8,7 @@ Item {
 	property Component content
 	property variant assignTo: parent
 	property variant containInside: assignTo.parent != undefined ? assignTo.parent : assignTo //TODO, set to something else default (when undefined)
+	property bool open: false
 	property string preferredPosition: vertical
 	property int realHeight: properties.isHorizontal ? width : height
 	property int realWidth: properties.isHorizontal ? height : width
@@ -16,9 +17,9 @@ Item {
 	width: contentLoader.width
 	height: contentLoader.height
 
-	opacity: 0
+	opacity: open ? 1 : 0
 	Behavior on opacity { NumberAnimation{ duration: 200 } }
-	visible: opacity > 0 ? 1 : 0
+	visible: opacity > 0 ? true : false
 
 	Item {
 		id: properties
@@ -178,14 +179,14 @@ Item {
 	}
 
 	function show() {
-		opacity = 1
+		open = true
 	}
 	function hide() {
-		opacity = 0
+		open = false
 	}
 
 	function toggle() {
-		opacity = opacity > 0 ? 0 : 1
+		open = !open
 	}
 
 	function coordInside(coord) {
