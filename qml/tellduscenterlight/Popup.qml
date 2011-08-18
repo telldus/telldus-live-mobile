@@ -16,7 +16,7 @@ Item {
 	height: properties.isHorizontal ? contentLoader.width : contentLoader.height
 
 	opacity: open ? 1 : 0
-	Behavior on opacity { NumberAnimation{ duration: 200 } }
+	Behavior on opacity { NumberAnimation{ duration: 200; easing.type: Easing.InOutQuad } }
 	visible: opacity > 0 ? true : false
 
 	Item {
@@ -176,15 +176,9 @@ Item {
 		}
 	}
 
-	function show() {
-		open = true
-	}
-	function hide() {
-		open = false
-	}
-	function toggle() {
-		open = !open
-	}
+	function show() { open = true }
+	function hide() { open = false }
+	function toggle() { open = !open }
 
 	function coordInside(coord) {
 		if (coord.x < 0 || coord.y < 0) {
