@@ -47,5 +47,6 @@
         <file>qml/tellduscenterlight/pad/MenuHeader.qml</file>
         <file>qml/tellduscenterlight/pad/CreateGroupMenu.qml</file>
         <file>qml/tellduscenterlight/Separator.qml</file>
+        <file>qml/tellduscenterlight/pad/MenuSeparator.qml</file>
     </qresource>
 </RCC>
