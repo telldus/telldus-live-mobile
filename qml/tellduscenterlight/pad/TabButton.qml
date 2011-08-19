@@ -38,9 +38,7 @@ Rectangle{
 
 			MenuOption{
 				text: "Edit Tab"
-				//showArrow: false
 				optionValue: 'todo'
-				//align: 'right'
 				isHeader: true
 			}
 
@@ -84,8 +82,6 @@ Rectangle{
 
 			MenuOption{
 				text: "Delete Tab"
-				//showArrow: false
-				//align: 'right'
 				isHeader: false
 				onReleased: {
 					tabButton.released()

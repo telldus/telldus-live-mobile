@@ -13,12 +13,7 @@ Item{
 	Item{
 		anchors.fill: parent
 		z: 2 //place above mousearea for whole device to allow clicks here
-		/*
-		Image{
-			id: status
-			source: "/bla/bla"
-		}
-		*/
+
 		Text{
 			id: status
 			text: statusIcon(device.state)
@@ -108,17 +103,6 @@ Item{
 		}
 	}
 
-	/*
-	function menuX(deviceElement, menu){
-		menu.deviceElementLeftX = deviceElement.mapToItem(main, deviceElement.x, deviceElement.y).x;
-		menu.deviceElementRightX = menu.deviceElementLeftX + deviceElement.width;
-		menu.align = 'right'
-		if(menu.deviceElementRightX >= main.width){
-			menu.align = 'left'
-		}
-	}
-	*/
-
 	function setElementHeight(){
 		var height = MainScripts.DEVICEROWHEIGHT;
 		if(slider.visible){
@@ -127,8 +111,7 @@ Item{
 		return height;
 	}
 
-	function statusIcon(state){ //TODO remove deviceItem later on
-		//return state + " " + parseInt(deviceItem.statevalue, 10)
+	function statusIcon(state){
 		if(state == DeviceList.METHOD_TURNON){
 			return "\u263C";
 		}

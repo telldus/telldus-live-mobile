@@ -9,8 +9,6 @@ Rectangle {
 
 	property int selectedPane: defaultSelectedMode()
 	property variant selectedDevice: undefined
-	//property variant groupAddRemoveMenu: undefined //TODO better way?
-	//property variant groupContentMenu: undefined
 
 	Component.onCompleted: {  //TODO what of this can be reused?
 		Device.setupCache(deviceModelController)
@@ -161,18 +159,6 @@ Rectangle {
 		}*/
 	}
 
-	/*
-MouseArea{
-		anchors.fill: parent
-		onClicked: {
-			hideMenus();
-		}
-		visible: selectedDevice != undefined
-	}
-*/
-
-	//TODO KLIPPT HÄRIFRÅN
-
 	Rectangle{
 		id: editDevice
 		color: "white"
@@ -209,17 +195,5 @@ MouseArea{
 		function update(){
 			webview.url = "http://example.com/deviceid=" + selectedDevice.id
 		}
-	}
-
-	function hideMenus(){
-/* TODO		selectedDevice = undefined
-		addToGroupMenu.visible = false
-		if(groupAddRemoveMenu != undefined){
-			groupAddRemoveMenu.destroy();
-		}
-		if(groupContentMenu != undefined){
-			groupContentMenu.destroy();
-		}
-		*/
 	}
 }

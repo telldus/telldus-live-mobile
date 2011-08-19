@@ -4,16 +4,7 @@ import ".."
 
 Menu{
 	id: groupAddRemoveMenu
-	/*
-	height: menuColumn.height
-	width: menuColumn.width
-	color: "lightgray"
-	property string align: ''
-	*/
 	property variant selectedGroup
-	//property int deviceElementLeftX: 0
-	//property int deviceElementRightX: 0
-	//x: deviceElementRightX + groupAddRemoveMenu.width >= main.width ? deviceElementLeftX - groupAddRemoveMenu.width : deviceElementRightX
 
 	content: menuComp
 
@@ -25,13 +16,11 @@ Menu{
 
 			MenuOption{
 				text: "Add/Remove"
-				//showArrow: true
-				//align: groupAddRemoveMenu.align
 				isHeader: true
 			}
 
 			Repeater{
-				model: rawDeviceModel   //TODO groups too?
+				model: rawDeviceModel
 
 				Item{
 					property int optionWidth: optiontext.width + MainScripts.MARGIN_TEXT + 50 //TODO
@@ -54,8 +43,7 @@ Menu{
 						MouseArea{
 							anchors.fill: parent
 							onClicked: {
-								//if(checked.visible){
-								if(selectedGroup.hasDevice(modelData.id)){  //TODO why didn't this work? Change back when fixed
+								if(selectedGroup.hasDevice(modelData.id)){
 									selectedGroup.removeDevice(modelData.id);
 									checked.visible = false;
 								}

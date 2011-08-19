@@ -26,14 +26,13 @@ Rectangle {
 		id: tabSelection
 		property alias tabButtonRow: tabButtonRow
 		color: "darkgray"
-		height: tabButtonRow.height //parent.height/2
+		height: tabButtonRow.height
 		anchors.left: parent.left
 		anchors.top: lock.bottom
 		width: MainScripts.TOOLBARWIDTH  //TODO
 		z: 99
 		Column{
 			id: tabButtonRow
-			//height: parent.height
 			width: parent.width
 
 			TabButton{
