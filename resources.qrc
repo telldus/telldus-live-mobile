@@ -46,5 +46,6 @@
         <file>qml/tellduscenterlight/sensor.png</file>
         <file>qml/tellduscenterlight/pad/MenuHeader.qml</file>
         <file>qml/tellduscenterlight/pad/CreateGroupMenu.qml</file>
+        <file>qml/tellduscenterlight/Separator.qml</file>
     </qresource>
 </RCC>
