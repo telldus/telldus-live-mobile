@@ -38,7 +38,8 @@ SOURCES += main.cpp \
 	schedulermodel.cpp \
 	abstractfiltereddevicemodel.cpp \
 	groupdevicemodel.cpp \
-	client.cpp 
+	client.cpp \
+	clientmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -92,7 +93,8 @@ HEADERS += \
 	schedulermodel.h \
 	abstractfiltereddevicemodel.h \
 	groupdevicemodel.h \
-	client.h
+	client.h \
+	clientmodel.h
 
 RESOURCES += \
 	resources.qrc
