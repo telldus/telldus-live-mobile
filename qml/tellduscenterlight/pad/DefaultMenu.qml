@@ -27,6 +27,7 @@ Menu{
 					text: model.text != undefined ? model.text : model.device.name
 					optionValue: model.device != undefined ? model.device.id : (model.optionValue == undefined ? 'false' : model.optionValue)
 					isHeader: model.isHeader == undefined ? false : model.isHeader
+					onSelected: optionSelected(optionValue)
 				}
 			}
 

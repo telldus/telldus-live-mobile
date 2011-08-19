@@ -80,13 +80,13 @@ Rectangle{
 				}
 			}
 
-			MenuOption{
+			MenuOption{ //TODO: Broken
 				text: "Delete Tab"
 				isHeader: false
-				onReleased: {
+				/*onReleased: {
 					tabButton.released()
 					tabEditMenu.visible = false
-				}
+				}*/
 			}
 
 			//TODO upload background image somehow...

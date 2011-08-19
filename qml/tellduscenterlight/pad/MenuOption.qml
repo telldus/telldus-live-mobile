@@ -9,9 +9,11 @@ Item{
 	property int optionWidth: optiontext.width + MainScripts.MARGIN_TEXT
 	property string optionValue: ''
 	property bool hideIfFavorite: false
+
+	signal selected()
+
 	height: MainScripts.MENUOPTIONHEIGHT
 	width: parent == undefined ? optionWidth : (optionWidth > parent.width ? optionWidth : parent.width)
-	signal released()
 
 	Item{
 		id: menuOptionRect
@@ -53,8 +55,7 @@ Item{
 				else{
 					menubackground.color = "lightgray"
 				}
-				deviceMenu.optionSelected(menuOption.optionValue)
-				menuOption.released();
+				menuOption.selected()
 			}
 		}
 	}
