@@ -38,7 +38,7 @@ DeviceElement{
 		headerText: "Device options"
 
 		Component{
-			id: test
+			id: deviceOptionsComp
 			Column{
 				MenuOption{
 					text: "Toggle favorite"
@@ -52,6 +52,7 @@ DeviceElement{
 						}
 						selectedDevice = undefined;
 					}
+					visible: !hideFavoriteToggle
 				}
 				MenuOption{
 					text: "Add to group"
@@ -88,8 +89,6 @@ DeviceElement{
 							group.addDevice(selectedDevice.id)
 
 							selectedDevice = undefined
-							//addToGroupMenu.hide();
-							//deviceMenu.hide();
 						}
 					}
 				}
@@ -104,6 +103,6 @@ DeviceElement{
 			}
 		}
 
-		footerComponent: test
+		footerComponent: deviceOptionsComp
 	}
 }

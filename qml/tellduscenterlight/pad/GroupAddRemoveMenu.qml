@@ -15,7 +15,7 @@ Menu{
 			id: menuColumn
 
 			MenuOption{
-				text: "Add/Remove"
+				text: "Add/Remove from group"
 				isHeader: true
 			}
 
@@ -27,7 +27,6 @@ Menu{
 					height: groupAddRemoveMenu.selectedGroup != undefined && modelData.id == groupAddRemoveMenu.selectedGroup.id ? 0 : MainScripts.MENUOPTIONHEIGHT  //some protection for group in group loop
 					width: optionWidth > parent.width ? optionWidth : parent.width
 					visible: groupAddRemoveMenu.selectedGroup == undefined || modelData.id != groupAddRemoveMenu.selectedGroup.id
-					//color: "lightgray"
 					Rectangle{
 						id: checkbox
 						anchors.left: parent.left
