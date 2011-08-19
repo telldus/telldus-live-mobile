@@ -54,6 +54,18 @@ void DeviceModel::authorizationChanged() {
 	}
 }
 
+void DeviceModel::createGroup(const QString &name, Device *dev) {
+	TelldusLive *telldusLive = TelldusLive::instance();
+	if (!telldusLive->isAuthorized()) {
+		return;
+	}
+	TelldusLiveParams params;
+	params["clientId"] = 112; //TODO
+	params["name"] = name;
+	params["devices"] = dev->id();
+	telldusLive->call("group/add", params, this, SLOT(onGroupAdd(QVariantMap)));
+}
+
 Device *DeviceModel::findDevice(int id) const {
 	for(int i = 0; i < this->rowCount(); ++i) {
 		Device *device = qobject_cast<Device *>(this->get(i).value<QObject *>());
@@ -74,7 +86,26 @@ DeviceModel * DeviceModel::instance() {
 	return PrivateData::instance;
 }
 
+void DeviceModel::onDeviceInfo(const QVariantMap &result) {
+	QVariantList list;
+	list << result;
+	this->addDevices(list);
+}
+
 void DeviceModel::onDevicesList(const QVariantMap &result) {
 	this->addDevices(result["device"].toList());
 	emit devicesLoaded(result["device"].toList());
 }
+
+void DeviceModel::onGroupAdd(const QVariantMap &result) {
+	if (result["status"].toString() != "success") {
+		return;
+	}
+
+	TelldusLive *telldusLive = TelldusLive::instance();
+	TelldusLiveParams params;
+	params["id"] = result["id"];
+	params["supportedMethods"] = 23; //TODO: Use constants
+	telldusLive->call("device/info", params, this, SLOT(onDeviceInfo(QVariantMap)));
+}
+

@@ -55,7 +55,7 @@ DeviceElement{
 
 		onOptionSelected: {
 			addToGroupMenu.hide();
-			if(value == "addtogroup"){				
+			if(value == "addtogroup"){
 				addToGroupMenu.show();
 			}
 			else if(value == "editdevice"){
@@ -85,10 +85,11 @@ DeviceElement{
 					width: 100 //TODO
 					MouseArea{
 						anchors.fill: parent
-						onClicked: {
-							console.log("TODO ADD NEW GROUP, set name and stuff, and then add this device there");
-							selectedDevice = undefined;
-						}
+						onClicked: createGroup.show()
+					}
+					CreateGroupMenu {
+						id: createGroup
+						addDevice: device
 					}
 				}
 			}

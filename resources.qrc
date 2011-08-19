@@ -45,5 +45,6 @@
         <file>qml/tellduscenterlight/slider.png</file>
         <file>qml/tellduscenterlight/sensor.png</file>
         <file>qml/tellduscenterlight/pad/MenuHeader.qml</file>
+        <file>qml/tellduscenterlight/pad/CreateGroupMenu.qml</file>
     </qresource>
 </RCC>
