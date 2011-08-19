@@ -27,9 +27,10 @@ Item {
 		property bool isRight: assignTo.x > (containInside.width - contentLoader.width)
 		property bool isLeft: assignTo.x > (containInside.width - contentLoader.height - assignTo.width)
 
-		property bool isOver: assignTo.y > (containInside.height - contentLoader.width + 25)
+		property bool isOver: assignTo.y > (containInside.height - contentLoader.width + shift)
 		property bool isUnder: assignTo.y < contentLoader.height
 
+		property int shift: 34 - ( (isHorizontal ? assignTo.height : assignTo.width) /2)
 	}
 
 	Loader {
@@ -123,13 +124,13 @@ Item {
 			State {
 				when: !properties.isOver && properties.isHorizontal
 				AnchorChanges { target: popup; anchors.top: assignTo.top }
-				PropertyChanges { target: popup; anchors.topMargin: Math.max(-25, -assignTo.y) }
+				PropertyChanges { target: popup; anchors.topMargin: Math.max(-properties.shift, -assignTo.y) }
 			},
 			State {
 				name: "upper"
 				when: properties.isOver && properties.isHorizontal
 				AnchorChanges { target: popup; anchors.top: assignTo.bottom }
-				PropertyChanges { target: popup; anchors.topMargin: -contentLoader.width+Math.min(25,containInside.height - assignTo.y - assignTo.height) }
+				PropertyChanges { target: popup; anchors.topMargin: -contentLoader.width+Math.min(properties.shift,containInside.height - assignTo.y - assignTo.height) }
 			},
 			State {
 				when: !properties.isUnder && properties.isVertical
@@ -161,13 +162,13 @@ Item {
 			State {
 				when: !properties.isRight && properties.isVertical
 				AnchorChanges { target: popup; anchors.left: assignTo.left }
-				PropertyChanges { target: popup; anchors.leftMargin: Math.max(-25, -assignTo.x) }
+				PropertyChanges { target: popup; anchors.leftMargin: Math.max(-properties.shift, -assignTo.x) }
 			},
 			State {
 				name: "right"
 				when: properties.isRight && properties.isVertical
 				AnchorChanges { target:  popup; anchors.right: assignTo.right; }
-				PropertyChanges { target: popup; anchors.rightMargin: Math.max(-25, -(containInside.width - assignTo.x - assignTo.width)) }
+				PropertyChanges { target: popup; anchors.rightMargin: Math.max(-properties.shift, -(containInside.width - assignTo.x - assignTo.width)) }
 			}
 
 		]
