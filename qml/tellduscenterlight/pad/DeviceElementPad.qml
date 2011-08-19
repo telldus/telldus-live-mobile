@@ -89,6 +89,8 @@ DeviceElement{
 							group.addDevice(selectedDevice.id)
 
 							selectedDevice = undefined
+							addToGroupMenu.hide();
+							deviceMenu.hide();
 						}
 					}
 				}
