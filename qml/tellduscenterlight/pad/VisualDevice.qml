@@ -56,7 +56,7 @@ Item {
 		}
 	}
 
-	z: infoBubble.visible || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
+	z: infoBubble.open || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
 
 	property string action: ''
 	property string actionvalue: ''
@@ -150,7 +150,7 @@ Item {
 			}
 
 			infoBubble.toggle();
-			VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).expand(infoBubble.visible);
+			VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).expand(infoBubble.open);
 		}
 		onReleased: {
 			if(editable && movedX != visualDevice.x || movedY != visualDevice.y){
