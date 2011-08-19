@@ -56,7 +56,7 @@ Item {
 		}
 	}
 
-	z: infoBubble.open || visualDeviceMenu.visible ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
+	z: infoBubble.open || visualDeviceMenu.open ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
 
 	property string action: ''
 	property string actionvalue: ''
@@ -159,7 +159,7 @@ Item {
 		}
 		onPressAndHold: {
 			if(editable){
-				visualDeviceMenu.visible = true
+				visualDeviceMenu.show()
 			}
 		}
 	}
@@ -194,22 +194,9 @@ Item {
 		footerComponent: visualDevice.action == "dim" ? footer : undefined
 
 		onOptionSelected: {
-			addToGroupMenu.hide();
 			if(value == "removefromlayout"){
-				favoriteLayout.visibleMenu = undefined
 				visualDevice.destroy();
 				VisualDeviceList.visualDevicelist.visualDevice(visualDevice.visualDeviceId).deleteDevice();
-			}
-		}
-
-		visible: false
-
-		onVisibleChanged: {
-			if(visible){
-				favoriteLayout.visibleMenu = visualDeviceMenu
-			}
-			else{
-				favoriteLayout.visibleMenu = undefined
 			}
 		}
 	}

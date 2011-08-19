@@ -6,7 +6,6 @@ import ".."
 Rectangle {
 	property int selectedTabId: 1 //default
 	property int selectedVisualDevice
-	property variant visibleMenu
 	property bool editable: false
 
 	id: favoriteLayout
@@ -297,13 +296,5 @@ Rectangle {
 				}
 			}
 		}
-	}
-
-	MouseArea{
-		anchors.fill: parent
-		onClicked: {
-			visibleMenu.visible = false
-		}
-		visible: visibleMenu != undefined
 	}
 }
