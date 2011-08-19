@@ -16,9 +16,8 @@ Menu{
 		Column{
 			id: menuColumn
 
-			MenuOption{
+			MenuHeader{
 				text: headerText
-				isHeader: true
 				visible: headerText != ''
 			}
 

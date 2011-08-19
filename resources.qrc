@@ -44,5 +44,6 @@
         <file>qml/tellduscenterlight/toggle.png</file>
         <file>qml/tellduscenterlight/slider.png</file>
         <file>qml/tellduscenterlight/sensor.png</file>
+        <file>qml/tellduscenterlight/pad/MenuHeader.qml</file>
     </qresource>
 </RCC>
