@@ -24,12 +24,13 @@ Item{
 			anchors.fill: menuOptionRect
 			visible: false
 			color: 'black'
+			opacity: 0.3
 		}
 
 		Text{
 			id: optiontext
 			anchors.centerIn: parent
-			color: isHeader ? "white" : "black"
+			color: isHeader ? "white" : "lightgray"
 			font.bold: isHeader
 		}
 		MouseArea{
