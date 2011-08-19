@@ -35,78 +35,75 @@ DeviceElement{
 
 	DefaultMenu{
 		id: deviceMenu
-		headerText: "Header"
+		headerText: "Device options"
 
-		model: ListModel{
-			ListElement{
-				text: "Toggle favorite"
-				optionValue: 'addfavorite'
-				hideIfFavorite: true //TODO
-			}
-			ListElement{
-				text: "Add to group"
-				optionValue: 'addtogroup'
-			}
-			ListElement{
-				text: "Edit device"
-				optionValue: 'editdevice'
-			}
-		}
-
-		onOptionSelected: {
-			addToGroupMenu.hide();
-			if(value == "addtogroup"){
-				addToGroupMenu.show();
-			}
-			else if(value == "editdevice"){
-				editDevice.visible = true;
-				editDevice.update();
-				deviceMenu.hide();
-			}
-			else if(value == "addfavorite"){
-				deviceMenu.hide();
-				if(selectedDevice.isFavorite){
-					selectedDevice.isFavorite = false;
-				}
-				else{
-					selectedDevice.isFavorite = true;
-				}
-				selectedDevice = undefined;
-			}
-		}
-
-		DefaultMenu{
-			id: addToGroupMenu
-			Component{
-				id: footer
+		Component{
+			id: test
+			Column{
 				MenuOption{
-					text: "Add to new group"
-					optionValue: "new"
-					width: 100 //TODO
-					MouseArea{
-						anchors.fill: parent
-						onClicked: createGroup.show()
+					text: "Toggle favorite"
+					onSelected: {
+						deviceMenu.hide();
+						if(selectedDevice.isFavorite){
+							selectedDevice.isFavorite = false;
+						}
+						else{
+							selectedDevice.isFavorite = true;
+						}
+						selectedDevice = undefined;
 					}
-					CreateGroupMenu {
-						id: createGroup
-						addDevice: device
+				}
+				MenuOption{
+					text: "Add to group"
+					onSelected: {
+						addToGroupMenu.show();
+					}
+
+					DefaultMenu{
+						id: addToGroupMenu
+						Component{
+							id: footer
+							MenuOption{
+								text: "Add to new group"
+								optionValue: "new"
+								width: 100 //TODO
+								MouseArea{
+									anchors.fill: parent
+									onClicked: createGroup.show()
+								}
+								CreateGroupMenu {
+									id: createGroup
+									addDevice: device
+								}
+							}
+						}
+
+						headerText: "Select group"
+						footerComponent: footer
+
+						model: groupModel
+
+						onOptionSelected: {
+							var group = deviceModelController.findDevice(value);
+							group.addDevice(selectedDevice.id)
+
+							selectedDevice = undefined
+							//addToGroupMenu.hide();
+							//deviceMenu.hide();
+						}
+					}
+				}
+				MenuOption{
+					text: "Edit device"
+					onSelected: {
+						editDevice.visible = true;
+						editDevice.update();
+						deviceMenu.hide();
 					}
 				}
 			}
-
-			headerText: "Select group"
-			footerComponent: footer
-
-			model: groupModel
-
-			onOptionSelected: {
-				var group = deviceModelController.findDevice(value);
-				group.addDevice(selectedDevice.id)
-
-				selectedDevice = undefined
-				addToGroupMenu.hide();
-				deviceMenu.hide();
-			}
 		}
+
+		footerComponent: test
 	}
 }
