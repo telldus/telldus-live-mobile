@@ -64,17 +64,20 @@ DeviceElement{
 						id: addToGroupMenu
 						Component{
 							id: footer
-							MenuOption{
-								text: "Add to new group"
-								optionValue: "new"
-								width: 100 //TODO
-								MouseArea{
-									anchors.fill: parent
-									onClicked: createGroup.show()
-								}
-								CreateGroupMenu {
-									id: createGroup
-									addDevice: device
+							Column {
+								MenuSeparator {}
+								MenuOption{
+									text: "Add to new group"
+									optionValue: "new"
+									width: 100 //TODO
+									MouseArea{
+										anchors.fill: parent
+										onClicked: createGroup.show()
+									}
+									CreateGroupMenu {
+										id: createGroup
+										addDevice: device
+									}
 								}
 							}
 						}
