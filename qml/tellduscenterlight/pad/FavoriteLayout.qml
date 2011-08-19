@@ -168,7 +168,6 @@ Rectangle {
 
 			Menu{
 				id: actionPopup
-				containInside: favoriteLayout
 				content: Component {
 					Item{
 						height: childrenRect.height

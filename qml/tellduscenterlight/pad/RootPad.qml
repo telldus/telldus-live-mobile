@@ -9,8 +9,8 @@ Rectangle {
 
 	property int selectedPane: defaultSelectedMode()
 	property variant selectedDevice: undefined
-	property variant groupAddRemoveMenu: undefined //TODO better way?
-	property variant groupContentMenu: undefined
+	//property variant groupAddRemoveMenu: undefined //TODO better way?
+	//property variant groupContentMenu: undefined
 
 	Component.onCompleted: {  //TODO what of this can be reused?
 		Device.setupCache(deviceModelController)
@@ -56,7 +56,7 @@ Rectangle {
 		ListView {
 			id: devicelist
 			height: parent.height
-			width: 300 //TODO
+			width: MainScripts.LISTWIDTH
 
 			model: deviceModel
 
@@ -66,7 +66,7 @@ Rectangle {
 		ListView {
 			id: grouplist
 			height: parent.height
-			width: 300 //TODO
+			width: MainScripts.LISTWIDTH
 			anchors.left: devicelist.right
 
 			model: groupModel
@@ -80,7 +80,7 @@ Rectangle {
 		id: sensorlist
 		height: parent.height
 		anchors.left: toolbar.right
-		width: 300 //TODO
+		width: MainScripts.LISTWIDTH
 		model: sensorModel
 		delegate: SensorElement{ }
 		z: 1

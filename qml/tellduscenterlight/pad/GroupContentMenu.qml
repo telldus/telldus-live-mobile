@@ -1,15 +1,20 @@
+/*
 import Qt 4.7
 import ".."
 
 Menu{
 	id: groupContentMenu
 
-	//height: 200 //TODO
-	//width: 300 //TODO
+	Rectangle{
+	height: 200 //TODO
+	width: 300 //TODO
+	color: 'red'
+	}
 	//color: "lightgray"
 	//property string align: ''
 	clip: true
 	property variant selectedGroup
+*/
 	//property int deviceElementLeftX: 0
 	//property int deviceElementRightX: 0
 	//x: deviceElementRightX + groupContentMenu.width >= main.width ? deviceElementLeftX - groupContentMenu.width : deviceElementRightX
@@ -47,24 +52,91 @@ Menu{
 		delegate: SensorElement {}
 	}
 	*/
-	MenuOption{
-		id: groupContentMenuHeader
-		text: "Devices"
-		//showArrow: true //!groupContentMenuHeaderSensor.visible
-		//align: groupContentMenu.align
-		isHeader: true
-		z: 5
+/*
+	content: compMenu
+
+	Component{
+		id: compMenu
+
+		Item{
+			MenuOption{
+				id: groupContentMenuHeader
+				text: "Devices"
+				//showArrow: true //!groupContentMenuHeaderSensor.visible
+				//align: groupContentMenu.align
+				isHeader: true
+				z: 5
+			}
+
+			ListView {
+				id: groupdevicelist
+				height: parent.height - groupContentMenuHeader.height
+				width: 300 //TODO
+				anchors.top: groupContentMenuHeader.bottom
+
+				model: selectedGroup != undefined ? selectedGroup.devices() : undefined //TODO why is this needed?
+
+				/*
+				delegate: DeviceElementPad {
+					hideFavoriteToggle: true
+				}
+				*/
+/*			}
+		}
 	}
-	ListView {
-		id: groupdevicelist
-		height: parent.height - groupContentMenuHeader.height
-		width: 300 //TODO
-		anchors.top: groupContentMenuHeader.bottom
+}
+*/
 
-		model: selectedGroup != undefined ? selectedGroup.devices() : undefined //TODO why is this needed?
+import Qt 4.7
+import ".."
+import "../mainscripts.js" as MainScripts
 
-		delegate: DeviceElementPad {
-			hideFavoriteToggle: true
+
+Menu{
+
+	id: groupContentMenu
+	//property string align: (deviceMenu.x + deviceMenu.width) >= main.width ? 'left' : 'right'
+	//property bool menuShowArrow: false
+	//property int deviceElementLeftX: 0
+	//property int deviceElementRightX: 0
+	//width: menuComp.width
+	//height: menuComp.height
+	//x: deviceElementRightX + deviceMenu.width >= main.width ? deviceElementLeftX - deviceMenu.width : deviceElementRightX
+
+//	Menu{
+//		assignTo: visualDevice
+
+		content: menuComp //menuComp
+//	}
+
+	Component{
+		id: menuComp
+
+		Column{
+			id: menuColumn
+			width: MainScripts.LISTWIDTH
+
+			MenuOption{
+				id: groupContentMenuHeader
+				text: "Devices"
+				//showArrow: true //!groupContentMenuHeaderSensor.visible
+				//align: groupContentMenu.align
+				isHeader: true
+				z: 5
+			}
+
+			Repeater {
+				id: groupdevicelist
+				//height: 300  //TODO parent.height - groupContentMenuHeader.height
+				//width: 300 //TODO
+
+				//model: selectedGroup != undefined ? selectedGroup.devices() : undefined //TODO why is this needed?
+
+				model: device.devices() //selectedGroup.devices()
+				delegate: DeviceElementPad { //TODO DeviceElementPad, to get menus etc too
+					//hideFavoriteToggle: true
+				}
+			}
 		}
 	}
 }
