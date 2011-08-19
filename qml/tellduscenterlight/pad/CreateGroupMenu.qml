@@ -8,7 +8,10 @@ Menu {
 	id: createGroup
 	modal: true
 	content: Column {
-		Component.onCompleted: { groupName.forceActiveFocus(); }
+		Component.onCompleted: {
+			clients.selectedClient = clientModel.get(0).id
+			groupName.forceActiveFocus();
+		}
 		MenuHeader {
 			text: "Group name:"
 		}
@@ -22,11 +25,42 @@ Menu {
 				anchors.centerIn: parent
 			}
 		}
+		MenuHeader {
+			text: "Select a location:"
+		}
+		Repeater {
+			id: clients
+			property int selectedClient: 0
+			model: clientModel
+			delegate: MenuOption {
+				Rectangle {
+					anchors.left: parent.left
+					anchors.leftMargin: 5
+					anchors.verticalCenter: parent.verticalCenter
+					width: 10
+					height: 10
+
+					Rectangle {
+						visible: clients.selectedClient == client.id
+						radius: 2
+						color: "black"
+						anchors.centerIn: parent
+						width: 4
+						height: 4
+					}
+				}
+
+				text: client.name
+				onSelected: clients.selectedClient = client.id
+			}
+		}
+
+		MenuSeparator {}
 		MenuOption {
 			text: "Create"
 			onSelected: {
 				createGroup.hide()
-				deviceModelController.createGroup(groupName.text, addDevice);
+				deviceModelController.createGroup(clients.selectedClient, groupName.text, addDevice);
 			}
 		}
 	}

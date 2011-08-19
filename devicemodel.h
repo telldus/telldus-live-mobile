@@ -10,7 +10,7 @@ class DeviceModel : public TListModel
 	Q_OBJECT
 public:
 	Q_INVOKABLE void addDevices(const QVariantList &devices);
-	Q_INVOKABLE void createGroup(const QString &name, Device *device);
+	Q_INVOKABLE void createGroup(int clientId, const QString &name, Device *device);
 	Q_INVOKABLE Device *findDevice(int id) const;
 
 	static DeviceModel *instance();

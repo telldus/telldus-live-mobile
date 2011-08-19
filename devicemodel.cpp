@@ -54,13 +54,13 @@ void DeviceModel::authorizationChanged() {
 	}
 }
 
-void DeviceModel::createGroup(const QString &name, Device *dev) {
+void DeviceModel::createGroup(int clientId, const QString &name, Device *dev) {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (!telldusLive->isAuthorized()) {
 		return;
 	}
 	TelldusLiveParams params;
-	params["clientId"] = 112; //TODO
+	params["clientId"] = clientId;
 	params["name"] = name;
 	params["devices"] = dev->id();
 	telldusLive->call("group/add", params, this, SLOT(onGroupAdd(QVariantMap)));
