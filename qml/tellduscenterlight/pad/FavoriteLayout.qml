@@ -160,7 +160,7 @@ Rectangle {
 				}
 
 				onClicked:{
-					actionPopup.visible = true;
+					actionPopup.show();
 				}
 			}
 
