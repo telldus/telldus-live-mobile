@@ -20,6 +20,7 @@ Menu {
 			Column{
 
 				Text{
+					id: messageText
 					text: message
 					anchors.horizontalCenter: parent.horizontalCenter
 				}
@@ -28,7 +29,7 @@ Menu {
 					anchors.horizontalCenter: parent.horizontalCenter
 					Rectangle{
 						height: 40 //TODO
-						width: dialog.width/2
+						width: messageText.width/2
 						color: buttonMouseAreaCancel.pressed ? 'blue' : 'gray'
 						visible: isConfirmation
 						Text{
@@ -45,7 +46,7 @@ Menu {
 					}
 					Rectangle{
 						height: 40 //TODO
-						width: dialog.width/2
+						width: messageText.width/2
 						color: buttonMouseArea.pressed ? 'blue' : 'gray'
 						Text{
 							text: "OK"

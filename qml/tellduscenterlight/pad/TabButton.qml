@@ -1,4 +1,5 @@
 import Qt 4.7
+import ".."
 
 Rectangle{
 	id: tabButton
@@ -22,76 +23,55 @@ Rectangle{
 		}
 		onPressAndHold: {
 			if(selectionTabId > 0 && editable){
-				tabEditMenu.visible = true;
+				tabEditMenu.show();
 			}
 		}
 	}
-	Rectangle{
+
+	Menu{
 		id: tabEditMenu
-		anchors.left: tabButton.right
-		anchors.top: tabButton.top
-		width: tabEditMenuColumn.width
-		height: tabEditMenuColumn.height
-		color: "lightgray"
-		Column{
-			id: tabEditMenuColumn
+		modal: true
+		content: Column {
+			Component.onCompleted: {
+				tabName.forceActiveFocus();
+			}
+			MenuHeader {
+				text: "Edit tab"
+			}
+
+			Rectangle {
+				color: 'white'
+				height: tabName.height + 10
+				width: parent.width
+				TextInput {
+					id: tabName
+					width: parent.width - 10
+					anchors.centerIn: parent
+					text: name
+				}
+			}
+
+			MenuOption {
+				text: "Update name"
+				onSelected: {
+					tabEditMenu.hide()
+					name = tabName.text
+				}
+			}
+			MenuSeparator {}
 
 			MenuOption{
-				text: "Edit Tab"
-				optionValue: 'todo'
-				isHeader: true
-			}
-
-			Rectangle{
-				height: updateNameButtonRect.height
-				width: updateNameTextInput.width + updateNameButtonRect.width
-				color: "white"
-				TextInput{
-					id: updateNameTextInput
-					anchors.left: parent.left
-					text: name
-					height: 40 //TODO
-					width: 100 //TODO
-					anchors.verticalCenter: parent.verticalCenter  //TODO
-					cursorVisible: true  //TODO set focus...
-					focus: true
-				}
-				Rectangle{
-					id: updateNameButtonRect
-					height: updateNameTextInput.height
-					width: updateNameButton.width
-					anchors.left: updateNameTextInput.right
-					anchors.top: parent.top
-					Text{
-						id: updateNameButton
-						text: "Update name"
-						anchors.verticalCenter: parent.verticalCenter
-					}
-					MouseArea{
-						id: updateNameMouseArea
-						anchors.fill: parent
-						hoverEnabled: true
-						onClicked: {
-							name = updateNameTextInput.text
-							tabEditMenu.visible = false
-						}
-					}
-					color: updateNameMouseArea.pressed ? "blue" : updateNameMouseArea.containsMouse ? "darkgray" : "lightgray"
-				}
-			}
-
-			MenuOption{ //TODO: Broken
 				text: "Delete Tab"
 				isHeader: false
 				onSelected: {
 					tabButton.released()
-					tabEditMenu.visible = false
+					tabEditMenu.hide();
 				}
 			}
 
 			//TODO upload background image somehow...
 		}
 
-		visible: false
+		//visible: false
 	}
 }
