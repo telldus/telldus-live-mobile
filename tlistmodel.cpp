@@ -25,6 +25,9 @@ TListModel::~TListModel() {
 
 QVariant TListModel::data(const QModelIndex &index, int role) const {
 	Q_UNUSED(role);
+	if (!index.isValid()) {
+		return QVariant();
+	}
 	return QVariant::fromValue(d->list.at(index.row()));
 }
 
