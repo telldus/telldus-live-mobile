@@ -1,5 +1,6 @@
 import Qt 4.7
 import ".."
+import "../mainscripts.js" as MainScripts
 
 Rectangle{
 	id: tabButton
@@ -7,7 +8,7 @@ Rectangle{
 	property int selectionTabId
 	signal clicked()
 	signal released()
-	height: 40 //TODO
+	height: MainScripts.DEFAULTBUTTONHEIGHT
 	width: parent.width
 	color: buttonMouseArea.pressed ? 'blue' : 'gray'
 
@@ -60,7 +61,7 @@ Rectangle{
 			MenuSeparator {}
 
 			MenuOption{
-				text: "Delete Tab"
+				text: "Delete Layout"
 				isHeader: false
 				onSelected: {
 					tabButton.released()

@@ -232,6 +232,7 @@ var tabAreaList = function(){
 		_tabAreaList[id] = null;
 		db.transaction(function(tx) {
 			tx.executeSql('DELETE FROM TabArea WHERE id = ?', [id]);
+			tx.executeSql('DELETE FROM VisualDevice WHERE tabId = ?', [id]);
 		});
 	}
 

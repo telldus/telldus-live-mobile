@@ -81,6 +81,8 @@ function methodContains(methods, method){
 	return (methods & methodid);
 }
 
+var AVAILABLELISTWIDTH = 140 * SCALEFACTOR;
+var DEFAULTBUTTONHEIGHT = 40 * SCALEFACTOR;
 var DEVICEROWHEIGHT = 50 * SCALEFACTOR;
 var HEADERHEIGHT = 20 * SCALEFACTOR;
 var INFOBUBBLEHEIGHT = 200 * SCALEFACTOR;

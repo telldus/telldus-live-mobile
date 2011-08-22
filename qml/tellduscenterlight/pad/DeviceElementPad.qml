@@ -69,7 +69,6 @@ DeviceElement{
 								MenuOption{
 									text: "Add to new group"
 									optionValue: "new"
-									width: 100 //TODO
 									MouseArea{
 										anchors.fill: parent
 										onClicked: createGroup.show()

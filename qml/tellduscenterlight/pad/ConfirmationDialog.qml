@@ -1,9 +1,10 @@
 import Qt 4.7
 import ".."
+import "../mainscripts.js" as MainScripts
 
 Menu {
-	signal cancel()
-	signal ok()
+	signal rejected()
+	signal accepted()
 	property string message: ''
 	property bool isConfirmation: true
 	modal: true
@@ -28,7 +29,7 @@ Menu {
 				Row{
 					anchors.horizontalCenter: parent.horizontalCenter
 					Rectangle{
-						height: 40 //TODO
+						height: MainScripts.DEFAULTBUTTONHEIGHT
 						width: messageText.width/2
 						color: buttonMouseAreaCancel.pressed ? 'blue' : 'gray'
 						visible: isConfirmation
@@ -40,12 +41,12 @@ Menu {
 							id: buttonMouseAreaCancel
 							anchors.fill: parent
 							onClicked:{
-								cancel();
+								rejected();
 							}
 						}
 					}
 					Rectangle{
-						height: 40 //TODO
+						height: MainScripts.DEFAULTBUTTONHEIGHT
 						width: messageText.width/2
 						color: buttonMouseArea.pressed ? 'blue' : 'gray'
 						Text{
@@ -56,7 +57,7 @@ Menu {
 							id: buttonMouseArea
 							anchors.fill: parent
 							onClicked:{
-								ok();
+								accepted();
 							}
 						}
 					}

@@ -50,12 +50,12 @@ Rectangle {
 				ConfirmationDialog{
 					id: dialog
 					message: "This will delete the tab and everything in it. Continue?"
-					onOk: {
+					onAccepted: {
 						VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
 						selectedTabId = 1; //TODO default, but what if this is deleted?
 						dialog.hide();
 					}
-					onCancel: {
+					onRejected: {
 						dialog.hide();
 					}
 				}
@@ -109,7 +109,7 @@ Rectangle {
 		delegate: Rectangle{
 			id: availableListDelegate
 			height: deviceText.height
-			width: 100 //TODO
+			width: MainScripts.AVAILABLELISTWIDTH
 			property variant dragActionImage: undefined
 
 			Text{
@@ -246,7 +246,7 @@ Rectangle {
 			id: availableSensorDelegate
 			property variant dragActionImage: undefined
 			height: sensorText.height
-			width: 100 //TODO
+			width: availableSensorList.width //MainScripts.AVAILABLELISTWIDTH
 
 			Text{
 				id: sensorText
