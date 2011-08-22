@@ -29,7 +29,7 @@ Item {
 	Slider{
 		id: slider
 		visible: action == "slider"
-		width: 100 //TODO
+		width: MainScripts.SLIDERWIDTH
 		height: MainScripts.SLIDERHEIGHT
 
 		onSlided: {
@@ -76,10 +76,6 @@ Item {
 	property string humidity: device == undefined || type != MainScripts.SENSOR ? '' : device.humidity
 	property string temperature: device == undefined || type != MainScripts.SENSOR ? '' : device.temperature
 	property string lastUpdated: device == undefined || type != MainScripts.SENSOR ? '' : device.lastUpdated
-
-	//make this default, then the content and size may differ, depending on for exampele sensor or device, and onclick event, but move etc common
-
-	//TODO edit mode? When it's ok to move around stuff?
 
 	Text{
 
@@ -204,7 +200,7 @@ Item {
 	Popup{
 		id: infoBubble
 		//assignTo: visualDevice
-		open: visualDevice.expanded //TODO annan property än visible att bind:a emot
+		open: visualDevice.expanded
 
 		Component{
 			id: infoSensorComp
@@ -212,12 +208,9 @@ Item {
 				id: infoSensor
 				height: childrenRect.height
 				width: childrenRect.width
-				//anchors.top: parent.top
-				//visible: type == MainScripts.SENSOR
 				z: 3
 
 				Column{
-					//anchors.centerIn: parent
 					Text{
 						color: "white"
 						text: deviceName
@@ -244,94 +237,81 @@ Item {
 		Component {
 			id: infoDeviceComp
 			Item {
-				height: childrenRect.height //MainScripts.INFOBUBBLEHEIGHT
-				width: childrenRect.width //MainScripts.INFOBUBBLEWIDTH
-			//	Rectangle{
-			//		id: infoDevice
-					//color: "white"
-					//height: 200 //TODO
-					//width: parent.width
-					//anchors.top: parent.top
-					//visible: type == MainScripts.DEVICE
+				height: childrenRect.height
+				width: childrenRect.width
 
+				Column{
+					Text{
+						text: deviceName
+						color: 'white'
+					}
 
-					//z:2
+					Text{
+						text: "Next run time: " + (device == undefined ? 'undef' : Qt.formatDateTime(device.nextRunTime))
+						color: 'white'
+						visible: device != undefined && device.nextRunTime != 'Invalid Date' //TODO
+					}
 
-					Column{
-						//anchors.centerIn: parent
-						Text{
-							text: deviceName
-							color: 'white'
-						}
-
-						Text{
-							text: "Next run time: " + (device == undefined ? 'undef' : Qt.formatDateTime(device.nextRunTime))
-							color: 'white'
-							visible: device != undefined && device.nextRunTime != 'Invalid Date' //TODO
-						}
-
-						Row{  //TODO possibly reuse?
-							id: buttonrow
-							anchors.horizontalCenter: parent.horizontalCenter
-							ActionButton{
-								text: "OFF"
-								visible: MainScripts.methodContains(deviceMethods, "off")
-								onClicked: {
-									console.log("CLICKED off");
-									device.turnOff();
-								}
-							}
-
-							ActionButton{
-								text: "ON"
-								visible: MainScripts.methodContains(deviceMethods, "on")
-								onClicked: {
-									console.log("CLICKED on");
-									device.turnOn();
-								}
-							}
-
-							ActionButton{
-								text: "BELL"
-								visible: MainScripts.methodContains(deviceMethods, "bell")
-								onClicked: {
-									console.log("CLICKED BELL");
-									device.bell();
-								}
+					Row{
+						id: buttonrow
+						anchors.horizontalCenter: parent.horizontalCenter
+						ActionButton{
+							text: "OFF"
+							visible: MainScripts.methodContains(deviceMethods, "off")
+							onClicked: {
+								console.log("CLICKED off");
+								device.turnOff();
 							}
 						}
 
-						Slider{
-							id: slider
-							width: parent.width
-							//anchors.top: buttonrow.bottom
-							height: MainScripts.SLIDERHEIGHT
-							visible: MainScripts.methodContains(deviceMethods, "dim")
-							onSlided: {
-								console.log("DIMMED to " + dimvalue);
-								device.dim(dimvalue);
+						ActionButton{
+							text: "ON"
+							visible: MainScripts.methodContains(deviceMethods, "on")
+							onClicked: {
+								console.log("CLICKED on");
+								device.turnOn();
 							}
+						}
 
-							Item {
-								//This is a pseudo-item only for listening for changes in the model data
-								property int state: deviceState
-								onStateChanged: {
-									if (state == MainScripts.METHOD_TURNON) {
-										slider.value = slider.maximum;
-									} else if (state == MainScripts.METHOD_TURNOFF) {
-										slider.value = slider.minimum;
-									}
+						ActionButton{
+							text: "BELL"
+							visible: MainScripts.methodContains(deviceMethods, "bell")
+							onClicked: {
+								console.log("CLICKED BELL");
+								device.bell();
+							}
+						}
+					}
+
+					Slider{
+						id: slider
+						width: parent.width
+						height: MainScripts.SLIDERHEIGHT
+						visible: MainScripts.methodContains(deviceMethods, "dim")
+						onSlided: {
+							console.log("DIMMED to " + dimvalue);
+							device.dim(dimvalue);
+						}
+
+						Item {
+							//This is a pseudo-item only for listening for changes in the model data
+							property int state: deviceState
+							onStateChanged: {
+								if (state == MainScripts.METHOD_TURNON) {
+									slider.value = slider.maximum;
+								} else if (state == MainScripts.METHOD_TURNOFF) {
+									slider.value = slider.minimum;
 								}
-								property string stateValue: deviceStateValue
-								onStateValueChanged: {
-									if (state == MainScripts.METHOD_DIM) {
-										slider.value = parseInt(stateValue, 10);
-									}
+							}
+							property string stateValue: deviceStateValue
+							onStateValueChanged: {
+								if (state == MainScripts.METHOD_DIM) {
+									slider.value = parseInt(stateValue, 10);
 								}
 							}
 						}
 					}
-			//	}
+				}
 			}
 		}
 

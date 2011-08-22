@@ -10,37 +10,12 @@ Rectangle {
 	property int selectedPane: defaultSelectedMode()
 	property variant selectedDevice: undefined
 
-	Component.onCompleted: {  //TODO what of this can be reused?
+	Component.onCompleted: {
 		Device.setupCache(deviceModelController)
-		//Sensors.list.setTelldusLive( telldusLive )
 		selectedPane = defaultSelectedMode()
 	}
 
 	anchors.fill: parent
-
-	/* This doesn't work !?!? why?
-	ContentFavorite{
-		id: rootPartFavorite
-		//anchors.fill: parent //fungerar
-		anchors.horizontalCenter: parent.horizontalCenter
-		height: parent.height
-		width: parent.width
-
-		color: "red"
-
-		/*
-		anchors.left: parent.left
-		//anchors.horizontalCenter: parent.horizontalCenter
-		//anchors.verticalCenter: parent.verticalCenter
-		anchors.top: parent.top
-		width: parent.width //300
-		height: parent.height //500
-		color:"red"
-		//pane: 0
-		//selected: 1
-
-	}
-	*/
 
 	ToolbarPad{
 		id: toolbar

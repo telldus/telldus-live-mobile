@@ -101,15 +101,21 @@ Rectangle {
 		model: favoriteModel
 		visible: editable
 		z: 160 //above everything
-		header: Text {
-			font.bold: true
-			text: 'Devices'
+		header: Rectangle {
+			width: MainScripts.TOOLBARWIDTH
+			height: deviceHeader.height
+			Text{
+				id: deviceHeader
+				font.bold: true
+				text: 'Devices'
+				anchors.centerIn: parent
+			}
 		}
 
 		delegate: Rectangle{
 			id: availableListDelegate
 			height: deviceText.height
-			width: MainScripts.AVAILABLELISTWIDTH
+			width: MainScripts.TOOLBARWIDTH
 			property variant dragActionImage: undefined
 
 			Text{
@@ -181,12 +187,11 @@ Rectangle {
 				content: Component {
 					Item{
 						height: childrenRect.height
-						width: 260 //TODO
+						width: childrenRect.width
 						Text{
 							id: descText
-							text: "Drag an action to the layout panel, or drag a whole device from the list"
+							text: "Drag an action to the layout panel,<br>or drag a whole device from the list"
 							wrapMode: Text.WordWrap
-							width: parent.width
 						}
 
 						//action for on/off if supported, toggle, dim (slider and presets)...
@@ -236,9 +241,15 @@ Rectangle {
 		anchors.top: availableFavoriteList.bottom
 		height: parent.height/3
 		model: sensorModel
-		header: Text {
-			font.bold: true
-			text: 'Sensors'
+		header: Rectangle {
+			width: MainScripts.TOOLBARWIDTH
+			height: sensorHeader.height
+			Text{
+				id: sensorHeader
+				font.bold: true
+				text: 'Sensors'
+				anchors.centerIn: parent
+			}
 		}
 		z: 160 //over everything
 
@@ -246,7 +257,7 @@ Rectangle {
 			id: availableSensorDelegate
 			property variant dragActionImage: undefined
 			height: sensorText.height
-			width: availableSensorList.width //MainScripts.AVAILABLELISTWIDTH
+			width: MainScripts.TOOLBARWIDTH
 
 			Text{
 				id: sensorText
