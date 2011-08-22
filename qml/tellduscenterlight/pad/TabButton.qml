@@ -30,7 +30,6 @@ Rectangle{
 
 	Menu{
 		id: tabEditMenu
-		modal: true
 		content: Column {
 			Component.onCompleted: {
 				tabName.forceActiveFocus();
@@ -71,7 +70,5 @@ Rectangle{
 
 			//TODO upload background image somehow...
 		}
-
-		//visible: false
 	}
 }
