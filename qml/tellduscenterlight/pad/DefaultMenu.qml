@@ -34,6 +34,7 @@ Menu{
 			Loader{
 				id: footer
 				sourceComponent: footerComponent
+				anchors.horizontalCenter: parent.horizontalCenter
 			}
 		}
 	}
