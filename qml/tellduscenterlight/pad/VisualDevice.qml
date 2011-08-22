@@ -56,7 +56,7 @@ Item {
 		}
 	}
 
-	z: infoBubble.open || visualDeviceMenu.open ? (selectedVisualDevice == visualDeviceId ? 160 : 150) : 5
+	z: selectedVisualDevice == visualDeviceId ? (infoBubble.open || visualDeviceMenu.open ? 160 : 150) : 5
 
 	property string action: ''
 	property string actionvalue: ''
