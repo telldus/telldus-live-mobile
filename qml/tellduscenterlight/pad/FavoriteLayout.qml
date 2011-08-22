@@ -4,7 +4,7 @@ import "VisualDeviceList.js" as VisualDeviceList
 import ".."
 
 Rectangle {
-	property int selectedTabId: 1 //default
+	property int selectedTabId: VisualDeviceList.tabAreaList.firstTab()
 	property int selectedVisualDevice
 	property bool editable: false
 
@@ -38,6 +38,10 @@ Rectangle {
 				name: "Add new layout"
 				onClicked: {
 					VisualDeviceList.tabAreaList.insertTabArea('New layout', '');
+					if(selectedTabId == 0){
+						//no tab selected, select this one
+						selectedTabId = VisualDeviceList.tabAreaList.firstTab();
+					}
 				}
 				visible: editable
 			}
@@ -52,7 +56,7 @@ Rectangle {
 					message: "This will delete the tab and everything in it. Continue?"
 					onAccepted: {
 						VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
-						selectedTabId = 1; //TODO default, but what if this is deleted?
+						selectedTabId = VisualDeviceList.tabAreaList.firstTab();
 						dialog.hide();
 					}
 					onRejected: {
@@ -99,7 +103,7 @@ Rectangle {
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
 		model: favoriteModel
-		visible: editable
+		visible: editable && selectedTabId > 0
 		z: 160 //above everything
 		header: Rectangle {
 			width: MainScripts.TOOLBARWIDTH
@@ -236,7 +240,7 @@ Rectangle {
 
 	ListView{
 		id: availableSensorList
-		visible: editable
+		visible: editable && selectedTabId > 0
 		anchors.left: parent.left
 		anchors.top: availableFavoriteList.bottom
 		height: parent.height/3

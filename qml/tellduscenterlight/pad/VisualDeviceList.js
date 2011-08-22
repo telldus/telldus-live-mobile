@@ -236,6 +236,18 @@ var tabAreaList = function(){
 		});
 	}
 
+	//return the first tab layout id, 0 if none exists
+	function firstTab(){
+		var firstTab = 0;
+		db.transaction(function(tx) {
+			var result = tx.executeSql('SELECT id FROM TabArea ORDER BY id');
+			if(result.rows.length > 0){
+				firstTab = result.rows.item(0).id;
+			}
+		});
+		return firstTab;
+	}
+
 	function insertTabArea(name, backgroundimage){
 		var insertId = 0;
 		db.transaction(function(tx) {
@@ -276,6 +288,7 @@ var tabAreaList = function(){
 
 	return{
 		init: init,
+		firstTab: firstTab,
 		tab: tab,
 		insertTabArea: insertTabArea,
 		updateTabAreaName: updateTabAreaName,
