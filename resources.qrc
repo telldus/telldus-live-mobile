@@ -48,5 +48,6 @@
         <file>qml/tellduscenterlight/pad/CreateGroupMenu.qml</file>
         <file>qml/tellduscenterlight/Separator.qml</file>
         <file>qml/tellduscenterlight/pad/MenuSeparator.qml</file>
+        <file>qml/tellduscenterlight/pad/ConfirmationDialog.qml</file>
     </qresource>
 </RCC>

@@ -47,12 +47,24 @@ Rectangle {
 			id: tabSelectionButton
 			TabButton{
 				z: 99
+				ConfirmationDialog{
+					id: dialog
+					message: "This will delete the tab and everything in it. Continue?"
+					onOk: {
+						VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
+						selectedTabId = 1; //TODO default, but what if this is deleted?
+						dialog.hide();
+					}
+					onCancel: {
+						dialog.hide();
+					}
+				}
+
 				onClicked: {
 					favoriteLayout.selectedTabId = selectionTabId;
 				}
 				onReleased: {
-					VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
-					selectedTabId = 1; //TODO default, but what if this is deleted?
+					dialog.show();
 				}
 				onNameChanged: {
 					VisualDeviceList.tabAreaList.updateTabAreaName(selectionTabId, name);

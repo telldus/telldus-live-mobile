@@ -83,24 +83,15 @@ Rectangle{
 			MenuOption{ //TODO: Broken
 				text: "Delete Tab"
 				isHeader: false
-				/*onReleased: {
+				onSelected: {
 					tabButton.released()
 					tabEditMenu.visible = false
-				}*/
+				}
 			}
 
 			//TODO upload background image somehow...
 		}
 
 		visible: false
-
-		onVisibleChanged: {
-			if(visible){
-				favoriteLayout.visibleMenu = tabEditMenu
-			}
-			else{
-				favoriteLayout.visibleMenu = undefined
-			}
-		}
 	}
 }
