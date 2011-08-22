@@ -34,7 +34,11 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 		device->setOnline(dev["online"].toBool());
 		device->setState(dev["state"].toInt());
 		device->setStateValue(dev["statevalue"].toString());
-		device->setType(dev["type"].toString());
+		if (dev["type"].type() == QVariant::String) {
+			device->setType(dev["type"].toString());
+		} else {
+			device->setType(Device::Type(dev["type"].toInt()));
+		}
 		if (dev.contains("devices")) {
 			device->addDevices(dev["devices"].toString());
 		}

@@ -7,6 +7,7 @@ function setupCache(deviceModel) {
 			var device = deviceModel.get(i);
 			devices.push(device);
 			device.isFavoriteChanged.connect(device, function() { save([this]) });
+			device.typeChanged.connect(device, function() { save([this]) });
 		}
 		//Save them to the cache
 		save(devices);
