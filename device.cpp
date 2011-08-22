@@ -78,6 +78,9 @@ bool Device::isFavorite() const {
 }
 
 void Device::setIsFavorite(bool isFavorite) {
+	if (isFavorite == d->isFavorite) {
+		return;
+	}
 	d->isFavorite = isFavorite;
 	emit isFavoriteChanged();
 }
@@ -176,6 +179,9 @@ Device::Type Device::type() const {
 }
 
 void Device::setType(Device::Type type) {
+	if (type == d->type) {
+		return;
+	}
 	d->type = type;
 	emit typeChanged();
 }
