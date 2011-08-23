@@ -103,6 +103,7 @@ DeviceElement{
 						editDevice.update();
 						deviceMenu.hide();
 					}
+					visible: false //TODO future feature: edit device
 				}
 			}
 		}

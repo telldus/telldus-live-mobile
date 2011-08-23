@@ -7,8 +7,9 @@ Rectangle {
 	width: MainScripts.TOOLBARWIDTH
 	height: parent.height
 	property string orientation: 'landscape'  //TODO change with orientation?
+	property bool schedulerVisible: false  //TODO future feature: scheduler
 	property int childwidth: MainScripts.TOOLBARWIDTH
-	property int childheight: parent.height/5 //TODO make dynamic
+	property int childheight: parent.height/( 4 + (schedulerVisible? 1 : 0) ) //TODO make dynamic
 
 	Column {
 		anchors.fill: parent
@@ -33,6 +34,7 @@ Rectangle {
 		ToolbarButton{
 			pane: MainScripts.SCHEDULER
 			orientation: toolbar.orientation
+			visible: schedulerVisible //TODO future feature: scheduler
 		}
 		ToolbarButton{
 			pane: MainScripts.FULL_SETTING
