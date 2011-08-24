@@ -46,6 +46,32 @@ Rectangle {
 
 			delegate: DeviceElementPad {}
 		}
+
+		Rectangle{
+			color: 'red'
+			height: 100
+			width: 100
+			x: 100
+			y: 100
+			MouseArea{
+				anchors.fill: parent
+				onClicked: {
+					androidComm.pickImage();
+				}
+			}
+			Text{
+				id: imgurltext
+				anchors.centerIn: parent
+				text: ''
+			}
+			Connections {
+				target: androidComm
+				onImagePicked: {
+					imgurltext.text = imgurl
+				}
+			 }
+		}
+
 		visible: selectedPane == MainScripts.FULL_DEVICE
 	}
 
