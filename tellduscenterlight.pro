@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
-SUBDIRS = src \
-    libtelldusandroid
+SUBDIRS = libtelldusandroid \
+	src

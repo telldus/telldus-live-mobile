@@ -10,6 +10,7 @@
 #include "client.h"
 #include "device.h"
 #include "sensor.h"
+#include "androidcomm.h"
 
 class TelldusCenter::PrivateData {
 public:
@@ -53,8 +54,11 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	d->view->rootContext()->setContextProperty("clientModel", d->clientModel);
 	d->view->rootContext()->setContextProperty("sensorModel", d->sensorModel);
 	d->view->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
+
+	d->view->rootContext()->setContextProperty("androidComm", AndroidComm::instance());
 }
 
 TelldusCenter::~TelldusCenter() {
 	delete d;
 }
+

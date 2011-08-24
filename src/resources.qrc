@@ -46,10 +46,8 @@
         <file>qml/sensor.png</file>
         <file>qml/pad/MenuHeader.qml</file>
         <file>qml/pad/CreateGroupMenu.qml</file>
-        <file>qml/pad/floorplan.jpg</file>
         <file>qml/Separator.qml</file>
         <file>qml/pad/MenuSeparator.qml</file>
         <file>qml/pad/ConfirmationDialog.qml</file>
-        <file>qml/toolbar.png</file>
     </qresource>
 </RCC>

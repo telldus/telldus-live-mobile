@@ -11,5 +11,7 @@
         <item>QtXmlPatterns</item>
         <item>QtDeclarative</item>
     </array>
-    <array name="bundled_libs"/>
+    <array name="bundled_libs">
+		 <item>telldusandroid</item>
+	 </array>
 </resources>

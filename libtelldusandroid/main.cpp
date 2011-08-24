@@ -1,11 +1,11 @@
-#include <QtCore/QCoreApplication>
-
+#include "androidcomm.h"
 #include <android/log.h>
 #include <jni.h>
 
 
-Q_DECL_EXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* /*reserved*/) {
-    __android_log_print(ANDROID_LOG_INFO,"Qt", "Hello from libTelldusAndroid");
+Q_DECL_EXPORT jint JNICALL JNI_OnLoad(JavaVM* vmInit, void* /*reserved*/) {
+	AndroidComm *comm = AndroidComm::instance();
+	comm->setupVM(vmInit);
 
-    return JNI_VERSION_1_4;
+	return JNI_VERSION_1_4;
 }
