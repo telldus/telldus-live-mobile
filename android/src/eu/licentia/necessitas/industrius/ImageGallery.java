@@ -80,20 +80,27 @@ currentActivity.startActivityForResult(Intent.createChooser(intent, "Select Pict
 			String filePath = "";
 			if(resultCode == RESULT_OK){
 				Uri selectedImage = data.getData();
+				Log.i("Telldus", "This: " + selectedImage);
 				String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
 				Cursor cursor = QtApplication.mainActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-				cursor.moveToFirst();  //TODO koll här (testa med andra programmet)
-
-				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-				filePath = cursor.getString(columnIndex);
-				Log.i("Telldus", "FILE: " + filePath);
-				cursor.close();
+				if(cursor != null){
+					if(cursor.moveToFirst()){
+						int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+						filePath = cursor.getString(columnIndex);
+						Log.i("Telldus", "FILE: " + filePath);
+					}
+					cursor.close();
+				}
+				else{
+					//different image pickers are obviously returning different things... this seems to work when using QuickPic...
+					Log.i("Telldus", "NO first in cursor!");
+					Log.i("Telldus", "FILE (2): " + selectedImage);
+					filePath = selectedImage.toString();
+				}
 			}
 			pickedImage(filePath);
 			finish(); //finish
-			 //setResult(RESULT_OK, data);
-			 //QtApplication.redrawSurface(0,0,300,300);
 		}
 	}
 
