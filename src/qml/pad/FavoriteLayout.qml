@@ -13,8 +13,6 @@ Rectangle {
 	Connections {
 		/*target: imagePicker  //TODO
 		onImagePicked: {
-			console.log("TILLBAKA3 med " + imgurl);
-			selectedTabId = VisualDeviceList.tabAreaList.firstTab();
 			VisualDeviceList.tabAreaList.updateTabAreaBackgroundImage(selectedTabId, imgurl);
 		}
 		*/
@@ -63,7 +61,7 @@ Rectangle {
 				z: 99
 				ConfirmationDialog{
 					id: dialog
-					message: "This will delete the tab and everything in it. Continue?"
+					message: "This will delete the tab and everything on it. Continue?"
 					onAccepted: {
 						VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
 						selectedTabId = VisualDeviceList.tabAreaList.firstTab();
@@ -94,7 +92,7 @@ Rectangle {
 			property string name: ''
 			property string backgroundimage: ''
 			property variant button
-			color: "gray" //backgroundimage == '' ? "gray" : ''
+			color: "gray"
 
 			Image{
 				anchors.fill: parent

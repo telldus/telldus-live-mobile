@@ -65,6 +65,7 @@ Rectangle{
 					tabEditMenu.hide();
 					tabEditMenu.forceActiveFocus(); //TODO Trying to remove keyboard again...
 					tabName.focus = false; //TODO same as above, seems to be a known bug
+					favoriteLayout.selectedTabId = selectionTabId; //change to this tab, so the background is placed correctly
 					//TODO: show image pick-dialog
 				}
 				visible: false //TODO visible when image pick-dialog is created
@@ -80,8 +81,6 @@ Rectangle{
 					tabEditMenu.hide();
 				}
 			}
-
-			//TODO upload background image somehow...
 		}
 	}
 }
