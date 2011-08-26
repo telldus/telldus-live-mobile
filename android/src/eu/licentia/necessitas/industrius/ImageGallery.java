@@ -62,6 +62,7 @@ currentActivity.startActivityForResult(Intent.createChooser(intent, "Select Pict
 		super.onCreate(savedInstanceState);
 
 		QtActivity currentActivity = QtApplication.mainActivity();
+		//Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		Intent intent = new Intent();
 		intent.setType("image/*");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -87,7 +88,8 @@ currentActivity.startActivityForResult(Intent.createChooser(intent, "Select Pict
 				if(cursor != null){
 					if(cursor.moveToFirst()){
 						int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-						filePath = cursor.getString(columnIndex);
+						Log.i("Telldus", "Prepending file://...");
+						filePath = "file://" + cursor.getString(columnIndex);
 						Log.i("Telldus", "FILE: " + filePath);
 					}
 					cursor.close();
