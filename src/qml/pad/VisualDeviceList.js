@@ -240,6 +240,7 @@ var tabAreaList = function(){
 	function firstTab(){
 		var firstTab = 0;
 		db.transaction(function(tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS TabArea(id INTEGER PRIMARY KEY, name TEXT, backgroundimage TEXT)');
 			var result = tx.executeSql('SELECT id FROM TabArea ORDER BY id');
 			if(result.rows.length > 0){
 				firstTab = result.rows.item(0).id;
@@ -269,6 +270,18 @@ var tabAreaList = function(){
 		});
 	}
 
+	function updateTabAreaBackgroundImage(id, newPath){
+		var tabArea = _tabAreaList[id];
+		if(!tabArea){
+			return;
+		}
+
+		tabArea.backgroundimage = newPath; //TODO bind or even update this?
+		db.transaction(function(tx) {
+			tx.executeSql('UPDATE TabArea SET backgroundimage = ? WHERE id = ?', [newPath, id]);
+		});
+	}
+
 	function addTab(tabInfo) {
 		var tabAreaObject = _tabComponent.createObject(_parentTabArea);
 		tabAreaObject.tabId = tabInfo.id;
@@ -292,6 +305,7 @@ var tabAreaList = function(){
 		tab: tab,
 		insertTabArea: insertTabArea,
 		updateTabAreaName: updateTabAreaName,
+		updateTabAreaBackgroundImage: updateTabAreaBackgroundImage,
 		deleteTabArea: deleteTabArea
 	}
 }();
