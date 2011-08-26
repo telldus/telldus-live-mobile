@@ -221,6 +221,7 @@ var tabAreaList = function(){
 			if(rs.rows.length == 0){
 				//no tab areas exists, create a default first one
 				insertTabArea('New layout', '');
+				tabArea.selectedTabId = firstTab();
 			}
 		});
 	}
