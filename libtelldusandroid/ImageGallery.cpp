@@ -17,6 +17,4 @@ JNIEXPORT void JNICALL Java_eu_licentia_necessitas_industrius_ImageGallery_picke
 	comm->pickedImage(str);
 
 	env->ReleaseStringUTFChars(imageurl, str);
-
-	LOGI("TILLBAKAMEDDELANDE!!!");
 }

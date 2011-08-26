@@ -13,7 +13,6 @@ Rectangle {
 	Connections {
 		target: androidComm
 		onImagePicked: {
-			console.log("TILLBAKA3 med " + imgurl);
 			selectedTabId = VisualDeviceList.tabAreaList.firstTab();
 			VisualDeviceList.tabAreaList.updateTabAreaBackgroundImage(selectedTabId, imgurl);
 			//TODO update current background too, bound or manually here?
