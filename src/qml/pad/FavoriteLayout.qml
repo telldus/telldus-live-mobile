@@ -7,6 +7,7 @@ Rectangle {
 	property int selectedTabId: VisualDeviceList.tabAreaList.firstTab()
 	property int selectedVisualDevice
 	property bool editable: false
+	property string orientation: main.height/main.width < 1 ? 'landscape' : 'portrait'  //TODO reuse
 
 	id: favoriteLayout
 
@@ -87,6 +88,7 @@ Rectangle {
 	Component{
 		id: tabArea
 		Rectangle{
+			id: tabAreaRect
 			property int tabId
 			property string name: ''
 			property string backgroundimage: ''
@@ -94,9 +96,15 @@ Rectangle {
 			color: "gray"
 
 			Image{
-				anchors.fill: parent
+				anchors.left: tabArea.left
+				anchors.top: tabAreaRect.top
 				source: backgroundimage
 				visible: backgroundimage != ''
+				fillMode: Image.PreserveAspectFit //Crop
+				sourceSize.height: orientation == 'portrait' ? tabArea.height : tabArea.width
+				sourceSize.width: orientation == 'portrait' ? tabArea.width : tabArea.height
+				width: tabArea.width
+				height: main.height
 			}
 
 			anchors.left: tabSelection.right
