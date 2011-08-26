@@ -65,6 +65,7 @@ Rectangle{
 					tabEditMenu.hide();
 					tabEditMenu.forceActiveFocus(); //TODO Trying to remove keyboard again...
 					tabName.focus = false; //TODO same as above, seems to be a known bug
+					favoriteLayout.selectedTabId = selectionTabId; //change to this tab, so the background is placed correctly
 					androidComm.pickImage();  //TODO this is of course android dependent
 				}
 			}
@@ -79,8 +80,6 @@ Rectangle{
 					tabEditMenu.hide();
 				}
 			}
-
-			//TODO upload background image somehow...
 		}
 	}
 }
