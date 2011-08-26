@@ -182,6 +182,9 @@ Rectangle {
 						newY = 0;
 					}
 					if(newX < 0){
+						if(newX < -10){ //TODO, able to release dragpoint close to edge, but not mistake this when only trying to click
+							moved = false;
+						}
 						newX = 0;
 					}
 
