@@ -96,6 +96,22 @@ void DeviceModel::onDeviceInfo(const QVariantMap &result) {
 	this->addDevices(list);
 }
 
+void DeviceModel::onDeviceRemove(const QVariantMap &result, const QVariantMap &params) {
+	if (result["status"] != "success") {
+		return;
+	}
+	for(int i = 0; i < this->rowCount(); ++i) {
+		Device *device = qobject_cast<Device *>(this->get(i).value<QObject *>());
+		if (!device) {
+			continue;
+		}
+		if (device->id() == params["id"].toInt()) {
+			this->splice(i,1);
+			return;
+		}
+	}
+}
+
 void DeviceModel::onDevicesList(const QVariantMap &result) {
 	this->addDevices(result["device"].toList());
 	emit devicesLoaded(result["device"].toList());
@@ -111,5 +127,12 @@ void DeviceModel::onGroupAdd(const QVariantMap &result) {
 	params["id"] = result["id"];
 	params["supportedMethods"] = 23; //TODO: Use constants
 	telldusLive->call("device/info", params, this, SLOT(onDeviceInfo(QVariantMap)));
+}
+
+void DeviceModel::removeDevice(int id) {
+	TelldusLive *telldusLive = TelldusLive::instance();
+	TelldusLiveParams params;
+	params["id"] = id;
+	telldusLive->call("device/remove", params, this, SLOT(onDeviceRemove(QVariantMap,QVariantMap)), params);
 }
 

@@ -68,5 +68,21 @@ Menu{
 				}
 			}
 		}
+
+		MenuSeparator {}
+
+		MenuOption {
+			text: "Remove group"
+			onSelected: confirm.show();
+			ConfirmationDialog {
+				id: confirm
+				message: 'Are you sure you want to remove this group?'
+				onAccepted: {
+					//We hide the menu since the call to removeDevice is asynchronous and can happen later.
+					groupAddRemoveMenu.hide();
+					deviceModelController.removeDevice(selectedGroup.id)
+				}
+			}
+		}
 	}
 }
