@@ -36,16 +36,16 @@ Device::~Device() {
 	delete d;
 }
 
-void Device::addDevice(int deviceId) {
-	d->groupModel->addDevices(QList<int>() << deviceId);
+void Device::addDevice(int deviceId, bool save) {
+	d->groupModel->addDevices(QList<int>() << deviceId, save);
 }
 
-void Device::addDevices(const QString &devices) {
+void Device::addDevices(const QString &devices, bool save) {
 	QList<int> list;
 	foreach(QString deviceId, devices.split(',')) {
 		list << deviceId.toInt();
 	}
-	d->groupModel->addDevices(list);
+	d->groupModel->addDevices(list, save);
 }
 
 GroupDeviceModel * Device::devices() const {

@@ -28,8 +28,8 @@ public:
 
 	enum Type { DeviceType, GroupType, AnyType };
 
-	Q_INVOKABLE void addDevice(int deviceId); //add device to group
-	void addDevices(const QString &devices);
+	Q_INVOKABLE void addDevice(int deviceId, bool save = true); //add device to group
+	void addDevices(const QString &devices, bool save = true);
 
 	Q_INVOKABLE GroupDeviceModel *devices() const;
 

@@ -10,7 +10,7 @@ public:
 	explicit GroupDeviceModel(QObject *parent = 0);
 	~GroupDeviceModel();
 
-	void addDevices(const QList<int> &devices);
+	void addDevices(const QList<int> &devices, bool save);
 	bool hasDevice(int deviceId) const;
 	void removeDevices(const QList<int> &devices);
 

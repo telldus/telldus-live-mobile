@@ -40,7 +40,7 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 			device->setType(Device::Type(dev["type"].toInt()));
 		}
 		if (dev.contains("devices")) {
-			device->addDevices(dev["devices"].toString());
+			device->addDevices(dev["devices"].toString(), false);
 		}
 	}
 	if (list.size()) {

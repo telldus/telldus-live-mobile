@@ -19,7 +19,7 @@ GroupDeviceModel::~GroupDeviceModel() {
 	delete d;
 }
 
-void GroupDeviceModel::addDevices(const QList<int> &devices) {
+void GroupDeviceModel::addDevices(const QList<int> &devices, bool saveToAPI) {
 	foreach(int deviceId, devices) {
 		qDebug() << "Adding" << deviceId;
 		d->devices << deviceId;
