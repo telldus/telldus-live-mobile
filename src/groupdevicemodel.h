@@ -21,6 +21,10 @@ signals:
 protected:
 	bool filterAcceptsDevice ( Device * ) const;
 	void deviceAdded( Device * );
+	void save();
+
+private slots:
+	void onSetParameter(const QVariantMap &, const QVariantMap &);
 
 private:
 	class PrivateData;
