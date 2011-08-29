@@ -90,6 +90,9 @@ int Device::methods() const {
 }
 
 void Device::setMethods(int methods) {
+	if (d->methods == methods) {
+		return;
+	}
 	d->methods = methods;
 	emit methodsChanged();
 }
