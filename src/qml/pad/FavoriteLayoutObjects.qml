@@ -20,7 +20,7 @@ ListModel {
 		var tabAreaObject = VisualDeviceList.tabAreaList.tab(device.tabId());
 
 		if(device.tabId() > 0){ //Check for correct tab, property of this favoriteLayoutObjects...
-			var visualObject = visualDevice.createObject(tabAreaObject);
+			var visualObject = visualDevice.createObject(tabAreaObject.contentItem);
 			visualObject.x = device.layoutX();
 			visualObject.y = device.layoutY();
 			visualObject.tabId = device.tabId();

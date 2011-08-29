@@ -88,31 +88,34 @@ Rectangle {
 
 	Component{
 		id: tabArea
-		Rectangle{
-			id: tabAreaRect
+		Flickable{
+			id: tabAreaFlick
 			property int tabId
 			property string name: ''
 			property string backgroundimage: ''
 			property variant button
-			color: "gray"
-
-			Image{
-				anchors.left: tabArea.left
-				anchors.top: tabAreaRect.top
-				source: backgroundimage
-				visible: backgroundimage != ''
-				fillMode: Image.PreserveAspectFit //Crop
-				sourceSize.height: orientation == 'portrait' ? tabArea.height : tabArea.width
-				sourceSize.width: orientation == 'portrait' ? tabArea.width : tabArea.height
-				width: tabArea.width
-				height: main.height
-			}
 
 			anchors.left: tabSelection.right
 			anchors.top: lock.top
-			height: parent.height
-			width: parent.width - tabSelection.width
+			height: favoriteLayout.height
+			width: favoriteLayout.width - tabSelection.width
+			contentHeight: background.height
+			contentWidth: background.width
+			interactive: !editable
+			clip: true
 			visible: tabId == selectedTabId
+
+			Rectangle{
+				id: tabAreaRect
+				color: "gray"
+				anchors.fill: parent
+
+				Image{
+					id: background
+					source: backgroundimage
+					visible: backgroundimage != ''
+				}
+			}
 		}
 	}
 
