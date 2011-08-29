@@ -26,6 +26,7 @@ Device::Device(QObject *parent) :
 	d->state = 2;
 	d->type = DeviceType;
 	d->groupModel = new GroupDeviceModel(this);
+	connect(d->groupModel, SIGNAL(changed()), this, SLOT(groupContentChanged()));
 
 	SchedulerModel *sm = SchedulerModel::instance();
 	connect(sm, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(schedulerJobsChanged(QModelIndex,int,int)));
@@ -130,8 +131,21 @@ void Device::onActionResponse(const QVariantMap &result, const QVariantMap &data
 	setState(method);
 }
 
+void Device::onDeviceInfo(const QVariantMap &result, const QVariantMap &) {
+	this->setMethods(result["methods"].toInt());
+}
+
 bool Device::online() const {
 	return d->online;
+}
+
+void Device::groupContentChanged() {
+	TelldusLive *telldusLive = TelldusLive::instance();
+	TelldusLiveParams params;
+	params["id"] = d->id;
+	params["supportedMethods"] = 23; //TODO: Use constants
+	telldusLive->call("device/info", params, this, SLOT(onDeviceInfo(QVariantMap,QVariantMap)));
+
 }
 
 void Device::removeDevice(int deviceId) {
