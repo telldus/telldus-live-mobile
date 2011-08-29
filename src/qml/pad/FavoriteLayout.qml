@@ -46,9 +46,9 @@ Rectangle {
 				name: "Add new layout"
 				onClicked: {
 					VisualDeviceList.tabAreaList.insertTabArea('New layout', '');
-					if(selectedTabId == 0){
+					if(favoriteLayout.selectedTabId == 0){
 						//no tab selected, select this one
-						selectedTabId = VisualDeviceList.tabAreaList.firstTab();
+						favoriteLayout.selectedTabId = VisualDeviceList.tabAreaList.firstTab();
 					}
 				}
 				visible: editable
@@ -64,7 +64,7 @@ Rectangle {
 					message: "This will delete the tab and everything on it. Continue?"
 					onAccepted: {
 						VisualDeviceList.tabAreaList.deleteTabArea(selectionTabId);
-						selectedTabId = VisualDeviceList.tabAreaList.firstTab();
+						favoriteLayout.selectedTabId = VisualDeviceList.tabAreaList.firstTab();
 						dialog.hide();
 					}
 					onRejected: {
@@ -98,16 +98,17 @@ Rectangle {
 			anchors.top: lock.top
 			height: favoriteLayout.height
 			width: favoriteLayout.width - tabSelection.width
-			contentHeight: background.height
-			contentWidth: background.width
+			contentHeight: backgroundimage != '' ? background.height : height
+			contentWidth: background.width != '' ? background.width : width
 			interactive: !editable
 			clip: true
-			visible: tabId == selectedTabId
+			visible: tabId == favoriteLayout.selectedTabId
 
 			Rectangle{
 				id: tabAreaRect
 				color: "gray"
 				anchors.fill: parent
+				visible: tabId == favoriteLayout.selectedTabId
 
 				Image{
 					id: background
@@ -128,7 +129,7 @@ Rectangle {
 		anchors.top: tabSelection.bottom
 		height: parent.height/3
 		model: favoriteModel
-		visible: editable && selectedTabId > 0
+		visible: editable && favoriteLayout.selectedTabId > 0
 		z: 160 //above everything
 		header: Rectangle {
 			width: MainScripts.TOOLBARWIDTH
@@ -201,7 +202,7 @@ Rectangle {
 
 					if(moved){
 						//do nothing if not moved
-						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, selectedTabId);
+						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, device.id, favoriteLayout.selectedTabId);
 					}
 
 					if(dragActionImage != undefined){
@@ -268,7 +269,7 @@ Rectangle {
 
 	ListView{
 		id: availableSensorList
-		visible: editable && selectedTabId > 0
+		visible: editable && favoriteLayout.selectedTabId > 0
 		anchors.left: parent.left
 		anchors.top: availableFavoriteList.bottom
 		height: parent.height/3
@@ -342,7 +343,7 @@ Rectangle {
 
 					if(moved){
 						//do nothing if not moved
-						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, sensor.id, selectedTabId, MainScripts.SENSOR);
+						VisualDeviceList.visualDevicelist.addVisualDevice(newX, newY, sensor.id, favoriteLayout.selectedTabId, MainScripts.SENSOR);
 					}
 
 					if(dragActionImage != undefined){
