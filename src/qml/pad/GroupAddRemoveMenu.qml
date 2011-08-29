@@ -6,24 +6,21 @@ Menu{
 	id: groupAddRemoveMenu
 	property variant selectedGroup
 
-	content: menuComp
-
-	Component{
-		id: menuComp
+	content: Column{
+		MenuOption{
+			text: "Add/Remove from group"
+			isHeader: true
+		}
 
 		Flickable{
-			height: main.height - 200 //TODO
-			width:  menuColumn.width
-			contentHeight: menuColumn.height
+			height: Math.min(main.height/4*3, deviceModel.height)
+			width:  parent.width
+			contentHeight: deviceModel.height
 			clip: true
-			Column{
-				id: menuColumn
 
-				MenuOption{
-					text: "Add/Remove from group"
-					isHeader: true
-				}
 
+			Column {
+				id: deviceModel
 				Repeater{
 					model: rawDeviceModel
 
