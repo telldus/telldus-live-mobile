@@ -15,6 +15,8 @@ public:
 	void removeDevices(const QList<int> &devices);
 	void setId(int id);
 
+signals:
+	void changed();
 
 protected:
 	bool filterAcceptsDevice ( Device * ) const;
