@@ -24,6 +24,7 @@ Menu {
 					id: messageText
 					text: message
 					anchors.horizontalCenter: parent.horizontalCenter
+					color: "white"
 				}
 
 				Row{
