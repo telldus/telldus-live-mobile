@@ -70,6 +70,7 @@ int Device::id() const {
 
 void Device::setId(int id) {
 	d->id = id;
+	d->groupModel->setId(d->id);
 	emit idChanged();
 }
 

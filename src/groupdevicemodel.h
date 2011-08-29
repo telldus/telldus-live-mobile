@@ -13,6 +13,8 @@ public:
 	void addDevices(const QList<int> &devices, bool save);
 	bool hasDevice(int deviceId) const;
 	void removeDevices(const QList<int> &devices);
+	void setId(int id);
+
 
 protected:
 	bool filterAcceptsDevice ( Device * ) const;

@@ -8,11 +8,13 @@
 class GroupDeviceModel::PrivateData {
 public:
 	QSet<int> devices;
+	int id;
 };
 
 GroupDeviceModel::GroupDeviceModel(QObject *parent) :
 AbstractFilteredDeviceModel(DeviceModel::instance(), parent), d(new PrivateData)
 {
+	d->id = 0;
 }
 
 GroupDeviceModel::~GroupDeviceModel() {
@@ -41,4 +43,8 @@ void GroupDeviceModel::removeDevices(const QList<int> &devices) {
 		d->devices.remove(deviceId);
 	}
 	invalidateFilter();
+}
+
+void GroupDeviceModel::setId(int id) {
+	d->id = id;
 }
