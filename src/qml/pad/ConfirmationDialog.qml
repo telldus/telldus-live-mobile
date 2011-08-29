@@ -41,6 +41,7 @@ Menu {
 							id: buttonMouseAreaCancel
 							anchors.fill: parent
 							onClicked:{
+								hide();
 								rejected();
 							}
 						}
@@ -57,6 +58,7 @@ Menu {
 							id: buttonMouseArea
 							anchors.fill: parent
 							onClicked:{
+								hide();
 								accepted();
 							}
 						}
