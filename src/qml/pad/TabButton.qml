@@ -58,6 +58,18 @@ Rectangle{
 					name = tabName.text
 				}
 			}
+
+			MenuOption {
+				text: "Pick background image"
+				onSelected: {
+					tabEditMenu.hide();
+					tabEditMenu.forceActiveFocus(); //TODO Trying to remove keyboard again...
+					tabName.focus = false; //TODO same as above, seems to be a known bug
+					//TODO: show image pick-dialog
+				}
+				visible: false //TODO visible when image pick-dialog is created
+			}
+
 			MenuSeparator {}
 
 			MenuOption{

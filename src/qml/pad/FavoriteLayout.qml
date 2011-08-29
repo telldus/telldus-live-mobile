@@ -10,6 +10,16 @@ Rectangle {
 
 	id: favoriteLayout
 
+	Connections {
+		/*target: imagePicker  //TODO
+		onImagePicked: {
+			console.log("TILLBAKA3 med " + imgurl);
+			selectedTabId = VisualDeviceList.tabAreaList.firstTab();
+			VisualDeviceList.tabAreaList.updateTabAreaBackgroundImage(selectedTabId, imgurl);
+		}
+		*/
+	 }
+
 	TabButton{
 		id: lock
 		anchors.top: parent.top
@@ -84,7 +94,14 @@ Rectangle {
 			property string name: ''
 			property string backgroundimage: ''
 			property variant button
-			color: "gray"
+			color: "gray" //backgroundimage == '' ? "gray" : ''
+
+			Image{
+				anchors.fill: parent
+				source: backgroundimage
+				visible: backgroundimage != ''
+			}
+
 			anchors.left: tabSelection.right
 			anchors.top: lock.top
 			height: parent.height
