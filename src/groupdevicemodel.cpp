@@ -35,7 +35,7 @@ void GroupDeviceModel::addDevices(const QList<int> &devices, bool saveToAPI) {
 }
 
 bool GroupDeviceModel::filterAcceptsDevice(Device *device) const {
-	return hasDevice(device->id());
+	return hasDevice(device->deviceId());
 }
 
 bool GroupDeviceModel::hasDevice(int deviceId) const {

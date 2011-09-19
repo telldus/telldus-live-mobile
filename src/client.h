@@ -10,7 +10,7 @@ class Client : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool editable READ editable NOTIFY editableChanged)
-	Q_PROPERTY(int id READ id NOTIFY idChanged)
+	Q_PROPERTY(int id READ clientId NOTIFY idChanged)
 	Q_PROPERTY(QString name READ name NOTIFY nameChanged)
 	Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
 	Q_PROPERTY(QString version READ version NOTIFY versionChanged)
@@ -22,7 +22,7 @@ public:
 	bool editable() const;
 	void setEditable(bool editable);
 
-	int id() const;
+	int clientId() const;
 	void setId(int id);
 
 	QString name() const;

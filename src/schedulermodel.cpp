@@ -64,7 +64,7 @@ SchedulerJob *SchedulerModel::findJob(int id) const {
 		if (!job) {
 			continue;
 		}
-		if (job->id() == id) {
+		if (job->schedulerJobId() == id) {
 			return job;
 		}
 	}

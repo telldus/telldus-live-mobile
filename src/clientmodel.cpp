@@ -47,7 +47,7 @@ Client *ClientModel::findClient(int id) const {
 		if (!client) {
 			continue;
 		}
-		if (client->id() == id) {
+		if (client->clientId() == id) {
 			return client;
 		}
 	}

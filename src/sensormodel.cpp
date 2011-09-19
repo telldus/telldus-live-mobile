@@ -43,7 +43,7 @@ Sensor *SensorModel::findSensor(int id) const {
 		if (!sensor) {
 			continue;
 		}
-		if (sensor->id() == id) {
+		if (sensor->sensorId() == id) {
 			return sensor;
 		}
 	}

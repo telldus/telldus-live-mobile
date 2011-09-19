@@ -11,7 +11,7 @@ class SchedulerJob : public QObject
 	Q_OBJECT
 	Q_ENUMS(Type)
 	Q_PROPERTY(int deviceId READ deviceId WRITE setDeviceId NOTIFY deviceIdChanged)
-	Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+	Q_PROPERTY(int id READ schedulerJobId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(int method READ method WRITE setMethod NOTIFY methodChanged)
 	Q_PROPERTY(QString methodValue READ methodValue WRITE setMethodValue NOTIFY methodValueChanged)
 	Q_PROPERTY(QDateTime nextRunTime READ nextRunTime WRITE setNextRunTime NOTIFY nextRunTimeChanged)
@@ -32,7 +32,7 @@ public:
 	int deviceId() const;
 	void setDeviceId(int deviceId);
 
-	int id() const;
+	int schedulerJobId() const;
 	void setId(int id);
 
 	int method() const;

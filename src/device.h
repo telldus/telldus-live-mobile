@@ -13,7 +13,7 @@ class Device : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(Type)
-	Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+	Q_PROPERTY(int id READ deviceId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY isFavoriteChanged)
 	Q_PROPERTY(int methods READ methods WRITE setMethods NOTIFY methodsChanged)
 	Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
@@ -35,7 +35,7 @@ public:
 
 	Q_INVOKABLE bool hasDevice(int deviceId) const;  //group has device
 
-	int id() const;
+	int deviceId() const;
 	void setId(int id);
 
 	bool isFavorite() const;

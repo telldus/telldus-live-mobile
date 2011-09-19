@@ -12,7 +12,7 @@ class Sensor : public QObject
 	Q_PROPERTY(bool hasHumidity READ hasHumidity NOTIFY hasHumidityChanged)
 	Q_PROPERTY(bool hasTemperature READ hasTemperature NOTIFY hasTemperatureChanged)
 	Q_PROPERTY(QString humidity READ humidity WRITE setHumidity NOTIFY humidityChanged)
-	Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+	Q_PROPERTY(int id READ sensorId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(QDateTime lastUpdated READ lastUpdated WRITE setLastUpdated NOTIFY lastUpdatedChanged)
 	Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 	Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
@@ -24,7 +24,7 @@ public:
 	void setHumidity(const QString &humidity);
 	bool hasHumidity() const;
 
-	int id() const;
+	int sensorId() const;
 	void setId(int id);
 
 	QDateTime lastUpdated() const;

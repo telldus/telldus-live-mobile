@@ -65,7 +65,7 @@ bool Device::hasDevice(int deviceId) const {
 	return d->groupModel->hasDevice(deviceId);
 }
 
-int Device::id() const {
+int Device::deviceId() const {
 	return d->id;
 }
 
@@ -160,7 +160,7 @@ void Device::setOnline(bool online) {
 void Device::sendMethod(int method, const QString &value) {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	TelldusLiveParams params;
-	params["id"] = this->id();
+	params["id"] = this->deviceId();
 	params["method"] = method;
 	params["value"] = value;
 	telldusLive->call("device/command", params, this, SLOT(onActionResponse(QVariantMap,QVariantMap)), params);

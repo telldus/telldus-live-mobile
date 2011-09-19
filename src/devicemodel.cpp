@@ -66,7 +66,7 @@ void DeviceModel::createGroup(int clientId, const QString &name, Device *dev) {
 	TelldusLiveParams params;
 	params["clientId"] = clientId;
 	params["name"] = name;
-	params["devices"] = dev->id();
+	params["devices"] = dev->deviceId();
 	telldusLive->call("group/add", params, this, SLOT(onGroupAdd(QVariantMap)));
 }
 
@@ -76,7 +76,7 @@ Device *DeviceModel::findDevice(int id) const {
 		if (!device) {
 			continue;
 		}
-		if (device->id() == id) {
+		if (device->deviceId() == id) {
 			return device;
 		}
 	}
@@ -105,7 +105,7 @@ void DeviceModel::onDeviceRemove(const QVariantMap &result, const QVariantMap &p
 		if (!device) {
 			continue;
 		}
-		if (device->id() == params["id"].toInt()) {
+		if (device->deviceId() == params["id"].toInt()) {
 			this->splice(i,1);
 			return;
 		}

@@ -47,7 +47,7 @@ bool Sensor::hasHumidity() const {
 	return d->hasHumidity;
 }
 
-int Sensor::id() const {
+int Sensor::sensorId() const {
 	return d->id;
 }
 

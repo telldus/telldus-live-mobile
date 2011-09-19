@@ -30,7 +30,7 @@ void Client::setEditable(bool editable) {
 	emit editableChanged();
 }
 
-int Client::id() const {
+int Client::clientId() const {
 	return d->id;
 }
 

@@ -39,7 +39,7 @@ void SchedulerJob::setDeviceId(int deviceId) {
 	emit deviceIdChanged();
 }
 
-int SchedulerJob::id() const {
+int SchedulerJob::schedulerJobId() const {
 	return d->id;
 }
 
