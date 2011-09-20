@@ -9,6 +9,7 @@ Item {
 	 property real maximum: 255
 	 property real minimum: 1
 	 property int xMax: width - handle.width - 4
+	 property bool enabled: true
 	 onXMaxChanged: updatePos();
 	 onMinimumChanged: updatePos();
 	 //property string statevalue: '1'
@@ -38,7 +39,7 @@ Item {
 		MouseArea {
 			id: clickableSlider
 			anchors.fill: parent
-			enabled: !favoriteLayout.editable
+			enabled: slider.enabled
 			onClicked: {
 				var newSliderLeftPosition = mouseX - handle.width/2;
 				if(newSliderLeftPosition < 0){
@@ -63,7 +64,7 @@ Item {
 		 MouseArea {
 			 id: mouse
 			 anchors.fill: parent; drag.target: parent
-			 enabled: !favoriteLayout.editable
+			 enabled: slider.enabled
 			 drag.axis: Drag.XAxis; drag.minimumX: 2; drag.maximumX: slider.xMax+2
 			 onReleased: { slider.slided((handle.x-2)/slider.xMax*slider.maximum) }
 		 }
