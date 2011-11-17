@@ -8,6 +8,7 @@ Content{
 		anchors.horizontalCenter: parent.horizontalCenter
 		height: parent.height
 		width: parent.width
+		spacing: 10
 
 		model: favoriteModel
 

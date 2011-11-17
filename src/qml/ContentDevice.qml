@@ -15,6 +15,7 @@ Content {
 			id: contentArea
 			width: parent.width
 			anchors.horizontalCenter: parent.horizontalCenter
+			spacing: 10
 
 			Rectangle{
 				height: MainScripts.HEADERHEIGHT

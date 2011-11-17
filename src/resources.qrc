@@ -49,5 +49,7 @@
         <file>qml/Separator.qml</file>
         <file>qml/pad/MenuSeparator.qml</file>
         <file>qml/pad/ConfirmationDialog.qml</file>
+        <file>qml/header_bg.png</file>
+        <file>qml/row_bg.png</file>
     </qresource>
 </RCC>
