@@ -105,3 +105,15 @@ HEADERS += \
 
 RESOURCES += \
 	resources.qrc
+
+contains(MEEGO_EDITION,harmattan) {
+	icon.files = tellduscenter.png
+    icon.path = /usr/share/icons/hicolor/80x80/apps
+    INSTALLS += icon
+}
+
+contains(MEEGO_EDITION,harmattan) {
+    desktopfile.files = $${TARGET}.desktop
+    desktopfile.path = /usr/share/applications
+    INSTALLS += desktopfile
+}
