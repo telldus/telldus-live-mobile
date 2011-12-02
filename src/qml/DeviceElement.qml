@@ -15,12 +15,12 @@ Column{
 		id: header
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: 40
+		height: 72
 		BorderImage {
 			source: "header_bg.png"
 			anchors.fill: parent
-			border.left: 5; border.top: 5
-			border.right: 5; border.bottom: 5
+			border.left: 10; border.top: 10
+			border.right: 10; border.bottom: 10
 		}
 
 		Text{
@@ -64,8 +64,8 @@ Column{
 		height: actionContent.height + 10
 		anchors.left: parent.left
 		anchors.right: parent.right
-		border.left: 5; border.top: 5
-		border.right: 5; border.bottom: 5
+		border.left: 10; border.top: 10
+		border.right: 10; border.bottom: 10
 
 		Column {
 			id: actionContent
