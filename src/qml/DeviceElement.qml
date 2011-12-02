@@ -1,4 +1,5 @@
 import Qt 4.7
+import com.nokia.meego 1.0 as Meego
 import "mainscripts.js" as MainScripts
 import "DeviceList.js" as DeviceList
 import Telldus 1.0
@@ -75,8 +76,10 @@ Column{
 			anchors.rightMargin: 5
 			spacing: 5
 
-			Row{
+			Meego.ButtonRow{
 				id: buttonrow
+				width: parent.width
+				exclusive: false
 
 				ActionButton{
 					text: "OFF"
