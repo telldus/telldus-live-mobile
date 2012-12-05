@@ -1,0 +1,10 @@
+source {PATH_TO_BBNDK}/bbndk-env.sh
+cmake .. \
+-DTARGET_PLATFORM=BB10 \
+-DCMAKE_C_COMPILER="${QNX_HOST}/usr/bin/ntoarmv7-gcc" \
+-DCMAKE_CXX_COMPILER="${QNX_HOST}/usr/bin/ntoarmv7-g++" \
+-DCMAKE_SYSTEM="QNX 6.5.0" \
+-DCMAKE_SYSTEM_NAME="QNX" \
+-DCMAKE_SYSTEM_PROCESSOR="arm" \
+-DCMAKE_CXX_FLAGS="-fPIC" \
+-DQT_QTCORE_LIBRARY_RELEASE=${QNX_TARGET}/armle-v7/usr/lib/qt4/lib/libQtCore.so

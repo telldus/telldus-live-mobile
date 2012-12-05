@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+	<id>com.telldus.tellduscenterlight</id>
+	<name>TelldusCenter light</name>
+	<versionNumber>1.0.0</versionNumber>
+	<buildIdFile>_buildId</buildIdFile>
+	<description></description>
+	<initialWindow>
+		<autoOrients>true</autoOrients>
+	</initialWindow>
+	<icon><image>icon.png</image></icon>
+	<asset path="TelldusCenter-light" entry="true" type="Qnx/Elf">TelldusCenter-light</asset>
+	<permission system="true">run_native</permission>
+</qnx>
