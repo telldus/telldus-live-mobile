@@ -36,6 +36,7 @@ Rectangle {
 					anchors.leftMargin: 20
 					anchors.right: arrow.left
 					Text {
+						color: "#00659F"
 						width: parent.width
 						font.pixelSize: 45
 						font.weight: Font.Bold
@@ -43,6 +44,7 @@ Rectangle {
 						elide: Text.ElideRight
 					}
 					Text {
+						color: "#999999"
 						font.pixelSize: 25
 						text: "Home"
 					}
@@ -128,6 +130,8 @@ Rectangle {
 				font.pixelSize: 30
 				font.weight: Font.Bold
 				color: "white"
+				style: Text.Raised;
+				styleColor: "#003959"
 			}
 		}
 		Item {
@@ -139,7 +143,9 @@ Rectangle {
 				text: "Favourites"
 				font.pixelSize: 30
 				font.weight: Font.Bold
-				color: "white"
+				color: "#d5ebff"
+				style: Text.Raised;
+				styleColor: "#003959"
 			}
 		}
 	}
