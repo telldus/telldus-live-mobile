@@ -70,5 +70,6 @@
         <file>phone/Footer.qml</file>
         <file>phone/DevicePage.qml</file>
         <file>phone/SensorPage.qml</file>
+        <file>phone/SettingsPage.qml</file>
     </qresource>
 </RCC>

@@ -23,19 +23,11 @@ Rectangle {
 			opacity: footer.activePage == 'sensor' ? 1 : 0
 			Behavior on opacity { NumberAnimation { duration: 100 } }
 		}
-		Item {
+		SettingsPage {
 			id: settingsPage
 			anchors.fill: parent
 			opacity: footer.activePage == 'settings' ? 1 : 0
 			Behavior on opacity { NumberAnimation { duration: 100 } }
-			Text {
-				text: "Settings-sidan"
-				horizontalAlignment: Text.AlignHCenter
-				font.pixelSize: 100
-				anchors.centerIn: parent
-				rotation: -45
-				transformOrigin: Item.Center
-			}
 		}
 	}
 
