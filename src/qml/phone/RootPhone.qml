@@ -1,4 +1,4 @@
-import Qt 4.7
+import QtQuick 1.0
 import "../DeviceList.js" as DeviceList
 import "../mainscripts.js" as MainScripts
 import "../Device.js" as Device
