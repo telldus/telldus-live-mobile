@@ -69,5 +69,6 @@
         <file>phone/rowBg.png</file>
         <file>phone/Footer.qml</file>
         <file>phone/DevicePage.qml</file>
+        <file>phone/SensorPage.qml</file>
     </qresource>
 </RCC>

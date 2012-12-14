@@ -18,19 +18,10 @@ Rectangle {
 			opacity: footer.activePage == 'device' ? 1 : 0
 			Behavior on opacity { NumberAnimation { duration: 100 } }
 		}
-		Item {
-			id: sensorPage
+		SensorPage {
 			anchors.fill: parent
 			opacity: footer.activePage == 'sensor' ? 1 : 0
 			Behavior on opacity { NumberAnimation { duration: 100 } }
-			Text {
-				text: "Sensors-sidan"
-				horizontalAlignment: Text.AlignHCenter
-				font.pixelSize: 100
-				anchors.centerIn: parent
-				rotation: 45
-				transformOrigin: Item.Center
-			}
 		}
 		Item {
 			id: settingsPage
