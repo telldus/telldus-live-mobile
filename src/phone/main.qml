@@ -105,21 +105,23 @@ Rectangle {
 	}
 	Item {
 		id: headerMenu
-		height: 53
+		height: 57
 		anchors.top: header.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
 		Image {
-			height: 63
+			height: 67
 			anchors.left: parent.left
 			anchors.right: parent.right
+			anchors.top: parent.top
 			source: "headerMenuBg.png"
 			fillMode: Image.TileHorizontally
 		}
-		Image {
+		BorderImage {
 			width: parent.width/2
 			height: parent.height
 			source: "headerButtonActive.png"
+			border {left: 20; top: 20; right: 20; bottom: 20 }
 			Text {
 				anchors.centerIn: parent
 				text: "All devices"
