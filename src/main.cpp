@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	TelldusCenter tc(viewer);
 
 	viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-	viewer->setSource(QUrl("qrc:/qml/main.qml"));
+	viewer->setSource(QUrl("qrc:/phone/main.qml"));
 	viewer->showExpanded();
 
 	return app.exec();

@@ -51,5 +51,21 @@
         <file>qml/pad/ConfirmationDialog.qml</file>
         <file>qml/header_bg.png</file>
         <file>qml/row_bg.png</file>
+        <file>phone/main.qml</file>
+        <file>phone/headerBg.png</file>
+        <file>phone/buttonDivider.png</file>
+        <file>phone/footerBg.png</file>
+        <file>phone/footerButtonActive.png</file>
+        <file>phone/footerIconDevices.png</file>
+        <file>phone/footerIconDevicesActive.png</file>
+        <file>phone/footerIconSensors.png</file>
+        <file>phone/footerIconSensorsActive.png</file>
+        <file>phone/footerIconSettings.png</file>
+        <file>phone/footerIconSettingsActive.png</file>
+        <file>phone/headerButtonActive.png</file>
+        <file>phone/headerLogo.png</file>
+        <file>phone/headerMenuBg.png</file>
+        <file>phone/rowArrow.png</file>
+        <file>phone/rowBg.png</file>
     </qresource>
 </RCC>
