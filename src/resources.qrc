@@ -67,5 +67,6 @@
         <file>phone/headerMenuBg.png</file>
         <file>phone/rowArrow.png</file>
         <file>phone/rowBg.png</file>
+        <file>phone/Footer.qml</file>
     </qresource>
 </RCC>
