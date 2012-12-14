@@ -8,6 +8,10 @@
 #include <QMetaMethod>
 #include <QDebug>
 
+#ifdef PLATFORM_BB10
+#include <bb/system/InvokeRequest>
+#endif
+
 class TelldusLiveCall {
 public:
 	QString endpoint;
@@ -28,7 +32,9 @@ public:
 	QString base, key, secret;
 	QQueue<TelldusLiveCall> queue;
 	bool requestPending;
-
+#ifdef PLATFORM_BB10
+	bb::system::InvokeManager *m;
+#endif
 	static TelldusLive *instance;
 };
 
@@ -53,6 +59,12 @@ TelldusLive::TelldusLive(QObject *parent) :
 	} else {
 		d->state = PrivateData::Authorized;
 	}
+
+#ifdef PLATFORM_BB10
+	d->m = new bb::system::InvokeManager(this);
+	connect(d->m, SIGNAL(invoked(const bb::system::InvokeRequest&)), this, SLOT(handleInvoke(const bb::system::InvokeRequest&)));
+#endif
+
 	this->setupManager();
 }
 
@@ -60,10 +72,16 @@ TelldusLive::~TelldusLive() {
 	delete d;
 }
 
+#ifdef PLATFORM_BB10
+void TelldusLive::handleInvoke(const bb::system::InvokeRequest &r) {
+}
+#endif
+
 void TelldusLive::authorize() {
 	d->request->initRequest(KQOAuthRequest::TemporaryCredentials, QUrl(d->base + "/oauth/requestToken"));
 	d->request->setConsumerKey(d->key);
 	d->request->setConsumerSecretKey(d->secret);
+	d->request->setCallbackUrl(QUrl("x-com-telldus-tellduscenter://success"));
 
 	d->manager->setHandleUserAuthorization(true);
 	d->manager->executeRequest(d->request);

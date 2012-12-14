@@ -7,6 +7,10 @@
 #include <QMap>
 #include <QVariant>
 
+#ifdef PLATFORM_BB10
+#include <bb/system/InvokeManager>
+#endif
+
 typedef QMap<QString, QVariant> TelldusLiveParams;
 
 class TelldusLive : public QObject
@@ -36,6 +40,10 @@ private slots:
 	void onAuthorizationReceived(const QString &token, const QString &verifier);
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);
 	void onRequestReady(const QByteArray &response);
+#ifdef PLATFORM_BB10
+	void handleInvoke(const bb::system::InvokeRequest&);
+#endif
+
 
 private:
 	explicit TelldusLive(QObject *parent = 0);
