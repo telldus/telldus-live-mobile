@@ -2,13 +2,17 @@ import QtQuick 1.0
 
 Image {
 	id: footer
-	anchors.bottom: parent.bottom
-	anchors.left: parent.left
-	anchors.right: parent.right
-	source: "footerBg.png"
-	fillMode: Image.TileHorizontally
-	height: 140
-	
+	property string activePage: 'device'
+	height: 125
+	Image {
+		source: "footerBg.png"
+		height: 140
+		fillMode: Image.TileHorizontally
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+	}
+
 	Row {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left

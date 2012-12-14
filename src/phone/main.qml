@@ -72,7 +72,6 @@ Rectangle {
 
 		anchors.top: parent.top
 		anchors.bottom: footer.top
-		anchors.bottomMargin: -20 // TODO
 		anchors.left: parent.left
 		anchors.right: parent.right
 
@@ -145,6 +144,9 @@ Rectangle {
 
 	Footer {
 		id: footer
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
 	}
 }
 
