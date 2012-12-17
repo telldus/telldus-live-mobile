@@ -28,8 +28,6 @@ SET( SOURCES
 	src/client.cpp
 	src/clientmodel.cpp
 
-	qmlapplicationviewer/qmlapplicationviewer.cpp
-
 	qt-json/json.cpp
 )
 
@@ -51,8 +49,6 @@ SET( MOC_HEADERS
 	src/groupdevicemodel.h
 	src/client.h
 	src/clientmodel.h
-
-	qmlapplicationviewer/qmlapplicationviewer.h
 )
 
 SET(RESOURCES

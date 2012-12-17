@@ -1,5 +1,4 @@
 #include <QtGui/QApplication>
-#include "qmlapplicationviewer.h"
 #include <QtDeclarative>
 #include "tellduscenter.h"
 #include "tellduslive.h"
@@ -15,15 +14,14 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationName("TelldusCenter Light");
 	QCoreApplication::setApplicationVersion("Android-1.0");
 
-	QmlApplicationViewer *viewer = new QmlApplicationViewer();
+	QDeclarativeView *viewer = new QDeclarativeView();
 	viewer->setWindowTitle("TelldusCenter Light");
 
 	TelldusCenter tc(viewer);
 
-	viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 	viewer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	viewer->setSource(QUrl("qrc:/phone/main.qml"));
-	viewer->showExpanded();
+	viewer->showFullScreen();
 
 	return app.exec();
 }
