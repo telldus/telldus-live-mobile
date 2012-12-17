@@ -8,6 +8,9 @@ int main(int argc, char *argv[])
 	Q_INIT_RESOURCE(resources);
 
 	QApplication app(argc, argv);
+#ifdef PLATFORM_ANDROID
+	app.setFont(QFont("Roboto"));
+#endif
 
 	QCoreApplication::setOrganizationName("telldus");
 	QCoreApplication::setOrganizationDomain("com.telldus");
