@@ -21,40 +21,4 @@ Item {
 		property HeaderMenuItem activeItem
 		anchors.fill: parent
 	}
-
-	/*BorderImage {
-		width: parent.width/2
-		height: parent.height
-		source: "headerButtonActive.png"
-		border {left: 20; top: 20; right: 20; bottom: 20 }
-		Text {
-			anchors.centerIn: parent
-			text: "All devices"
-			font.pixelSize: 30
-			font.weight: Font.Bold
-			color: "white"
-			style: Text.Raised;
-			styleColor: "#003959"
-		}
-	}*/
-	/*Item {
-		width: parent.width/2
-		height: parent.height
-		anchors.right: parent.right
-		Text {
-			anchors.centerIn: parent
-			text: "Favourites"
-			font.pixelSize: 30
-			font.weight: Font.Bold
-			color: "#d5ebff"
-			style: Text.Raised;
-			styleColor: "#003959"
-		}
-	}*/
-	Component.onCompleted: {
-		/*for(var i in items) {
-			console.log("Set p");
-			items[i].parent = headerMenu
-		}*/
-	}
 }
