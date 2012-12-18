@@ -1,5 +1,6 @@
 #include <QtGui/QApplication>
 #include <QtDeclarative>
+#include <QDesktopWidget>
 #include "tellduscenter.h"
 #include "tellduslive.h"
 
@@ -24,6 +25,14 @@ int main(int argc, char *argv[])
 
 	viewer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	viewer->setSource(QUrl("qrc:/phone/main.qml"));
+
+#ifdef PLATFORM_BB10
+	QDesktopWidget s;
+	QRect size = s.availableGeometry();
+
+	viewer->resize(size.width(), size.height());
+#endif
+
 	viewer->showFullScreen();
 
 	return app.exec();
