@@ -39,7 +39,7 @@ Image {
 			}
 		}
 		Image {
-			source: "buttonDivider.png"
+			source: "menuButtonDivider.png"
 			height: parent.height
 			fillMode: Image.TileVertically
 		}
@@ -64,7 +64,7 @@ Image {
 			}
 		}
 		Image {
-			source: "buttonDivider.png"
+			source: "menuButtonDivider.png"
 			height: parent.height
 			fillMode: Image.TileVertically
 		}

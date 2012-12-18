@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>phone/main.qml</file>
         <file>phone/headerBg.png</file>
-        <file>phone/buttonDivider.png</file>
+        <file>phone/menuButtonDivider.png</file>
         <file>phone/footerBg.png</file>
         <file>phone/footerButtonActive.png</file>
         <file>phone/footerIconDevices.png</file>
