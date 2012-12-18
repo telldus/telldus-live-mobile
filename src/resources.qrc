@@ -22,6 +22,7 @@
         <file>phone/SettingsPage.qml</file>
         <file>phone/HeaderMenu.qml</file>
         <file>phone/HeaderMenuItem.qml</file>
+        <file>phone/Header.qml</file>
         <file>phone/buttonBg.png</file>
     </qresource>
 </RCC>
