@@ -13,15 +13,6 @@ Item {
 		source: "headerButtonActive.png"
 		border {left: 20; top: 20; right: 20; bottom: 20 }
 		opacity: active ? 1 : 0
-		/*Text {
-			anchors.centerIn: parent
-			text: "All devices"
-			font.pixelSize: 30
-			font.weight: Font.Bold
-			color: "white"
-			style: Text.Raised;
-			styleColor: "#003959"
-		}*/
 	}
 
 	Text {
@@ -29,7 +20,7 @@ Item {
 		anchors.centerIn: parent
 		font.pixelSize: 30
 		font.weight: Font.Bold
-		color: "#d5ebff"
+		color: active ? "white" : "#d5ebff"
 		style: Text.Raised;
 		styleColor: "#003959"
 	}
