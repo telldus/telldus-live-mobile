@@ -6,13 +6,32 @@ Item {
 	Component {
 		id: deviceDelegate
 		Item {
-			width: parent.width
+			id: wrapper
+			width: list.width
 			height: 150
+			clip: false
+			ListView.onRemove: SequentialAnimation {
+				PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
+				PropertyAction { target: wrapper; property: "z"; value: -1 }
+				NumberAnimation { target: wrapper; properties: "height,opacity"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
+				PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: false }
+			}
+			ListView.onAdd: SequentialAnimation {
+				PropertyAction { target: wrapper; property: "z"; value: -1 }
+				ParallelAnimation {
+					NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150; duration: 250; easing.type: Easing.InOutQuad }
+					NumberAnimation { target: wrapper; properties: "opacity"; from: 0; to: 1; duration: 250; easing.type: Easing.InOutQuad }
+				}
+				PropertyAction { target: wrapper; property: "z"; value: 0 }
+			}
 			BorderImage {
 				source: "rowBg.png"
-				anchors.fill: parent
+				anchors.top: parent.top
+				anchors.right: parent.right
+				anchors.left: parent.left
 				anchors.leftMargin: 20
 				anchors.rightMargin: 20
+				height: 140
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
 				Rectangle {
@@ -64,14 +83,14 @@ Item {
 			width: parent.width
 		}
 		footer: Item {
-			height: 20
+			height: 10
 			width: parent.width
 		}
 
 		anchors.fill: parent
-		model: deviceModel
+		model: favoriteModel
 		delegate: deviceDelegate
-		spacing: 10
+		spacing: 0
 	}
 
 	Image {
