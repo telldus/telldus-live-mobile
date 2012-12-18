@@ -33,7 +33,13 @@ int main(int argc, char *argv[])
 	viewer->resize(size.width(), size.height());
 #endif
 
+#if defined(PLATFORM_DESKTOP)
+	viewer->show();
+#elif defined(PLATFORM_ANDROID)
+	viewer->show();
+#else
 	viewer->showFullScreen();
+#endif
 
 	return app.exec();
 }
