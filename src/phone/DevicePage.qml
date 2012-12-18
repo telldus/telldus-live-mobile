@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import Telldus 1.0
 
 Item {
 	id: devicePage

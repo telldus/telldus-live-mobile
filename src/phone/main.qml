@@ -7,28 +7,48 @@ Rectangle {
 	width: 768
 	height: 1280
 
+	Component {
+		id: component_devicePage
+		DevicePage {}
+	}
+	Component {
+		id: component_SensorPage
+		SensorPage {}
+	}
+	Component {
+		id: component_settingsPage
+		SettingsPage {}
+	}
 	Item {
 		anchors.top: parent.top
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: footer.top
-		DevicePage {
-			id: devicePage
+
+		Loader {
+			id: loader_devicePage
 			anchors.fill: parent
 			opacity: footer.activePage == 'device' ? 1 : 0
 			Behavior on opacity { NumberAnimation { duration: 100 } }
+			sourceComponent: opacity > 0  ? component_devicePage : undefined
 		}
-		SensorPage {
+
+		Loader {
+			id: loader_SensorPage
 			anchors.fill: parent
 			opacity: footer.activePage == 'sensor' ? 1 : 0
 			Behavior on opacity { NumberAnimation { duration: 100 } }
+			sourceComponent: opacity > 0  ? component_SensorPage : undefined
 		}
-		SettingsPage {
-			id: settingsPage
+
+		Loader {
+			id: loader_settingsPage
 			anchors.fill: parent
 			opacity: footer.activePage == 'settings' ? 1 : 0
 			Behavior on opacity { NumberAnimation { duration: 100 } }
+			sourceComponent: opacity > 0  ? component_settingsPage : undefined
 		}
+
 	}
 
 	Footer {
