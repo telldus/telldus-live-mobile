@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 1.1
 
 Item {
 	id: devicePage
@@ -97,48 +97,28 @@ Item {
 			source: "headerLogo.png"
 		}
 	}
-	Item {
+	HeaderMenu {
 		id: headerMenu
-		height: 57
-		anchors.top: header.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		Image {
-			height: 67
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.top: parent.top
-			source: "headerMenuBg.png"
-			fillMode: Image.TileHorizontally
-		}
-		BorderImage {
-			width: parent.width/2
-			height: parent.height
-			source: "headerButtonActive.png"
-			border {left: 20; top: 20; right: 20; bottom: 20 }
-			Text {
-				anchors.centerIn: parent
-				text: "All devices"
-				font.pixelSize: 30
-				font.weight: Font.Bold
-				color: "white"
-				style: Text.Raised;
-				styleColor: "#003959"
+		Component.onCompleted: activeItem = fav
+		items: [
+			HeaderMenuItem {
+				id: fav
+				title: "Favorites"
+				onActivated: {
+					headerMenu.activeItem = fav
+					list.positionViewAtBeginning()
+					favoriteModel.doFilter = true
+				}
+			},
+			HeaderMenuItem {
+				id: allDev
+				title: "All devices"
+				onActivated: {
+					headerMenu.activeItem = allDev
+					list.positionViewAtBeginning()
+					favoriteModel.doFilter = false
+				}
 			}
-		}
-		Item {
-			width: parent.width/2
-			height: parent.height
-			anchors.right: parent.right
-			Text {
-				anchors.centerIn: parent
-				text: "Favourites"
-				font.pixelSize: 30
-				font.weight: Font.Bold
-				color: "#d5ebff"
-				style: Text.Raised;
-				styleColor: "#003959"
-			}
-		}
+		]
 	}
 }
