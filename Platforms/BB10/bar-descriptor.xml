@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
 	<id>com.telldus.tellduscenterlight</id>
-	<name>TelldusCenter light</name>
+	<name>Telldus Live! Mobile</name>
 	<author>Telldus Technologies AB</author>
 	<versionNumber>1.0.0</versionNumber>
 	<buildIdFile>_buildId</buildIdFile>
