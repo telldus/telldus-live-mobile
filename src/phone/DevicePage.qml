@@ -57,7 +57,7 @@ Item {
 					Text {
 						color: "#00659F"
 						width: parent.width
-						font.pixelSize: 45
+						font.pixelSize: 32
 						font.weight: Font.Bold
 						text: device.name
 						elide: Text.ElideRight
