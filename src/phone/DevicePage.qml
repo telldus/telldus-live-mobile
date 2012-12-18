@@ -35,15 +35,18 @@ Item {
 				height: 140
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
-				Rectangle {
+				BorderImage {
 					id: buttons
+					source: "buttonBg.png"
+					border {left: 15; top: 49; right: 15; bottom: 49 }
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
 					anchors.leftMargin: 20
-					color: "lightblue"
-					width: 150
-					height: 75
-					radius: 5
+					width: 210
+					height: 100
+					MouseArea {
+						anchors.fill: parent
+					}
 				}
 
 				Column {
