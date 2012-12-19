@@ -25,5 +25,6 @@
         <file>phone/Header.qml</file>
         <file>phone/buttonBg.png</file>
         <file>phone/MainInterface.qml</file>
+        <file>phone/LoginScreen.qml</file>
     </qresource>
 </RCC>

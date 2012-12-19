@@ -15,7 +15,22 @@ Rectangle {
 	}
 	Loader {
 		id: loader_mainInterface
-		sourceComponent: component_mainInterface
+		opacity: telldusLive.isAuthorized ? 1 : 0
+		Behavior on opacity { NumberAnimation { duration: 100 } }
+		sourceComponent: opacity > 0  ? component_mainInterface : undefined
+		anchors.fill: parent
+	}
+	Component {
+		id: component_loginScreen
+		LoginScreen {
+			id: loginScreen
+		}
+	}
+	Loader {
+		id: loader_loginScreen
+		opacity: telldusLive.isAuthorized ? 0 : 1
+		Behavior on opacity { NumberAnimation { duration: 100 } }
+		sourceComponent: opacity > 0  ? component_loginScreen : undefined
 		anchors.fill: parent
 	}
 }
