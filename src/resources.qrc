@@ -24,5 +24,6 @@
         <file>phone/HeaderMenuItem.qml</file>
         <file>phone/Header.qml</file>
         <file>phone/buttonBg.png</file>
+        <file>phone/MainInterface.qml</file>
     </qresource>
 </RCC>
