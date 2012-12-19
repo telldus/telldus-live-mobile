@@ -3,6 +3,8 @@
 INCLUDE_DIRECTORIES("${QT_INCLUDE_DIR}/QtMobility")
 LIST(APPEND LIBRARIES "-lQtSystemInfo")
 
+SET(HAVE_WEBKIT 1)
+
 SET(ANDROID_FILES
 	AndroidManifest.xml
 	icon.png

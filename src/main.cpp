@@ -3,6 +3,7 @@
 #include <QDesktopWidget>
 #include "tellduscenter.h"
 #include "tellduslive.h"
+#include "config.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
 
 	QDeclarativeView *viewer = new QDeclarativeView();
 	viewer->setWindowTitle("TelldusCenter Light");
+	viewer->rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
 
 	TelldusCenter tc(viewer);
 
