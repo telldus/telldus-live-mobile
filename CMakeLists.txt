@@ -32,6 +32,8 @@ SET( SOURCES
 )
 
 SET( HEADERS
+	${CMAKE_CURRENT_BINARY_DIR}/parsed/config.h
+	src/config.h.in
 )
 SET( MOC_HEADERS
 	src/tellduslive.h
@@ -55,12 +57,15 @@ SET(RESOURCES
 )
 
 SET(TARGET_PLATFORM "" CACHE STRING "Sets the target platform. Valid values are 'iOS', 'Android', 'Desktop', or 'BB10'")
+SET(TELLDUS_LIVE_PUBLIC_KEY	""	CACHE STRING "Telldus Live! public key")
+SET(TELLDUS_LIVE_PRIVATE_KEY	""	CACHE STRING "Telldus Live! private key")
 
 FILE(GLOB_RECURSE QML RELATIVE ${CMAKE_SOURCE_DIR} *.qml)
 
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} )
 INCLUDE_DIRECTORIES( qt-json )
 INCLUDE_DIRECTORIES( qmlapplicationviewer )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/parsed )
 
 INCLUDE( 3rdparty/kqoauth.cmake NO_POLICY_SCOPE )
 
@@ -75,6 +80,11 @@ ELSE ()
 		CONFIGURE()
 	ENDIF(COMMAND CONFIGURE)
 ENDIF()
+
+CONFIGURE_FILE(
+	src/config.h.in
+	${CMAKE_CURRENT_BINARY_DIR}/parsed/config.h
+)
 
 IF (USE_QMAKE)
 	FIND_PACKAGE( Qt4 REQUIRED )

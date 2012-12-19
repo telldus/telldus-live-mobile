@@ -1,4 +1,5 @@
 #include "tellduslive.h"
+#include "config.h"
 
 #include <QtKOAuth>
 #include "json.h"
@@ -29,7 +30,7 @@ public:
 	State state;
 	KQOAuthManager *manager;
 	KQOAuthRequest *request;
-	QString base, key, secret;
+	QString base;
 	QQueue<TelldusLiveCall> queue;
 	bool requestPending;
 #ifdef PLATFORM_BB10
@@ -48,8 +49,6 @@ TelldusLive::TelldusLive(QObject *parent) :
 	d->request = 0;
 	d->requestPending = false;
 	d->base = "https://api.telldus.com";
-	d->key = "";
-	d->secret = "";
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
@@ -79,8 +78,8 @@ void TelldusLive::handleInvoke(const bb::system::InvokeRequest &r) {
 
 void TelldusLive::authorize() {
 	d->request->initRequest(KQOAuthRequest::TemporaryCredentials, QUrl(d->base + "/oauth/requestToken"));
-	d->request->setConsumerKey(d->key);
-	d->request->setConsumerSecretKey(d->secret);
+	d->request->setConsumerKey(TELLDUS_LIVE_PUBLIC_KEY);
+	d->request->setConsumerSecretKey(TELLDUS_LIVE_PRIVATE_KEY);
 	d->request->setCallbackUrl(QUrl("x-com-telldus-tellduscenter://success"));
 
 	d->manager->setHandleUserAuthorization(true);
@@ -246,8 +245,8 @@ void TelldusLive::doCall() {
 	QString tokenSecret = s.value("oauthTokenSecret", "").toString();
 
 	d->request->initRequest(KQOAuthRequest::AuthorizedRequest, QUrl(d->base + "/json/" + call.endpoint));
-	d->request->setConsumerKey(d->key);
-	d->request->setConsumerSecretKey(d->secret);
+	d->request->setConsumerKey(TELLDUS_LIVE_PUBLIC_KEY);
+	d->request->setConsumerSecretKey(TELLDUS_LIVE_PRIVATE_KEY);
 	d->request->setToken(token);
 	d->request->setTokenSecret(tokenSecret);
 	d->request->setHttpMethod(KQOAuthRequest::GET);
