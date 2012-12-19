@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+	<array name="qt_libs">
+		<item>QtCore</item>
+		<item>QtGui</item>
+		<item>QtNetwork</item>
+		<item>QtDeclarative</item>
+		<item>QtXml</item>
+		<item>QtOpenGL</item>
+		<item>QtSystemInfo</item>
+	</array>
+	<array name="bundled_libs"/>
+</resources>
