@@ -26,5 +26,7 @@
         <file>phone/buttonBg.png</file>
         <file>phone/MainInterface.qml</file>
         <file>phone/LoginScreen.qml</file>
+        <file>phone/LoginWebKit.qml</file>
+        <file>phone/LoginNonWebKit.qml</file>
     </qresource>
 </RCC>

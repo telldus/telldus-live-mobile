@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
 	QCoreApplication::setOrganizationName("telldus");
 	QCoreApplication::setOrganizationDomain("com.telldus");
-	QCoreApplication::setApplicationName("TelldusCenter Light");
+	QCoreApplication::setApplicationName("Telldus Live! Mobile");
 	QCoreApplication::setApplicationVersion("Android-1.0");
 
 	QDeclarativeView *viewer = new QDeclarativeView();
