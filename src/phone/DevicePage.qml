@@ -26,6 +26,7 @@ Item {
 				PropertyAction { target: wrapper; property: "z"; value: 0 }
 			}
 			MouseArea {
+				id: mouseArea
 				anchors.fill: parent
 				onClicked: {
 					devicePage.state = 'showDevice'
@@ -33,7 +34,7 @@ Item {
 				}
 			}
 			BorderImage {
-				source: "rowBg.png"
+				source: mouseArea.pressed ? "rowBgActive.png" : "rowBg.png"
 				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.left: parent.left

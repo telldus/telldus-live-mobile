@@ -28,5 +28,6 @@
         <file>phone/LoginScreen.qml</file>
         <file>phone/LoginWebKit.qml</file>
         <file>phone/LoginNonWebKit.qml</file>
+        <file>phone/rowBgActive.png</file>
     </qresource>
 </RCC>
