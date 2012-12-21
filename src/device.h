@@ -72,7 +72,7 @@ signals:
 	void nextRunTimeChanged();
 	void onlineChanged();
 	void stateChanged();
-	void stateValueChanged();
+	void stateValueChanged(const QString &stateValue);
 	void typeChanged();
 
 public slots:

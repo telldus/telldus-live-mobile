@@ -181,7 +181,7 @@ QString Device::stateValue() const {
 
 void Device::setStateValue(const QString &stateValue) {
 	d->stateValue = stateValue;
-	emit stateValueChanged();
+	emit stateValueChanged(stateValue);
 }
 
 void Device::turnOff() {
