@@ -173,6 +173,13 @@ int Device::state() const {
 void Device::setState(int state) {
 	d->state = state;
 	emit stateChanged();
+	if (state == 1) {
+		d->stateValue = "100";
+		emit stateValueChanged(d->stateValue);
+	} else if (state == 2) {
+		d->stateValue = "0";
+		emit stateValueChanged(d->stateValue);
+	}
 }
 
 QString Device::stateValue() const {
