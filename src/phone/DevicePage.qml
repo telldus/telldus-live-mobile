@@ -11,6 +11,7 @@ Item {
 			width: list.width
 			height: 150
 			clip: false
+			z: model.index
 			ListView.onRemove: SequentialAnimation {
 				PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
 				PropertyAction { target: wrapper; property: "z"; value: -1 }
