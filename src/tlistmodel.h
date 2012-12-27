@@ -18,6 +18,8 @@ public:
 	void append(QObject *v);
 	void append(const QList<QObject *> &objects);
 
+	void clear();
+
 	Q_INVOKABLE QVariant get(int row) const;
 	Q_INVOKABLE void splice(int row, int count);
 
