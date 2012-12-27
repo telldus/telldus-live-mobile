@@ -57,6 +57,7 @@ Item {
 				}
 
 				Column {
+					id: nameCol
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: buttons.right
 					anchors.leftMargin: 20
