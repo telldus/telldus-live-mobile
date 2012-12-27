@@ -84,7 +84,7 @@ void TelldusLive::authorize() {
 	d->request->initRequest(KQOAuthRequest::TemporaryCredentials, QUrl(d->base + "/oauth/requestToken"));
 	d->request->setConsumerKey(TELLDUS_LIVE_PUBLIC_KEY);
 	d->request->setConsumerSecretKey(TELLDUS_LIVE_PRIVATE_KEY);
-	d->request->setCallbackUrl(QUrl("x-com-telldus-tellduscenter://success"));
+	d->request->setCallbackUrl(QUrl("x-com-telldus-live-mobile://success"));
 
 #if HAVE_WEBKIT
 	d->manager->setHandleUserAuthorization(true);

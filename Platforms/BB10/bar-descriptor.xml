@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
-	<id>com.telldus.tellduscenterlight</id>
+	<id>com.telldus.live.mobile</id>
 	<name>Telldus Live! Mobile</name>
 	<author>Telldus Technologies AB</author>
 	<versionNumber>1.0.0</versionNumber>
@@ -17,7 +17,7 @@
 			<action>bb.action.VIEW</action>
 			<action>bb.action.OPEN</action>
 			<mime-type>*</mime-type>
-			<property var="uris" value="x-com-telldus-tellduscenter://"/>
+			<property var="uris" value="x-com-telldus-live-mobile://"/>
 		</filter>
 	</invoke-target>
 </qnx>
