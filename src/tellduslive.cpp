@@ -73,6 +73,10 @@ TelldusLive::~TelldusLive() {
 
 #ifdef PLATFORM_BB10
 void TelldusLive::handleInvoke(const bb::system::InvokeRequest &r) {
+	QMultiMap<QString, QString> queryParams;
+	QString token = r.uri().queryItemValue("oauth_token");
+	QString verifier = r.uri().queryItemValue("oauth_verifier");
+	d->manager->verifyToken(token, verifier);
 }
 #endif
 
