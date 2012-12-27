@@ -55,6 +55,8 @@ void SchedulerModel::authorizationChanged() {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
 		telldusLive->call("scheduler/jobList", TelldusLiveParams(), this, SLOT(onJobList(QVariantMap)));
+	} else {
+		this->clear();
 	}
 }
 

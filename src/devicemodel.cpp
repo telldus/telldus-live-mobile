@@ -55,6 +55,8 @@ void DeviceModel::authorizationChanged() {
 		TelldusLiveParams params;
 		params["supportedMethods"] = 23; //TODO: Use constants
 		telldusLive->call("devices/list", params, this, SLOT(onDevicesList(QVariantMap)));
+	} else {
+		this->clear();
 	}
 }
 

@@ -34,6 +34,8 @@ void SensorModel::authorizationChanged() {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
 		telldusLive->call("sensors/list", TelldusLiveParams(), this, SLOT(onSensorsList(QVariantMap)));
+	} else {
+		this->clear();
 	}
 }
 

@@ -37,6 +37,8 @@ void ClientModel::authorizationChanged() {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
 		telldusLive->call("clients/list", TelldusLiveParams(), this, SLOT(onClientsList(QVariantMap)));
+	} else {
+		this->clear();
 	}
 }
 
