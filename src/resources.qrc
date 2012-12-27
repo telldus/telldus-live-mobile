@@ -48,5 +48,9 @@
         <file>phone/buttonBgClickLeft.png</file>
         <file>phone/buttonBgClickRight.png</file>
         <file>phone/ComponentSetOnOff.qml</file>
+        <file>phone/startLogo.png</file>
+        <file>phone/startDivider.png</file>
+        <file>phone/startButtonLogin.png</file>
+        <file>phone/startButtonLoginActive.png</file>
     </qresource>
 </RCC>

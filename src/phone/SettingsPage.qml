@@ -2,27 +2,62 @@ import QtQuick 1.0
 
 Item {
 	id: settingsPage
-	Image {
-		id: header
-		anchors.top: parent.top
-		anchors.left: parent.left
+	Header {
+		id: deviceH
+	}
+	BorderImage {
+		source: "rowBg.png"
+		anchors.top: deviceH.bottom
 		anchors.right: parent.right
-		source: "headerBg.png"
-		fillMode: Image.TileHorizontally
-		height: 103
-		Image {
+		anchors.left: parent.left
+		anchors.bottom: parent.bottom
+		anchors.margins: 20
+		border {left: 21; top: 21; right: 21; bottom: 28 }
+
+		Item {
+			anchors.top: parent.top
+			anchors.left: parent.left
+			anchors.leftMargin: 30
+			anchors.right: parent.right
+			anchors.rightMargin: 30
+			anchors.bottom: button.top
+			Text {
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.right: parent.right
+				horizontalAlignment: Text.AlignHCenter
+				text: "You are currently logged in to a Telldus&nbsp;Live! account.\nIf you want to change account, please click the button below."
+				wrapMode: Text.WordWrap
+				textFormat: Text.RichText
+				font.pointSize: 10
+				font.bold: true
+				color: "#8cabc5"
+			}
+		}
+		BorderImage {
+			id: button
+			source: "buttonBg.png"
+			border {left: 15; top: 49; right: 15; bottom: 49 }
+			anchors.left: parent.left
+			anchors.leftMargin: 30
+			anchors.right: parent.right
+			anchors.rightMargin: 30
 			anchors.verticalCenter: parent.verticalCenter
-			source: "headerLogo.png"
+			height: 100
+			Text {
+				text: "Logout"
+				anchors.centerIn: parent
+				color: "#00659F"
+				font.pixelSize: 40
+				font.weight: Font.Bold
+				style: Text.Raised
+				styleColor: "white"
+			}
+			MouseArea {
+				id: buttonArea
+				anchors.fill: parent
+				onClicked: telldusLive.logout()
+			}
 		}
 	}
-
-	Text {
-		text: "Settings-sidan"
-		horizontalAlignment: Text.AlignHCenter
-		font.pixelSize: 100
-		anchors.centerIn: parent
-		rotation: -45
-		transformOrigin: Item.Center
-	}
-
 }
