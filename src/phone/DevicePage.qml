@@ -125,7 +125,7 @@ Item {
 		}
 		HeaderMenu {
 			id: headerMenu
-			Component.onCompleted: activeItem = fav
+			Component.onCompleted: activeItem = favoriteModel.doFilter ? fav : allDev
 			items: [
 				HeaderMenuItem {
 					id: fav
