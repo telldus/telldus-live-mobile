@@ -161,14 +161,18 @@ Item {
 		anchors.bottom: parent.bottom
 		width: parent.width
 
-		Header {}
-		Text {
-			anchors.centerIn: parent
-			color: "#00659F"
-			font.pixelSize: 45
-			font.weight: Font.Bold
-			text: showDevice.selected.name
-			elide: Text.ElideRight
+		Header {
+			id: deviceH
+			title: showDevice.selected ? showDevice.selected.name : ''
+		}
+		BorderImage {
+			source: "rowBg.png"
+			anchors.top: deviceH.bottom
+			anchors.right: parent.right
+			anchors.left: parent.left
+			anchors.bottom: parent.bottom
+			anchors.margins: 20
+			border {left: 21; top: 21; right: 21; bottom: 28 }
 		}
 	}
 
