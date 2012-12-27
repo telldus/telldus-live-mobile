@@ -52,5 +52,7 @@
         <file>phone/startDivider.png</file>
         <file>phone/startButtonLogin.png</file>
         <file>phone/startButtonLoginActive.png</file>
+        <file>phone/sensorIconHumidity.png</file>
+        <file>phone/sensorIconTemperature.png</file>
     </qresource>
 </RCC>
