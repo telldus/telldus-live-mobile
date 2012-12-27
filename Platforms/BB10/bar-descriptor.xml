@@ -7,7 +7,7 @@
 	<buildIdFile>_buildId</buildIdFile>
 	<description></description>
 	<initialWindow>
-		<autoOrients>true</autoOrients>
+		<autoOrients>false</autoOrients>
 	</initialWindow>
 	<icon><image>icon.png</image></icon>
 	<asset path="TelldusCenter-light" entry="true" type="Qnx/Elf">TelldusCenter-light</asset>
