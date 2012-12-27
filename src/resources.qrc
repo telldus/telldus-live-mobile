@@ -24,10 +24,29 @@
         <file>phone/HeaderMenuItem.qml</file>
         <file>phone/Header.qml</file>
         <file>phone/buttonBg.png</file>
+        <file>phone/buttonActionOff.png</file>
+        <file>phone/buttonActionOffActive.png</file>
+        <file>phone/buttonActionOn.png</file>
+        <file>phone/buttonActionOnActive.png</file>
+        <file>phone/buttonDivider.png</file>
         <file>phone/MainInterface.qml</file>
         <file>phone/LoginScreen.qml</file>
         <file>phone/LoginWebKit.qml</file>
         <file>phone/LoginNonWebKit.qml</file>
+        <file>phone/buttonDividerDim.png</file>
+        <file>phone/buttonActionDown.png</file>
+        <file>phone/buttonActionBell.png</file>
+        <file>phone/buttonActionDownActive.png</file>
+        <file>phone/buttonActionStop.png</file>
+        <file>phone/buttonActionStopActive.png</file>
+        <file>phone/buttonActionToggle.png</file>
+        <file>phone/buttonActionToggleActive.png</file>
+        <file>phone/buttonActionUp.png</file>
+        <file>phone/buttonActionUpActive.png</file>
+        <file>phone/ButtonSet.qml</file>
         <file>phone/rowBgActive.png</file>
+        <file>phone/buttonBgClickLeft.png</file>
+        <file>phone/buttonBgClickRight.png</file>
+        <file>phone/ComponentSetOnOff.qml</file>
     </qresource>
 </RCC>

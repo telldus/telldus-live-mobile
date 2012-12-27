@@ -8,6 +8,7 @@ Item {
 		id: deviceDelegate
 		Item {
 			id: wrapper
+			property Device dev: device
 			width: list.width
 			height: 150
 			clip: false
@@ -26,14 +27,6 @@ Item {
 				}
 				PropertyAction { target: wrapper; property: "z"; value: 0 }
 			}
-			MouseArea {
-				id: mouseArea
-				anchors.fill: parent
-				onClicked: {
-					devicePage.state = 'showDevice'
-					showDevice.selected = device
-				}
-			}
 			BorderImage {
 				source: mouseArea.pressed ? "rowBgActive.png" : "rowBg.png"
 				anchors.top: parent.top
@@ -44,17 +37,22 @@ Item {
 				height: 140
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
-				BorderImage {
+				ButtonSet {
 					id: buttons
-					source: "buttonBg.png"
-					border {left: 15; top: 49; right: 15; bottom: 49 }
+					device: wrapper.dev
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
 					anchors.leftMargin: 20
-					width: 210
-					height: 100
-					MouseArea {
-						anchors.fill: parent
+				}
+				MouseArea {
+					id: mouseArea
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					anchors.left: nameCol.left
+					anchors.right: parent.right
+					onClicked: {
+						devicePage.state = 'showDevice'
+						showDevice.selected = device
 					}
 				}
 
