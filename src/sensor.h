@@ -15,6 +15,7 @@ class Sensor : public QObject
 	Q_PROPERTY(int id READ sensorId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(QDateTime lastUpdated READ lastUpdated WRITE setLastUpdated NOTIFY lastUpdatedChanged)
 	Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+	Q_PROPERTY(int minutesAgo READ minutesAgo NOTIFY lastUpdatedChanged)
 	Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
 public:
 	explicit Sensor(QObject *parent = 0);
@@ -29,6 +30,8 @@ public:
 
 	QDateTime lastUpdated() const;
 	void setLastUpdated(const QDateTime &lastUpdated);
+
+	int minutesAgo() const;
 
 	QString name() const;
 	void setName(const QString &name);

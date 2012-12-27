@@ -66,6 +66,10 @@ void Sensor::setLastUpdated(const QDateTime &lastUpdated) {
 	emit lastUpdatedChanged();
 }
 
+int Sensor::minutesAgo() const {
+	return round(d->lastUpdated.secsTo(QDateTime::currentDateTime())/60.0);
+}
+
 QString Sensor::name() const {
 	return d->name;
 }
