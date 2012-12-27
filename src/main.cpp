@@ -5,6 +5,11 @@
 #include "tellduslive.h"
 #include "config.h"
 
+#ifdef PLATFORM_IOS
+	#include <QtPlugin>
+	Q_IMPORT_PLUGIN(UIKit)
+#endif
+
 int main(int argc, char *argv[])
 {
 	Q_INIT_RESOURCE(resources);
