@@ -86,7 +86,11 @@ void TelldusLive::authorize() {
 	d->request->setConsumerSecretKey(TELLDUS_LIVE_PRIVATE_KEY);
 	d->request->setCallbackUrl(QUrl("x-com-telldus-tellduscenter://success"));
 
+#if HAVE_WEBKIT
 	d->manager->setHandleUserAuthorization(true);
+#else
+	d->manager->setHandleUserAuthorization(false);
+#endif
 	d->manager->executeRequest(d->request);
 
 }
