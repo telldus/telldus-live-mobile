@@ -10,7 +10,7 @@ class Device::PrivateData {
 public:
 	bool isFavorite, online;
 	int id, methods, state;
-	QString name, stateValue;
+	QString name, stateValue, clientName;
 	Type type;
 	GroupDeviceModel *groupModel;
 };
@@ -47,6 +47,15 @@ void Device::addDevices(const QString &devices, bool save) {
 		list << deviceId.toInt();
 	}
 	d->groupModel->addDevices(list, save);
+}
+
+QString Device::clientName() const {
+	return d->clientName;
+}
+
+void Device::setClientName(const QString &clientName) {
+	d->clientName = clientName;
+	emit clientNameChanged();
 }
 
 GroupDeviceModel * Device::devices() const {

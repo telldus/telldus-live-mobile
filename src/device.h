@@ -13,6 +13,7 @@ class Device : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(Type)
+	Q_PROPERTY(QString clientName READ clientName WRITE setClientName NOTIFY clientNameChanged)
 	Q_PROPERTY(int id READ deviceId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY isFavoriteChanged)
 	Q_PROPERTY(int methods READ methods WRITE setMethods NOTIFY methodsChanged)
@@ -30,6 +31,9 @@ public:
 
 	Q_INVOKABLE void addDevice(int deviceId, bool save = true); //add device to group
 	void addDevices(const QString &devices, bool save = true);
+
+	QString clientName() const;
+	void setClientName(const QString &clientName);
 
 	Q_INVOKABLE GroupDeviceModel *devices() const;
 
@@ -65,6 +69,7 @@ public:
 	void setType(const QString &type);
 
 signals:
+	void clientNameChanged();
 	void idChanged();
 	void isFavoriteChanged();
 	void methodsChanged();

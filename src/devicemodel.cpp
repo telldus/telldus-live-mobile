@@ -31,6 +31,7 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 		}
 		device->setMethods(dev["methods"].toInt());
 		device->setName(dev["name"].toString());
+		device->setClientName(dev["clientName"].toString());
 		device->setOnline(dev["online"].toBool());
 		device->setState(dev["state"].toInt());
 		device->setStateValue(dev["statevalue"].toString());

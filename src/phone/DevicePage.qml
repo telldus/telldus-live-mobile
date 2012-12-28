@@ -73,7 +73,7 @@ Item {
 					Text {
 						color: "#999999"
 						font.pixelSize: 25
-						text: "Home"
+						text: device.clientName
 					}
 				}
 
