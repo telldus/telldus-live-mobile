@@ -31,14 +31,14 @@ ENDFOREACH()
 
 FUNCTION(COMPILE target)
 	ADD_CUSTOM_TARGET(run
-		blackberry-nativepackager -package ${target}.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} bar-descriptor.xml icon-114.png ${target}
+		blackberry-nativepackager -package ${target}-debug.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} ${BB10_FILES} ${target}
 		DEPENDS ${target}
-		COMMENT "Package and deploy ${target}.bar file"
+		COMMENT "Package and deploy ${target}-debug.bar file"
 	)
-	ADD_CUSTOM_TARGET(deploy
-		COMMAND blackberry-nativepackager -package ${target}.bar ${BB10_FILES} ${target}
-		COMMAND blackberry-signer -storepass ${SIGNING_PASSWORD} ${target}.bar
+	ADD_CUSTOM_TARGET(release
+		COMMAND blackberry-nativepackager -package ${target}-release.bar ${BB10_FILES} ${target}
+		COMMAND blackberry-signer -storepass ${SIGNING_PASSWORD} ${target}-release.bar
 		DEPENDS ${target}
-		COMMENT "Package and sign ${target}.bar file"
+		COMMENT "Package and sign ${target}-release.bar file"
 	)
 ENDFUNCTION()
