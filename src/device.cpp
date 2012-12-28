@@ -223,6 +223,9 @@ void Device::schedulerJobsChanged(const QModelIndex &, int start, int end) {
 	SchedulerModel *model = SchedulerModel::instance();
 	for (int i = start; i <= end; ++i ) {
 		SchedulerJob *job = qobject_cast<SchedulerJob *>(model->get(i).value<QObject *>());
+		if (!job) {
+			continue;
+		}
 		if (job->deviceId() == d->id) {
 			emit nextRunTimeChanged();
 			return;
