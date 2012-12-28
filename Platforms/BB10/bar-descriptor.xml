@@ -9,8 +9,8 @@
 	<initialWindow>
 		<autoOrients>false</autoOrients>
 	</initialWindow>
-	<icon><image>icon.png</image></icon>
-	<asset path="TelldusCenter-light" entry="true" type="Qnx/Elf">TelldusCenter-light</asset>
+	<icon><image>icon-114.png</image></icon>
+	<asset path="TelldusLiveMobile" entry="true" type="Qnx/Elf">TelldusLiveMobile</asset>
 	<permission system="true">run_native</permission>
 	<invoke-target id="com.telldus.TARGET">
 		<filter>

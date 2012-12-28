@@ -1,11 +1,11 @@
 SET(BB10_FILES
 	bar-descriptor.xml
-	icon.png
+	icon-114.png
 )
 
 SET_SOURCE_FILES_PROPERTIES(
 	bar-descriptor.xml
-	icon.png
+	icon-114.png
 	PROPERTIES TARGET_PATH "."
 )
 
@@ -30,8 +30,8 @@ ENDFOREACH()
 
 FUNCTION(COMPILE target)
 	ADD_CUSTOM_TARGET(run
-		blackberry-nativepackager -package ${target}.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} bar-descriptor.xml icon.png ${target}
+		blackberry-nativepackager -package ${target}.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} bar-descriptor.xml icon-114.png ${target}
 		DEPENDS ${target}
-		COMMENT "Package and deploy .bar file"
+		COMMENT "Package and deploy ${target}.bar file"
 	)
 ENDFUNCTION()

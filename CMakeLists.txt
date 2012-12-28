@@ -1,4 +1,4 @@
-PROJECT( TelldusCenter-light )
+PROJECT( TelldusLiveMobile )
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
@@ -106,7 +106,7 @@ FOREACH(F ${QML})
 ENDFOREACH()
 
 IF (${TARGET_PLATFORM} MATCHES "Android")
-	ADD_LIBRARY(TelldusCenter-light SHARED
+	ADD_LIBRARY(TelldusLiveMobile SHARED
 		${SOURCES}
 		${HEADERS}
 		${MOC_SOURCES}
@@ -114,7 +114,7 @@ IF (${TARGET_PLATFORM} MATCHES "Android")
 		${RSRCS}
 	)
 ELSE ()
-	ADD_EXECUTABLE(TelldusCenter-light MACOSX_BUNDLE
+	ADD_EXECUTABLE(TelldusLiveMobile MACOSX_BUNDLE
 		${SOURCES}
 		${HEADERS}
 		${MOC_SOURCES}
@@ -124,7 +124,7 @@ ELSE ()
 ENDIF ()
 
 IF (COMMAND COMPILE)
-	COMPILE(TelldusCenter-light)
+	COMPILE(TelldusLiveMobile)
 ENDIF(COMMAND COMPILE)
 
-TARGET_LINK_LIBRARIES( TelldusCenter-light ${LIBRARIES} )
+TARGET_LINK_LIBRARIES( TelldusLiveMobile ${LIBRARIES} )
