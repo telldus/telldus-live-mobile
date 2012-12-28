@@ -72,8 +72,10 @@ Item {
 					}
 					Text {
 						color: "#999999"
+						width: parent.width
 						font.pixelSize: 25
 						text: device.clientName
+						elide: Text.ElideRight
 					}
 				}
 
