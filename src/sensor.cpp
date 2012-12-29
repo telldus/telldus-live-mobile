@@ -1,4 +1,5 @@
 #include "sensor.h"
+#include <math.h>
 #include "tellduslive.h"
 
 class Sensor::PrivateData {
