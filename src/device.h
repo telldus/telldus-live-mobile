@@ -96,6 +96,7 @@ public slots:
 	void bell();
 	void dim(unsigned char level);
 	void down();
+	void stop();
 	void turnOff();
 	void turnOn();
 

@@ -74,6 +74,10 @@ void Device::down() {
 	sendMethod(Device::DOWN);
 }
 
+void Device::stop() {
+	sendMethod(Device::STOP);
+}
+
 bool Device::hasDevice(int deviceId) const {
 	return d->groupModel->hasDevice(deviceId);
 }
