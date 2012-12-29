@@ -8,6 +8,7 @@
 #ifdef PLATFORM_IOS
 	#include <QtPlugin>
 	Q_IMPORT_PLUGIN(UIKit)
+	Q_IMPORT_PLUGIN(qsqlite)
 #endif
 
 int main(int argc, char *argv[])

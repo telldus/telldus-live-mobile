@@ -64,6 +64,7 @@ LIST(APPEND LIBRARIES
 	${QT_DIR}/lib/libQtScript.a
 	${QT_DIR}/lib/libQtSql.a
 	${QT_DIR}/lib/libQtSvg.a
+	${QT_DIR}/plugins/sqldrivers/libqsqlite.a
 	${QT_DIR}/plugins/platforms/libquikit.a
 	libz.dylib
 	libiconv.dylib
