@@ -217,6 +217,10 @@ void Device::turnOn() {
 	sendMethod(Device::TURNON);
 }
 
+void Device::up() {
+	sendMethod(Device::UP);
+}
+
 Device::Type Device::type() const {
 	return d->type;
 }

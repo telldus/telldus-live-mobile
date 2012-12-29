@@ -99,6 +99,7 @@ public slots:
 	void stop();
 	void turnOff();
 	void turnOn();
+	void up();
 
 protected:
 	void sendMethod(int action, const QString &value = "");
