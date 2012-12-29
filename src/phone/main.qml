@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import "Device.js" as Device
 
 Rectangle {
 	color: "#dceaf6"
@@ -6,6 +7,10 @@ Rectangle {
 	//height: 1136
 	width: 768
 	height: 1280
+
+	Component.onCompleted: {
+		Device.setupCache(deviceModelController)
+	}
 
 	Component {
 		id: component_mainInterface
