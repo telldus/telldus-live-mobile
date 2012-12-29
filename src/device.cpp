@@ -182,17 +182,18 @@ int Device::state() const {
 void Device::setState(int state) {
 	d->state = state;
 	emit stateChanged();
-	if (state == 1) {
-		d->stateValue = "100";
-		emit stateValueChanged(d->stateValue);
-	} else if (state == 2) {
-		d->stateValue = "0";
-		emit stateValueChanged(d->stateValue);
-	}
+	emit stateValueChanged(this->stateValue());
 }
 
 QString Device::stateValue() const {
-	return d->stateValue;
+	if (d->state == 1) {
+		return "100";
+	} else if (d->state == 2) {
+		return "0";
+	} else if (d->state == 16) {
+		return d->stateValue;
+	}
+	return "";
 }
 
 void Device::setStateValue(const QString &stateValue) {
