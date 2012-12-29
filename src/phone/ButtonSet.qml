@@ -24,9 +24,10 @@ BorderImage {
 	}
 
 	function primarySet() {
-		if (set < 0) {
-			// Autodetect
+		if (device.methods & (128+256)) {
+			return 1; // Up and Down
 		}
+
 		return 0;
 	}
 
