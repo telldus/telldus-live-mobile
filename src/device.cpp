@@ -70,6 +70,10 @@ void Device::dim(unsigned char level) {
 	sendMethod(Device::DIM, QString::number(level));
 }
 
+void Device::down() {
+	sendMethod(Device::DOWN);
+}
+
 bool Device::hasDevice(int deviceId) const {
 	return d->groupModel->hasDevice(deviceId);
 }
