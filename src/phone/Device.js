@@ -44,7 +44,7 @@ function setupCache(deviceModel) {
 
 	db.transaction(function(tx) {
 		tx.executeSql('CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT)');
-		var rs = tx.executeSql('SELECT id, name, methods, type, favorite, state, statevalue FROM Device');
+		var rs = tx.executeSql('SELECT id, name, methods, type, favorite, state, statevalue FROM Device ORDER BY name');
 		var deviceList = [];
 		for(var i = 0; i < rs.rows.length; ++i) {
 			deviceList.push({
