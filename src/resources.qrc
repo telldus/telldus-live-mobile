@@ -59,5 +59,6 @@
         <file>phone/iconFavouriteActive.png</file>
         <file>phone/ComponentSetUpDown.qml</file>
         <file>phone/buttonBgClickMiddle.png</file>
+        <file>phone/ComponentSetBell.qml</file>
     </qresource>
 </RCC>

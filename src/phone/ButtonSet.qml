@@ -17,7 +17,10 @@ BorderImage {
 				return 'ComponentSetOnOff.qml';
 			} else if (set == 1) {
 				return 'ComponentSetUpDown.qml';
+			} else if (set == 2) {
+				return 'ComponentSetBell.qml';
 			}
+
 			return '';
 		}
 		anchors.fill: parent
@@ -26,6 +29,9 @@ BorderImage {
 	function primarySet() {
 		if (device.methods & (128+256)) {
 			return 1; // Up and Down
+		}
+		if (device.methods & 4) {
+			return 2;
 		}
 
 		return 0;
