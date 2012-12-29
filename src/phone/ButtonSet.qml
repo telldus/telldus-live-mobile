@@ -54,10 +54,6 @@ BorderImage {
 		anchors.fill: parent
 	}
 
-	/*MouseArea {
-		anchors.fill: parent
-	}*/
-
 	function primarySet() {
 		if (set < 0) {
 			// Autodetect
