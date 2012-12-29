@@ -28,6 +28,18 @@ public:
 	~Device();
 
 	enum Type { DeviceType, GroupType, AnyType };
+	enum Methods {
+		TURNON = 1,
+		TURNOFF = 2,
+		BELL = 4,
+		TOGGLE = 8,
+		DIM = 16,
+		LEARN = 32,
+		EXECUTE = 64,
+		UP = 128,
+		DOWN = 256,
+		STOP = 512
+	};
 
 	Q_INVOKABLE void addDevice(int deviceId, bool save = true); //add device to group
 	void addDevices(const QString &devices, bool save = true);
