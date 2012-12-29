@@ -128,29 +128,21 @@ Item {
 		}
 		HeaderMenu {
 			id: headerMenu
-			Component.onCompleted: activeItem = favoriteModel.doFilter ? fav : allDev
+			activeItem: favoriteModel.doFilter ? fav : allDev
+			onActiveItemChanged: {
+				list.positionViewAtBeginning()
+			}
+
 			items: [
 				HeaderMenuItem {
 					id: fav
 					title: "Favorites"
-					onActivated: {
-						if (headerMenu.activeItem !== fav) {
-							headerMenu.activeItem = fav
-							list.positionViewAtBeginning()
-							favoriteModel.doFilter = true
-						}
-					}
+					onActivated: favoriteModel.doFilter = true
 				},
 				HeaderMenuItem {
 					id: allDev
 					title: "All devices"
-					onActivated: {
-						if (headerMenu.activeItem !== allDev) {
-							headerMenu.activeItem = allDev
-							list.positionViewAtBeginning()
-							favoriteModel.doFilter = false
-						}
-					}
+					onActivated: favoriteModel.doFilter = false
 				}
 			]
 		}

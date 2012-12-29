@@ -18,7 +18,7 @@ Item {
 	}
 	Row {
 		id: children
-		property HeaderMenuItem activeItem
+		property variant activeItem
 		anchors.fill: parent
 	}
 }

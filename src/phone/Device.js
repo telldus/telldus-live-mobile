@@ -46,6 +46,7 @@ function setupCache(deviceModel) {
 		tx.executeSql('CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT)');
 		var rs = tx.executeSql('SELECT id, name, methods, type, favorite, state, statevalue FROM Device ORDER BY name');
 		var deviceList = [];
+		var haveFav = false;
 		for(var i = 0; i < rs.rows.length; ++i) {
 			deviceList.push({
 				'id': rs.rows.item(i).id,
@@ -56,7 +57,15 @@ function setupCache(deviceModel) {
 				'state': parseInt(rs.rows.item(i).state, 10),
 				'statevalue': rs.rows.item(i).statevalue
 			});
+			if (rs.rows.item(i).favorite === 'true') {
+				haveFav = true;
+			}
 		}
+		if (haveFav) {
+			// At lease one is marked as favorite. Switch over to fav view
+			favoriteModel.doFilter = true;
+		}
+
 		deviceModel.addDevices(deviceList);
 	});
 }
