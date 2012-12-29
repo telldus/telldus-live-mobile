@@ -63,11 +63,11 @@ GroupDeviceModel * Device::devices() const {
 }
 
 void Device::bell() {
-	sendMethod(4);
+	sendMethod(Device::BELL);
 }
 
 void Device::dim(unsigned char level) {
-	sendMethod(16, QString::number(level));
+	sendMethod(Device::DIM, QString::number(level));
 }
 
 bool Device::hasDevice(int deviceId) const {
@@ -126,15 +126,15 @@ void Device::onActionResponse(const QVariantMap &result, const QVariantMap &data
 		return;
 	}
 	int method = data["method"].toInt();
-	if (method == 16) {
+	if (method == Device::DIM) {
 		QString value = data["value"].toString();
 		if (value == "255") {
-			method = 1;
+			method = Device::TURNON;
 		} else if (value == "0") {
-			method = 2;
+			method = Device::TURNOFF;
 		}
 		setStateValue(value);
-	} else if (method == 4) {
+	} else if (method == Device::BELL) {
 		return;
 	}
 	setState(method);
@@ -186,11 +186,11 @@ void Device::setState(int state) {
 }
 
 QString Device::stateValue() const {
-	if (d->state == 1) {
+	if (d->state == Device::TURNON) {
 		return "100";
-	} else if (d->state == 2) {
+	} else if (d->state == Device::TURNOFF) {
 		return "0";
-	} else if (d->state == 16) {
+	} else if (d->state == Device::DIM) {
 		return d->stateValue;
 	}
 	return "";
@@ -202,11 +202,11 @@ void Device::setStateValue(const QString &stateValue) {
 }
 
 void Device::turnOff() {
-	sendMethod(2);
+	sendMethod(Device::TURNOFF);
 }
 
 void Device::turnOn() {
-	sendMethod(1);
+	sendMethod(Device::TURNON);
 }
 
 Device::Type Device::type() const {
