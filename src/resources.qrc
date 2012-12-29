@@ -57,5 +57,6 @@
         <file>phone/Device.js</file>
         <file>phone/iconFavourite.png</file>
         <file>phone/iconFavouriteActive.png</file>
+        <file>phone/ComponentSetUpDown.qml</file>
     </qresource>
 </RCC>

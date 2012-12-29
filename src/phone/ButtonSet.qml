@@ -10,46 +10,15 @@ BorderImage {
 	width: 222
 	height: 100
 
-	ComponentSetOnOff {
-		id: componentSetOnOff
-	}
-	Component {
-		id: component_setUpDown
-		Row {
-			Item {
-				height: parent.height
-				width: 64
-				Image {
-					anchors.centerIn: parent
-					source: "buttonActionDownActive.png"
-				}
-			}
-			Item {
-				height: parent.height
-				width: 64
-				Image {
-					anchors.centerIn: parent
-					source: "buttonActionStop.png"
-				}
-			}
-			Item {
-				height: parent.height
-				width: 64
-				Image {
-					anchors.centerIn: parent
-					source: "buttonActionUp.png"
-				}
-			}
-		}
-	}
-
 	Loader {
 		id: loader
-		sourceComponent: {
+		source: {
 			if (set == 0) {
-				return componentSetOnOff;
+				return 'ComponentSetOnOff.qml';
+			} else if (set == 1) {
+				return 'ComponentSetUpDown.qml';
 			}
-			return undefined
+			return '';
 		}
 		anchors.fill: parent
 	}
