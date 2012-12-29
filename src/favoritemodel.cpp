@@ -13,7 +13,7 @@ FavoriteModel::FavoriteModel(DeviceModel *model, QObject *parent) :
 	QSortFilterProxyModel(parent)
 {
 	d = new PrivateData;
-	d->doFilter = true;
+	d->doFilter = false;
 	this->setSourceModel(model);
 	this->setDynamicSortFilter(true);
 	this->sort(0);

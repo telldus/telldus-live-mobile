@@ -55,5 +55,7 @@
         <file>phone/sensorIconHumidity.png</file>
         <file>phone/sensorIconTemperature.png</file>
         <file>phone/Device.js</file>
+        <file>phone/iconFavourite.png</file>
+        <file>phone/iconFavouriteActive.png</file>
     </qresource>
 </RCC>
