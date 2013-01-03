@@ -75,4 +75,10 @@ Rectangle {
 			}
 		}
 	}
+	BusyIndicator {
+		anchors.top: loginButton.bottom
+		anchors.topMargin: 20
+		anchors.horizontalCenter: parent.horizontalCenter
+		visible: telldusLive.working
+	}
 }

@@ -81,6 +81,9 @@ void TelldusLive::handleInvoke(const bb::system::InvokeRequest &r) {
 #endif
 
 void TelldusLive::authorize() {
+	d->requestPending = true;
+	emit workingChanged();
+
 	d->request->initRequest(KQOAuthRequest::TemporaryCredentials, QUrl(d->base + "/oauth/requestToken"));
 	d->request->setConsumerKey(TELLDUS_LIVE_PUBLIC_KEY);
 	d->request->setConsumerSecretKey(TELLDUS_LIVE_PRIVATE_KEY);
@@ -123,6 +126,8 @@ void TelldusLive::onAccessTokenReceived(const QString &token, const QString &tok
 	//We cannot emit the signal here since more will happen when this function ends.
 	//Wait for onRequestReady instead
 	d->state = PrivateData::AuthorizationPending;
+	d->requestPending = false;
+	emit workingChanged();
 }
 
 void TelldusLive::onRequestReady(const QByteArray &response) {
@@ -148,6 +153,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		this->doCall();
 	} else {
 		d->requestPending = false;
+		emit workingChanged();
 	}
 
 	if (!call.callback.isValid() && !call.receiver) {
@@ -233,6 +239,10 @@ void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params,
 	}
 }
 
+bool TelldusLive::working() const {
+	return d->requestPending;
+}
+
 
 void TelldusLive::logout() {
 	QSettings s;
@@ -245,6 +255,7 @@ void TelldusLive::logout() {
 
 void TelldusLive::doCall() {
 	d->requestPending = true;
+	emit workingChanged();
 	TelldusLiveCall call(d->queue.head());
 	qDebug() << "Calling" << call.endpoint;
 

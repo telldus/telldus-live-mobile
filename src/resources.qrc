@@ -60,5 +60,18 @@
         <file>phone/ComponentSetUpDown.qml</file>
         <file>phone/buttonBgClickMiddle.png</file>
         <file>phone/ComponentSetBell.qml</file>
+        <file>phone/BusyIndicator.qml</file>
+        <file>phone/throbber/throbber1.png</file>
+        <file>phone/throbber/throbber2.png</file>
+        <file>phone/throbber/throbber3.png</file>
+        <file>phone/throbber/throbber4.png</file>
+        <file>phone/throbber/throbber5.png</file>
+        <file>phone/throbber/throbber6.png</file>
+        <file>phone/throbber/throbber7.png</file>
+        <file>phone/throbber/throbber8.png</file>
+        <file>phone/throbber/throbber9.png</file>
+        <file>phone/throbber/throbber10.png</file>
+        <file>phone/throbber/throbber11.png</file>
+        <file>phone/throbber/throbber12.png</file>
     </qresource>
 </RCC>
