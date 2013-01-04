@@ -61,17 +61,17 @@
         <file>phone/buttonBgClickMiddle.png</file>
         <file>phone/ComponentSetBell.qml</file>
         <file>phone/BusyIndicator.qml</file>
-        <file>phone/throbber/throbber1.png</file>
-        <file>phone/throbber/throbber2.png</file>
-        <file>phone/throbber/throbber3.png</file>
-        <file>phone/throbber/throbber4.png</file>
-        <file>phone/throbber/throbber5.png</file>
-        <file>phone/throbber/throbber6.png</file>
-        <file>phone/throbber/throbber7.png</file>
-        <file>phone/throbber/throbber8.png</file>
-        <file>phone/throbber/throbber9.png</file>
-        <file>phone/throbber/throbber10.png</file>
-        <file>phone/throbber/throbber11.png</file>
-        <file>phone/throbber/throbber12.png</file>
+        <file>phone/throbber/throbber_1.svg</file>
+        <file>phone/throbber/throbber_2.svg</file>
+        <file>phone/throbber/throbber_3.svg</file>
+        <file>phone/throbber/throbber_4.svg</file>
+        <file>phone/throbber/throbber_5.svg</file>
+        <file>phone/throbber/throbber_6.svg</file>
+        <file>phone/throbber/throbber_7.svg</file>
+        <file>phone/throbber/throbber_8.svg</file>
+        <file>phone/throbber/throbber_9.svg</file>
+        <file>phone/throbber/throbber_10.svg</file>
+        <file>phone/throbber/throbber_11.svg</file>
+        <file>phone/throbber/throbber_12.svg</file>
     </qresource>
 </RCC>
