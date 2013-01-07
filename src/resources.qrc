@@ -73,6 +73,8 @@
         <file>phone/throbber/throbber_10.svg</file>
         <file>phone/throbber/throbber_11.svg</file>
         <file>phone/throbber/throbber_12.svg</file>
+        <file>phone/headerButtonBack.png</file>
+        <file>phone/headerButtonBackActive.png</file>
         <file>phone/DeviceDetails.qml</file>
     </qresource>
 </RCC>

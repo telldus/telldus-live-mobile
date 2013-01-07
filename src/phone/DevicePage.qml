@@ -151,6 +151,7 @@ Item {
 
 	DeviceDetails {
 		id: showDevice
+		onBackClicked: devicePage.state = ''
 	}
 
 	states: [

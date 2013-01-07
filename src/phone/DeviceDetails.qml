@@ -4,14 +4,17 @@ import Telldus 1.0
 Item {
 	id: showDevice
 	property Device selected
+	signal backClicked()
 	anchors.top: parent.top
 	anchors.left: listPage.right
 	anchors.bottom: parent.bottom
 	width: parent.width
-	
+
 	Header {
 		id: deviceH
 		title: showDevice.selected ? showDevice.selected.name : ''
+		backVisible: true
+		onBackClicked: showDevice.backClicked()
 	}
 	BorderImage {
 		source: "rowBg.png"
