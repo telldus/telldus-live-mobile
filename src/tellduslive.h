@@ -38,6 +38,9 @@ public slots:
 	void call(const QString &endpoint, const QScriptValue &params, const QScriptValue &expression);
 	void logout();
 
+protected:
+	bool eventFilter(QObject *obj, QEvent *event);
+
 private slots:
 	void onTemporaryTokenReceived(const QString &token, const QString &tokenSecret);
 	void onAuthorizationReceived(const QString &token, const QString &verifier);

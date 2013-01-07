@@ -7,6 +7,8 @@
 #include <QScriptEngine>
 #include <QQueue>
 #include <QMetaMethod>
+#include <QApplication>
+#include <QFileOpenEvent>
 #include <QDebug>
 
 #ifdef PLATFORM_BB10
@@ -58,6 +60,8 @@ TelldusLive::TelldusLive(QObject *parent) :
 	} else {
 		d->state = PrivateData::Authorized;
 	}
+
+	qApp->installEventFilter(this);
 
 #ifdef PLATFORM_BB10
 	d->m = new bb::system::InvokeManager(this);
@@ -251,6 +255,22 @@ void TelldusLive::logout() {
 	d->state = PrivateData::Unauthorized;
 	this->setupManager();
 	emit authorizedChanged();
+}
+
+bool TelldusLive::eventFilter(QObject *obj, QEvent *event) {
+	if (event->type() == QEvent::FileOpen) {
+		QFileOpenEvent *fileOpenEvent = static_cast<QFileOpenEvent *>(event);
+		QUrl url = fileOpenEvent->url();
+		if (url.scheme() != "x-com-telldus-live-mobile") {
+			return QObject::eventFilter(obj, event);
+		}
+		QMultiMap<QString, QString> queryParams;
+		QString token = url.queryItemValue("oauth_token");
+		QString verifier = url.queryItemValue("oauth_verifier");
+		d->manager->verifyToken(token, verifier);
+		return true;
+	}
+	return QObject::eventFilter(obj, event);
 }
 
 void TelldusLive::doCall() {
