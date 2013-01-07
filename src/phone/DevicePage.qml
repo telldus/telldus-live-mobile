@@ -62,6 +62,7 @@ Item {
 					anchors.left: buttons.right
 					anchors.leftMargin: 20
 					anchors.right: arrow.left
+					anchors.rightMargin: 20
 					Text {
 						color: "#00659F"
 						width: parent.width
