@@ -27,7 +27,7 @@ Row {
 		height: parent.height
 		width: childrenRect.width
 		Image {
-			anchors.centerIn: parent
+			anchors.verticalCenter: parent.verticalCenter
 			source: "buttonDivider.png"
 			height: 70
 			fillMode: Image.TileVertically
@@ -60,7 +60,7 @@ Row {
 		height: parent.height
 		width: childrenRect.width
 		Image {
-			anchors.centerIn: parent
+			anchors.verticalCenter: parent.verticalCenter
 			source: "buttonDivider.png"
 			height: 70
 			fillMode: Image.TileVertically

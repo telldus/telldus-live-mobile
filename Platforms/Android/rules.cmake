@@ -66,8 +66,8 @@ FUNCTION(COMPILE target)
 		COMMAND cd ${CMAKE_BINARY_DIR}/apk/ && ant debug
 	)
 	ADD_CUSTOM_TARGET(run
-		adb install -r ${CMAKE_BINARY_DIR}/apk/bin/TelldusCenter-light-debug.apk &&
-		adb shell am start -n com.telldus.livemobile/org.kde.necessitas.origo.QtActivity
+		adb install -r ${CMAKE_BINARY_DIR}/apk/bin/${target}-debug.apk &&
+		adb shell am start -n com.telldus.live.mobile/org.kde.necessitas.origo.QtActivity
 		DEPENDS ${target}
 		COMMENT "Package and deploy apk"
 	)
