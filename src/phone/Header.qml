@@ -60,4 +60,12 @@ Image {
 		styleColor: "#003959"
 		elide: Text.ElideRight
 	}
+
+	Image {
+		source: "headerShade.png"
+		anchors.top: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		fillMode: Image.TileHorizontally
+	}
 }

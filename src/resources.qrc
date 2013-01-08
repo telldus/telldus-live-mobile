@@ -76,5 +76,6 @@
         <file>phone/headerButtonBack.png</file>
         <file>phone/headerButtonBackActive.png</file>
         <file>phone/DeviceDetails.qml</file>
+        <file>phone/headerShade.png</file>
     </qresource>
 </RCC>
