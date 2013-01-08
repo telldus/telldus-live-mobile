@@ -7,7 +7,10 @@ SET(HAVE_WEBKIT 1)
 
 SET(ANDROID_FILES
 	AndroidManifest.xml
-	icon.png
+	../../icons/icon-36.png
+	../../icons/icon-48.png
+	../../icons/icon-72.png
+	../../icons/icon-96.png
 	libs.xml
 	logo.png
 	IMinistro.aidl
@@ -23,8 +26,31 @@ SET_SOURCE_FILES_PROPERTIES(
 	PROPERTIES TARGET_PATH "."
 )
 SET_SOURCE_FILES_PROPERTIES(
-	icon.png logo.png
+	logo.png
 	PROPERTIES TARGET_PATH res/drawable
+)
+SET_SOURCE_FILES_PROPERTIES(
+	../../icons/icon-36.png
+	PROPERTIES TARGET_PATH res/drawable-ldpi
+)
+SET_SOURCE_FILES_PROPERTIES(
+	../../icons/icon-48.png
+	PROPERTIES TARGET_PATH res/drawable-mdpi
+)
+SET_SOURCE_FILES_PROPERTIES(
+	../../icons/icon-72.png
+	PROPERTIES TARGET_PATH res/drawable-hdpi
+)
+SET_SOURCE_FILES_PROPERTIES(
+	../../icons/icon-96.png
+	PROPERTIES TARGET_PATH res/drawable-xhdpi
+)
+SET_SOURCE_FILES_PROPERTIES(
+	../../icons/icon-36.png
+	../../icons/icon-48.png
+	../../icons/icon-72.png
+	../../icons/icon-96.png
+	PROPERTIES TARGET_NAME icon.png
 )
 SET_SOURCE_FILES_PROPERTIES(
 	splash.xml
@@ -49,12 +75,16 @@ SET( RESOURCES_PATH "${CMAKE_BINARY_DIR}/apk/assets" )
 FOREACH(file ${ANDROID_FILES})
 	GET_FILENAME_COMPONENT(filename ${file} NAME)
 	GET_SOURCE_FILE_PROPERTY(path ${file} TARGET_PATH)
-	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_BINARY_DIR}/apk/${path}/${filename}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Platforms/Android/${file} ${CMAKE_BINARY_DIR}/apk/${path}/${filename}
+	GET_SOURCE_FILE_PROPERTY(name ${file} TARGET_NAME)
+	IF (${name} STREQUAL "NOTFOUND")
+		SET(name ${filename})
+	ENDIF()
+	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_BINARY_DIR}/apk/${path}/${name}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Platforms/Android/${file} ${CMAKE_BINARY_DIR}/apk/${path}/${name}
 		MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/Platforms/Android/${file}
 		COMMENT "Copying ${file}"
 	)
-	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/${path}/${filename})
+	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/${path}/${name})
 ENDFOREACH()
 
 
