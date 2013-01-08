@@ -7,7 +7,6 @@
 		<item>QtDeclarative</item>
 		<item>QtXml</item>
 		<item>QtOpenGL</item>
-		<item>QtSystemInfo</item>
 		<item>QtWebKit</item>
 	</array>
 	<array name="bundled_libs"/>
