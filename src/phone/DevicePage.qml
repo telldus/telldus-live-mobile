@@ -149,10 +149,23 @@ Item {
 		}
 	}
 
-	DeviceDetails {
-		id: showDevice
-		onBackClicked: devicePage.state = ''
+	Component {
+		id: componentShowDevice
+		DeviceDetails {
+			onBackClicked: devicePage.state = ''
+			selected: showDevice.selected
+		}
 	}
+	Loader {
+		id: showDevice
+		property Device selected
+		anchors.top: parent.top
+		anchors.left: listPage.right
+		anchors.bottom: parent.bottom
+		width: parent.width
+		sourceComponent: selected ? componentShowDevice : undefined
+	}
+
 
 	states: [
 		State {

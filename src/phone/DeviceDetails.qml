@@ -5,14 +5,10 @@ Item {
 	id: showDevice
 	property Device selected
 	signal backClicked()
-	anchors.top: parent.top
-	anchors.left: listPage.right
-	anchors.bottom: parent.bottom
-	width: parent.width
 
 	Header {
 		id: deviceH
-		title: showDevice.selected ? showDevice.selected.name : ''
+		title: showDevice.selected.name
 		backVisible: true
 		onBackClicked: showDevice.backClicked()
 	}
