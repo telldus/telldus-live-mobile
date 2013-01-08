@@ -79,5 +79,6 @@
         <file>phone/headerShade.png</file>
         <file>phone/dimSliderBg.png</file>
         <file>phone/dimSliderButton.png</file>
+        <file>phone/dimBg.png</file>
     </qresource>
 </RCC>

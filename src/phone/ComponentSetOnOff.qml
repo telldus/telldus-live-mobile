@@ -18,7 +18,7 @@ Item {
 		drag.minimumY: 0
 		drag.maximumY: 0
 	}
-	Rectangle {
+	Item {
 		id:dimArea
 		property bool shown: false
 		onShownChanged: {
@@ -27,18 +27,32 @@ Item {
 				device.dim(value)
 			}
 		}
-		color: "red"
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: parent.top
 		height: parent.height
 		opacity: shown ? 1 : 0
 		Behavior on opacity { NumberAnimation { duration: 200 } }
-		Rectangle {
+		BorderImage {
+			border { left: 22; top: 20; right: 22; bottom: 24 }
+			source: "dimBg.png"
+			anchors.fill: parent
+			anchors.leftMargin: -dimHandle.width/2
+			anchors.rightMargin: -dimHandle.width/2
+		}
+		BorderImage {
+			source: "dimSliderBg.png"
+			height: 12
+			border { left: 6; top: 6; right: 6; bottom: 5 }
+			anchors.verticalCenter: parent.verticalCenter
+			anchors.left: parent.left
+			anchors.leftMargin: dimHandle.width/2
+			anchors.right: parent.right
+			anchors.rightMargin: dimHandle.width/2
+		}
+		Image {
 			id: dimHandle
-			color: "blue"
-			width: 20
-			height: 20
+			source: "dimSliderButton.png"
 			anchors.verticalCenter: parent.verticalCenter
 			x: (device.stateValue / 100) * (dimArea.width-dimHandle.width)
 			Connections {
