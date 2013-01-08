@@ -50,95 +50,97 @@ Item {
 		}
 	}
 
-	Row {
-		id: row
-		anchors.fill: parent
-		Item {
-			height: parent.height
-			width: 96
-			BorderImage {
-				anchors.fill: parent
-				anchors.rightMargin: -15
-				border {left: 15; top: 49; right: 0; bottom: 49 }
-				source: "buttonBgClickLeft.png"
-				opacity: offMouseArea.pressed || buttonsMouseArea.pressed ? 1 : 0
+	Item {
+		height: parent.height
+		anchors.left: parent.left
+		anchors.right: separator.left
+		BorderImage {
+			anchors.fill: parent
+			anchors.rightMargin: -15
+			border {left: 15; top: 49; right: 0; bottom: 49 }
+			source: "buttonBgClickLeft.png"
+			opacity: offMouseArea.pressed || buttonsMouseArea.pressed ? 1 : 0
+		}
+		Image {
+			anchors.centerIn: parent
+			source: device.state == 2 ? "buttonActionOffActive.png" : "buttonActionOff.png"
+		}
+		MouseArea {
+			id: offMouseArea
+			anchors.fill: parent
+			drag.target: dimArea.shown ? dimHandle : undefined
+			drag.axis: Drag.XandYAxis
+			drag.minimumX: 0
+			drag.maximumX: dimArea.width - dimHandle.width
+			drag.minimumY: 0
+			drag.maximumY: 0
+			onPressAndHold: pressedAndHeld()
+			onClicked: {
+				device.turnOff()
 			}
-			Image {
-				anchors.centerIn: parent
-				source: device.state == 2 ? "buttonActionOffActive.png" : "buttonActionOff.png"
-			}
-			MouseArea {
-				id: offMouseArea
-				anchors.fill: parent
-				drag.target: dimArea.shown ? dimHandle : undefined
-				drag.axis: Drag.XandYAxis
-				drag.minimumX: 0
-				drag.maximumX: dimArea.width - dimHandle.width
-				drag.minimumY: 0
-				drag.maximumY: 0
-				onPressAndHold: pressedAndHeld()
-				onClicked: {
-					device.turnOff()
-				}
-				onPressedChanged: {
-					if (!pressed) {
-						dimArea.shown = false
-					}
+			onPressedChanged: {
+				if (!pressed) {
+					dimArea.shown = false
 				}
 			}
 		}
-		Item {
-			height: parent.height
-			width: 30
-			z:1
-			Image {
-				anchors.centerIn: parent
-				source: methods & 16 ? "buttonDividerDim.png" : "buttonDivider.png"
-				height: 70
-				fillMode: Image.TileVertically
-				Text {
-					visible: methods & 16
-					color: "#00659F"
-					text: device.stateValue + '%'
-					font.pixelSize: 14
-					font.bold: true
-					style: Text.Raised;
-					styleColor: "#fff"
-					anchors.horizontalCenter: parent.horizontalCenter
-					anchors.top: parent.top
-					anchors.topMargin: 34
-				}
+	}
+
+	Item {
+		id: separator
+		anchors.horizontalCenter: parent.horizontalCenter
+		height: parent.height
+		width: 30
+		z:1
+		Image {
+			anchors.centerIn: parent
+			source: methods & 16 ? "buttonDividerDim.png" : "buttonDivider.png"
+			height: 70
+			fillMode: Image.TileVertically
+			Text {
+				visible: methods & 16
+				color: "#00659F"
+				text: device.stateValue + '%'
+				font.pixelSize: 14
+				font.bold: true
+				style: Text.Raised;
+				styleColor: "#fff"
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.top: parent.top
+				anchors.topMargin: 34
 			}
 		}
-		Item {
-			height: parent.height
-			width: 96
-			BorderImage {
-				anchors.fill: parent
-				anchors.leftMargin: -15
-				border {left: 0; top: 49; right: 15; bottom: 49 }
-				source: "buttonBgClickRight.png"
-				opacity: onMouseArea.pressed || buttonsMouseArea.pressed ? 1 : 0
-			}
-			Image {
-				anchors.centerIn: parent
-				source: device.state == 1 || device.state == 16 ? "buttonActionOnActive.png" : "buttonActionOn.png"
-			}
-			MouseArea {
-				id: onMouseArea
-				anchors.fill: parent
-				drag.target: dimArea.shown ? dimHandle : undefined
-				drag.axis: Drag.XandYAxis
-				drag.minimumX: 0
-				drag.maximumX: dimArea.width - dimHandle.width
-				drag.minimumY: 0
-				drag.maximumY: 0
-				onClicked: device.turnOn()
-				onPressAndHold: pressedAndHeld()
-				onPressedChanged: {
-					if (!pressed) {
-						dimArea.shown = false
-					}
+	}
+
+	Item {
+		height: parent.height
+		anchors.left: separator.right
+		anchors.right: parent.right
+		BorderImage {
+			anchors.fill: parent
+			anchors.leftMargin: -15
+			border {left: 0; top: 49; right: 15; bottom: 49 }
+			source: "buttonBgClickRight.png"
+			opacity: onMouseArea.pressed || buttonsMouseArea.pressed ? 1 : 0
+		}
+		Image {
+			anchors.centerIn: parent
+			source: device.state == 1 || device.state == 16 ? "buttonActionOnActive.png" : "buttonActionOn.png"
+		}
+		MouseArea {
+			id: onMouseArea
+			anchors.fill: parent
+			drag.target: dimArea.shown ? dimHandle : undefined
+			drag.axis: Drag.XandYAxis
+			drag.minimumX: 0
+			drag.maximumX: dimArea.width - dimHandle.width
+			drag.minimumY: 0
+			drag.maximumY: 0
+			onClicked: device.turnOn()
+			onPressAndHold: pressedAndHeld()
+			onPressedChanged: {
+				if (!pressed) {
+					dimArea.shown = false
 				}
 			}
 		}
