@@ -61,20 +61,27 @@ Item {
 					Item {
 						height: iconFavorite.height
 						width: childrenRect.width
-						Column {
+						Item {
 							anchors.verticalCenter: parent.verticalCenter
+							height: childrenRect.height
+							width: childrenRect.width
+							Behavior on height { NumberAnimation { duration: 200 } }
 							Text {
+								id: favText
 								text: showDevice.selected.isFavorite ? "Device is in Your Favorites" : "Add device to Your Favorites"
 								color: showDevice.selected.isFavorite ? "#00659F" : "#999999"
 								font.pointSize: 8
 								font.weight: Font.Bold
 							}
 							Text {
+								anchors.top: favText.bottom
 								text: "Tap to remove"
 								color: "#00659F"
 								font.pointSize: 4
 								font.weight: Font.Bold
-								visible: showDevice.selected.isFavorite
+								height: showDevice.selected.isFavorite ? undefined : 0
+								opacity: showDevice.selected.isFavorite ? 1 : 0
+								Behavior on opacity { NumberAnimation { duration: 200 } }
 							}
 						}
 					}
