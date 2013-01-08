@@ -1,14 +1,15 @@
 import QtQuick 1.1
 import Telldus 1.0
 
-Row {
+Item {
 	property bool supportsStop: methods & 512
 	Item {
+		id: downButton
 		height: parent.height
-		width: supportsStop ? 71 : 109
+		anchors.left: parent.left
+		anchors.right: supportsStop ? stopButton.left : parent.horizontalCenter
 		BorderImage {
 			anchors.fill: parent
-			anchors.rightMargin: -2
 			border {left: 15; top: 49; right: 0; bottom: 49 }
 			source: "buttonBgClickLeft.png"
 			opacity: downMouseArea.pressed ? 1 : 0
@@ -24,23 +25,13 @@ Row {
 		}
 	}
 	Item {
-		height: parent.height
-		width: childrenRect.width
-		Image {
-			anchors.verticalCenter: parent.verticalCenter
-			source: "buttonDivider.png"
-			height: 70
-			fillMode: Image.TileVertically
-		}
-	}
-	Item {
+		id: stopButton
 		visible: supportsStop ? true : false
 		height: parent.height
-		width: 71
+		width: parent.width/3
+		anchors.horizontalCenter: parent.horizontalCenter
 		Image {
 			anchors.fill: parent
-			anchors.leftMargin: -2
-			anchors.rightMargin: -2
 			source: "buttonBgClickMiddle.png"
 			opacity: stopMouseArea.pressed ? 1 : 0
 			fillMode: Image.TileHorizontally
@@ -56,22 +47,12 @@ Row {
 		}
 	}
 	Item {
-		visible: supportsStop ? true : false
+		id: upButton
+		anchors.left: supportsStop ? stopButton.right : downButton.right
+		anchors.right: parent.right
 		height: parent.height
-		width: childrenRect.width
-		Image {
-			anchors.verticalCenter: parent.verticalCenter
-			source: "buttonDivider.png"
-			height: 70
-			fillMode: Image.TileVertically
-		}
-	}
-	Item {
-		height: parent.height
-		width: supportsStop ? 71 : 109
 		BorderImage {
 			anchors.fill: parent
-			anchors.leftMargin: -2
 			border {left: 0; top: 49; right: 15; bottom: 49 }
 			source: "buttonBgClickRight.png"
 			opacity: upMouseArea.pressed ? 1 : 0
@@ -84,6 +65,31 @@ Row {
 			id: upMouseArea
 			anchors.fill: parent
 			onClicked: device.up()
+		}
+	}
+	Item {
+		anchors.left: downButton.right
+		anchors.leftMargin: -2
+		width: childrenRect.width
+		height: parent.height
+		Image {
+			anchors.verticalCenter: parent.verticalCenter
+			source: "buttonDivider.png"
+			height: 70
+			fillMode: Image.TileVertically
+		}
+	}
+	Item {
+		anchors.right: upButton.left
+		anchors.rightMargin: -2
+		visible: supportsStop ? true : false
+		height: parent.height
+		width: childrenRect.width
+		Image {
+			anchors.verticalCenter: parent.verticalCenter
+			source: "buttonDivider.png"
+			height: 70
+			fillMode: Image.TileVertically
 		}
 	}
 }
