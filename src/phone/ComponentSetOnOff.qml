@@ -93,11 +93,11 @@ Item {
 			z:1
 			Image {
 				anchors.centerIn: parent
-				source: device.methods & 16 ? "buttonDividerDim.png" : "buttonDivider.png"
+				source: methods & 16 ? "buttonDividerDim.png" : "buttonDivider.png"
 				height: 70
 				fillMode: Image.TileVertically
 				Text {
-					visible: device.methods & 16
+					visible: methods & 16
 					color: "#00659F"
 					text: device.stateValue + '%'
 					font.pixelSize: 14
@@ -144,7 +144,7 @@ Item {
 		}
 	}
 	function pressedAndHeld() {
-		if ((device.methods & 16) == 0) {
+		if ((methods & 16) == 0) {
 			return;
 		}
 		dimArea.shown = true

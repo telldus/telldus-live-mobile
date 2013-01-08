@@ -2,7 +2,7 @@ import QtQuick 1.1
 import Telldus 1.0
 
 Row {
-	property bool supportsStop: device.methods & 512
+	property bool supportsStop: methods & 512
 	Item {
 		height: parent.height
 		width: supportsStop ? 71 : 109

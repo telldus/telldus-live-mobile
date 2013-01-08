@@ -5,6 +5,7 @@ BorderImage {
 	id: buttonSet
 	property int set: primarySet()
 	property Device device
+	property int methods: device.methods
 	source: "buttonBg.png"
 	border {left: 15; top: 49; right: 15; bottom: 49 }
 	width: 222
@@ -27,10 +28,10 @@ BorderImage {
 	}
 
 	function primarySet() {
-		if (device.methods & (128+256)) {
+		if (methods & (128+256)) {
 			return 1; // Up and Down
 		}
-		if (device.methods & 4) {
+		if (methods & 4) {
 			return 2;
 		}
 
