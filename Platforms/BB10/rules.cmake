@@ -1,11 +1,11 @@
-SET(BB10_FILES
+SET(FILES
 	bar-descriptor.xml
-	icon-114.png
+	../../icons/icon-114.png
 )
 
 SET_SOURCE_FILES_PROPERTIES(
 	bar-descriptor.xml
-	icon-114.png
+	../../icons/icon-114.png
 	PROPERTIES TARGET_PATH "."
 )
 
@@ -18,7 +18,7 @@ SET(DEVICE_IP "169.254.0.1" CACHE STRING "IP address to the device")
 SET(SIGNING_PASSWORD "" CACHE FILEPATH "Password for the signing keys")
 INCLUDE_DIRECTORIES( "${QNX_TARGET}/usr/include" )
 
-FOREACH(file ${BB10_FILES})
+FOREACH(file ${FILES})
 	GET_FILENAME_COMPONENT(filename ${file} NAME)
 	GET_SOURCE_FILE_PROPERTY(path ${file} TARGET_PATH)
 	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_BINARY_DIR}/${path}/${filename}
@@ -27,6 +27,7 @@ FOREACH(file ${BB10_FILES})
 		COMMENT "Copying ${file}"
 	)
 	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/${path}/${filename})
+	LIST(APPEND BB10_FILES ${CMAKE_BINARY_DIR}/${path}/${filename})
 ENDFOREACH()
 
 FUNCTION(COMPILE target)
