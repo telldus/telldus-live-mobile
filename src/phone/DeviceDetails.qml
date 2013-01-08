@@ -23,7 +23,7 @@ Item {
 		Column {
 			anchors.fill: parent
 			anchors.margins: 20
-			spacing: 20
+			spacing: 30
 			Text {
 				text: "Location: " + showDevice.selected.clientName
 				color: "#999999"
