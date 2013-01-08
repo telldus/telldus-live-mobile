@@ -33,6 +33,21 @@ Item {
 				elide: Text.ElideRight
 			}
 
+			Repeater {
+				model: ListModel {
+					ListElement { set: 0; req: 1 }
+					ListElement { set: 1; req: 384 }
+					ListElement { set: 2; req: 4 }
+				}
+				delegate: ButtonSet {
+					set: model.set
+					device: selected
+					methods: selected.methods & ~16  // Clear the dim method
+					visible: selected.methods & model.req
+					width: parent.width
+				}
+			}
+
 			Item {
 				width: favRow.width
 				height: favRow.height
