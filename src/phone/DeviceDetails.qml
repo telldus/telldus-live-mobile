@@ -20,31 +20,54 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.margins: 20
 		border {left: 21; top: 21; right: 21; bottom: 28 }
-		Item {
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 20
-			anchors.left: parent.left
-			anchors.leftMargin: 20
-			height: childrenRect.height
-			width: childrenRect.width
-			Row {
-				spacing: 20
-				Image {
-					id: iconFavorite
-					source: showDevice.selected && showDevice.selected.isFavorite ? "iconFavouriteActive.png" : "iconFavourite.png"
-				}
-				Text {
-					text: "Favorite"
-					color: "#00659F"
-					font.pointSize: 11
-					font.weight: Font.Bold
-					height: iconFavorite.height
-					verticalAlignment: Text.AlignVCenter
-				}
+		Column {
+			anchors.fill: parent
+			anchors.margins: 20
+			spacing: 20
+			Text {
+				text: "Location: " + showDevice.selected.clientName
+				color: "#999999"
+				width: parent.width
+				font.pixelSize: 30
+				font.bold: Font.Bold
+				elide: Text.ElideRight
 			}
-			MouseArea {
-				anchors.fill: parent
-				onClicked: showDevice.selected.isFavorite = !showDevice.selected.isFavorite
+
+			Item {
+				width: favRow.width
+				height: favRow.height
+				Row {
+					id: favRow
+					spacing: 20
+					Image {
+						id: iconFavorite
+						source: showDevice.selected.isFavorite ? "iconFavouriteActive.png" : "iconFavourite.png"
+					}
+					Item {
+						height: iconFavorite.height
+						width: childrenRect.width
+						Column {
+							anchors.verticalCenter: parent.verticalCenter
+							Text {
+								text: showDevice.selected.isFavorite ? "Device is in Your Favorites" : "Add device to Your Favorites"
+								color: showDevice.selected.isFavorite ? "#06456a" : "#999999"
+								font.pointSize: 8
+								font.weight: Font.Bold
+							}
+							Text {
+								text: "Tap to remove"
+								color: "#06456a"
+								font.pointSize: 4
+								font.weight: Font.Bold
+								visible: showDevice.selected.isFavorite
+							}
+						}
+					}
+				}
+				MouseArea {
+					anchors.fill: parent
+					onClicked: showDevice.selected.isFavorite = !showDevice.selected.isFavorite
+				}
 			}
 		}
 	}
