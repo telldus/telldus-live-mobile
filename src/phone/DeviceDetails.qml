@@ -33,6 +33,45 @@ Item {
 				elide: Text.ElideRight
 			}
 
+			Item {
+				width: parent.width - dimHandle.width
+				height: 100
+				visible: selected.methods & 16
+				anchors.horizontalCenter: parent.horizontalCenter
+				BorderImage {
+					id: dimArea
+					anchors.verticalCenter: parent.verticalCenter
+					source: "dimSliderBg.png"
+					height: 12
+					width: parent.width
+					border { left: 6; top: 6; right: 6; bottom: 5 }
+					Image {
+						id: dimHandle
+						source: "dimSliderButton.png"
+						anchors.verticalCenter: parent.verticalCenter
+						x: (selected.stateValue / 100) * dimArea.width - (dimHandle.width/2)
+						Connections {
+							target: selected
+							onStateValueChanged: {
+								dimHandle.x = (stateValue / 100) * dimArea.width - (dimHandle.width/2)
+							}
+						}
+						MouseArea {
+							anchors.fill: parent
+							anchors.margins: -parent.height  // Make sure the target area is bigger
+							drag.target: dimHandle
+							drag.axis: Drag.XAxis
+							drag.minimumX: -dimHandle.width/2
+							drag.maximumX: dimArea.width - (dimHandle.width/2)
+							onReleased: {
+								var value = Math.round((dimHandle.x + dimHandle.width/2) / dimArea.width * 100);
+								selected.dim(value)
+							}
+						}
+					}
+				}
+			}
+
 			Repeater {
 				model: ListModel {
 					ListElement { set: 0; req: 1 }
