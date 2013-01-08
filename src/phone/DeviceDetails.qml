@@ -65,13 +65,13 @@ Item {
 							anchors.verticalCenter: parent.verticalCenter
 							Text {
 								text: showDevice.selected.isFavorite ? "Device is in Your Favorites" : "Add device to Your Favorites"
-								color: showDevice.selected.isFavorite ? "#06456a" : "#999999"
+								color: showDevice.selected.isFavorite ? "#00659F" : "#999999"
 								font.pointSize: 8
 								font.weight: Font.Bold
 							}
 							Text {
 								text: "Tap to remove"
-								color: "#06456a"
+								color: "#00659F"
 								font.pointSize: 4
 								font.weight: Font.Bold
 								visible: showDevice.selected.isFavorite
