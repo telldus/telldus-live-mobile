@@ -34,11 +34,15 @@ Image {
 			style: Text.Raised;
 			styleColor: "#ffffff"
 		}
-		MouseArea {
-			id: backMouseArea
-			anchors.fill: parent
-			onClicked: backClicked()
-		}
+	}
+	MouseArea {
+		id: backMouseArea
+		enabled: backButton.visible
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
+		anchors.left: backButton.left
+		anchors.right: backButton.right
+		onClicked: backClicked()
 	}
 
 	Image {
