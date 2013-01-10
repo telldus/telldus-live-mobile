@@ -1,0 +1,8 @@
+export NECESSITAS_DIR=
+export ANDROID_NDK=${NECESSITAS_DIR}/android-ndk
+cmake .. -DTARGET_PLATFORM=Android \
+-DQT_QMAKE_EXECUTABLE=${NECESSITAS_DIR}/Android/Qt/482/armeabi/bin/qmake \
+-DCMAKE_TOOLCHAIN_FILE=../android.toolchain.cmake \
+-DQT_INCLUDE_DIR=${NECESSITAS_DIR}/Android/Qt/482/armeabi/include \
+-DQT_QTCORE_INCLUDE_DIR=${NECESSITAS_DIR}/Android/Qt/482/armeabi/include/QtCore \
+-DQT_QTCORE_LIBRARY_RELEASE=${NECESSITAS_DIR}/Android/Qt/482/armeabi/lib/libQtCore.so
