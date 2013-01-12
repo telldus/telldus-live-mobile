@@ -3,7 +3,7 @@
 	<id>com.telldus.live.mobile</id>
 	<name>Telldus Live! Mobile</name>
 	<author>Telldus Technologies AB</author>
-	<versionNumber>1.0.0</versionNumber>
+	<versionNumber>1.0.1</versionNumber>
 	<buildIdFile>_buildId</buildIdFile>
 	<description></description>
 	<initialWindow>
