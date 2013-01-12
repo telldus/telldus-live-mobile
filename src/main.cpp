@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 	// This is needed because OpenGL viewport doesn't support partial updates.
 	viewer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	viewer->setViewport(new QGLWidget);
-	viewer->setWindowTitle("TelldusCenter Light");
+
+	viewer->setWindowTitle("Telldus Live! mobile");
 	viewer->rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
 
 	TelldusCenter tc(viewer);
