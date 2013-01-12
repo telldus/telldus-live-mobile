@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include <QtDeclarative>
 #include <QDesktopWidget>
+#include <QGLWidget>
 #include "tellduscenter.h"
 #include "tellduslive.h"
 #include "config.h"
@@ -26,6 +27,9 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationVersion("Android-1.0");
 
 	QDeclarativeView *viewer = new QDeclarativeView();
+	// This is needed because OpenGL viewport doesn't support partial updates.
+	viewer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	viewer->setViewport(new QGLWidget);
 	viewer->setWindowTitle("TelldusCenter Light");
 	viewer->rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
 
