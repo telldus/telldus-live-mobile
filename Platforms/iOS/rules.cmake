@@ -29,6 +29,7 @@ LIST(APPEND LIBRARIES
 	"-framework CoreMedia"
 	${QT_DIR}/lib/libQtOpenGL.a
 	${QT_DIR}/plugins/sqldrivers/libqsqlite.a
+	${QT_DIR}/plugins/imageformats/libqsvg.a
 	${QT_DIR}/plugins/platforms/libquikit.a
 	libz.dylib
 	libiconv.dylib

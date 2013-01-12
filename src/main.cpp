@@ -10,6 +10,7 @@
 	#include <QtPlugin>
 	Q_IMPORT_PLUGIN(UIKit)
 	Q_IMPORT_PLUGIN(qsqlite)
+	Q_IMPORT_PLUGIN(qsvg)
 #endif
 
 int main(int argc, char *argv[])
