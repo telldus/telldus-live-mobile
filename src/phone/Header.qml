@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import Telldus 1.0
 
-Image {
+Item {
 	id: header
 	property alias title: titleText.text
 	property alias backVisible: backButton.visible
@@ -9,26 +9,45 @@ Image {
 	anchors.left: parent.left
 	anchors.right: parent.right
 	anchors.top: parent.top
+	height: 103 * SCALEFACTOR
 
-	source: "headerBg.png"
-	fillMode: Image.TileHorizontally
-	height: 103
-	BorderImage {
+	Image {
+		source: "headerBg.png"
+		fillMode: Image.TileHorizontally
+		width: parent.width/SCALEFACTOR
+		scale: SCALEFACTOR
+		transformOrigin: Item.TopLeft
+		smooth: true
+
+		Image {
+			visible: title == '' && backVisible == false
+			anchors.verticalCenter: parent.verticalCenter
+			source: "headerLogo.png"
+			smooth: true
+		}
+	}
+	Item {
 		id: backButton
 		visible: false
-		width: backText.width + 25 + 15
+		width: backText.width + ((25 + 15) * SCALEFACTOR)
+		height: 50
 		anchors.left: parent.left
-		anchors.leftMargin: 30
+		anchors.leftMargin: 30 * SCALEFACTOR
 		anchors.verticalCenter: parent.verticalCenter
-		source: backMouseArea.pressed ? "headerButtonBackActive.png" : "headerButtonBack.png"
-		border {left: 23; right: 8; top: 24; bottom: 25}
+		BorderImage {
+			source: backMouseArea.pressed ? "headerButtonBackActive.png" : "headerButtonBack.png"
+			border {left: 23; right: 8; top: 24; bottom: 25}
+			width: parent.width/SCALEFACTOR
+			scale: SCALEFACTOR
+			transformOrigin: Item.Left
+		}
 		Text {
 			id: backText
 			text: "Back"
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.left: parent.left
-			anchors.leftMargin: 25
-			font.pixelSize: 25
+			anchors.leftMargin: 25 * SCALEFACTOR
+			font.pixelSize: 25 * SCALEFACTOR
 			font.weight: Font.Bold
 			color: "#06456a"
 			style: Text.Raised;
@@ -45,19 +64,14 @@ Image {
 		onClicked: backClicked()
 	}
 
-	Image {
-		visible: title == '' && backVisible == false
-		anchors.verticalCenter: parent.verticalCenter
-		source: "headerLogo.png"
-	}
 	Text {
 		id: titleText
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.left: backButton.right
-		anchors.leftMargin: 30
+		anchors.leftMargin: 30 * SCALEFACTOR
 		anchors.right: parent.right
-		anchors.rightMargin: 30
-		font.pixelSize: 40
+		anchors.rightMargin: 30 * SCALEFACTOR
+		font.pixelSize: 40 * SCALEFACTOR
 		font.weight: Font.Bold
 		color: "white"
 		style: Text.Raised;
