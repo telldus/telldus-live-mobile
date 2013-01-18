@@ -12,24 +12,27 @@ Rectangle {
 
 	Image {
 		id: logo
+		height: sourceSize.height*SCALEFACTOR
+		fillMode: Image.PreserveAspectFit
+		smooth: true
 		source: "startLogo.png"
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
-		anchors.topMargin: 70
+		anchors.topMargin: 70*SCALEFACTOR
 	}
 
 	Item {
 		anchors.top: logo.bottom
 		anchors.bottom: loginButton.top
 		anchors.left: parent.left
-		anchors.leftMargin: 50
+		anchors.leftMargin: 50*SCALEFACTOR
 		anchors.right: parent.right
-		anchors.rightMargin: 50
+		anchors.rightMargin: 50*SCALEFACTOR
 		Image {
 			source: "startDivider.png"
 			fillMode: Image.TileHorizontally
 			anchors.top: parent.top
-			anchors.topMargin: 70
+			anchors.topMargin: 70*SCALEFACTOR
 			anchors.left: parent.left
 			anchors.right: parent.right
 		}
@@ -55,7 +58,7 @@ Rectangle {
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 70
+			anchors.bottomMargin: 70*SCALEFACTOR
 		}
 	}
 
@@ -64,7 +67,10 @@ Rectangle {
 		source: buttonArea.pressed ? "startButtonLoginActive.png" : "startButtonLogin.png"
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 170
+		anchors.bottomMargin: 170*SCALEFACTOR
+		height: sourceSize.height*SCALEFACTOR
+		fillMode: Image.PreserveAspectFit
+		smooth: true
 
 		MouseArea {
 			id: buttonArea
@@ -77,7 +83,7 @@ Rectangle {
 	}
 	BusyIndicator {
 		anchors.top: loginButton.bottom
-		anchors.topMargin: 20
+		anchors.topMargin: 20*SCALEFACTOR
 		anchors.horizontalCenter: parent.horizontalCenter
 		visible: telldusLive.working
 	}

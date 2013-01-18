@@ -3,8 +3,8 @@ import QtQuick 1.1
 Item {
 	id: root
 	property bool running: true
-	width: 90
-	height: 90
+	width: 90*SCALEFACTOR
+	height: 90*SCALEFACTOR
 	Image {
 		id: spinner
 		property int index: 1
