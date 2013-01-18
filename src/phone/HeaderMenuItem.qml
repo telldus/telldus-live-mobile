@@ -19,12 +19,13 @@ Item {
 		height: parent.height
 		fillMode: Image.TileVertically
 		anchors.right: parent.left
+		scale: SCALEFACTOR
 	}
 
 	Text {
 		id: label
 		anchors.centerIn: parent
-		font.pixelSize: 30
+		font.pixelSize: 30*SCALEFACTOR
 		font.weight: Font.Bold
 		color: active ? "white" : "#d5ebff"
 		style: Text.Raised;
