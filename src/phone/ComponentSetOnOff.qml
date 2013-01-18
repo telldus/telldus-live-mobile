@@ -78,6 +78,7 @@ Item {
 		Image {
 			anchors.centerIn: parent
 			source: device.state == 2 ? "buttonActionOffActive.png" : "buttonActionOff.png"
+			smooth: true
 		}
 		MouseArea {
 			id: offMouseArea
@@ -122,6 +123,7 @@ Item {
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: parent.top
 				anchors.topMargin: 34
+				smooth: true
 			}
 		}
 	}
@@ -140,6 +142,7 @@ Item {
 		Image {
 			anchors.centerIn: parent
 			source: device.state == 1 || device.state == 16 ? "buttonActionOnActive.png" : "buttonActionOn.png"
+			smooth: true
 		}
 		MouseArea {
 			id: onMouseArea

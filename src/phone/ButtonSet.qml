@@ -17,7 +17,6 @@ Item {
 		height: parent.height/SCALEFACTOR
 		scale: SCALEFACTOR
 		transformOrigin: Item.TopLeft
-		smooth: true
 		Loader {
 			id: loader
 			source: {
