@@ -1,30 +1,38 @@
 import QtQuick 1.1
 import Telldus 1.0
 
-BorderImage {
+Item {
 	id: buttonSet
 	property int set: primarySet()
 	property Device device
 	property int methods: device.methods
-	source: "buttonBg.png"
-	border {left: 15; top: 49; right: 15; bottom: 49 }
-	width: 222
-	height: 100
 
-	Loader {
-		id: loader
-		source: {
-			if (set == 0) {
-				return 'ComponentSetOnOff.qml';
-			} else if (set == 1) {
-				return 'ComponentSetUpDown.qml';
-			} else if (set == 2) {
-				return 'ComponentSetBell.qml';
+	width: 222 * SCALEFACTOR
+	height: 100 * SCALEFACTOR
+
+	BorderImage {
+		source: "buttonBg.png"
+		border {left: 15; top: 49; right: 15; bottom: 49 }
+		width: parent.width/SCALEFACTOR
+		height: parent.height/SCALEFACTOR
+		scale: SCALEFACTOR
+		transformOrigin: Item.TopLeft
+		smooth: true
+		Loader {
+			id: loader
+			source: {
+				if (set == 0) {
+					return 'ComponentSetOnOff.qml';
+				} else if (set == 1) {
+					return 'ComponentSetUpDown.qml';
+				} else if (set == 2) {
+					return 'ComponentSetBell.qml';
+				}
+
+				return '';
 			}
-
-			return '';
+			anchors.fill: parent
 		}
-		anchors.fill: parent
 	}
 
 	function primarySet() {
