@@ -82,5 +82,6 @@
         <file>phone/dimBg.png</file>
         <file>phone/headerMenuButtonDivider.png</file>
         <file>Equifax_Secure_CA.pem</file>
+        <file>phone/Button.qml</file>
     </qresource>
 </RCC>

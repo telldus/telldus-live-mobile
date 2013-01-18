@@ -34,48 +34,15 @@ Item {
 				color: "#8cabc5"
 			}
 		}
-		BorderImage {
+		Button {
 			id: button
-			source: "buttonBg.png"
-			border {left: 15; top: 49; right: 15; bottom: 49 }
+			title: "Logout"
 			anchors.left: parent.left
 			anchors.leftMargin: 30
 			anchors.right: parent.right
 			anchors.rightMargin: 30
 			anchors.verticalCenter: parent.verticalCenter
-			height: 100
-			BorderImage {
-				anchors.left: parent.left
-				anchors.top: parent.top
-				anchors.bottom: parent.bottom
-				anchors.right: parent.horizontalCenter
-				border {left: 15; top: 49; right: 0; bottom: 49 }
-				source: "buttonBgClickLeft.png"
-				opacity: buttonArea.pressed ? 1 : 0
-			}
-			BorderImage {
-				anchors.left: parent.horizontalCenter
-				anchors.top: parent.top
-				anchors.bottom: parent.bottom
-				anchors.right: parent.right
-				border {left: 0; top: 49; right: 15; bottom: 49 }
-				source: "buttonBgClickRight.png"
-				opacity: buttonArea.pressed ? 1 : 0
-			}
-			Text {
-				text: "Logout"
-				anchors.centerIn: parent
-				color: "#00659F"
-				font.pixelSize: 40
-				font.weight: Font.Bold
-				style: Text.Raised
-				styleColor: "white"
-			}
-			MouseArea {
-				id: buttonArea
-				anchors.fill: parent
-				onClicked: telldusLive.logout()
-			}
+			onClicked: telldusLive.logout()
 		}
 	}
 }
