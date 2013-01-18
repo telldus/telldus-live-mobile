@@ -10,7 +10,7 @@ Item {
 			id: wrapper
 			property Device dev: device
 			width: list.width
-			height: 150
+			height: 150*SCALEFACTOR
 			clip: false
 			z: model.index
 			ListView.onRemove: SequentialAnimation {
@@ -22,7 +22,7 @@ Item {
 			ListView.onAdd: SequentialAnimation {
 				PropertyAction { target: wrapper; property: "z"; value: -1 }
 				ParallelAnimation {
-					NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150; duration: 250; easing.type: Easing.InOutQuad }
+					NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150*SCALEFACTOR; duration: 250; easing.type: Easing.InOutQuad }
 					NumberAnimation { target: wrapper; properties: "opacity"; from: 0; to: 1; duration: 250; easing.type: Easing.InOutQuad }
 				}
 				PropertyAction { target: wrapper; property: "z"; value: 0 }
@@ -32,9 +32,9 @@ Item {
 				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.left: parent.left
-				anchors.leftMargin: 20
-				anchors.rightMargin: 20
-				height: 140
+				anchors.leftMargin: 20*SCALEFACTOR
+				anchors.rightMargin: 20*SCALEFACTOR
+				height: 140*SCALEFACTOR
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
 				ButtonSet {
@@ -42,7 +42,7 @@ Item {
 					device: wrapper.dev
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
-					anchors.leftMargin: 20
+					anchors.leftMargin: 20*SCALEFACTOR
 				}
 				MouseArea {
 					id: mouseArea
@@ -60,13 +60,13 @@ Item {
 					id: nameCol
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: buttons.right
-					anchors.leftMargin: 20
+					anchors.leftMargin: 20*SCALEFACTOR
 					anchors.right: arrow.left
-					anchors.rightMargin: 20
+					anchors.rightMargin: 20*SCALEFACTOR
 					Text {
 						color: "#00659F"
 						width: parent.width
-						font.pixelSize: 32
+						font.pixelSize: 32*SCALEFACTOR
 						font.weight: Font.Bold
 						text: device.name
 						elide: Text.ElideRight
@@ -74,7 +74,7 @@ Item {
 					Text {
 						color: "#999999"
 						width: parent.width
-						font.pixelSize: 25
+						font.pixelSize: 25*SCALEFACTOR
 						text: device.clientName
 						elide: Text.ElideRight
 					}
@@ -83,8 +83,10 @@ Item {
 				Image {
 					id: arrow
 					source: "rowArrow.png"
+					width: sourceSize.width*SCALEFACTOR
+					fillMode: Image.PreserveAspectFit
 					anchors.right: parent.right
-					anchors.rightMargin: 20
+					anchors.rightMargin: 20*SCALEFACTOR
 					anchors.verticalCenter: parent.verticalCenter
 				}
 			}
