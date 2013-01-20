@@ -33,6 +33,8 @@ LIST(APPEND LIBRARIES
 	${QT_DIR}/plugins/platforms/libquikit.a
 	libz.dylib
 	libiconv.dylib
+	${QT_DIR}/lib/libssl.a
+	${QT_DIR}/lib/libcrypto.a
 )
 
 FUNCTION(COMPILE target)

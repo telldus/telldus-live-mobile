@@ -52,12 +52,9 @@ TelldusLive::TelldusLive(QObject *parent) :
 	d->request = 0;
 	d->requestPending = false;
 
-#ifdef PLATFORM_IOS
-	d->base = "http://api.telldus.com";
-#else
 	d->base = "https://api.telldus.com";
+
 	QSslSocket::addDefaultCaCertificates(":/Equifax_Secure_CA.pem");
-#endif
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
