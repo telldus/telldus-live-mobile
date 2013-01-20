@@ -7,7 +7,7 @@ Item {
 		Item {
 			id: wrapper
 			width: list.width
-			height: 150
+			height: 150*SCALEFACTOR
 			clip: false
 			z: model.index
 			BorderImage {
@@ -15,75 +15,85 @@ Item {
 				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.left: parent.left
-				anchors.leftMargin: 20
-				anchors.rightMargin: 20
-				height: 140
+				anchors.leftMargin: 20*SCALEFACTOR
+				anchors.rightMargin: 20*SCALEFACTOR
+				height: 140*SCALEFACTOR
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
-				Column {
-					anchors.left: parent.left
-					anchors.leftMargin: 20
-					anchors.right: dataRow.left
-					anchors.verticalCenter: parent.verticalCenter
-					Text {
-						color: sensor.name !== '' ? '#00659F' : '#8cabc5'
-						width: parent.width
-						font.pixelSize: 32
-						font.weight: Font.Bold
-						text: sensor.name !== '' ? sensor.name : '(no name)'
-						elide: Text.ElideRight
-					}
-					Text {
-						color: "#999999"
-						font.pixelSize: 28
-						text: ""  // TODO(micke): Add location name
-					}
-					Text {
-						color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
-						font.pixelSize: 25
-						text: formatLastUpdated(sensor.minutesAgo)
-					}
-				}
-				Row {
-					id: dataRow
-					spacing: 20
-					anchors.right: parent.right
-					anchors.rightMargin: 20
-					anchors.verticalCenter: parent.verticalCenter
-					Item {
-						width: childrenRect.width
-						height: humidityIcon.height
-						visible: sensor.hasHumidity
-						Image {
-							id: humidityIcon
-							source: "sensorIconHumidity.png"
+				Item {
+					anchors.fill: parent
+					anchors.topMargin: 1
+					anchors.bottomMargin: 11
+
+					Column {
+						anchors.left: parent.left
+						anchors.leftMargin: 20
+						anchors.right: dataRow.left
+						anchors.verticalCenter: parent.verticalCenter
+						Text {
+							color: sensor.name !== '' ? '#00659F' : '#8cabc5'
+							width: parent.width
+							font.pixelSize: 32*SCALEFACTOR
+							font.weight: Font.Bold
+							text: sensor.name !== '' ? sensor.name : '(no name)'
+							elide: Text.ElideRight
 						}
 						Text {
-							anchors.left: humidityIcon.right
-							anchors.leftMargin: 10
-							anchors.verticalCenter: parent.verticalCenter
-							color: '#00659F'
-							font.pixelSize: 28
-							font.weight: Font.Bold
-							text: sensor.humidity + '%'
-						}
-					}
-					Item {
-						width: childrenRect.width
-						height: temperatureIcon.height
-						visible: sensor.hasTemperature
-						Image {
-							id: temperatureIcon
-							source: "sensorIconTemperature.png"
+							color: "#999999"
+							font.pixelSize: 28*SCALEFACTOR
+							text: ""  // TODO(micke): Add location name
 						}
 						Text {
-							anchors.left: temperatureIcon.right
-							anchors.leftMargin: 10
-							anchors.verticalCenter: parent.verticalCenter
-							color: '#00659F'
-							font.pixelSize: 28
-							font.weight: Font.Bold
-							text: sensor.temperature + '\u00B0C'
+							color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
+							font.pixelSize: 25*SCALEFACTOR
+							text: formatLastUpdated(sensor.minutesAgo)
+						}
+					}
+					Row {
+						id: dataRow
+						spacing: 20
+						anchors.right: parent.right
+						anchors.rightMargin: 20
+						anchors.verticalCenter: parent.verticalCenter
+						Item {
+							width: childrenRect.width
+							height: humidityIcon.height
+							visible: sensor.hasHumidity
+							Image {
+								id: humidityIcon
+								source: "sensorIconHumidity.png"
+								height: sourceSize.height*SCALEFACTOR
+								width: sourceSize.width*SCALEFACTOR
+							}
+							Text {
+								anchors.left: humidityIcon.right
+								anchors.leftMargin: 10
+								anchors.verticalCenter: parent.verticalCenter
+								color: '#00659F'
+								font.pixelSize: 28*SCALEFACTOR
+								font.weight: Font.Bold
+								text: sensor.humidity + '%'
+							}
+						}
+						Item {
+							width: childrenRect.width
+							height: temperatureIcon.height
+							visible: sensor.hasTemperature
+							Image {
+								id: temperatureIcon
+								source: "sensorIconTemperature.png"
+								height: sourceSize.height*SCALEFACTOR
+								width: sourceSize.width*SCALEFACTOR
+							}
+							Text {
+								anchors.left: temperatureIcon.right
+								anchors.leftMargin: 10
+								anchors.verticalCenter: parent.verticalCenter
+								color: '#00659F'
+								font.pixelSize: 28*SCALEFACTOR
+								font.weight: Font.Bold
+								text: sensor.temperature + '\u00B0C'
+							}
 						}
 					}
 				}
