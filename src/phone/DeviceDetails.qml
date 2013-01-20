@@ -18,24 +18,25 @@ Item {
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
-		anchors.margins: 20
+		anchors.margins: 20*SCALEFACTOR
 		border {left: 21; top: 21; right: 21; bottom: 28 }
 		Column {
 			anchors.fill: parent
 			anchors.margins: 20
-			spacing: 30
+			spacing: 30*SCALEFACTOR
 			Text {
 				text: "Location: " + showDevice.selected.clientName
 				color: "#999999"
 				width: parent.width
-				font.pixelSize: 30
+				font.pixelSize: 30*SCALEFACTOR
 				font.bold: Font.Bold
 				elide: Text.ElideRight
 			}
 
 			Item {
-				width: parent.width - dimHandle.width
-				height: 100
+				width: (parent.width - dimHandle.width*SCALEFACTOR)/SCALEFACTOR
+				height: 100*SCALEFACTOR
+				scale: SCALEFACTOR
 				visible: selected.methods & 16
 				anchors.horizontalCenter: parent.horizontalCenter
 				BorderImage {
@@ -88,40 +89,45 @@ Item {
 			}
 
 			Item {
-				width: favRow.width
-				height: favRow.height
-				Row {
-					id: favRow
-					spacing: 20
-					Image {
-						id: iconFavorite
-						source: showDevice.selected.isFavorite ? "iconFavouriteActive.png" : "iconFavourite.png"
-					}
+				width: parent.width
+				height: childrenRect.height
+				Image {
+					id: iconFavorite
+					source: showDevice.selected.isFavorite ? "iconFavouriteActive.png" : "iconFavourite.png"
+					height: sourceSize.height*SCALEFACTOR;
+					width: sourceSize.width*SCALEFACTOR;
+					smooth: true
+				}
+				Item {
+					height: iconFavorite.height
+					anchors.left: iconFavorite.right
+					anchors.leftMargin: 20*SCALEFACTOR
+					anchors.right: parent.right
 					Item {
-						height: iconFavorite.height
-						width: childrenRect.width
-						Item {
-							anchors.verticalCenter: parent.verticalCenter
-							height: childrenRect.height
-							width: childrenRect.width
-							Behavior on height { NumberAnimation { duration: 200 } }
-							Text {
-								id: favText
-								text: showDevice.selected.isFavorite ? "Device is in Your Favorites" : "Add device to Your Favorites"
-								color: showDevice.selected.isFavorite ? "#00659F" : "#999999"
-								font.pointSize: 8
-								font.weight: Font.Bold
-							}
-							Text {
-								anchors.top: favText.bottom
-								text: "Tap to remove"
-								color: "#00659F"
-								font.pointSize: 4
-								font.weight: Font.Bold
-								height: showDevice.selected.isFavorite ? undefined : 0
-								opacity: showDevice.selected.isFavorite ? 1 : 0
-								Behavior on opacity { NumberAnimation { duration: 200 } }
-							}
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.left: parent.left
+						anchors.right: parent.right
+						height: childrenRect.height
+						Behavior on height { NumberAnimation { duration: 200 } }
+						Text {
+							id: favText
+							anchors.left: parent.left
+							anchors.right: parent.right
+							wrapMode: Text.WordWrap
+							text: showDevice.selected.isFavorite ? "Device is in Your Favorites" : "Add device to Your Favorites"
+							color: showDevice.selected.isFavorite ? "#00659F" : "#999999"
+							font.pixelSize: 30 * SCALEFACTOR
+							font.weight: Font.Bold
+						}
+						Text {
+							anchors.top: favText.bottom
+							text: "Tap to remove"
+							color: "#00659F"
+							font.pixelSize: 16 * SCALEFACTOR
+							font.weight: Font.Bold
+							height: showDevice.selected.isFavorite ? undefined : 0
+							opacity: showDevice.selected.isFavorite ? 1 : 0
+							Behavior on opacity { NumberAnimation { duration: 200 } }
 						}
 					}
 				}
