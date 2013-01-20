@@ -28,9 +28,11 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationVersion("Android-1.0");
 
 	QDeclarativeView *viewer = new QDeclarativeView();
+#ifdef PLATFORM_BB10
 	// This is needed because OpenGL viewport doesn't support partial updates.
 	viewer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	viewer->setViewport(new QGLWidget);
+#endif
 
 	viewer->setWindowTitle("Telldus Live! mobile");
 	viewer->rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
