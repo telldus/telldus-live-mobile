@@ -37,57 +37,64 @@ Item {
 				height: 140*SCALEFACTOR
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
-				ButtonSet {
-					id: buttons
-					device: wrapper.dev
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: parent.left
-					anchors.leftMargin: 20*SCALEFACTOR
-				}
-				MouseArea {
-					id: mouseArea
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.left: nameCol.left
-					anchors.right: parent.right
-					onClicked: {
-						devicePage.state = 'showDevice'
-						showDevice.selected = device
-					}
-				}
+				Item {
+					anchors.fill: parent
+					anchors.topMargin: 2
+					anchors.bottomMargin: 10
 
-				Column {
-					id: nameCol
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: buttons.right
-					anchors.leftMargin: 20*SCALEFACTOR
-					anchors.right: arrow.left
-					anchors.rightMargin: 20*SCALEFACTOR
-					Text {
-						color: "#00659F"
-						width: parent.width
-						font.pixelSize: 32*SCALEFACTOR
-						font.weight: Font.Bold
-						text: device.name
-						elide: Text.ElideRight
+					ButtonSet {
+						id: buttons
+						device: wrapper.dev
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.left: parent.left
+						anchors.leftMargin: 20*SCALEFACTOR
 					}
-					Text {
-						color: "#999999"
-						width: parent.width
-						font.pixelSize: 25*SCALEFACTOR
-						text: device.clientName
-						elide: Text.ElideRight
-					}
-				}
 
-				Image {
-					id: arrow
-					source: "rowArrow.png"
-					width: sourceSize.width*SCALEFACTOR
-					fillMode: Image.PreserveAspectFit
-					anchors.right: parent.right
-					anchors.rightMargin: 20*SCALEFACTOR
-					anchors.verticalCenter: parent.verticalCenter
+					MouseArea {
+						id: mouseArea
+						anchors.top: parent.top
+						anchors.bottom: parent.bottom
+						anchors.left: nameCol.left
+						anchors.right: parent.right
+						onClicked: {
+							devicePage.state = 'showDevice'
+							showDevice.selected = device
+						}
+					}
+
+					Column {
+						id: nameCol
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.left: buttons.right
+						anchors.leftMargin: 20*SCALEFACTOR
+						anchors.right: arrow.left
+						anchors.rightMargin: 20*SCALEFACTOR
+						Text {
+							color: "#00659F"
+							width: parent.width
+							font.pixelSize: 32*SCALEFACTOR
+							font.weight: Font.Bold
+							text: device.name
+							elide: Text.ElideRight
+						}
+						Text {
+							color: "#999999"
+							width: parent.width
+							font.pixelSize: 25*SCALEFACTOR
+							text: device.clientName
+							elide: Text.ElideRight
+						}
+					}
+
+					Image {
+						id: arrow
+						source: "rowArrow.png"
+						width: sourceSize.width*SCALEFACTOR
+						fillMode: Image.PreserveAspectFit
+						anchors.right: parent.right
+						anchors.rightMargin: 20*SCALEFACTOR
+						anchors.verticalCenter: parent.verticalCenter
+					}
 				}
 			}
 		}
