@@ -45,7 +45,7 @@ Rectangle {
 			text: "To start using Telldus&nbsp;Live!&nbsp;mobile you need to log in to your Telldus&nbsp;Live! account."
 			wrapMode: Text.WordWrap
 			textFormat: Text.RichText
-			font.pointSize: 10
+			font.pixelSize: 30*SCALEFACTOR
 			font.bold: true
 			color: "#d5ebff"
 			style: Text.Raised

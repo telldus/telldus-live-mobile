@@ -29,7 +29,7 @@ Item {
 				text: "You are currently logged in to a Telldus&nbsp;Live! account.\nIf you want to change account, please click the button below."
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
-				font.pointSize: 10
+				font.pixelSize: 30*SCALEFACTOR
 				font.bold: true
 				color: "#8cabc5"
 			}
