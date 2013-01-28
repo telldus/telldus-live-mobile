@@ -16,6 +16,9 @@ signals:
 
 public slots:
 
+protected:
+	void resizeEvent( QResizeEvent * event );
+
 private:
 	class PrivateData;
 	PrivateData *d;

@@ -39,11 +39,6 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	qmlRegisterType<GroupDeviceModel>("Telldus", 1, 0, "GroupDeviceModel");
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 
-	double scaleFactor = 1.0;
-#ifdef Q_WS_MAEMO_5
-	scaleFactor = 2.0;
-#endif
-
 	d->view->rootContext()->setContextProperty("telldusLive", TelldusLive::instance());
 	d->view->rootContext()->setContextProperty("deviceModelController", DeviceModel::instance());
 	d->view->rootContext()->setContextProperty("rawDeviceModel", d->rawDeviceModel);
@@ -52,7 +47,6 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	d->view->rootContext()->setContextProperty("favoriteModel", d->favoriteModel);
 	d->view->rootContext()->setContextProperty("clientModel", d->clientModel);
 	d->view->rootContext()->setContextProperty("sensorModel", d->sensorModel);
-	d->view->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 }
 
 TelldusCenter::~TelldusCenter() {
