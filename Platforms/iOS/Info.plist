@@ -27,7 +27,7 @@
 		<string>icon-114.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.telldus.tellduscenter-light</string>
+	<string>com.telldus.live.mobile</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
