@@ -1,10 +1,8 @@
 #include <QtGui/QApplication>
-#include <QtDeclarative>
-#include <QDesktopWidget>
-#include <QGLWidget>
 #include "tellduscenter.h"
 #include "tellduslive.h"
-#include "config.h"
+#include "view.h"
+#include <QDebug>
 
 #ifdef PLATFORM_IOS
 	#include <QtPlugin>
@@ -27,27 +25,9 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationName("Telldus Live! Mobile");
 	QCoreApplication::setApplicationVersion("Android-1.0");
 
-	QDeclarativeView *viewer = new QDeclarativeView();
-#ifdef PLATFORM_BB10
-	// This is needed because OpenGL viewport doesn't support partial updates.
-	viewer->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-	viewer->setViewport(new QGLWidget);
-#endif
-
-	viewer->setWindowTitle("Telldus Live! mobile");
-	viewer->rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
-
+	View *viewer = new View();
 	TelldusCenter tc(viewer);
-
-	viewer->setResizeMode(QDeclarativeView::SizeRootObjectToView);
-	viewer->setSource(QUrl("qrc:/phone/main.qml"));
-
-#ifdef PLATFORM_BB10
-	QDesktopWidget s;
-	QRect size = s.availableGeometry();
-
-	viewer->resize(size.width(), size.height());
-#endif
+	viewer->load();
 
 #if defined(PLATFORM_DESKTOP)
 	viewer->show();

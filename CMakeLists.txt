@@ -27,6 +27,7 @@ SET( SOURCES
 	src/groupdevicemodel.cpp
 	src/client.cpp
 	src/clientmodel.cpp
+	src/view.cpp
 
 	qt-json/json.cpp
 )
@@ -51,6 +52,7 @@ SET( MOC_HEADERS
 	src/groupdevicemodel.h
 	src/client.h
 	src/clientmodel.h
+	src/view.h
 )
 
 SET(RESOURCES
