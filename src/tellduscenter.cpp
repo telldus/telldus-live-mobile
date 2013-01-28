@@ -47,6 +47,9 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	d->view->rootContext()->setContextProperty("favoriteModel", d->favoriteModel);
 	d->view->rootContext()->setContextProperty("clientModel", d->clientModel);
 	d->view->rootContext()->setContextProperty("sensorModel", d->sensorModel);
+#ifdef PLATFORM_IOS
+	this->init();
+#endif
 }
 
 TelldusCenter::~TelldusCenter() {

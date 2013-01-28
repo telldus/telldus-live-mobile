@@ -20,6 +20,10 @@ public slots:
 private:
 	class PrivateData;
 	PrivateData *d;
+
+#ifdef PLATFORM_IOS
+	void init();
+#endif
 };
 
 #endif // TELLDUSCENTER_H

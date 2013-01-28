@@ -7,6 +7,8 @@ ELSE()
 ENDIF()
 SET(USE_QMAKE TRUE)
 
+SET(TESTFLIGHT_TOKEN	""	CACHE STRING "TestFlight token")
+
 SET(CMAKE_OSX_SYSROOT "iphoneos")
 SET(CMAKE_OSX_ARCHITECTURES i386 armv7)
 SET(CMAKE_CXX_FLAGS "-x objective-c++")
@@ -17,6 +19,10 @@ SET(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer" CACHE STRING "Th
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtOpenGL )
 
 SET(QT_USE_QTOPENGL FALSE)
+
+LIST(APPEND SOURCES
+	Platforms/iOS/tellduscenter.mm
+)
 
 LIST(APPEND LIBRARIES
 	"-framework Foundation"
@@ -36,6 +42,7 @@ LIST(APPEND LIBRARIES
 	libiconv.dylib
 	${QT_DIR}/lib/libssl.a
 	${QT_DIR}/lib/libcrypto.a
+	${CMAKE_SOURCE_DIR}/Platforms/iOS/libTestFlight.a
 )
 
 LIST(APPEND RESOURCES
