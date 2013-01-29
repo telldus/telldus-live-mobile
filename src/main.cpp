@@ -33,6 +33,8 @@ int main(int argc, char *argv[])
 	viewer->show();
 #elif defined(PLATFORM_ANDROID)
 	viewer->show();
+#elif defined(PLATFORM_IOS)
+	viewer->show();
 #else
 	viewer->showFullScreen();
 #endif
