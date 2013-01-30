@@ -23,8 +23,10 @@
 	<string></string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>icon-72.png</string>
-		<string>icon-114.png</string>
+		<string>icon-flat-57.png</string>
+		<string>icon-flat-72.png</string>
+		<string>icon-flat-114.png</string>
+		<string>icon-flat-144.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.telldus.live.mobile</string>

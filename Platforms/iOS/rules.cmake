@@ -46,8 +46,10 @@ LIST(APPEND LIBRARIES
 )
 
 LIST(APPEND RESOURCES
-	icons/icon-72.png
-	icons/icon-114.png
+	icons/icon-flat-57.png
+	icons/icon-flat-72.png
+	icons/icon-flat-114.png
+	icons/icon-flat-144.png
 )
 
 SET_SOURCE_FILES_PROPERTIES(${RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
