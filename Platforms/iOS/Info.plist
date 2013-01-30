@@ -30,6 +30,8 @@
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
+	<key>UILaunchImageFile</key>
+	<string>LaunchImage</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.telldus.live.mobile</string>
 	<key>CFBundleInfoDictionaryVersion</key>

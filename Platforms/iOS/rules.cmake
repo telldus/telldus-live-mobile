@@ -51,6 +51,9 @@ LIST(APPEND RESOURCES
 	icons/icon-flat-72.png
 	icons/icon-flat-114.png
 	icons/icon-flat-144.png
+	Platforms/iOS/LaunchImage.png
+	Platforms/iOS/LaunchImage@2x.png
+	Platforms/iOS/LaunchImage-568h@2x.png
 )
 
 SET_SOURCE_FILES_PROPERTIES(${RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
