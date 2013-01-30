@@ -1,7 +1,9 @@
 SET(HAVE_WEBKIT 1)
 
+MATH(EXPR INTERNAL_VERSION "${PACKAGE_MAJOR_VERSION}*10000+${PACKAGE_MINOR_VERSION}*100+${PACKAGE_PATCH_VERSION}")
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/Android/AndroidManifest.xml ${CMAKE_BINARY_DIR}/apk/AndroidManifest.xml)
+
 SET(ANDROID_FILES
-	AndroidManifest.xml
 	../../icons/icon-36.png
 	../../icons/icon-48.png
 	../../icons/icon-72.png
@@ -16,10 +18,6 @@ SET(ANDROID_FILES
 	strings.xml
 )
 
-SET_SOURCE_FILES_PROPERTIES(
-	AndroidManifest.xml
-	PROPERTIES TARGET_PATH "."
-)
 SET_SOURCE_FILES_PROPERTIES(
 	logo.png
 	PROPERTIES TARGET_PATH res/drawable

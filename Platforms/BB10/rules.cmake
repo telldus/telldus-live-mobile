@@ -1,10 +1,11 @@
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/BB10/bar-descriptor.xml ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
+
+SET(BB10_FILES ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
 SET(FILES
-	bar-descriptor.xml
 	../../icons/icon-114.png
 )
 
 SET_SOURCE_FILES_PROPERTIES(
-	bar-descriptor.xml
 	../../icons/icon-114.png
 	PROPERTIES TARGET_PATH "."
 )
