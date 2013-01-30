@@ -12,6 +12,7 @@
 	<icon><image>icon-114.png</image></icon>
 	<asset path="TelldusLiveMobile" entry="true" type="Qnx/Elf">TelldusLiveMobile</asset>
 	<permission system="true">run_native</permission>
+	<action>access_internet</action>
 	<invoke-target id="com.telldus.TARGET">
 		<filter>
 			<action>bb.action.VIEW</action>
