@@ -3,11 +3,10 @@ import QtQuick 1.0
 Image {
 	id: footer
 	property string activePage: 'device'
-	property int scaleFactor: footer.width / 3 < 125 ? 2 : 1
-	height: 125/scaleFactor
+	height: 125*SCALEFACTOR
 	Image {
 		source: "footerBg.png"
-		height: 140/scaleFactor
+		height: 140*SCALEFACTOR
 		fillMode: Image.TileHorizontally
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
@@ -18,7 +17,7 @@ Image {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: 123/scaleFactor
+		height: 123*SCALEFACTOR
 		Item {
 			width: parent.width/3
 			height: parent.height
@@ -31,7 +30,7 @@ Image {
 			}
 			Image {
 				id: deviceButton
-				height: sourceSize.height/scaleFactor
+				height: sourceSize.height*SCALEFACTOR
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				anchors.centerIn: parent
@@ -60,7 +59,7 @@ Image {
 			Image {
 				id: sensorButton
 				anchors.centerIn: parent
-				height: sourceSize.height/scaleFactor
+				height: sourceSize.height*SCALEFACTOR
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				source: "footerIconSensors.png"
@@ -88,7 +87,7 @@ Image {
 			Image {
 				id: settingsButton
 				anchors.centerIn: parent
-				height: sourceSize.height/scaleFactor
+				height: sourceSize.height*SCALEFACTOR
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				source: "footerIconSettings.png"
