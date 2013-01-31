@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import Telldus 1.0
 
 Item {
 	id: mainInterface
@@ -43,7 +44,11 @@ Item {
 			Behavior on opacity { NumberAnimation { duration: 100 } }
 			sourceComponent: opacity > 0  ? component_settingsPage : undefined
 		}
-
+		SwipeArea {
+			anchors.fill: parent
+			onSwipeLeft:  footer.activePage = (footer.activePage == 'device' ? 'sensor' : 'settings')
+			onSwipeRight: footer.activePage = (footer.activePage == 'settings' ? 'sensor' : 'device')
+		}
 	}
 
 	Footer {
