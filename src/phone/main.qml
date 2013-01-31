@@ -3,10 +3,6 @@ import "Device.js" as Device
 
 Rectangle {
 	color: "#dceaf6"
-	//width: 640
-	//height: 1136
-	width: 768
-	height: 1280
 
 	Component.onCompleted: {
 		Device.setupCache(deviceModelController)
