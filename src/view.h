@@ -9,8 +9,8 @@ class View : public QDeclarativeView
 public:
 	explicit View(QWidget *parent = 0);
 	virtual ~View();
-	
-	void load();
+
+	void loadAndShow();
 
 signals:
 

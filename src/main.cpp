@@ -28,33 +28,7 @@ int main(int argc, char *argv[])
 	View *viewer = new View();
 	TelldusCenter tc(viewer);
 
-#if defined(PLATFORM_DESKTOP)
-	viewer->show();
-	int w = 0, h = 0;
-	QStringList args = app.arguments();
-	for(int i = 1; i < args.length(); ++i) {
-		if (args.at(i) == "--width") {
-			w = args.at(i+1).toInt();
-			++i;
-			continue;
-		} else if (args.at(i) == "--height") {
-			h = args.at(i+1).toInt();
-			++i;
-			continue;
-		}
-	}
-	if (w > 0 && h > 0) {
-		viewer->setFixedSize(w, h);
-	}
-#elif defined(PLATFORM_ANDROID)
-	viewer->show();
-#elif defined(PLATFORM_IOS)
-	viewer->show();
-#else
-	viewer->showFullScreen();
-#endif
-
-	viewer->load();
+	viewer->loadAndShow();
 
 	return app.exec();
 }

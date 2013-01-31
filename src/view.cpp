@@ -25,7 +25,36 @@ View::View(QWidget *parent) :
 
 	this->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	this->rootContext()->setContextProperty("SCALEFACTOR", 1);  // Default value, resizeEvent() overrides this
+}
 
+View::~View() {
+	delete d;
+}
+
+void View::loadAndShow() {
+#if defined(PLATFORM_DESKTOP)
+	this->show();
+	int w = 0, h = 0;
+	QStringList args = QCoreApplication::arguments();
+	for(int i = 1; i < args.length(); ++i) {
+		if (args.at(i) == "--width") {
+			w = args.at(i+1).toInt();
+			++i;
+			continue;
+		} else if (args.at(i) == "--height") {
+			h = args.at(i+1).toInt();
+			++i;
+			continue;
+		}
+	}
+	if (w > 0 && h > 0) {
+		this->setFixedSize(w, h);
+	}
+#else
+	this->show();
+#endif
+
+	this->setSource(QUrl("qrc:/phone/main.qml"));
 
 #ifdef PLATFORM_BB10
 	QDesktopWidget s;
@@ -33,15 +62,6 @@ View::View(QWidget *parent) :
 
 	this->resize(size.width(), size.height());
 #endif
-
-}
-
-View::~View() {
-	delete d;
-}
-
-void View::load() {
-	this->setSource(QUrl("qrc:/phone/main.qml"));
 }
 
 void View::resizeEvent ( QResizeEvent * event ) {
