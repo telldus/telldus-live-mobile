@@ -19,7 +19,6 @@ Item {
 		height: parent.height
 		fillMode: Image.TileVertically
 		anchors.right: parent.left
-		scale: SCALEFACTOR
 	}
 
 	Text {
