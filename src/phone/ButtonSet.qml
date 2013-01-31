@@ -26,6 +26,8 @@ Item {
 					return 'ComponentSetUpDown.qml';
 				} else if (set == 2) {
 					return 'ComponentSetBell.qml';
+				} else if (set == 3) {
+					return 'ComponentSetLearn.qml';
 				}
 
 				return '';

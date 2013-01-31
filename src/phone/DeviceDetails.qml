@@ -78,6 +78,7 @@ Item {
 					ListElement { set: 0; req: 1 }
 					ListElement { set: 1; req: 384 }
 					ListElement { set: 2; req: 4 }
+					ListElement { set: 3; req: 32 }
 				}
 				delegate: ButtonSet {
 					set: model.set

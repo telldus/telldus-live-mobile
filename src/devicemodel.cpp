@@ -54,7 +54,7 @@ void DeviceModel::authorizationChanged() {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
 		TelldusLiveParams params;
-		params["supportedMethods"] = Device::TURNON | Device::TURNOFF | Device::BELL | Device::DIM | Device::UP | Device::DOWN | Device::STOP;
+		params["supportedMethods"] = Device::TURNON | Device::TURNOFF | Device::BELL | Device::DIM | Device::LEARN | Device::UP | Device::DOWN | Device::STOP;
 		telldusLive->call("devices/list", params, this, SLOT(onDevicesList(QVariantMap)));
 	} else {
 		this->clear();

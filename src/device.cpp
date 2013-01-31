@@ -74,6 +74,10 @@ void Device::down() {
 	sendMethod(Device::DOWN);
 }
 
+void Device::learn() {
+	sendMethod(Device::LEARN);
+}
+
 void Device::stop() {
 	sendMethod(Device::STOP);
 }
@@ -142,7 +146,7 @@ void Device::onActionResponse(const QVariantMap &result, const QVariantMap &data
 			method = Device::TURNOFF;
 		}
 		setStateValue(value);
-	} else if (method == Device::BELL) {
+	} else if (method == Device::BELL || method == Device::LEARN) {
 		return;
 	}
 	setState(method);
