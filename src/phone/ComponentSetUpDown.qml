@@ -20,6 +20,7 @@ Item {
 		}
 		MouseArea {
 			id: downMouseArea
+			preventStealing: true
 			anchors.fill: parent
 			onClicked: device.down()
 		}
@@ -42,6 +43,7 @@ Item {
 		}
 		MouseArea {
 			id: stopMouseArea
+			preventStealing: true
 			anchors.fill: parent
 			onClicked: device.stop()
 		}
@@ -63,6 +65,7 @@ Item {
 		}
 		MouseArea {
 			id: upMouseArea
+			preventStealing: true
 			anchors.fill: parent
 			onClicked: device.up()
 		}

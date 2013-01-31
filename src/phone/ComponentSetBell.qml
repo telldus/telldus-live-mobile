@@ -26,6 +26,7 @@ Item {
 	}
 	MouseArea {
 		id: bellMouseArea
+		preventStealing: true
 		anchors.fill: parent
 		onClicked: device.bell()
 	}

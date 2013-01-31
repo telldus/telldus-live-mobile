@@ -4,6 +4,7 @@ import Telldus 1.0
 Item {
 	MouseArea {
 		id: buttonsMouseArea
+		preventStealing: true
 		anchors.fill: parent
 		onPressAndHold: pressedAndHeld()
 		onPressedChanged: {
@@ -82,6 +83,7 @@ Item {
 		}
 		MouseArea {
 			id: offMouseArea
+			preventStealing: true
 			anchors.fill: parent
 			drag.target: dimArea.shown ? dimHandle : undefined
 			drag.axis: Drag.XandYAxis
@@ -146,6 +148,7 @@ Item {
 		}
 		MouseArea {
 			id: onMouseArea
+			preventStealing: true
 			anchors.fill: parent
 			drag.target: dimArea.shown ? dimHandle : undefined
 			drag.axis: Drag.XandYAxis
