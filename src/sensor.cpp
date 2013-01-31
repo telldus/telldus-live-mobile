@@ -1,13 +1,14 @@
 #include "sensor.h"
 #include <math.h>
 #include "tellduslive.h"
+#include <QTimer>
 
 class Sensor::PrivateData {
 public:
 	bool hasTemperature, hasHumidity;
 	int id;
 	QString name, temperature, humidity;
-	QDateTime lastUpdated;
+	QDateTime lastUpdated, lastPolled;
 };
 
 Sensor::Sensor(QObject *parent) :
@@ -30,6 +31,7 @@ void Sensor::fetchData() {
 		TelldusLiveParams params;
 		params["id"] = d->id;
 		telldusLive->call("sensor/info", params, this, SLOT(onInfoReceived(QVariantMap)));
+		d->lastPolled = QDateTime::currentDateTime();
 	}
 }
 
@@ -81,6 +83,7 @@ void Sensor::setName(const QString &name) {
 }
 
 void Sensor::onInfoReceived(const QVariantMap &info) {
+	setLastUpdated(QDateTime::fromMSecsSinceEpoch(((qint64)info["lastUpdated"].toInt()*1000)));
 	foreach(QVariant v, info["data"].toList()) {
 		QVariantMap info = v.toMap();
 		if (info["name"].toString() == "temp") {
@@ -93,6 +96,10 @@ void Sensor::onInfoReceived(const QVariantMap &info) {
 }
 
 QString Sensor::temperature() const {
+	if (d->lastPolled.secsTo(QDateTime::currentDateTime()) > 300) {
+		// Five minutes
+		QTimer::singleShot(0, const_cast<Sensor*>(this), SLOT(fetchData()));
+	}
 	return d->temperature;
 }
 
