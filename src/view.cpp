@@ -26,11 +26,11 @@ View::View(QWidget *parent) :
 	this->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 	this->rootContext()->setContextProperty("SCALEFACTOR", 1);  // Default value, resizeEvent() overrides this
 
-	
+
 #ifdef PLATFORM_BB10
 	QDesktopWidget s;
 	QRect size = s.availableGeometry();
-	
+
 	this->resize(size.width(), size.height());
 #endif
 
@@ -51,7 +51,11 @@ void View::resizeEvent ( QResizeEvent * event ) {
 		return;
 	}
 
-	if (s.height() < 500) {
-		this->rootContext()->setContextProperty("SCALEFACTOR", 0.5);
+	double scaleFactor = 1;
+	if (s.width() < 450) {
+		scaleFactor = 0.5;
+	} else if (s.width() < 600) {
+		scaleFactor = 0.75;
 	}
+	this->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 }
