@@ -2,7 +2,7 @@ import QtQuick 1.0
 
 Image {
 	id: footer
-	property string activePage: 'device'
+	property int activePage: 0
 	height: 125*SCALEFACTOR
 	Image {
 		source: "footerBg.png"
@@ -38,7 +38,7 @@ Image {
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: footer.activePage = 'device'
+				onClicked: footer.activePage = 0
 			}
 		}
 		Image {
@@ -66,7 +66,7 @@ Image {
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: footer.activePage = 'sensor'
+				onClicked: footer.activePage = 1
 			}
 		}
 		Image {
@@ -94,24 +94,24 @@ Image {
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: footer.activePage = 'settings'
+				onClicked: footer.activePage = 2
 			}
 		}
 	}
 
 	states: [
 		State {
-			when: activePage == 'device'
+			when: activePage == 0
 			PropertyChanges { target: deviceButtonBackground; opacity: 1 }
 			PropertyChanges { target: deviceButton; source: "footerIconDevicesActive.png" }
 		},
 		State {
-			when: activePage == 'sensor'
+			when: activePage == 1
 			PropertyChanges { target: sensorButtonBackground; opacity: 1 }
 			PropertyChanges { target: sensorButton; source: "footerIconSensorsActive.png" }
 		},
 		State {
-			when: activePage == 'settings'
+			when: activePage == 2
 			PropertyChanges { target: settingsButtonBackground; opacity: 1 }
 			PropertyChanges { target: settingsButton; source: "footerIconSettingsActive.png" }
 		}

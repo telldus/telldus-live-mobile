@@ -84,5 +84,6 @@
         <file>Equifax_Secure_CA.pem</file>
         <file>phone/Button.qml</file>
         <file>phone/ComponentSetLearn.qml</file>
+        <file>phone/TabPage.qml</file>
     </qresource>
 </RCC>
