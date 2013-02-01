@@ -24,12 +24,13 @@ Item {
 			pageId: 2
 			currentPage: footer.activePage
 		}
+	}
 
-		SwipeArea {
-			anchors.fill: parent
-			onSwipeLeft:  footer.activePage = Math.min(2, footer.activePage+1)
-			onSwipeRight: footer.activePage = Math.max(0, footer.activePage-1)
-		}
+	function swipeLeft() {
+		footer.activePage = Math.min(2, footer.activePage+1)
+	}
+	function swipeRight() {
+		footer.activePage = Math.max(0, footer.activePage-1)
 	}
 
 	Footer {

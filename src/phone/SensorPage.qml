@@ -1,4 +1,5 @@
 import QtQuick 1.0
+import Telldus 1.0
 
 Item {
 	id: sensorPage
@@ -101,7 +102,11 @@ Item {
 		}
 	}
 
-
+	SwipeArea {
+		anchors.fill: list
+		onSwipeLeft: mainInterface.swipeLeft()
+		onSwipeRight: mainInterface.swipeRight()
+	}
 	ListView {
 		id: list
 		header: Item {

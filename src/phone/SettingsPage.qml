@@ -1,7 +1,12 @@
 import QtQuick 1.0
+import Telldus 1.0
 
 Item {
 	id: settingsPage
+	SwipeArea {
+		anchors.fill: parent
+		onSwipeRight: mainInterface.swipeRight()
+	}
 	Header {
 		id: deviceH
 	}

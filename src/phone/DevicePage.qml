@@ -100,12 +100,13 @@ Item {
 		}
 	}
 
-	Item {
+	SwipeArea {
 		id: listPage
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
+		onSwipeLeft: mainInterface.swipeLeft()
 
 		ListView {
 			id: list
