@@ -199,7 +199,7 @@ void Device::setState(int state) {
 
 QString Device::stateValue() const {
 	if (d->state == Device::TURNON) {
-		return "100";
+		return "255";
 	} else if (d->state == Device::TURNOFF) {
 		return "0";
 	} else if (d->state == Device::DIM) {

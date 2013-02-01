@@ -24,7 +24,7 @@ Item {
 		property bool shown: false
 		onShownChanged: {
 			if (!shown) {
-				var value = Math.round(dimHandle.x / (dimArea.width - dimHandle.width) * 100);
+				var value = Math.round(dimHandle.x / (dimArea.width - dimHandle.width) * 255);
 				device.dim(value)
 			}
 		}
@@ -55,11 +55,11 @@ Item {
 			id: dimHandle
 			source: "dimSliderButton.png"
 			anchors.verticalCenter: parent.verticalCenter
-			x: (device.stateValue / 100) * (dimArea.width-dimHandle.width)
+			x: (device.stateValue / 255) * (dimArea.width-dimHandle.width)
 			Connections {
 				target: device
 				onStateValueChanged: {
-					dimHandle.x = (stateValue / 100) * (dimArea.width-dimHandle.width)
+					dimHandle.x = (stateValue / 255) * (dimArea.width-dimHandle.width)
 				}
 			}
 		}
@@ -117,7 +117,7 @@ Item {
 			Text {
 				visible: methods & 16
 				color: "#00659F"
-				text: device.stateValue + '%'
+				text: Math.round(device.stateValue/255*100) + '%'
 				font.pixelSize: 14
 				font.bold: true
 				style: Text.Raised;

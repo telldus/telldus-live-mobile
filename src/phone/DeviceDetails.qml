@@ -50,11 +50,11 @@ Item {
 						id: dimHandle
 						source: "dimSliderButton.png"
 						anchors.verticalCenter: parent.verticalCenter
-						x: (selected.stateValue / 100) * dimArea.width - (dimHandle.width/2)
+						x: (selected.stateValue / 255) * dimArea.width - (dimHandle.width/2)
 						Connections {
 							target: selected
 							onStateValueChanged: {
-								dimHandle.x = (stateValue / 100) * dimArea.width - (dimHandle.width/2)
+								dimHandle.x = (stateValue / 255) * dimArea.width - (dimHandle.width/2)
 							}
 						}
 						MouseArea {
@@ -65,7 +65,7 @@ Item {
 							drag.minimumX: -dimHandle.width/2
 							drag.maximumX: dimArea.width - (dimHandle.width/2)
 							onReleased: {
-								var value = Math.round((dimHandle.x + dimHandle.width/2) / dimArea.width * 100);
+								var value = Math.round((dimHandle.x + dimHandle.width/2) / dimArea.width * 255);
 								selected.dim(value)
 							}
 						}
