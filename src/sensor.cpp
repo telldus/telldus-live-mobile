@@ -18,7 +18,6 @@ Sensor::Sensor(QObject *parent) :
 	d->hasTemperature = false;
 	d->hasHumidity = false;
 	d->id = 0;
-	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(fetchData()));
 }
 
 Sensor::~Sensor() {
@@ -56,7 +55,6 @@ int Sensor::sensorId() const {
 
 void Sensor::setId(int id) {
 	d->id = id;
-	fetchData();
 	emit idChanged();
 }
 
