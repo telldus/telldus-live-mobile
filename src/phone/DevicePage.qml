@@ -106,6 +106,8 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
+		filterTouchEvent: true
+		filterMouseEvent: false
 		onSwipeLeft: mainInterface.swipeLeft()
 
 		ListView {

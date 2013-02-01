@@ -104,6 +104,8 @@ Item {
 
 	SwipeArea {
 		anchors.fill: list
+		filterTouchEvent: true
+		filterMouseEvent: false
 		onSwipeLeft: mainInterface.swipeLeft()
 		onSwipeRight: mainInterface.swipeRight()
 	}

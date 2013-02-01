@@ -5,6 +5,8 @@ Item {
 	id: settingsPage
 	SwipeArea {
 		anchors.fill: parent
+		filterTouchEvent: true
+		filterMouseEvent: false
 		onSwipeRight: mainInterface.swipeRight()
 	}
 	Header {
