@@ -68,11 +68,11 @@ bool SwipeArea::event(QEvent *ev) {
 
 void SwipeArea::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	this->touchBegin(event->pos());
-	QDeclarativeItem::mousePressEvent(event);
 }
 
 void SwipeArea::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	touchMove(event->pos());
+	QDeclarativeItem::mouseMoveEvent(event);
 }
 
 void SwipeArea::touchBegin(QPointF pos) {
