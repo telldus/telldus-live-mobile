@@ -1,6 +1,7 @@
 #include "sensormodel.h"
 #include "sensor.h"
 #include "tellduslive.h"
+#include <math.h>
 #include <QDebug>
 
 SensorModel::SensorModel(QObject *parent) :
@@ -23,6 +24,12 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 		}
 		sensor->setName(dev["name"].toString());
 		sensor->setLastUpdated(QDateTime::fromMSecsSinceEpoch(((qint64)dev["lastUpdated"].toInt())*1000));
+		if (dev.contains("temperature") && !isnan(dev["temperature"].toDouble())) {
+			sensor->setTemperature(dev["temperature"].toString());
+		}
+		if (dev.contains("humidity") && !isnan(dev["humidity"].toDouble())) {
+			sensor->setHumidity(dev["humidity"].toString());
+		}
 	}
 	if (list.size()) {
 		//Appends all in one go

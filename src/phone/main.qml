@@ -1,11 +1,13 @@
 import QtQuick 1.0
 import "Device.js" as Device
+import "Sensor.js" as Sensor
 
 Rectangle {
 	color: "#dceaf6"
 
 	Component.onCompleted: {
 		Device.setupCache(deviceModelController)
+		Sensor.setupCache(sensorModel)
 	}
 
 	Component {

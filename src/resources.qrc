@@ -85,5 +85,6 @@
         <file>phone/Button.qml</file>
         <file>phone/ComponentSetLearn.qml</file>
         <file>phone/TabPage.qml</file>
+        <file>phone/Sensor.js</file>
     </qresource>
 </RCC>
