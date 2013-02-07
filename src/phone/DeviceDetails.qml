@@ -6,6 +6,11 @@ Item {
 	property Device selected
 	signal backClicked()
 
+	SwipeArea {
+		anchors.fill: parent
+		onSwipeRight: backClicked()
+	}
+
 	Header {
 		id: deviceH
 		title: showDevice.selected.name
