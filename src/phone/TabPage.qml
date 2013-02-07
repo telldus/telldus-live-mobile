@@ -10,7 +10,7 @@ Loader {
 	height: parent.height
 	anchors.left: parent.left
 	anchors.right: parent.right
-	source: component
+	source: ''
 
 	states: [
 		State {
