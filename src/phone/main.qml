@@ -10,30 +10,18 @@ Rectangle {
 		Sensor.setupCache(sensorModel)
 	}
 
-	Component {
-		id: component_mainInterface
-		MainInterface {
-			id: mainInterface
-		}
-	}
 	Loader {
 		id: loader_mainInterface
 		opacity: telldusLive.isAuthorized ? 1 : 0
 		Behavior on opacity { NumberAnimation { duration: 100 } }
-		sourceComponent: opacity > 0  ? component_mainInterface : undefined
+		source: opacity > 0  ? "MainInterface.qml" : ''
 		anchors.fill: parent
-	}
-	Component {
-		id: component_loginScreen
-		LoginScreen {
-			id: loginScreen
-		}
 	}
 	Loader {
 		id: loader_loginScreen
 		opacity: telldusLive.isAuthorized ? 0 : 1
 		Behavior on opacity { NumberAnimation { duration: 100 } }
-		sourceComponent: opacity > 0  ? component_loginScreen : undefined
+		source: opacity > 0  ? "LoginScreen.qml" : ''
 		anchors.fill: parent
 	}
 }
