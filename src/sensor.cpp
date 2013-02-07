@@ -41,7 +41,7 @@ QString Sensor::humidity() const {
 void Sensor::setHumidity(const QString &humidity) {
 	d->humidity = humidity;
 	d->hasHumidity = true;
-	emit humidityChanged();
+	emit humidityChanged(humidity);
 	emit hasHumidityChanged();
 }
 
@@ -64,7 +64,7 @@ QDateTime Sensor::lastUpdated() const {
 
 void Sensor::setLastUpdated(const QDateTime &lastUpdated) {
 	d->lastUpdated = lastUpdated;
-	emit lastUpdatedChanged();
+	emit lastUpdatedChanged(lastUpdated);
 }
 
 int Sensor::minutesAgo() const {
@@ -77,7 +77,7 @@ QString Sensor::name() const {
 
 void Sensor::setName(const QString &name) {
 	d->name = name;
-	emit nameChanged();
+	emit nameChanged(name);
 }
 
 void Sensor::onInfoReceived(const QVariantMap &info) {
@@ -104,7 +104,7 @@ QString Sensor::temperature() const {
 void Sensor::setTemperature(const QString &temperature) {
 	d->temperature = temperature;
 	d->hasTemperature = true;
-	emit temperatureChanged();
+	emit temperatureChanged(temperature);
 	emit hasTemperatureChanged();
 }
 

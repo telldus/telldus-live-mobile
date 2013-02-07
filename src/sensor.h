@@ -44,10 +44,10 @@ signals:
 	void idChanged();
 	void hasHumidityChanged();
 	void hasTemperatureChanged();
-	void humidityChanged();
-	void lastUpdatedChanged();
-	void nameChanged();
-	void temperatureChanged();
+	void humidityChanged(const QString &humidity);
+	void lastUpdatedChanged(const QDateTime &lastUpdated);
+	void nameChanged(const QString &name);
+	void temperatureChanged(const QString &temperature);
 
 private slots:
 	void fetchData();
