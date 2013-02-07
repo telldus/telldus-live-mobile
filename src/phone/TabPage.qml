@@ -1,34 +1,39 @@
 import QtQuick 1.0
 import Telldus 1.0
 
-Loader {
+Item {
 	id: tabPage
 	property int pageId: 0
-	property int currentPage: 0
+	property int currentPage: -1
 	property string component: ''
 	width: parent.width
 	height: parent.height
 	anchors.left: parent.left
 	anchors.right: parent.right
-	source: ''
+
+	Loader {
+		id: loader
+		anchors.fill: parent
+		source: ''
+	}
 
 	states: [
 		State {
 			name: 'left'
 			when: currentPage > pageId
 			AnchorChanges { target: tabPage; anchors.left: undefined; anchors.right: parent.left }
-			PropertyChanges { target: tabPage; source: '' }
+			PropertyChanges { target: loader; source: '' }
 		},
 		State {
 			name: 'active'
 			when: currentPage == pageId
-			PropertyChanges { target: tabPage; source: tabPage.component }
+			PropertyChanges { target: loader; source: tabPage.component }
 		},
 		State {
 			name: 'right'
 			when: currentPage < pageId
 			AnchorChanges { target: tabPage; anchors.left: parent.right; anchors.right: undefined }
-			PropertyChanges { target: tabPage; source: '' }
+			PropertyChanges { target: loader; source: '' }
 		}
 	]
 
@@ -37,7 +42,7 @@ Loader {
 			to: 'active'
 			reversible: true
 			SequentialAnimation {
-				PropertyAction { target: tabPage; property: "source" }
+				PropertyAction { target: loader; property: "source" }
 				AnchorAnimation { duration: 250; easing.type: Easing.InOutQuad }
 			}
 		}
