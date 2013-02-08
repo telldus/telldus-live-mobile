@@ -66,7 +66,7 @@ function save(sensor, what, value) {
 		if (rs.rows.length > 0) {
 			tx.executeSql('UPDATE Sensor SET ' + what + ' = ? WHERE id = ?', [value, sensor.id]);
 		} else {
-			tx.executeSql('INSERT INTO Sensor (id, ?) VALUES(?, ?)', [what, sensor.id, value]);
+			tx.executeSql('INSERT INTO Sensor (id, ' + what + ') VALUES(?, ?)', [sensor.id, value]);
 		}
 	});
 }
