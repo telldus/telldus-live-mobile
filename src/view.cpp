@@ -50,6 +50,9 @@ void View::loadAndShow() {
 	if (w > 0 && h > 0) {
 		this->setFixedSize(w, h);
 	}
+#elif defined(PLATFORM_IOS)
+	this->show();
+	this->resize(this->windowSize());
 #else
 	this->show();
 #endif

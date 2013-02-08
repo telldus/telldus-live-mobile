@@ -22,6 +22,10 @@ protected:
 private:
 	class PrivateData;
 	PrivateData *d;
+
+#ifdef PLATFORM_IOS
+	QSize windowSize() const;
+#endif
 };
 
 #endif // VIEW_H
