@@ -19,7 +19,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: 123*SCALEFACTOR
+		height: 122*SCALEFACTOR
 		Item {
 			width: parent.width/3
 			height: parent.height
