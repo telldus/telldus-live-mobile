@@ -2,7 +2,7 @@
 #include "config.h"
 
 #include <QtKOAuth>
-#include "json.h"
+#include <parser.h>
 #include <QSettings>
 #include <QScriptEngine>
 #include <QQueue>
@@ -170,7 +170,8 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 	}
 
 	bool ok;
-	QVariantMap result = Json::parse(response, ok).toMap();
+	QJson::Parser parser;
+	QVariantMap result = parser.parse (response, &ok).toMap();
 	if (!ok) {
 		qDebug() << "Could not parse json response from" << call.endpoint;
 		qDebug() << response;

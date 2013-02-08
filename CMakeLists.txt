@@ -33,8 +33,6 @@ SET( SOURCES
 	src/clientmodel.cpp
 	src/view.cpp
 	src/swipearea.cpp
-
-	qt-json/json.cpp
 )
 
 SET( HEADERS
@@ -84,11 +82,11 @@ SET(HAVE_WEBKIT 0)
 FILE(GLOB_RECURSE QML RELATIVE ${CMAKE_SOURCE_DIR} *.qml)
 
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/src )
-INCLUDE_DIRECTORIES( qt-json )
 INCLUDE_DIRECTORIES( qmlapplicationviewer )
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/parsed )
 
 INCLUDE( 3rdparty/kqoauth.cmake NO_POLICY_SCOPE )
+INCLUDE( 3rdparty/qjson.cmake NO_POLICY_SCOPE )
 
 IF (NOT TARGET_PLATFORM)
 	MESSAGE(FATAL_ERROR "Please set the target platform with -DTARGET_PLATFORM='platform'")
