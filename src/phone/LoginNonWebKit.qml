@@ -29,6 +29,7 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.rightMargin: 50*SCALEFACTOR
 		Image {
+			id: topDivider
 			source: "startDivider.png"
 			fillMode: Image.TileHorizontally
 			anchors.top: parent.top
@@ -53,6 +54,7 @@ Rectangle {
 		}
 
 		Image {
+			id: bottomDivider
 			source: "startDivider.png"
 			fillMode: Image.TileHorizontally
 			anchors.left: parent.left
@@ -82,9 +84,22 @@ Rectangle {
 		}
 	}
 	BusyIndicator {
+		id: busyIndicator
 		anchors.top: loginButton.bottom
 		anchors.topMargin: 20*SCALEFACTOR
 		anchors.horizontalCenter: parent.horizontalCenter
 		visible: telldusLive.working
 	}
+
+	states: [
+		State {
+			when: screen.height < 800  // BlackBerry Q10
+			PropertyChanges { target: busyIndicator; anchors.topMargin: 10 }
+			PropertyChanges { target: logo; anchors.topMargin: 30 }
+			PropertyChanges { target: topDivider; anchors.topMargin: 10 }
+			PropertyChanges { target: bottomDivider; anchors.bottomMargin: 10 }
+			PropertyChanges { target: loginButton; anchors.bottomMargin: 120 }
+		}
+
+	]
 }
