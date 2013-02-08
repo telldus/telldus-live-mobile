@@ -3,6 +3,7 @@ import "Device.js" as Device
 import "Sensor.js" as Sensor
 
 Rectangle {
+	id: screen
 	color: "#dceaf6"
 
 	Component.onCompleted: {

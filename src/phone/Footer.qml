@@ -1,10 +1,11 @@
 import QtQuick 1.0
 
-Image {
+Item {
 	id: footer
 	property int activePage: 0
 	height: 125*SCALEFACTOR
 	Image {
+		id: footerBg
 		source: "footerBg.png"
 		height: 140*SCALEFACTOR
 		fillMode: Image.TileHorizontally
@@ -14,6 +15,7 @@ Image {
 	}
 
 	Row {
+		id: buttonRow
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
@@ -121,6 +123,18 @@ Image {
 		Transition {
 			NumberAnimation { properties: "opacity"; duration: 100 }
 		}
-
 	]
+
+	Item {
+		states: [
+			State {
+				// BlackBerry Q10
+				when: screen.height < 800 && SCALEFACTOR == 1
+				PropertyChanges { target: footer; height: 85 }
+				PropertyChanges { target: footerBg; height: 95 }
+				PropertyChanges { target: buttonRow; height: 83 }
+			}
+
+		]
+	}
 }
