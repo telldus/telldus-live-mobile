@@ -44,6 +44,13 @@ Item {
 				scale: SCALEFACTOR
 				visible: selected.methods & 16
 				anchors.horizontalCenter: parent.horizontalCenter
+				MouseArea {
+					anchors.fill: parent
+					onClicked: {
+						selected.dim(Math.round(mouse.x / width * 255));
+					}
+				}
+
 				BorderImage {
 					id: dimArea
 					anchors.verticalCenter: parent.verticalCenter
