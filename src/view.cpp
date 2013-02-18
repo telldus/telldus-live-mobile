@@ -3,6 +3,7 @@
 #include <QDesktopWidget>
 #include <QGLWidget>
 #include <QResizeEvent>
+#include <QDesktopWidget>
 #include "config.h"
 
 class View::PrivateData {
@@ -13,6 +14,7 @@ View::View(QWidget *parent) :
 	QDeclarativeView(parent)
 {
 	d = new PrivateData;
+	connect(QApplication::desktop(), SIGNAL(workAreaResized(int)), this, SLOT(workAreaResized(int)));
 
 #ifdef PLATFORM_BB10
 	// This is needed because OpenGL viewport doesn't support partial updates.
@@ -47,24 +49,32 @@ void View::loadAndShow() {
 			continue;
 		}
 	}
+	QSize size(w, h);
 	if (w > 0 && h > 0) {
-		this->setFixedSize(w, h);
+		this->setFixedSize(size);
 	}
 #elif defined(PLATFORM_IOS)
+	QSize size(this->windowSize());
 	this->show();
-	this->resize(this->windowSize());
+	this->resize(size);
 #else
+	QRect r(QApplication::desktop()->availableGeometry());
+	QSize size(r.width(), r.height());
 	this->show();
 #endif
 
+	this->rootContext()->setContextProperty("HEIGHT", size.height());
+	this->rootContext()->setContextProperty("WIDTH", size.width());
 	this->setSource(QUrl("qrc:/phone/main.qml"));
 
 #ifdef PLATFORM_BB10
-	QDesktopWidget s;
-	QRect size = s.availableGeometry();
-
-	this->resize(size.width(), size.height());
+	this->resize(size);
 #endif
+}
+
+void View::workAreaResized(int screen) {
+	QRect r(QApplication::desktop()->availableGeometry());
+	this->resize(r.width(), r.height());
 }
 
 void View::resizeEvent ( QResizeEvent * event ) {

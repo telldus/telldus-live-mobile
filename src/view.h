@@ -14,7 +14,8 @@ public:
 
 signals:
 
-public slots:
+protected slots:
+	void workAreaResized(int screen);
 
 protected:
 	void resizeEvent( QResizeEvent * event );
