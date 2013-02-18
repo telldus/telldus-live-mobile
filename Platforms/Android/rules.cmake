@@ -94,4 +94,9 @@ FUNCTION(COMPILE target)
 		DEPENDS ${target}
 		COMMENT "Package and deploy apk"
 	)
+	ADD_CUSTOM_TARGET(release
+		cd ${CMAKE_BINARY_DIR}/apk/ && ant release
+		DEPENDS ${target}
+		COMMENT "Package and deploy apk"
+	)
 ENDFUNCTION()
