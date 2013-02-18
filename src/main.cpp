@@ -2,6 +2,7 @@
 #include "tellduscenter.h"
 #include "tellduslive.h"
 #include "view.h"
+#include "config.h"
 #include <QDebug>
 
 #ifdef PLATFORM_IOS
@@ -23,7 +24,7 @@ int main(int argc, char *argv[])
 	QCoreApplication::setOrganizationName("telldus");
 	QCoreApplication::setOrganizationDomain("com.telldus");
 	QCoreApplication::setApplicationName("Telldus Live! Mobile");
-	QCoreApplication::setApplicationVersion("Android-1.0");
+	QCoreApplication::setApplicationVersion(VERSION);
 
 	View *viewer = new View();
 	TelldusCenter tc(viewer);
