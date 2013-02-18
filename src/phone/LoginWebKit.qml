@@ -1,20 +1,15 @@
 import QtQuick 1.0
-import QtWebKit 1.0
+import QtWebKit 1.1
 
-BorderImage {
+Rectangle {
 	id: loginWebKit
-	source: "rowBg.png"
+	color: "#006199"
 	anchors.fill: parent
-	anchors.margins: 20
-	border {left: 21; top: 21; right: 21; bottom: 28 }
 
 	Connections{
 		target: telldusLive
 		onAuthorizationNeeded: {
 			webview.url = url
-		}
-		onAuthorizedChanged: {
-			console.log("Auth changed...");
 		}
 	}
 	Component.onCompleted: {
@@ -24,42 +19,97 @@ BorderImage {
 		}
 	}
 
-	Flickable {
-		id: webviewContainer
-		anchors.fill: parent
-		anchors.margins: 20
-		contentHeight: childrenRect.height
-		contentWidth: childrenRect.width
-		boundsBehavior: Flickable.StopAtBounds
-		clip: true
-		WebView{
-			id: webview
-			settings.defaultFontSize: 32
-			height: preferredHeight
-			width: preferredWidth
-		}
-		z: 1
-	}
 	Item {
-		id: shadow
-		anchors.fill: webviewContainer
-		z: 2
-		opacity: 0
-		Behavior on opacity { PropertyAnimation { easing.type: Easing.InOutQuad } }
+		id: content
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		height: HEIGHT
 
-		Rectangle{
-			anchors.fill: parent
-			opacity: 0.3
-			color: "#000"
+		Image {
+			id: logo
+			height: sourceSize.height*SCALEFACTOR
+			fillMode: Image.PreserveAspectFit
+			smooth: true
+			source: "startLogo.png"
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.top: parent.top
+			anchors.topMargin: 30*SCALEFACTOR
 		}
-		Text{
-			anchors.centerIn: parent
-			text: "Loading..."
+
+		Item {
+			anchors.top: logo.bottom
+			anchors.bottom: bottomContainer.top
+			anchors.left: parent.left
+			anchors.leftMargin: 50*SCALEFACTOR
+			anchors.right: parent.right
+			anchors.rightMargin: 50*SCALEFACTOR
+			Image {
+				id: topDivider
+				source: "startDivider.png"
+				fillMode: Image.TileHorizontally
+				anchors.top: parent.top
+				anchors.left: parent.left
+				anchors.right: parent.right
+			}
+
+			Text {
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.right: parent.right
+				horizontalAlignment: Text.AlignHCenter
+				text: "To start using Telldus&nbsp;Live!&nbsp;mobile you need to log in to your Telldus&nbsp;Live! account."
+				wrapMode: Text.WordWrap
+				textFormat: Text.RichText
+				font.pixelSize: 30*SCALEFACTOR
+				font.bold: true
+				color: "#d5ebff"
+				style: Text.Raised
+				styleColor: "#0b4366"
+			}
+
+			Image {
+				id: bottomDivider
+				source: "startDivider.png"
+				fillMode: Image.TileHorizontally
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: 10*SCALEFACTOR
+			}
 		}
-		states: State {
-			name: 'visible'
-			when: webview.progress < 1
-			PropertyChanges { target: shadow; opacity: 1 }
+		Item {
+			id: bottomContainer
+			anchors.bottom: parent.bottom
+			anchors.left: parent.left
+			anchors.leftMargin: 50*SCALEFACTOR
+			anchors.right: parent.right
+			anchors.rightMargin: 50*SCALEFACTOR
+			height: parent.height / 2
+			WebView {
+				id: webview
+				anchors.fill: parent
+				anchors.topMargin: 20*SCALEFACTOR
+				settings.defaultFontSize: 32*SCALEFACTOR
+				settings.developerExtrasEnabled: true
+				preferredWidth: width
+				preferredHeight: height
+				backgroundColor: "transparent"
+				z: 1
+			}
+		}
+		BusyIndicator {
+			id: throbber
+			anchors.bottom: parent.bottom
+			anchors.bottomMargin: 30*SCALEFACTOR
+			anchors.horizontalCenter: parent.horizontalCenter
+			opacity: 0
+			Behavior on opacity { PropertyAnimation { easing.type: Easing.InOutQuad } }
+			states: State {
+				name: 'visible'
+				when: webview.progress < 1
+				PropertyChanges { target:throbber; opacity: 1 }
+			}
 		}
 	}
 }
