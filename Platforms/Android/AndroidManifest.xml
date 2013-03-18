@@ -25,7 +25,7 @@
 			<!-- Splash screen -->
 		</activity>
 	</application>
-	<supports-screens android:largeScreens="true" android:normalScreens="false" android:anyDensity="true" android:smallScreens="false"/>
+	<supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="false"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-sdk android:minSdkVersion="11" android:targetSdkVersion="15" />
 </manifest>
