@@ -9,10 +9,11 @@ class SensorModel : public TListModel
 {
 	Q_OBJECT
 public:
-	explicit SensorModel(QObject *parent = 0);
 
 	Q_INVOKABLE void addSensors(const QVariantList &sensors);
 	Q_INVOKABLE Sensor *findSensor(int id) const;
+
+	static SensorModel *instance();
 
 signals:
 	void sensorsLoaded(const QVariantList &sensors);
@@ -20,6 +21,11 @@ signals:
 private slots:
 	void authorizationChanged();
 	void onSensorsList(const QVariantMap &result);
+
+private:
+	explicit SensorModel(QObject *parent = 0);
+	class PrivateData;
+	PrivateData *d;
 };
 
 #endif // SENSORMODEL_H

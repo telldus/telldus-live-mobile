@@ -16,7 +16,6 @@ class TelldusCenter::PrivateData {
 public:
 	QDeclarativeView *view;
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
-	SensorModel *sensorModel;
 	FavoriteModel *favoriteModel;
 	ClientModel *clientModel;
 };
@@ -31,7 +30,6 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
 	d->favoriteModel = new FavoriteModel(DeviceModel::instance(), this);
 	d->clientModel = new ClientModel(this);
-	d->sensorModel = new SensorModel(this);
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Client>("Telldus", 1, 0, "Client");
@@ -48,7 +46,8 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	d->view->rootContext()->setContextProperty("groupModel", d->groupModel);
 	d->view->rootContext()->setContextProperty("favoriteModel", d->favoriteModel);
 	d->view->rootContext()->setContextProperty("clientModel", d->clientModel);
-	d->view->rootContext()->setContextProperty("sensorModel", d->sensorModel);
+	d->view->rootContext()->setContextProperty("sensorModel", SensorModel::instance());
+
 #ifdef PLATFORM_IOS
 	this->init();
 #endif

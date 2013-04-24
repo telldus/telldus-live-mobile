@@ -4,11 +4,24 @@
 #include <math.h>
 #include <QDebug>
 
+class SensorModel::PrivateData {
+public:
+	static SensorModel *instance;
+};
+SensorModel *SensorModel::PrivateData::instance = 0;
+
 SensorModel::SensorModel(QObject *parent) :
 	TListModel("sensor", parent)
 {
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
+}
+
+SensorModel *SensorModel::instance() {
+	if (PrivateData::instance == 0) {
+		PrivateData::instance = new SensorModel;
+	}
+	return PrivateData::instance;
 }
 
 void SensorModel::addSensors(const QVariantList &sensorsList) {
