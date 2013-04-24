@@ -32,15 +32,16 @@ FOREACH(file ${FILES})
 ENDFOREACH()
 
 FUNCTION(COMPILE target)
+	SET(BARFILE "${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}")
 	ADD_CUSTOM_TARGET(run
-		blackberry-nativepackager -package ${target}-debug.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} ${BB10_FILES} ${target}
+		blackberry-nativepackager -package ${BARFILE}-debug.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} ${BB10_FILES} ${target}
 		DEPENDS ${target}
-		COMMENT "Package and deploy ${target}-debug.bar file"
+		COMMENT "Package and deploy ${BARFILE}-debug.bar file"
 	)
 	ADD_CUSTOM_TARGET(release
-		COMMAND blackberry-nativepackager -package ${target}-release.bar ${BB10_FILES} ${target}
+		COMMAND blackberry-nativepackager -package ${BARFILE}-release.bar ${BB10_FILES} ${target}
 		COMMAND blackberry-signer -storepass ${SIGNING_PASSWORD} ${target}-release.bar
 		DEPENDS ${target}
-		COMMENT "Package and sign ${target}-release.bar file"
+		COMMENT "Package and sign ${BARFILE}-release.bar file"
 	)
 ENDFUNCTION()
