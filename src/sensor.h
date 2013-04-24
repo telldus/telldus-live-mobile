@@ -40,6 +40,7 @@ public:
 	void setTemperature(const QString &temperature);
 	bool hasTemperature() const;
 
+	void update(const QVariantMap &data);
 signals:
 	void idChanged();
 	void hasHumidityChanged();

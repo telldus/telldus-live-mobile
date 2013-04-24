@@ -111,3 +111,14 @@ void Sensor::setTemperature(const QString &temperature) {
 bool Sensor::hasTemperature() const {
 	return d->hasTemperature;
 }
+
+void Sensor::update(const QVariantMap &info) {
+	QVariantMap data = info["data"].toMap();
+	if (data.contains("temp")) {
+		setTemperature(data["temp"].toString());
+	} else if (data.contains("humidity")) {
+		setHumidity(data["humidity"].toString());
+	}
+	setLastUpdated(QDateTime::fromMSecsSinceEpoch(((qint64)info["time"].toInt()*1000)));
+	d->lastPolled = QDateTime::currentDateTime();
+}
