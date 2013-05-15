@@ -11,16 +11,17 @@
 #include "device.h"
 #include "sensor.h"
 #include "swipearea.h"
+#include "abstractview.h"
 
 class TelldusCenter::PrivateData {
 public:
-	QDeclarativeView *view;
+	AbstractView *view;
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
 	FavoriteModel *favoriteModel;
 	ClientModel *clientModel;
 };
 
-TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
+TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :
 	QObject(parent)
 {
 	d = new PrivateData;
@@ -39,14 +40,15 @@ TelldusCenter::TelldusCenter(QDeclarativeView *view, QObject *parent) :
 	qmlRegisterType<SwipeArea>("Telldus", 1, 0, "SwipeArea");
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 
-	d->view->rootContext()->setContextProperty("telldusLive", TelldusLive::instance());
-	d->view->rootContext()->setContextProperty("deviceModelController", DeviceModel::instance());
-	d->view->rootContext()->setContextProperty("rawDeviceModel", d->rawDeviceModel);
-	d->view->rootContext()->setContextProperty("deviceModel", d->deviceModel);
-	d->view->rootContext()->setContextProperty("groupModel", d->groupModel);
-	d->view->rootContext()->setContextProperty("favoriteModel", d->favoriteModel);
-	d->view->rootContext()->setContextProperty("clientModel", d->clientModel);
-	d->view->rootContext()->setContextProperty("sensorModel", SensorModel::instance());
+	d->view->setContextProperty("telldusLive", TelldusLive::instance());
+	d->view->setContextProperty("deviceModelController", DeviceModel::instance());
+	d->view->setContextProperty("rawDeviceModel", d->rawDeviceModel);
+	d->view->setContextProperty("deviceModel", d->deviceModel);
+	d->view->setContextProperty("groupModel", d->groupModel);
+	d->view->setContextProperty("favoriteModel", d->favoriteModel);
+	d->view->setContextProperty("clientModel", d->clientModel);
+	d->view->setContextProperty("sensorModel", SensorModel::instance());
+	d->view->setContextProperty("user", d->user);
 
 #ifdef PLATFORM_IOS
 	this->init();

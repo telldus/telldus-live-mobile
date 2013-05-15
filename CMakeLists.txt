@@ -15,6 +15,8 @@ ENDIF(COMMAND CMAKE_POLICY)
 SET(PRODUCT_NAME TelldusCenter-light )
 
 SET( SOURCES
+	src/abstractview.cpp
+	src/commonview.cpp
 	src/main.cpp
 	src/tellduslive.cpp
 	src/tlistmodel.cpp
@@ -31,7 +33,6 @@ SET( SOURCES
 	src/groupdevicemodel.cpp
 	src/client.cpp
 	src/clientmodel.cpp
-	src/view.cpp
 	src/swipearea.cpp
 )
 
@@ -40,6 +41,8 @@ SET( HEADERS
 	src/config.h.in
 )
 SET( MOC_HEADERS
+	src/abstractview.h
+	src/commonview.h
 	src/tellduslive.h
 	src/tlistmodel.h
 	src/device.h
@@ -55,7 +58,6 @@ SET( MOC_HEADERS
 	src/groupdevicemodel.h
 	src/client.h
 	src/clientmodel.h
-	src/view.h
 	src/swipearea.h
 )
 

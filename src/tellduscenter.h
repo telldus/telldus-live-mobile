@@ -4,13 +4,13 @@
 #include <QObject>
 #include <QVariantList>
 
-class QDeclarativeView;
+class AbstractView;
 
 class TelldusCenter : public QObject
 {
 	Q_OBJECT
 public:
-	explicit TelldusCenter(QDeclarativeView *view, QObject *parent = 0);
+	explicit TelldusCenter(AbstractView *view, QObject *parent = 0);
 	virtual ~TelldusCenter();
 
 signals:

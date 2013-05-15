@@ -1,9 +1,10 @@
 #include <QtGui/QApplication>
 #include "tellduscenter.h"
 #include "tellduslive.h"
-#include "view.h"
 #include "config.h"
 #include <QDebug>
+
+#include "commonview.h"
 
 #ifdef PLATFORM_IOS
 	#include <QtPlugin>
@@ -26,7 +27,7 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationName("Telldus Live! Mobile");
 	QCoreApplication::setApplicationVersion(VERSION);
 
-	View *viewer = new View();
+	CommonView *viewer = new CommonView();
 	TelldusCenter tc(viewer);
 
 	viewer->loadAndShow();
