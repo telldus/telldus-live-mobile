@@ -33,7 +33,7 @@ Item {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				horizontalAlignment: Text.AlignHCenter
-				text: "You are currently logged in to a Telldus&nbsp;Live! account.\nIf you want to change account, please click the button below."
+				text: "You are currently logged in as<br>" + user.firstname + "&nbsp;" + user.lastname
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
 				font.pixelSize: 30*SCALEFACTOR
@@ -48,7 +48,8 @@ Item {
 			anchors.leftMargin: 30
 			anchors.right: parent.right
 			anchors.rightMargin: 30
-			anchors.verticalCenter: parent.verticalCenter
+			anchors.bottom: parent.bottom
+			anchors.bottomMargin: 30
 			onClicked: telldusLive.logout()
 		}
 	}

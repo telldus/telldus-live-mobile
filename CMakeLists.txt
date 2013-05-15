@@ -34,6 +34,7 @@ SET( SOURCES
 	src/client.cpp
 	src/clientmodel.cpp
 	src/swipearea.cpp
+	src/user.cpp
 )
 
 SET( HEADERS
@@ -59,6 +60,7 @@ SET( MOC_HEADERS
 	src/client.h
 	src/clientmodel.h
 	src/swipearea.h
+	src/user.h
 )
 
 SET(RESOURCES

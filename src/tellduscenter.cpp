@@ -11,6 +11,7 @@
 #include "device.h"
 #include "sensor.h"
 #include "swipearea.h"
+#include "user.h"
 #include "abstractview.h"
 
 class TelldusCenter::PrivateData {
@@ -19,6 +20,7 @@ public:
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
 	FavoriteModel *favoriteModel;
 	ClientModel *clientModel;
+	User *user;
 };
 
 TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :
@@ -31,6 +33,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
 	d->favoriteModel = new FavoriteModel(DeviceModel::instance(), this);
 	d->clientModel = new ClientModel(this);
+	d->user = new User(this);
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Client>("Telldus", 1, 0, "Client");
