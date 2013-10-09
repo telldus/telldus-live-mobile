@@ -55,6 +55,8 @@ TelldusLive::TelldusLive(QObject *parent) :
 	d->base = "https://api.telldus.com";
 
 	QSslSocket::addDefaultCaCertificates(":/Equifax_Secure_CA.pem");
+	QSslSocket::addDefaultCaCertificates(":/GeoTrustGlobalCA.pem");
+	QSslSocket::addDefaultCaCertificates(":/RapidSSLCA.pem");
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
