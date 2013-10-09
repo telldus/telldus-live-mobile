@@ -3,6 +3,7 @@
 
 #include "abstractview.h"
 #include <QSize>
+#include <QResizeEvent>
 
 class CommonView : public AbstractView
 {
@@ -21,7 +22,7 @@ protected slots:
 	void workAreaResized(int screen);
 
 protected:
-//	void resizeEvent( QResizeEvent * event );
+	bool eventFilter( QObject *obj, QEvent * event );
 //	void changeEvent( QEvent *event );
 
 private:

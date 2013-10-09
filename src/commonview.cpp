@@ -21,6 +21,7 @@ CommonView::CommonView(QObject *parent) :
 	AbstractView(parent)
 {
 	d = new PrivateData;
+	d->view.installEventFilter(this);
 	connect(QApplication::desktop(), SIGNAL(workAreaResized(int)), this, SLOT(workAreaResized(int)));
 
 	d->view.setWindowTitle("Telldus Live! mobile");
@@ -98,11 +99,15 @@ void CommonView::workAreaResized(int screen) {
 	d->view.resize(r.width(), r.height());
 }
 
-/*void CommonView::resizeEvent ( QResizeEvent * event ) {
-//	QDeclarativeView::resizeEvent(event);
-	QSize s = event->size();
+bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
+	if (event->type() != QEvent::Resize) {
+		return QObject::eventFilter(obj, event);
+	}
+	QResizeEvent *resizeEvent = static_cast<QResizeEvent *>(event);
+
+	QSize s = resizeEvent->size();
 	if (s.width() == 0 || s.height() == 0) {
-		return;
+		return QObject::eventFilter(obj, event);
 	}
 
 	double scaleFactor = 1;
@@ -111,8 +116,9 @@ void CommonView::workAreaResized(int screen) {
 	} else if (s.width() < 600) {
 		scaleFactor = 0.75;
 	}
-	//this->rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
-}*/
+	d->view.rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
+	return QObject::eventFilter(obj, event);
+}
 
 //void CommonView::changeEvent(QEvent *event) {
 	//QDeclarativeView::changeEvent(event);
