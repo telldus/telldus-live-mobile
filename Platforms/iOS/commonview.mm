@@ -1,7 +1,7 @@
-#include "view.h"
+#include "commonview.h"
 #import "UIKit/UIScreen.h"
 
-QSize View::windowSize() const {
+QSize CommonView::windowSize() const {
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;

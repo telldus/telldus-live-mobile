@@ -2,6 +2,7 @@
 #define COMMONVIEW_H
 
 #include "abstractview.h"
+#include <QSize>
 
 class CommonView : public AbstractView
 {

@@ -23,7 +23,7 @@ SET(QT_USE_QTOPENGL FALSE)
 
 LIST(APPEND SOURCES
 	Platforms/iOS/tellduscenter.mm
-	Platforms/iOS/view.mm
+	Platforms/iOS/commonview.mm
 )
 
 LIST(APPEND LIBRARIES
