@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include "tellduscenter.h"
 #include "tellduslive.h"
 #include "config.h"
@@ -8,16 +8,18 @@
 
 #ifdef PLATFORM_IOS
 	#include <QtPlugin>
-	Q_IMPORT_PLUGIN(UIKit)
-	Q_IMPORT_PLUGIN(qsqlite)
-	Q_IMPORT_PLUGIN(qsvg)
+	Q_IMPORT_PLUGIN(QSvgPlugin)
+	Q_IMPORT_PLUGIN(QSQLiteDriverPlugin)
 #endif
 
-int main(int argc, char *argv[])
+#ifdef PLATFORM_IOS
+extern "C" int qt_main(int argc, char *argv[])
+#else
+extern "C" int main(int argc, char *argv[])
+#endif
 {
-	Q_INIT_RESOURCE(resources);
 
-	QApplication app(argc, argv);
+	QScopedPointer<QApplication> app(new QApplication(argc, argv));
 #ifdef PLATFORM_ANDROID
 	app.setFont(QFont("Roboto"));
 #endif
@@ -32,5 +34,5 @@ int main(int argc, char *argv[])
 
 	viewer->loadAndShow();
 
-	return app.exec();
+	return app->exec();
 }

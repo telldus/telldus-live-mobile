@@ -2,14 +2,15 @@
 #include "config.h"
 
 #include <QtKOAuth>
-#include <parser.h>
 #include <QSettings>
-#include <QScriptEngine>
+#include <QJSEngine>
 #include <QQueue>
 #include <QMetaMethod>
 #include <QApplication>
-#include <QFileOpenEvent>
+#include <QDesktopServices>
 #include <QSslSocket>
+#include <QUrlQuery>
+#include <QJsonDocument>
 #include <QDebug>
 
 #ifdef PLATFORM_BB10
@@ -20,8 +21,8 @@ class TelldusLiveCall {
 public:
 	QString endpoint;
 	KQOAuthParameters params;
-	QScriptValue callback;
-	QScriptValue thisObject;
+	QJSValue callback;
+	QJSValue thisObject;
 	QObject *receiver;
 	QByteArray member;
 	QVariantMap extra;
@@ -67,7 +68,7 @@ TelldusLive::TelldusLive(QObject *parent) :
 		d->state = PrivateData::Authorized;
 	}
 
-	qApp->installEventFilter(this);
+	QDesktopServices::setUrlHandler("x-com-telldus-live-mobile", this, "onUrlOpened");
 
 #ifdef PLATFORM_BB10
 	d->m = new bb::system::InvokeManager(this);
@@ -115,7 +116,9 @@ void TelldusLive::onTemporaryTokenReceived(const QString &token, const QString &
 	}
 
 	QUrl userAuthURL(d->base + "/oauth/authorize");
-	userAuthURL.addQueryItem("oauth_token", token);
+	QUrlQuery query;
+	query.addQueryItem("oauth_token", token);
+	userAuthURL.setQuery(query);
 	emit authorizationNeeded(userAuthURL);
 }
 
@@ -166,16 +169,17 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		emit workingChanged();
 	}
 
-	if (!call.callback.isValid() && !call.receiver) {
-		//Callback not valid, no need to parse response
+	if (!call.callback.isUndefined() && !call.receiver) {
+		// Callback not valid, no need to parse response
 		return;
 	}
 
-	bool ok;
-	QJson::Parser parser;
-	QVariantMap result = parser.parse (response, &ok).toMap();
-	if (!ok) {
+	QJsonParseError error;
+	QJsonDocument json(QJsonDocument::fromJson(response, &error));
+	QVariantMap result = json.toVariant().toMap();
+	if (error.error != QJsonParseError::NoError) {
 		qDebug() << "Could not parse json response from" << call.endpoint;
+		qDebug() << error.errorString();
 		qDebug() << response;
 		return;
 	}
@@ -186,10 +190,10 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		QMetaMethod method = call.receiver->metaObject()->method(methodIndex);
 		method.invoke(call.receiver, Qt::QueuedConnection, Q_ARG(QVariantMap, result), Q_ARG(QVariantMap, call.extra));
 	} else {
-		QScriptValue parameters = call.callback.engine()->toScriptValue(result);
-		call.callback.call(call.thisObject, QScriptValueList() << parameters);
-		if (call.callback.engine()->hasUncaughtException()) {
-			qDebug() << call.callback.engine()->uncaughtException().toString();
+		QJSValue parameters = call.callback.engine()->toScriptValue(result);
+		QJSValue result = call.callback.callWithInstance(call.thisObject, QJSValueList() << parameters);
+		if (result.isError()) {
+			qDebug() << result.toString();
 		}
 	}
 }
@@ -198,22 +202,23 @@ bool TelldusLive::isAuthorized() {
 	return d->state == PrivateData::Authorized;
 }
 
-void TelldusLive::call(const QString &endpoint, const QScriptValue &params, const QScriptValue &expression) {
+void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJSValue &expression) {
 	qDebug() << "Queue call to" << endpoint;
 
 	TelldusLiveCall call;
 	call.receiver = 0;
 
-	if (expression.isFunction()) {
+	if (expression.isCallable()) {
 		call.callback = expression;
 
-		QScriptEngine *eng = expression.engine();
+		QJSEngine *eng = expression.engine();
 		if (eng) {
-			//Try determin if we have a forth parameter
-			QScriptContext *ctx = eng->currentContext();
+			// Try determin if we have a forth parameter
+			// TODO(micke): We need to figure out how this is done in Qt5
+			/*QScriptContext *ctx = eng->currentContext();
 			if (ctx->argumentCount() >= 4) {
 				call.thisObject = ctx->argument(3);
-			}
+			}*/
 		}
 	}
 	call.endpoint = endpoint;
@@ -264,20 +269,15 @@ void TelldusLive::logout() {
 	emit authorizedChanged();
 }
 
-bool TelldusLive::eventFilter(QObject *obj, QEvent *event) {
-	if (event->type() == QEvent::FileOpen) {
-		QFileOpenEvent *fileOpenEvent = static_cast<QFileOpenEvent *>(event);
-		QUrl url = fileOpenEvent->url();
-		if (url.scheme() != "x-com-telldus-live-mobile") {
-			return QObject::eventFilter(obj, event);
-		}
-		QMultiMap<QString, QString> queryParams;
-		QString token = url.queryItemValue("oauth_token");
-		QString verifier = url.queryItemValue("oauth_verifier");
-		d->manager->verifyToken(token, verifier);
-		return true;
+void TelldusLive::onUrlOpened(const QUrl &url) {
+	if (url.scheme() != "x-com-telldus-live-mobile") {
+		return;
 	}
-	return QObject::eventFilter(obj, event);
+	QMultiMap<QString, QString> queryParams;
+	QUrlQuery query(url);
+	QString token = query.queryItemValue("oauth_token");
+	QString verifier = query.queryItemValue("oauth_verifier");
+	d->manager->verifyToken(token, verifier);
 }
 
 void TelldusLive::doCall() {

@@ -1,6 +1,6 @@
 [submodule "3rdparty/kqoauth"]
 	path = 3rdparty/kqoauth
-	url = git://gitorious.org/~mickeprag/kqoauth/mickeprags-kqoauth.git
+	url = https://github.com/kypeli/kQOAuth.git
 [submodule "3rdparty/qjson"]
 	path = 3rdparty/qjson
 	url = https://github.com/flavio/qjson.git

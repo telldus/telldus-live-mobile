@@ -61,5 +61,7 @@
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string></string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
 </dict>
 </plist>

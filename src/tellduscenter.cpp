@@ -1,5 +1,5 @@
 #include "tellduscenter.h"
-#include <QtDeclarative>
+#include <QtQuick>
 #include "tellduslive.h"
 #include "devicemodel.h"
 #include "filtereddevicemodel.h"

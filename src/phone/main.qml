@@ -1,4 +1,5 @@
-import QtQuick 1.0
+import QtQuick 2.0
+import QtQuick.LocalStorage 2.0
 import "Device.js" as Device
 import "Sensor.js" as Sensor
 

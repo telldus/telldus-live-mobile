@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QUrl>
-#include <QScriptValue>
+#include <QJSValue>
 #include <QMap>
 #include <QVariant>
 
@@ -35,13 +35,11 @@ signals:
 public slots:
 
 	void authorize();
-	void call(const QString &endpoint, const QScriptValue &params, const QScriptValue &expression);
+	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
 
-protected:
-	bool eventFilter(QObject *obj, QEvent *event);
-
 private slots:
+	void onUrlOpened(const QUrl &url);
 	void onTemporaryTokenReceived(const QString &token, const QString &tokenSecret);
 	void onAuthorizationReceived(const QString &token, const QString &verifier);
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);

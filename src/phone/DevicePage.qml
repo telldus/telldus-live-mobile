@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.0
 import Telldus 1.0
 
 Item {
@@ -114,11 +114,11 @@ Item {
 			id: list
 			header: Item {
 				height: header.height + headerMenu.height + 20
-				width: parent.width
+				width: list.width
 			}
 			footer: Item {
 				height: 10
-				width: parent.width
+				width: list.width
 			}
 
 			anchors.fill: parent

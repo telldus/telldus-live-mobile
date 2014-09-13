@@ -94,7 +94,7 @@ void Sensor::onInfoReceived(const QVariantMap &info) {
 }
 
 QString Sensor::temperature() const {
-	if (d->lastPolled.secsTo(QDateTime::currentDateTime()) > 300) {
+	if (!d->lastPolled.isValid() || d->lastPolled.secsTo(QDateTime::currentDateTime()) > 300) {
 		// Five minutes
 		QTimer::singleShot(0, const_cast<Sensor*>(this), SLOT(fetchData()));
 	}

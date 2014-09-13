@@ -1,4 +1,4 @@
-var db = openDatabaseSync("TelldusLiveMobile", "1.0", "Settings used by Telldus Live! mobile", 1000000);
+var db = LocalStorage.openDatabaseSync("TelldusLiveMobile", "1.0", "Settings used by Telldus Live! mobile", 1000000);
 
 function setupCache(deviceModel) {
 	deviceModel.rowsInserted.connect(function(index, start, end) {

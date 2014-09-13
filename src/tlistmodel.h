@@ -2,7 +2,6 @@
 #define TLISTMODEL_H
 
 #include <QAbstractListModel>
-#include <QScriptValue>
 
 class TListModel : public QAbstractListModel
 {
@@ -13,6 +12,7 @@ public:
 	explicit TListModel(const QByteArray &role = "", QObject *parent = 0);
 	~TListModel();
 
+	virtual QHash<int, QByteArray> roleNames() const;
 	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 	void append(QObject *v);

@@ -1,6 +1,5 @@
 #include "swipearea.h"
 #include <QEvent>
-#include <QTouchEvent>
 #include <QGraphicsSceneMouseEvent>
 
 class SwipeArea::PrivateData {
@@ -9,10 +8,9 @@ public:
 	bool filterTouchEvent, filterMouseEvent;
 };
 
-SwipeArea::SwipeArea(QDeclarativeItem *parent)
-	:QDeclarativeItem(parent)
+SwipeArea::SwipeArea(QQuickItem *parent)
+	:QQuickItem(parent)
 {
-	setAcceptTouchEvents(false);
 	setAcceptedMouseButtons(Qt::LeftButton);
 	d = new PrivateData;
 	d->filterTouchEvent = false;
@@ -42,37 +40,19 @@ bool SwipeArea::filterTouchEvent() const {
 void SwipeArea::setFilterTouchEvent(bool arg) {
 	if (d->filterTouchEvent != arg) {
 		d->filterTouchEvent = arg;
-		setAcceptTouchEvents(arg);
 		emit filterTouchEventChanged(arg);
 	}
 }
 
-bool SwipeArea::event(QEvent *ev) {
-	switch (ev->type()) {
-		case QEvent::TouchBegin:
-		case QEvent::TouchUpdate:
-		break;
-		default:
-		return QDeclarativeItem::event(ev);
-	}
-	QList<QTouchEvent::TouchPoint> touchPoints = static_cast<QTouchEvent *>(ev)->touchPoints();
+void SwipeArea::touchEvent(QTouchEvent * event) {
+	QList<QTouchEvent::TouchPoint> touchPoints = static_cast<QTouchEvent *>(event)->touchPoints();
 	const QTouchEvent::TouchPoint &touchPoint = touchPoints.at(0);
 
-	if (ev->type() == QEvent::TouchBegin) {
+	if (event->type() == QEvent::TouchBegin) {
 		this->touchBegin(touchPoint.pos());
-		return true;
+	} else if (event->type() == QEvent::TouchUpdate) {
+		this->touchMove(touchPoint.pos());
 	}
-
-	return touchMove(touchPoint.pos());
-}
-
-void SwipeArea::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	this->touchBegin(event->pos());
-}
-
-void SwipeArea::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	touchMove(event->pos());
-	QDeclarativeItem::mouseMoveEvent(event);
 }
 
 void SwipeArea::touchBegin(QPointF pos) {

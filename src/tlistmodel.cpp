@@ -5,16 +5,15 @@
 class TListModel::PrivateData {
 public:
 	QList<QObject *> list;
+	QByteArray role;
 };
 
 TListModel::TListModel(const QByteArray &role, QObject *parent) :
 	QAbstractListModel(parent)
 {
 	d = new PrivateData;
+	d->role = role;
 
-	QHash<int, QByteArray> roles;
-	roles[Qt::UserRole+1] = role;
-	setRoleNames(roles);
 	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
 }
@@ -54,6 +53,12 @@ void TListModel::clear() {
 	beginRemoveRows(QModelIndex(), 0, d->list.size()-1);
 	d->list.clear();
 	endRemoveRows();
+}
+
+QHash<int, QByteArray> TListModel::roleNames() const {
+	QHash<int, QByteArray> roles;
+	roles[Qt::UserRole+1] = d->role;
+	return roles;
 }
 
 int TListModel::rowCount(const QModelIndex &parent) const {

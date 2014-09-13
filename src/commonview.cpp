@@ -1,9 +1,8 @@
 #include "commonview.h"
-#include <QtDeclarative>
+#include <QApplication>
+#include <QtQuick>
 #include <QDesktopWidget>
-#include <QGLWidget>
 #include <QResizeEvent>
-#include <QDesktopWidget>
 #include "config.h"
 
 #ifdef PLATFORM_BB10
@@ -12,22 +11,34 @@
 #include <bb/cascades/Page>
 #endif
 
+#ifdef PLATFORM_IOS
+Q_IMPORT_PLUGIN(QtQuick2Plugin)
+Q_IMPORT_PLUGIN(QQmlLocalStoragePlugin)
+#endif
+
 class CommonView::PrivateData {
 public:
-	QDeclarativeView view;
+	QQuickView view;
 };
 
 CommonView::CommonView(QObject *parent) :
 	AbstractView(parent)
 {
 	d = new PrivateData;
+
+#ifdef PLATFORM_IOS
+	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QtQuick2Plugin().instance())->registerTypes("QtQuick");
+	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QQmlLocalStoragePlugin().instance())->registerTypes("QtQuick.LocalStorage");
+	d->view.engine()->setImportPathList(QStringList());
+#endif
+
 	d->view.installEventFilter(this);
 	connect(QApplication::desktop(), SIGNAL(workAreaResized(int)), this, SLOT(workAreaResized(int)));
 
-	d->view.setWindowTitle("Telldus Live! mobile");
+	d->view.setTitle("Telldus Live! mobile");
 	d->view.rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
 
-	d->view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
+	d->view.setResizeMode(QQuickView::SizeRootObjectToView);
 	d->view.rootContext()->setContextProperty("SCALEFACTOR", 1);  // Default value, resizeEvent() overrides this
 }
 

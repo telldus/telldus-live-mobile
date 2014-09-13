@@ -1,15 +1,15 @@
 #ifndef SWIPEAREA_H
 #define SWIPEAREA_H
 
-#include <QDeclarativeItem>
+#include <QQuickItem>
 
-class SwipeArea : public QDeclarativeItem
+class SwipeArea : public QQuickItem
 {
 	Q_OBJECT
 	Q_PROPERTY(bool filterMouseEvent READ filterMouseEvent WRITE setFilterMouseEvent NOTIFY filterMouseEventChanged)
 	Q_PROPERTY(bool filterTouchEvent READ filterTouchEvent WRITE setFilterTouchEvent NOTIFY filterTouchEventChanged)
 public:
-	explicit SwipeArea(QDeclarativeItem *parent = 0);
+	explicit SwipeArea(QQuickItem *parent = 0);
 	~SwipeArea();
 
 	bool filterMouseEvent() const;
@@ -27,9 +27,7 @@ signals:
 	void filterTouchEventChanged(bool arg);
 
 protected:
-	bool event(QEvent *);
-	void	mousePressEvent ( QGraphicsSceneMouseEvent * event );
-	void	mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
+	virtual void touchEvent(QTouchEvent * event);
 
 private:
 	class PrivateData;
