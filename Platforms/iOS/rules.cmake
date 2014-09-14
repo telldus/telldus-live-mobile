@@ -51,6 +51,7 @@ LIST(APPEND RESOURCES
 	icons/icon-flat-57.png
 	icons/icon-flat-72.png
 	icons/icon-flat-114.png
+	icons/icon-flat-120.png
 	icons/icon-flat-144.png
 	Platforms/iOS/LaunchImage.png
 	Platforms/iOS/LaunchImage@2x.png
