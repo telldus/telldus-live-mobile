@@ -50,7 +50,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}</string>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations~iphone</key>
