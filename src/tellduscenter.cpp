@@ -12,7 +12,7 @@
 #include "sensor.h"
 #include "swipearea.h"
 #include "user.h"
-#include "abstractview.h"
+#include "commonview.h"
 
 class TelldusCenter::PrivateData {
 public:
@@ -44,6 +44,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 
 	d->view->setContextProperty("telldusLive", TelldusLive::instance());
+	d->view->setContextProperty("core", this);
 	d->view->setContextProperty("deviceModelController", DeviceModel::instance());
 	d->view->setContextProperty("rawDeviceModel", d->rawDeviceModel);
 	d->view->setContextProperty("deviceModel", d->deviceModel);
@@ -60,4 +61,12 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :
 
 TelldusCenter::~TelldusCenter() {
 	delete d;
+}
+
+void TelldusCenter::openUrl(const QUrl &url) {
+#ifdef PLATFORM_IOS
+	qobject_cast<CommonView *>(d->view)->openUrl(url);
+#else
+	QDesktopServices::openUrl(url);
+#endif  // PLATFORM_IOS
 }

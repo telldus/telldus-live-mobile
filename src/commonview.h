@@ -5,6 +5,11 @@
 #include <QSize>
 #include <QResizeEvent>
 
+class QQuickView;
+#ifdef PLATFORM_IOS
+@class WebViewDelegate;
+#endif  // PLATFORM_IOS
+
 class CommonView : public AbstractView
 {
 	Q_OBJECT
@@ -14,6 +19,10 @@ public:
 
 	void loadAndShow();
 	void setContextProperty( const QString &name, QObject *value);
+
+#ifdef PLATFORM_IOS
+	void openUrl(const QUrl &url);
+#endif  // PLATFORM_IOS
 
 signals:
 	void fullscreen();
@@ -26,11 +35,14 @@ protected:
 //	void changeEvent( QEvent *event );
 
 private:
+	QQuickView *view() const;
+	void init();
 	class PrivateData;
 	PrivateData *d;
 
 #ifdef PLATFORM_IOS
 	QSize windowSize() const;
+	WebViewDelegate *iosDelegate;
 #endif
 };
 

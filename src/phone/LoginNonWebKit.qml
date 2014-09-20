@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import Telldus 1.0
 
 Rectangle {
 	color: "#006199"
@@ -6,7 +7,7 @@ Rectangle {
 	Connections{
 		target: telldusLive
 		onAuthorizationNeeded: {
-			Qt.openUrlExternally(url)
+			core.openUrl(url)
 		}
 	}
 

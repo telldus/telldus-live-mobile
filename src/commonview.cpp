@@ -26,6 +26,9 @@ CommonView::CommonView(QObject *parent) :
 {
 	d = new PrivateData;
 
+	// For platform specific tasks
+	this->init();
+
 #ifdef PLATFORM_IOS
 	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QtQuick2Plugin().instance())->registerTypes("QtQuick");
 	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QQmlLocalStoragePlugin().instance())->registerTypes("QtQuick.LocalStorage");
@@ -45,6 +48,12 @@ CommonView::CommonView(QObject *parent) :
 CommonView::~CommonView() {
 	delete d;
 }
+
+#ifndef PLATFORM_IOS
+void CommonView::init() {
+	// Do nothing
+}
+#endif  // PLATFORM_IOS
 
 void CommonView::loadAndShow() {
 #if defined(PLATFORM_DESKTOP)
@@ -129,6 +138,10 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 	}
 	d->view.rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 	return QObject::eventFilter(obj, event);
+}
+
+QQuickView *CommonView::view() const {
+	return &d->view;
 }
 
 //void CommonView::changeEvent(QEvent *event) {

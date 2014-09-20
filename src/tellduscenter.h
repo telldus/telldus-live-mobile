@@ -16,6 +16,7 @@ public:
 signals:
 
 public slots:
+	void openUrl(const QUrl &url);
 
 private:
 	class PrivateData;
