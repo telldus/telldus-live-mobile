@@ -10,13 +10,18 @@ class Sensor : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool hasHumidity READ hasHumidity NOTIFY hasHumidityChanged)
+	Q_PROPERTY(bool hasRainRate READ hasRainRate NOTIFY hasRainRateChanged)
+	Q_PROPERTY(bool hasRainTotal READ hasRainTotal NOTIFY hasRainTotalChanged)
 	Q_PROPERTY(bool hasTemperature READ hasTemperature NOTIFY hasTemperatureChanged)
 	Q_PROPERTY(QString humidity READ humidity WRITE setHumidity NOTIFY humidityChanged)
+	Q_PROPERTY(QString rainRate READ rainRate WRITE setRainRate NOTIFY rainRateChanged)
+	Q_PROPERTY(QString rainTotal READ rainTotal WRITE setRainTotal NOTIFY rainTotalChanged)
+	Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
+
 	Q_PROPERTY(int id READ sensorId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(QDateTime lastUpdated READ lastUpdated WRITE setLastUpdated NOTIFY lastUpdatedChanged)
 	Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 	Q_PROPERTY(int minutesAgo READ minutesAgo NOTIFY lastUpdatedChanged)
-	Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
 public:
 	explicit Sensor(QObject *parent = 0);
 	~Sensor();
@@ -24,6 +29,14 @@ public:
 	QString humidity() const;
 	void setHumidity(const QString &humidity);
 	bool hasHumidity() const;
+
+	QString rainRate() const;
+	void setRainRate(const QString &rainRate);
+	bool hasRainRate() const;
+
+	QString rainTotal() const;
+	void setRainTotal(const QString &rainTotal);
+	bool hasRainTotal() const;
 
 	int sensorId() const;
 	void setId(int id);
@@ -44,8 +57,12 @@ public:
 signals:
 	void idChanged();
 	void hasHumidityChanged();
+	void hasRainRateChanged();
+	void hasRainTotalChanged();
 	void hasTemperatureChanged();
 	void humidityChanged(const QString &humidity);
+	void rainRateChanged(const QString &);
+	void rainTotalChanged(const QString &);
 	void lastUpdatedChanged(const QDateTime &lastUpdated);
 	void nameChanged(const QString &name);
 	void temperatureChanged(const QString &temperature);

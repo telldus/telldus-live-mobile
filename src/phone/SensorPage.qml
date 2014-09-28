@@ -66,6 +66,11 @@ Item {
 							visible: sensor.hasTemperature
 							value: sensor.temperature + '\u00B0C'
 						}
+						SensorValue {
+							icon: "sensorIconRain"
+							visible: sensor.hasRainRate
+							value: sensor.rainRate + ' mm/h\n' + sensor.rainTotal + ' mm'
+						}
 					}
 				}
 			}

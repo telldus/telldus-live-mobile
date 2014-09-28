@@ -5,9 +5,12 @@
 
 class Sensor::PrivateData {
 public:
-	bool hasTemperature, hasHumidity;
+	bool hasHumidity, hasRainRate, hasRainTotal;
+	bool hasTemperature;
 	int id;
-	QString name, temperature, humidity;
+	QString name;
+	QString humidity, rainRate, rainTotal;
+	QString temperature;
 	QDateTime lastUpdated, lastPolled;
 };
 
@@ -15,8 +18,10 @@ Sensor::Sensor(QObject *parent) :
 	QObject(parent)
 {
 	d = new PrivateData;
-	d->hasTemperature = false;
 	d->hasHumidity = false;
+	d->hasRainRate = false;
+	d->hasRainTotal = false;
+	d->hasTemperature = false;
 	d->id = 0;
 }
 
@@ -47,6 +52,36 @@ void Sensor::setHumidity(const QString &humidity) {
 
 bool Sensor::hasHumidity() const {
 	return d->hasHumidity;
+}
+
+QString Sensor::rainRate() const {
+	return d->rainRate;
+}
+
+void Sensor::setRainRate(const QString &rainRate) {
+	d->rainRate = rainRate;
+	d->hasRainRate = true;
+	emit rainRateChanged(rainRate);
+	emit hasRainRateChanged();
+}
+
+bool Sensor::hasRainRate() const {
+	return d->hasRainRate;
+}
+
+QString Sensor::rainTotal() const {
+	return d->rainTotal;
+}
+
+void Sensor::setRainTotal(const QString &rainTotal) {
+	d->rainTotal = rainTotal;
+	d->hasRainTotal = true;
+	emit rainTotalChanged(rainTotal);
+	emit hasRainTotalChanged();
+}
+
+bool Sensor::hasRainTotal() const {
+	return d->hasRainTotal;
 }
 
 int Sensor::sensorId() const {
@@ -89,6 +124,10 @@ void Sensor::onInfoReceived(const QVariantMap &info) {
 
 		} else if (info["name"].toString() == "humidity") {
 			setHumidity(info["value"].toString());
+		} else if (info["name"].toString() == "rrate") {
+			setRainRate(info["value"].toString());
+		} else if (info["name"].toString() == "rtot") {
+			setRainTotal(info["value"].toString());
 		}
 	}
 }
