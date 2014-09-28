@@ -71,6 +71,11 @@ Item {
 							visible: sensor.hasRainRate
 							value: sensor.rainRate + ' mm/h\n' + sensor.rainTotal + ' mm'
 						}
+						SensorValue {
+							icon: "sensorIconWind"
+							visible: sensor.hasWindGust
+							value: sensor.windAvg + ' m/s\n(' + sensor.windGust + ') m/s\n' + sensor.windDir + '\u00B0'
+						}
 					}
 				}
 			}

@@ -6,11 +6,11 @@
 class Sensor::PrivateData {
 public:
 	bool hasHumidity, hasRainRate, hasRainTotal;
-	bool hasTemperature;
+	bool hasTemperature, hasWindAvg, hasWindGust, hasWindDir;
 	int id;
 	QString name;
 	QString humidity, rainRate, rainTotal;
-	QString temperature;
+	QString temperature, windAvg, windGust, windDir;
 	QDateTime lastUpdated, lastPolled;
 };
 
@@ -22,6 +22,9 @@ Sensor::Sensor(QObject *parent) :
 	d->hasRainRate = false;
 	d->hasRainTotal = false;
 	d->hasTemperature = false;
+	d->hasWindAvg = false;
+	d->hasWindGust = false;
+	d->hasWindDir = false;
 	d->id = 0;
 }
 
@@ -128,6 +131,12 @@ void Sensor::onInfoReceived(const QVariantMap &info) {
 			setRainRate(info["value"].toString());
 		} else if (info["name"].toString() == "rtot") {
 			setRainTotal(info["value"].toString());
+		} else if (info["name"].toString() == "wavg") {
+			setWindAvg(info["value"].toString());
+		} else if (info["name"].toString() == "wgust") {
+			setWindGust(info["value"].toString());
+		} else if (info["name"].toString() == "wdir") {
+			setWindDir(info["value"].toString());
 		}
 	}
 }
@@ -160,4 +169,49 @@ void Sensor::update(const QVariantMap &info) {
 	}
 	setLastUpdated(QDateTime::fromMSecsSinceEpoch(((qint64)info["time"].toInt()*1000)));
 	d->lastPolled = QDateTime::currentDateTime();
+}
+
+QString Sensor::windAvg() const {
+	return d->windAvg;
+}
+
+void Sensor::setWindAvg(const QString &windAvg) {
+	d->windAvg = windAvg;
+	d->hasWindAvg = true;
+	emit windAvgChanged(windAvg);
+	emit hasWindAvgChanged();
+}
+
+bool Sensor::hasWindAvg() const {
+	return d->hasWindAvg;
+}
+
+QString Sensor::windGust() const {
+	return d->windGust;
+}
+
+void Sensor::setWindGust(const QString &windGust) {
+	d->windGust = windGust;
+	d->hasWindGust = true;
+	emit windGustChanged(windGust);
+	emit hasWindGustChanged();
+}
+
+bool Sensor::hasWindGust() const {
+	return d->hasWindGust;
+}
+
+QString Sensor::windDir() const {
+	return d->windDir;
+}
+
+void Sensor::setWindDir(const QString &windDir) {
+	d->windDir = windDir;
+	d->hasWindDir = true;
+	emit windDirChanged(windDir);
+	emit hasWindDirChanged();
+}
+
+bool Sensor::hasWindDir() const {
+	return d->hasWindDir;
 }
