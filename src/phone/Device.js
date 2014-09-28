@@ -57,7 +57,7 @@ function setupCache(deviceModel) {
 				'state': parseInt(rs.rows.item(i).state, 10),
 				'statevalue': rs.rows.item(i).statevalue
 			});
-			if (rs.rows.item(i).favorite === 'true') {
+			if (rs.rows.item(i).favorite === 1) {
 				haveFav = true;
 			}
 		}
