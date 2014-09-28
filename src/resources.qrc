@@ -19,6 +19,7 @@
         <file>phone/Footer.qml</file>
         <file>phone/DevicePage.qml</file>
         <file>phone/SensorPage.qml</file>
+        <file>phone/SensorValue.qml</file>
         <file>phone/SettingsPage.qml</file>
         <file>phone/HeaderMenu.qml</file>
         <file>phone/HeaderMenuItem.qml</file>

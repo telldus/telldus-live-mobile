@@ -56,45 +56,15 @@ Item {
 						anchors.right: parent.right
 						anchors.rightMargin: 20
 						anchors.verticalCenter: parent.verticalCenter
-						Item {
-							width: childrenRect.width
-							height: humidityIcon.height
+						SensorValue {
+							icon: "sensorIconHumidity"
 							visible: sensor.hasHumidity
-							Image {
-								id: humidityIcon
-								source: "sensorIconHumidity.png"
-								height: sourceSize.height*SCALEFACTOR
-								width: sourceSize.width*SCALEFACTOR
-							}
-							Text {
-								anchors.left: humidityIcon.right
-								anchors.leftMargin: 10
-								anchors.verticalCenter: parent.verticalCenter
-								color: '#00659F'
-								font.pixelSize: 28*SCALEFACTOR
-								font.weight: Font.Bold
-								text: sensor.humidity + '%'
-							}
+							value: sensor.humidity + '%'
 						}
-						Item {
-							width: childrenRect.width
-							height: temperatureIcon.height
+						SensorValue {
+							icon: "sensorIconTemperature"
 							visible: sensor.hasTemperature
-							Image {
-								id: temperatureIcon
-								source: "sensorIconTemperature.png"
-								height: sourceSize.height*SCALEFACTOR
-								width: sourceSize.width*SCALEFACTOR
-							}
-							Text {
-								anchors.left: temperatureIcon.right
-								anchors.leftMargin: 10
-								anchors.verticalCenter: parent.verticalCenter
-								color: '#00659F'
-								font.pixelSize: 28*SCALEFACTOR
-								font.weight: Font.Bold
-								text: sensor.temperature + '\u00B0C'
-							}
+							value: sensor.temperature + '\u00B0C'
 						}
 					}
 				}
