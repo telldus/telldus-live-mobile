@@ -20,9 +20,6 @@ extern "C" int main(int argc, char *argv[])
 {
 
 	QScopedPointer<QApplication> app(new QApplication(argc, argv));
-#ifdef PLATFORM_ANDROID
-	app.setFont(QFont("Roboto"));
-#endif
 
 	QCoreApplication::setOrganizationName("telldus");
 	QCoreApplication::setOrganizationDomain("com.telldus");
