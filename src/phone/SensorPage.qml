@@ -77,6 +77,11 @@ Item {
 							value: sensor.uv
 						}
 						SensorValue {
+							icon: "sensorIconWatt"
+							visible: sensor.hasWatt
+							value: sensor.watt + ' W'
+						}
+						SensorValue {
 							icon: "sensorIconWind"
 							visible: sensor.hasWindGust
 							value: sensor.windAvg + ' m/s\n(' + sensor.windGust + ') m/s\n' + sensor.windDir + '\u00B0'

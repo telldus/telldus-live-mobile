@@ -14,6 +14,7 @@ class Sensor : public QObject
 	Q_PROPERTY(bool hasRainTotal READ hasRainTotal NOTIFY hasRainTotalChanged)
 	Q_PROPERTY(bool hasTemperature READ hasTemperature NOTIFY hasTemperatureChanged)
 	Q_PROPERTY(bool hasUV READ hasUV NOTIFY hasUVChanged)
+	Q_PROPERTY(bool hasWatt READ hasWatt NOTIFY hasWattChanged)
 	Q_PROPERTY(bool hasWindAvg READ hasWindAvg NOTIFY hasWindAvgChanged)
 	Q_PROPERTY(bool hasWindGust READ hasWindGust NOTIFY hasWindGustChanged)
 	Q_PROPERTY(bool hasWindDir READ hasWindDir NOTIFY hasWindDirChanged)
@@ -22,6 +23,7 @@ class Sensor : public QObject
 	Q_PROPERTY(QString rainTotal READ rainTotal WRITE setRainTotal NOTIFY rainTotalChanged)
 	Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
 	Q_PROPERTY(QString uv READ uv WRITE setUV NOTIFY uvChanged)
+	Q_PROPERTY(QString watt READ watt WRITE setWatt NOTIFY wattChanged)
 	Q_PROPERTY(QString windAvg READ windAvg WRITE setWindAvg NOTIFY windAvgChanged)
 	Q_PROPERTY(QString windGust READ windGust WRITE setWindGust NOTIFY windGustChanged)
 	Q_PROPERTY(QString windDir READ windDir WRITE setWindDir NOTIFY windDirChanged)
@@ -67,6 +69,10 @@ public:
 	void setUV(const QString &uv);
 	bool hasUV() const;
 
+	QString watt() const;
+	void setWatt(const QString &power);
+	bool hasWatt() const;
+
 	QString windAvg() const;
 	void setWindAvg(const QString &windAvg);
 	bool hasWindAvg() const;
@@ -86,6 +92,7 @@ signals:
 	void hasRainTotalChanged();
 	void hasTemperatureChanged();
 	void hasUVChanged();
+	void hasWattChanged();
 	void hasWindAvgChanged();
 	void hasWindGustChanged();
 	void hasWindDirChanged();
@@ -96,6 +103,7 @@ signals:
 	void nameChanged(const QString &name);
 	void temperatureChanged(const QString &temperature);
 	void uvChanged(const QString &);
+	void wattChanged(const QString &);
 	void windAvgChanged(const QString &);
 	void windGustChanged(const QString &);
 	void windDirChanged(const QString &);

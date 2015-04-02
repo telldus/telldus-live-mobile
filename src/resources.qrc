@@ -57,6 +57,7 @@
         <file>phone/sensorIconRain.png</file>
         <file>phone/sensorIconTemperature.png</file>
         <file>phone/sensorIconUV.png</file>
+        <file>phone/sensorIconWatt.png</file>
         <file>phone/sensorIconWind.png</file>
         <file>phone/Device.js</file>
         <file>phone/iconFavourite.png</file>
