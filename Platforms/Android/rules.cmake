@@ -8,6 +8,8 @@ SET(Qt5Svg_DIR ${Qt5_Dir}/lib/cmake/Qt5Svg)
 SET(Qt5Widgets_DIR ${Qt5_Dir}/lib/cmake/Qt5Widgets)
 SET(Qt5WebView_DIR ${Qt5_Dir}/lib/cmake/Qt5WebView)
 
+SET(Keystore "" CACHE PATH "Path to Android keystore file")
+
 MATH(EXPR INTERNAL_VERSION "${PACKAGE_MAJOR_VERSION}*10000+${PACKAGE_MINOR_VERSION}*100+${PACKAGE_PATCH_VERSION}")
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/Android/AndroidManifest.xml ${CMAKE_BINARY_DIR}/template/AndroidManifest.xml)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/Android/deployment-settings.json ${CMAKE_BINARY_DIR}/deployment-settings.json)
@@ -89,7 +91,9 @@ FUNCTION(COMPILE target)
 		COMMENT "Package and deploy apk"
 	)
 	ADD_CUSTOM_TARGET(release
-		cd ${CMAKE_BINARY_DIR}/apk/ && ant release
+		cd ${CMAKE_BINARY_DIR}/apk/ && ant release &&
+		jarsigner -verbose -tsa http://timestamp.digicert.com -sigalg SHA1withRSA -digestalg SHA1 -keystore ${Keystore} ${CMAKE_BINARY_DIR}/apk/bin/QtApp-release-unsigned.apk telldus &&
+		zipalign -v 4 ${CMAKE_BINARY_DIR}/apk/bin/QtApp-release-unsigned.apk ${CMAKE_BINARY_DIR}/apk/bin/${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}-release-signed-aligned.apk
 		DEPENDS ${target}
 		COMMENT "Package and deploy apk"
 	)
