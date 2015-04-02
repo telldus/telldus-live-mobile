@@ -6,11 +6,11 @@
 class Sensor::PrivateData {
 public:
 	bool hasHumidity, hasRainRate, hasRainTotal;
-	bool hasTemperature, hasWindAvg, hasWindGust, hasWindDir;
+	bool hasTemperature, hasUV, hasWindAvg, hasWindGust, hasWindDir;
 	int id;
 	QString name;
 	QString humidity, rainRate, rainTotal;
-	QString temperature, windAvg, windGust, windDir;
+	QString temperature, uv, windAvg, windGust, windDir;
 	QDateTime lastUpdated, lastPolled;
 };
 
@@ -22,6 +22,7 @@ Sensor::Sensor(QObject *parent) :
 	d->hasRainRate = false;
 	d->hasRainTotal = false;
 	d->hasTemperature = false;
+	d->hasUV = false;
 	d->hasWindAvg = false;
 	d->hasWindGust = false;
 	d->hasWindDir = false;
@@ -124,13 +125,14 @@ void Sensor::onInfoReceived(const QVariantMap &info) {
 		QVariantMap info = v.toMap();
 		if (info["name"].toString() == "temp") {
 			setTemperature(info["value"].toString());
-
 		} else if (info["name"].toString() == "humidity") {
 			setHumidity(info["value"].toString());
 		} else if (info["name"].toString() == "rrate") {
 			setRainRate(info["value"].toString());
 		} else if (info["name"].toString() == "rtot") {
 			setRainTotal(info["value"].toString());
+		} else if (info["name"].toString() == "uv") {
+			setUV(info["value"].toString());
 		} else if (info["name"].toString() == "wavg") {
 			setWindAvg(info["value"].toString());
 		} else if (info["name"].toString() == "wgust") {
@@ -169,6 +171,21 @@ void Sensor::update(const QVariantMap &info) {
 	}
 	setLastUpdated(QDateTime::fromMSecsSinceEpoch(((qint64)info["time"].toInt()*1000)));
 	d->lastPolled = QDateTime::currentDateTime();
+}
+
+QString Sensor::uv() const {
+	return d->uv;
+}
+
+void Sensor::setUV(const QString &uv) {
+	d->uv = uv;
+	d->hasUV = true;
+	emit uvChanged(uv);
+	emit hasUVChanged();
+}
+
+bool Sensor::hasUV() const {
+	return d->hasUV;
 }
 
 QString Sensor::windAvg() const {

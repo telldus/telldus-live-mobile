@@ -72,6 +72,11 @@ Item {
 							value: sensor.rainRate + ' mm/h\n' + sensor.rainTotal + ' mm'
 						}
 						SensorValue {
+							icon: "sensorIconUV"
+							visible: sensor.hasUV
+							value: sensor.uv
+						}
+						SensorValue {
 							icon: "sensorIconWind"
 							visible: sensor.hasWindGust
 							value: sensor.windAvg + ' m/s\n(' + sensor.windGust + ') m/s\n' + sensor.windDir + '\u00B0'
