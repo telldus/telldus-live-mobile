@@ -91,5 +91,6 @@
         <file>phone/ComponentSetLearn.qml</file>
         <file>phone/TabPage.qml</file>
         <file>phone/Sensor.js</file>
+        <file>phone/DB.js</file>
     </qresource>
 </RCC>

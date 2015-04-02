@@ -1,6 +1,7 @@
-var db = LocalStorage.openDatabaseSync("TelldusLiveMobile", "1.0", "Settings used by Telldus Live! mobile", 1000000);
+var db;
 
-function setupCache(deviceModel) {
+function setupCache(deviceModel, database) {
+	db = database;
 	deviceModel.rowsInserted.connect(function(index, start, end) {
 		var devices = [];
 		for(var i = start; i <= end; ++i) {
@@ -43,7 +44,6 @@ function setupCache(deviceModel) {
 	});
 
 	db.transaction(function(tx) {
-		tx.executeSql('CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT)');
 		var rs = tx.executeSql('SELECT id, name, methods, type, favorite, state, statevalue FROM Device ORDER BY name');
 		var deviceList = [];
 		var haveFav = false;

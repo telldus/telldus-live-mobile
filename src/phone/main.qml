@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
+import "DB.js" as DB
 import "Device.js" as Device
 import "Sensor.js" as Sensor
 
@@ -8,8 +9,8 @@ Rectangle {
 	color: "#dceaf6"
 
 	Component.onCompleted: {
-		Device.setupCache(deviceModelController)
-		Sensor.setupCache(sensorModel)
+		Device.setupCache(deviceModelController, DB.db)
+		Sensor.setupCache(sensorModel, DB.db)
 	}
 
 	Loader {

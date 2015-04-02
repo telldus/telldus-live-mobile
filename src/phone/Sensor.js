@@ -1,6 +1,7 @@
-var db = LocalStorage.openDatabaseSync("TelldusLiveMobile", "1.0", "Settings used by Telldus Live! mobile", 1000000);
+var db;
 
-function setupCache(sensorModel) {
+function setupCache(sensorModel, database) {
+	db = database;
 	sensorModel.rowsInserted.connect(function(index, start, end) {
 		var sensors = [];
 		for(var i = start; i <= end; ++i) {
@@ -44,8 +45,7 @@ function setupCache(sensorModel) {
 	});
 
 	db.transaction(function(tx) {
-		tx.executeSql('CREATE TABLE IF NOT EXISTS Sensor (id INTEGER PRIMARY KEY, name TEXT, lastUpdated INTEGER, temperature REAL, humidity REAL)');
-		var rs = tx.executeSql('SELECT id, name, lastUpdated, temperature, humidity FROM Sensor ORDER BY name');
+		var rs = tx.executeSql('SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir FROM Sensor ORDER BY name');
 		var sensorList = [];
 		for(var i = 0; i < rs.rows.length; ++i) {
 			sensorList.push({
