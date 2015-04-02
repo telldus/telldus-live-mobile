@@ -43,6 +43,27 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 		if (dev.contains("humidity") && !isnan(dev["humidity"].toDouble())) {
 			sensor->setHumidity(dev["humidity"].toString());
 		}
+		if (dev.contains("rainRate") && !isnan(dev["rainRate"].toDouble())) {
+			sensor->setRainRate(dev["rainRate"].toString());
+		}
+		if (dev.contains("rainTotal") && !isnan(dev["rainTotal"].toDouble())) {
+			sensor->setRainTotal(dev["rainTotal"].toString());
+		}
+		if (dev.contains("uv") && !isnan(dev["uv"].toDouble())) {
+			sensor->setUV(dev["uv"].toString());
+		}
+		if (dev.contains("watt") && !isnan(dev["watt"].toDouble())) {
+			sensor->setWatt(dev["watt"].toString());
+		}
+		if (dev.contains("windAvg") && !isnan(dev["windAvg"].toDouble())) {
+			sensor->setWindAvg(dev["windAvg"].toString());
+		}
+		if (dev.contains("windGust") && !isnan(dev["windGust"].toDouble())) {
+			sensor->setWindGust(dev["windGust"].toString());
+		}
+		if (dev.contains("windDir") && !isnan(dev["windDir"].toDouble())) {
+			sensor->setWindDir(dev["windDir"].toString());
+		}
 	}
 	if (list.size()) {
 		//Appends all in one go

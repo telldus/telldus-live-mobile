@@ -11,6 +11,13 @@ function setupCache(sensorModel, database) {
 			sensor.lastUpdatedChanged.connect(sensor, function(lastUpdated) { save(this, "lastUpdated", lastUpdated.getTime()/1000) });
 			sensor.temperatureChanged.connect(sensor, function(temperature) { save(this, "temperature", temperature) });
 			sensor.humidityChanged.connect(sensor, function(humidity) { save(this, "humidity", humidity) });
+			sensor.rainRateChanged.connect(sensor, function(value) { save(this, "rainRate", value) });
+			sensor.rainTotalChanged.connect(sensor, function(value) { save(this, "rainTotal", value) });
+			sensor.uvChanged.connect(sensor, function(value) { save(this, "uv", value) });
+			sensor.wattChanged.connect(sensor, function(value) { save(this, "watt", value) });
+			sensor.windAvgChanged.connect(sensor, function(value) { save(this, "windAvg", value) });
+			sensor.windGustChanged.connect(sensor, function(value) { save(this, "windGust", value) });
+			sensor.windDirChanged.connect(sensor, function(value) { save(this, "windDir", value) });
 			save(sensor, "name", sensor.name);
 			save(sensor, "lastUpdated", sensor.lastUpdated.getTime()/1000);
 		}
@@ -53,7 +60,14 @@ function setupCache(sensorModel, database) {
 				'name': rs.rows.item(i).name,
 				'lastUpdated': parseInt(rs.rows.item(i).lastUpdated, 10),
 				'temperature': parseFloat(rs.rows.item(i).temperature),
-				'humidity':  parseFloat(rs.rows.item(i).humidity)
+				'humidity':  parseFloat(rs.rows.item(i).humidity),
+				'rainRate':  parseFloat(rs.rows.item(i).rainRate),
+				'rainTotal':  parseFloat(rs.rows.item(i).rainTotal),
+				'uv':  parseFloat(rs.rows.item(i).uv),
+				'watt':  parseFloat(rs.rows.item(i).watt),
+				'windAvg':  parseFloat(rs.rows.item(i).windAvg),
+				'windGust':  parseFloat(rs.rows.item(i).windGust),
+				'windDir':  parseFloat(rs.rows.item(i).windDir)
 			});
 		}
 		sensorModel.addSensors(sensorList);
