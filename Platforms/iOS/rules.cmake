@@ -1,5 +1,13 @@
 SET(QT_SOURCE_DIR "/path/to/qt" CACHE STRING "Path to qt source dir")
 OPTION(BUILD_FOR_DEVICE "Whatever to build for device or simulator" TRUE)
+
+
+IF(RELEASE_BUILD)
+	SET(SUFFIX "")
+ELSE()
+	SET(SUFFIX "-dev")
+ENDIF()
+
 IF (BUILD_FOR_DEVICE)
 	SET(QT_DIR "${QT_SOURCE_DIR}/ios")
 ELSE()
@@ -95,11 +103,13 @@ LIST(APPEND LIBRARIES
 )
 
 LIST(APPEND RESOURCES
-	icons/icon-flat-57.png
-	icons/icon-flat-72.png
-	icons/icon-flat-114.png
-	icons/icon-flat-120.png
-	icons/icon-flat-144.png
+	icons/icon-flat-57${SUFFIX}.png
+	icons/icon-flat-72${SUFFIX}.png
+	icons/icon-flat-76${SUFFIX}.png
+	icons/icon-flat-114${SUFFIX}.png
+	icons/icon-flat-120${SUFFIX}.png
+	icons/icon-flat-144${SUFFIX}.png
+	icons/icon-flat-152${SUFFIX}.png
 	Platforms/iOS/LaunchImage.png
 	Platforms/iOS/LaunchImage@2x.png
 	Platforms/iOS/LaunchImage-568h@2x.png

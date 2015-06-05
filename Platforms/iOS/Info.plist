@@ -25,18 +25,20 @@
 	<string></string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>icon-flat-57.png</string>
-		<string>icon-flat-72.png</string>
-		<string>icon-flat-114.png</string>
-		<string>icon-flat-120.png</string>
-		<string>icon-flat-144.png</string>
+		<string>icon-flat-57${SUFFIX}.png</string>
+		<string>icon-flat-72${SUFFIX}.png</string>
+		<string>icon-flat-76${SUFFIX}.png</string>
+		<string>icon-flat-114${SUFFIX}.png</string>
+		<string>icon-flat-120${SUFFIX}.png</string>
+		<string>icon-flat-144${SUFFIX}.png</string>
+		<string>icon-flat-152${SUFFIX}.png</string>
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UILaunchImageFile</key>
 	<string>LaunchImage</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.telldus.live.mobile</string>
+	<string>com.telldus.live.mobile${SUFFIX}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>

@@ -53,7 +53,7 @@ TelldusLive::TelldusLive(QObject *parent) :
 	d->request = 0;
 	d->requestPending = false;
 
-	d->base = "https://api.telldus.com";
+	d->base = TELLDUS_LIVE_API_ENDPOINT;
 
 	QSslSocket::addDefaultCaCertificates(":/Equifax_Secure_CA.pem");
 	QSslSocket::addDefaultCaCertificates(":/GeoTrustGlobalCA.pem");
