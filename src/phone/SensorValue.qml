@@ -4,8 +4,8 @@ Item {
 	id: sensorValue
 	property string icon
 	property alias value: valueText.text
-	width: childrenRect.width
-	height: sensorIcon.height
+	width: 180*SCALEFACTOR
+	height: Math.max(sensorIcon.height, valueText.height)
 	Image {
 		id: sensorIcon
 		source: icon + ".png"
@@ -15,10 +15,10 @@ Item {
 	Text {
 		id: valueText
 		anchors.left: sensorIcon.right
-		anchors.leftMargin: 10
+		anchors.leftMargin: 5
 		anchors.verticalCenter: parent.verticalCenter
 		color: '#00659F'
-		font.pixelSize: 28*SCALEFACTOR
+		font.pixelSize: 24*SCALEFACTOR
 		font.weight: Font.Bold
 		//text: 'sensor.temperature' + '\u00B0C'
 	}

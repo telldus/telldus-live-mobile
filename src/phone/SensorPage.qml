@@ -1,61 +1,59 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import Telldus 1.0
 
 Item {
 	id: sensorPage
+
 	Component {
 		id: sensorDelegate
 		Item {
 			id: wrapper
 			width: list.width
-			height: 150*SCALEFACTOR
-			clip: false
 			z: model.index
+			height: childrenRect.height
 			BorderImage {
 				source: "rowBg.png"
-				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.left: parent.left
-				anchors.leftMargin: 20*SCALEFACTOR
-				anchors.rightMargin: 20*SCALEFACTOR
-				height: 140*SCALEFACTOR
-				border {left: 21; top: 21; right: 21; bottom: 28 }
+				anchors.leftMargin: 10*SCALEFACTOR
+				anchors.rightMargin: 10*SCALEFACTOR
+				border { left: 21; top: 21; right: 21; bottom: 28 }
+				height: childrenRect.height + 40
 
-				Item {
-					anchors.fill: parent
-					anchors.topMargin: 1
-					anchors.bottomMargin: 11
-
-					Column {
-						anchors.left: parent.left
-						anchors.leftMargin: 20
-						anchors.right: dataRow.left
-						anchors.verticalCenter: parent.verticalCenter
-						Text {
-							color: sensor.name !== '' ? '#00659F' : '#8cabc5'
-							width: parent.width
-							font.pixelSize: 32*SCALEFACTOR
-							font.weight: Font.Bold
-							text: sensor.name !== '' ? sensor.name : '(no name)'
-							elide: Text.ElideRight
-						}
-						Text {
-							color: "#999999"
-							font.pixelSize: 28*SCALEFACTOR
-							text: ""  // TODO(micke): Add location name
-						}
-						Text {
-							color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
-							font.pixelSize: 25*SCALEFACTOR
-							text: formatLastUpdated(sensor.minutesAgo)
-						}
+				Column {
+					id: dataTitleRow
+					anchors.left: parent.left
+					anchors.leftMargin: 15
+					anchors.top: parent.top
+					anchors.topMargin: 15
+					width: 90
+					Text {
+						color: sensor.name !== '' ? '#00659F' : '#8cabc5'
+						width: parent.width
+						font.weight: Font.Bold
+						text: sensor.name !== '' ? sensor.name : '(no name)'
+						elide: Text.ElideRight
 					}
-					Row {
+					Text {
+						color: "#999999"
+						font.pixelSize: 28*SCALEFACTOR
+						text: ""  // TODO(micke): Add location name
+					}
+					Text {
+						color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
+						font.pixelSize: 21*SCALEFACTOR
+						text: formatLastUpdated(sensor.minutesAgo)
+					}
+				}
+				Flow {
 						id: dataRow
-						spacing: 20
+						anchors.left: dataTitleRow.right
+						anchors.leftMargin: 10
 						anchors.right: parent.right
-						anchors.rightMargin: 20
-						anchors.verticalCenter: parent.verticalCenter
+						anchors.rightMargin: 5
+						anchors.top: parent.top
+						anchors.topMargin: 15
+						spacing: 10
 						SensorValue {
 							icon: "sensorIconHumidity"
 							visible: sensor.hasHumidity
@@ -72,8 +70,13 @@ Item {
 							value: sensor.rainRate + ' mm/h\n' + sensor.rainTotal + ' mm'
 						}
 						SensorValue {
-							icon: "sensorIconUV"
-							visible: sensor.hasUV
+							icon: "sensorIconWind"
+							visible: sensor.hasWindGust
+							value: sensor.windAvg + ' m/s\n' + sensor.windGust + ' m/s*\n' + sensor.windDir + '\u00B0'
+						}
+						SensorValue {
+							icon: "sensorIconUv"
+							visible: sensor.hasUv
 							value: sensor.uv
 						}
 						SensorValue {
@@ -82,11 +85,10 @@ Item {
 							value: sensor.watt + ' W'
 						}
 						SensorValue {
-							icon: "sensorIconWind"
-							visible: sensor.hasWindGust
-							value: sensor.windAvg + ' m/s\n(' + sensor.windGust + ') m/s\n' + sensor.windDir + '\u00B0'
+							icon: "sensorIconLuminance"
+							visible: sensor.hasLuminance
+							value: sensor.luminance + ' lx'
 						}
-					}
 				}
 			}
 		}
@@ -113,12 +115,12 @@ Item {
 		anchors.fill: parent
 		model: sensorModel
 		delegate: sensorDelegate
-		spacing: 0
+		spacing: 5
 	}
 
 	Header {
 		id: header
-		anchors.topMargin: Math.min(0, -list.contentY)
+		anchors.topMargin: Math.min(0, -list.contentY-header.height-10)
 	}
 
 	function formatLastUpdated(minutes) {
