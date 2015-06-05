@@ -1,11 +1,18 @@
 #include "client.h"
 #include "tellduslive.h"
+#include "devicemodel.h"
+#include "device.h"
+#include "sensormodel.h"
+#include "sensor.h"
+#include <parser.h>
+#include <QTimer>
+#include <QDebug>
 
 class Client::PrivateData {
 public:
 	bool online, editable;
 	int id;
-	QString name, version, type;
+	QString name, version, type, sessionId;
 };
 
 Client::Client(QObject *parent) :
@@ -15,6 +22,10 @@ Client::Client(QObject *parent) :
 	d->online = false;
 	d->editable = false;
 	d->id = 0;
+	connect(TelldusLive::instance(), SIGNAL(sessionAuthenticated()), this, SLOT(sessionAuthenticated()));
+	connect(&m_webSocket, &QWebSocket::connected, this, &Client::wsConnected);
+	connect(&m_webSocket, &QWebSocket::disconnected, this, &Client::wsDisconnected);
+	connect(&m_webSocket, &QWebSocket::textMessageReceived, this, &Client::wsDataReceived);
 }
 
 Client::~Client() {
@@ -36,6 +47,7 @@ int Client::clientId() const {
 
 void Client::setId(int id) {
 	d->id = id;
+	this->sessionAuthenticated();
 	emit idChanged();
 }
 
@@ -73,4 +85,68 @@ QString Client::type() const {
 void Client::setType(const QString &type) {
 	d->type = type;
 	emit typeChanged();
+}
+
+void Client::sessionAuthenticated() {
+	TelldusLive *telldusLive = TelldusLive::instance();
+	if (telldusLive->session() == "" || d->id == 0) {
+		return;
+	}
+	// Check to see if we are already connected
+	if (m_webSocket.state() == QAbstractSocket::ConnectedState) {
+		return;
+	}
+	TelldusLiveParams params;
+	params["id"] = d->id;
+	telldusLive->call("client/serverAddress", params, this, SLOT(addressReceived(QVariantMap)));
+}
+
+void Client::addressReceived(const QVariantMap &data) {
+	if (data["address"].toString() == "") {
+		qDebug() << "No server to connect to, client offline? Retry in 5 minutes";
+		QTimer::singleShot(300000, this, SLOT(sessionAuthenticated()));
+		return;
+	}
+	TelldusLive *telldusLive = TelldusLive::instance();
+	d->sessionId = telldusLive->session();
+	QString url = QString("ws://%1:%2/websocket").arg(data["address"].toString(), data["port"].toString());
+	qDebug() << "-- Connecting to " + url;
+	m_webSocket.open(QUrl(url));
+}
+
+void Client::wsConnected() {
+	m_webSocket.sendTextMessage(QString("{\"module\":\"auth\",\"action\":\"auth\",\"data\":{\"sessionid\":\"%1\",\"clientId\":\"%2\"}}").arg(d->sessionId, QString::number(d->id)));
+	m_webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"setState\"}}"));
+	m_webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"value\"}}"));
+}
+
+void Client::wsDataReceived(const QString &string) {
+	bool ok;
+	QJson::Parser parser;
+	QVariantMap msg = parser.parse(string.toLatin1(), &ok).toMap();
+	if (!ok) {
+		qWarning() << "Could not parse json response";
+		qWarning() << string;
+		return;
+	}
+	QVariantMap data = msg["data"].toMap();
+	if (msg["module"] == "device" && msg["action"] == "setState") {
+		DeviceModel *m = DeviceModel::instance();
+		Device *dev = m->findDevice(data["deviceId"].toInt());
+		if (dev) {
+			dev->setState(data["method"].toInt());
+			dev->setStateValue(data["value"].toString());
+		}
+	} else if (msg["module"] == "sensor" && msg["action"] == "value") {
+		SensorModel *m = SensorModel::instance();
+		Sensor *sensor = m->findSensor(data["sensorId"].toInt());
+		if (sensor) {
+			sensor->update(data);
+		}
+	}
+}
+
+void Client::wsDisconnected() {
+	qDebug() << "Websocket disconnected, retry in 10 seconds";
+	QTimer::singleShot(10000, this, SLOT(sessionAuthenticated()));
 }

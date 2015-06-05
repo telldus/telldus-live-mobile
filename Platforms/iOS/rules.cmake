@@ -58,6 +58,7 @@ INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtQuick )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtQml )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWidgets )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWebView )
+INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWebSockets )
 INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
 
 SET(QT_USE_QTOPENGL FALSE)
@@ -92,6 +93,7 @@ LIST(APPEND LIBRARIES
 	${QT_DIR}/lib/libQt5Svg.a
 	${QT_DIR}/lib/libQt5WebView.a
 	${QT_DIR}/lib/libQt5Widgets.a
+	${QT_DIR}/lib/libQt5WebSockets.a
 	${QT_DIR}/qml/QtWebView/libdeclarative_webview.a
 	${QT_DIR}/qml/QtQuick.2/libqtquick2plugin.a
 	${QT_DIR}/qml/QtQuick/LocalStorage/libqmllocalstorageplugin.a

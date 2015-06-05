@@ -23,12 +23,14 @@ public:
 
 	bool isAuthorized();
 	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap());
+	QString session() const;
 	bool working() const;
 
 	static TelldusLive *instance();
 
 signals:
 	void authorizedChanged();
+	void sessionAuthenticated();
 	void authorizationNeeded(const QUrl &url);
 	void workingChanged();
 
@@ -37,13 +39,16 @@ public slots:
 	void authorize();
 	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
+	void logScreenView(const QString &screenName);
 
 private slots:
 	void onUrlOpened(const QUrl &url);
+	void authenticateSession();
 	void onTemporaryTokenReceived(const QString &token, const QString &tokenSecret);
 	void onAuthorizationReceived(const QString &token, const QString &verifier);
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);
 	void onRequestReady(const QByteArray &response);
+	void onSessionAuthenticated(const QVariantMap &data);
 #ifdef PLATFORM_BB10
 	void handleInvoke(const bb::system::InvokeRequest&);
 #endif

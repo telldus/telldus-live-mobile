@@ -4,6 +4,3 @@
 [submodule "3rdparty/qjson"]
 	path = 3rdparty/qjson
 	url = https://github.com/flavio/qjson.git
-[submodule "3rdparty/qtwebsocket"]
-	path = 3rdparty/qtwebsocket
-	url = git://gitorious.org/qtwebsocket/qtwebsocket.git

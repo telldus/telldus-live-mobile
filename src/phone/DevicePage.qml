@@ -32,8 +32,8 @@ Item {
 				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.left: parent.left
-				anchors.leftMargin: 20*SCALEFACTOR
-				anchors.rightMargin: 20*SCALEFACTOR
+				anchors.leftMargin: 10*SCALEFACTOR
+				anchors.rightMargin: 10*SCALEFACTOR
 				height: 140*SCALEFACTOR
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
@@ -129,15 +129,7 @@ Item {
 
 		Header {
 			id: header
-			anchors.topMargin: {
-				if (list.contentY <= 0) {
-					return 0;
-				}
-				if (list.contentY >= header.height) {
-					return -header.height;
-				}
-				return -list.contentY;
-			}
+			anchors.topMargin: Math.min(0, -list.contentY-header.height-headerMenu.height-10)
 		}
 		HeaderMenu {
 			id: headerMenu

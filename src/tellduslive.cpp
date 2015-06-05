@@ -11,7 +11,10 @@
 #include <QSslSocket>
 #include <QUrlQuery>
 #include <QJsonDocument>
+#include <QUuid>
 #include <QDebug>
+#include <QTimer>
+#include <QDateTime>
 
 #ifdef PLATFORM_BB10
 #include <bb/system/InvokeRequest>
@@ -34,9 +37,10 @@ public:
 	State state;
 	KQOAuthManager *manager;
 	KQOAuthRequest *request;
-	QString base;
+	QString base, session;
 	QQueue<TelldusLiveCall> queue;
-	bool requestPending;
+	bool requestPending, sessionIsAuthenticated;
+	QDateTime ttl;
 #ifdef PLATFORM_BB10
 	bb::system::InvokeManager *m;
 #endif
@@ -52,12 +56,13 @@ TelldusLive::TelldusLive(QObject *parent) :
 	d->manager = 0;
 	d->request = 0;
 	d->requestPending = false;
+	d->sessionIsAuthenticated = false;
 
 	d->base = TELLDUS_LIVE_API_ENDPOINT;
 
-	QSslSocket::addDefaultCaCertificates(":/Equifax_Secure_CA.pem");
-	QSslSocket::addDefaultCaCertificates(":/GeoTrustGlobalCA.pem");
-	QSslSocket::addDefaultCaCertificates(":/RapidSSLCA.pem");
+//	QSslSocket::addDefaultCaCertificates(":/Equifax_Secure_CA.pem");
+//	QSslSocket::addDefaultCaCertificates(":/GeoTrustGlobalCA.pem");
+//	QSslSocket::addDefaultCaCertificates(":/RapidSSLCA.pem");
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
@@ -80,6 +85,7 @@ TelldusLive::TelldusLive(QObject *parent) :
 	} else {
 		d->state = PrivateData::Authorized;
 	}
+	d->session = s.value("session", "").toString();
 
 	QDesktopServices::setUrlHandler("x-com-telldus-live-mobile", this, "onUrlOpened");
 
@@ -89,6 +95,18 @@ TelldusLive::TelldusLive(QObject *parent) :
 #endif
 
 	this->setupManager();
+}
+
+void TelldusLive::authenticateSession() {
+	if (d->session == "") {
+		QSettings s;
+		d->session = QUuid::createUuid().toString().mid(1, 36);
+		s.setValue("session", d->session);
+	}
+	TelldusLiveParams params;
+	params["session"] = d->session;
+	qDebug() << d->session;
+	this->call("user/authenticateSession", params, this, SLOT(onSessionAuthenticated(QVariantMap)));
 }
 
 TelldusLive::~TelldusLive() {
@@ -159,6 +177,7 @@ void TelldusLive::onAccessTokenReceived(const QString &token, const QString &tok
 void TelldusLive::onRequestReady(const QByteArray &response) {
 	if (d->state == PrivateData::AuthorizationPending) {
 		d->state = PrivateData::Authorized;
+		this->authenticateSession();
 		emit authorizedChanged();
 		return;
 	}
@@ -209,6 +228,19 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 			qDebug() << result.toString();
 		}
 	}
+}
+
+void TelldusLive::onSessionAuthenticated(const QVariantMap &data) {
+	if (data["status"] != "success") {
+		qWarning() << "Could not authenticate websockets";
+		return;
+	}
+	d->sessionIsAuthenticated = true;
+	d->ttl = QDateTime::fromMSecsSinceEpoch((qint64)data["ttl"].toInt()*1000);
+	qint64 msecs = QDateTime::currentDateTime().msecsTo(d->ttl);
+	msecs -= 15*60*1000;  // 15 minutes to be sure
+	QTimer::singleShot(msecs, this, SLOT(authenticateSession()));  // Renew the session
+	emit sessionAuthenticated();
 }
 
 bool TelldusLive::isAuthorized() {
@@ -268,16 +300,27 @@ void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params,
 	}
 }
 
+QString TelldusLive::session() const {
+	if (d->sessionIsAuthenticated) {
+		return d->session;
+	}
+	return "";
+}
+
 bool TelldusLive::working() const {
 	return d->requestPending;
 }
 
+void TelldusLive::logScreenView(const QString &screenName) {
+	qDebug() << "Screen View Logged: " << screenName;
+}
 
 void TelldusLive::logout() {
 	QSettings s;
 	s.setValue("oauthToken", "");
 	s.setValue("oauthTokenSecret", "");
 	d->state = PrivateData::Unauthorized;
+	d->sessionIsAuthenticated = false;
 	this->setupManager();
 	emit authorizedChanged();
 }
@@ -340,6 +383,10 @@ void TelldusLive::setupManager() {
 	connect(d->manager, SIGNAL(requestReady(QByteArray)), this, SLOT(onRequestReady(QByteArray)));
 
 	d->request = new KQOAuthRequest(this);
+
+	if (d->state == PrivateData::Authorized) {
+		this->authenticateSession();
+	}
 }
 
 TelldusLive * TelldusLive::instance() {

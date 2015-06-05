@@ -5,6 +5,7 @@ SET(Qt5Network_DIR ${Qt5_Dir}/lib/cmake/Qt5Network)
 SET(Qt5Qml_DIR ${Qt5_Dir}/lib/cmake/Qt5Qml)
 SET(Qt5Quick_DIR ${Qt5_Dir}/lib/cmake/Qt5Quick)
 SET(Qt5Svg_DIR ${Qt5_Dir}/lib/cmake/Qt5Svg)
+SET(Qt5WebSockets_DIR ${Qt5_Dir}/lib/cmake/Qt5WebSockets)
 SET(Qt5Widgets_DIR ${Qt5_Dir}/lib/cmake/Qt5Widgets)
 SET(Qt5WebView_DIR ${Qt5_Dir}/lib/cmake/Qt5WebView)
 

@@ -40,7 +40,7 @@ Item {
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: footer.activePage = 0
+				onClicked: mainInterface.setActivePage(0)
 			}
 		}
 		Image {
@@ -68,7 +68,7 @@ Item {
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: footer.activePage = 1
+				onClicked:mainInterface.setActivePage(1)
 			}
 		}
 		Image {
@@ -96,7 +96,7 @@ Item {
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: footer.activePage = 2
+				onClicked: mainInterface.setActivePage(2)
 			}
 		}
 	}
