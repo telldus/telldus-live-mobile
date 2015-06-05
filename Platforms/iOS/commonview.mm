@@ -53,14 +53,4 @@ void CommonView::openUrl(const QUrl &url) {
 																			 ->nativeResourceForWindow("uiview", this->view()));
 	UIViewController *qtController = [[view window] rootViewController];
 
-	// Create a new webview controller to show on top of Qt's view controller:
-	UIViewController *webViewController = [[[UIViewController alloc] init] autorelease];
-	UIWebView *webView = [[[UIWebView alloc] init] autorelease];
-	[webView setDelegate: id(iosDelegate)];
-	webViewController.view = webView;
-
-	[webView loadRequest:[NSURLRequest requestWithURL:url.toNSURL()]];
-
-	// Tell the imagecontroller to animate on top:
-	[qtController presentViewController:webViewController animated:YES completion:nil];
 }

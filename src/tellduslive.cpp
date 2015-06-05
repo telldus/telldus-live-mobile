@@ -62,6 +62,19 @@ TelldusLive::TelldusLive(QObject *parent) :
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
 	QString tokenSecret = s.value("oauthTokenSecret", "").toString();
+
+	QStringList args = QCoreApplication::arguments();
+	for(int i = 1; i < args.length(); ++i) {
+		if (args.at(i) == "--oauthToken") {
+			token = args.at(i+1);
+			++i;
+			continue;
+		} else if (args.at(i) == "--oauthTokenSecret") {
+			tokenSecret = args.at(i+1);
+			++i;
+			continue;
+		}
+	}
 	if (token.isEmpty() || tokenSecret.isEmpty()) {
 		d->state = PrivateData::Unauthorized;
 	} else {
@@ -289,7 +302,18 @@ void TelldusLive::doCall() {
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
 	QString tokenSecret = s.value("oauthTokenSecret", "").toString();
-
+	QStringList args = QCoreApplication::arguments();
+	for(int i = 1; i < args.length(); ++i) {
+		if (args.at(i) == "--oauthToken") {
+			token = args.at(i+1);
+			++i;
+			continue;
+		} else if (args.at(i) == "--oauthTokenSecret") {
+			tokenSecret = args.at(i+1);
+			++i;
+			continue;
+		}
+	}
 	d->request->initRequest(KQOAuthRequest::AuthorizedRequest, QUrl(d->base + "/json/" + call.endpoint));
 	d->request->setConsumerKey(TELLDUS_LIVE_PUBLIC_KEY);
 	d->request->setConsumerSecretKey(TELLDUS_LIVE_PRIVATE_KEY);

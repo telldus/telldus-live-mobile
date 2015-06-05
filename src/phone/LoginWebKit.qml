@@ -7,8 +7,8 @@ Rectangle {
 	Connections{
 		target: telldusLive
 		onAuthorizationNeeded: {
-			webview.url = url;
-			webview.visible = true;
+			webviewLoader.source = "LoginWebKitWebView.qml"
+			webviewLoader.item.url = url
 		}
 	}
 
@@ -93,12 +93,11 @@ Rectangle {
 		visible: telldusLive.working
 	}
 
-	WebView {
-		id: webview
+	Loader {
+		id: webviewLoader
 		anchors.fill: parent
-		z: 1
-		visible: false
 	}
+
 	states: [
 		State {
 			when: screen.height < 800  // BlackBerry Q10

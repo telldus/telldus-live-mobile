@@ -12,10 +12,10 @@
 	Q_IMPORT_PLUGIN(QSQLiteDriverPlugin)
 #endif
 
-#ifdef PLATFORM_IOS
-extern "C" int qt_main(int argc, char *argv[])
+#ifdef Q_OS_IOS
+extern "C" int qtmn(int argc, char *argv[])
 #else
-extern "C" int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 #endif
 {
 

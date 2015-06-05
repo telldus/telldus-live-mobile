@@ -1,3 +1,4 @@
+SET(HAVE_WEBKIT 1)
 SET(QT_SOURCE_DIR "/path/to/qt" CACHE STRING "Path to qt source dir")
 OPTION(BUILD_FOR_DEVICE "Whatever to build for device or simulator" TRUE)
 
@@ -34,16 +35,16 @@ ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/parsed/qrc_resources.cxx
 )
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/iOS/Info.plist ${CMAKE_BINARY_DIR}/Info.plist)
-SET(TESTFLIGHT_TOKEN	""	CACHE STRING "TestFlight token")
 
-SET(CMAKE_OSX_SYSROOT "iphoneos")
-SET(CMAKE_OSX_ARCHITECTURES i386 armv7)
+SET(CMAKE_OSX_SYSROOT "iphoneos" CACHE STRING "Path to SDK")
+SET(CMAKE_OSX_ARCHITECTURES i386 armv7 arm64)
 SET(CMAKE_CXX_FLAGS "-x objective-c++")
 SET(CMAKE_EXE_LINKER_FLAGS "-all_load")
 SET(APP_TYPE MACOSX_BUNDLE)
-SET(CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "4.3")
-SET(CMAKE_XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1")
+SET(CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "6.0")
+SET(CMAKE_XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2")
 SET(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer" CACHE STRING "The code signing identity")
+SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 SET(OPENSSL_DIR "/path/to/openssl/lib/and/include" CACHE STRING "Path to the openssl for iPhone dir")
 
 #INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtOpenGL )
@@ -51,11 +52,12 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtCore )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtGui )
-INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtGui/5.2.0 )
+INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtGui/5.4.2 )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtNetwork )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtQuick )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtQml )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWidgets )
+INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWebView )
 INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
 
 SET(QT_USE_QTOPENGL FALSE)
@@ -88,7 +90,9 @@ LIST(APPEND LIBRARIES
 	${QT_DIR}/lib/libQt5Network.a
 	${QT_DIR}/lib/libQt5Sql.a
 	${QT_DIR}/lib/libQt5Svg.a
+	${QT_DIR}/lib/libQt5WebView.a
 	${QT_DIR}/lib/libQt5Widgets.a
+	${QT_DIR}/qml/QtWebView/libdeclarative_webview.a
 	${QT_DIR}/qml/QtQuick.2/libqtquick2plugin.a
 	${QT_DIR}/qml/QtQuick/LocalStorage/libqmllocalstorageplugin.a
 	${OPENSSL_DIR}/lib/libcrypto.a
@@ -96,10 +100,11 @@ LIST(APPEND LIBRARIES
 	${QT_DIR}/plugins/imageformats/libqsvg.a
 	${QT_DIR}/plugins/platforms/libqios.a
 	${QT_DIR}/plugins/sqldrivers/libqsqlite.a
+	${QT_DIR}/plugins/qmltooling/libqmldbg_tcp.a
+	${QT_DIR}/lib/libqtharfbuzzng.a
 	libz.dylib
 	libiconv.dylib
 	libstdc++.6.dylib
-	${CMAKE_SOURCE_DIR}/Platforms/iOS/libTestFlight.a
 )
 
 LIST(APPEND RESOURCES

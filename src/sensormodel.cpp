@@ -50,7 +50,7 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 			sensor->setRainTotal(dev["rainTotal"].toString());
 		}
 		if (dev.contains("uv") && !isnan(dev["uv"].toDouble())) {
-			sensor->setUV(dev["uv"].toString());
+			sensor->setUv(dev["uv"].toString());
 		}
 		if (dev.contains("watt") && !isnan(dev["watt"].toDouble())) {
 			sensor->setWatt(dev["watt"].toString());

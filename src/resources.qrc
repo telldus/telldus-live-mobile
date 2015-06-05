@@ -33,6 +33,7 @@
         <file>phone/MainInterface.qml</file>
         <file>phone/LoginScreen.qml</file>
         <file>phone/LoginWebKit.qml</file>
+        <file>phone/LoginWebKitWebView.qml</file>
         <file>phone/LoginNonWebKit.qml</file>
         <file>phone/buttonDividerDim.png</file>
         <file>phone/buttonActionDown.png</file>

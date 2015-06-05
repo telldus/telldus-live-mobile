@@ -14,6 +14,7 @@
 #ifdef PLATFORM_IOS
 Q_IMPORT_PLUGIN(QtQuick2Plugin)
 Q_IMPORT_PLUGIN(QQmlLocalStoragePlugin)
+Q_IMPORT_PLUGIN(QWebViewModule)
 #endif
 
 class CommonView::PrivateData {
@@ -32,6 +33,7 @@ CommonView::CommonView(QObject *parent) :
 #ifdef PLATFORM_IOS
 	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QtQuick2Plugin().instance())->registerTypes("QtQuick");
 	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QQmlLocalStoragePlugin().instance())->registerTypes("QtQuick.LocalStorage");
+	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QWebViewModule().instance())->registerTypes("QtWebView");
 	d->view.engine()->setImportPathList(QStringList());
 #endif
 
@@ -73,7 +75,7 @@ void CommonView::loadAndShow() {
 	}
 	QSize size(w, h);
 	if (w > 0 && h > 0) {
-		d->view.setFixedSize(size);
+		d->view.resize(size);
 	}
 #elif defined(PLATFORM_IOS)
 	QSize size(this->windowSize());

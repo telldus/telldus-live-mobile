@@ -6,11 +6,13 @@
 class Sensor::PrivateData {
 public:
 	bool hasHumidity, hasRainRate, hasRainTotal;
-	bool hasTemperature, hasUV, hasWatt, hasWindAvg, hasWindGust, hasWindDir;
+	bool hasTemperature, hasWindAvg, hasWindGust, hasWindDir;
+	bool hasUv, hasWatt, hasLuminance;
 	int id;
 	QString name;
 	QString humidity, rainRate, rainTotal;
-	QString temperature, uv, watt, windAvg, windGust, windDir;
+	QString temperature, windAvg, windGust, windDir;
+	QString uv, watt, luminance;
 	QDateTime lastUpdated, lastPolled;
 };
 
@@ -22,11 +24,12 @@ Sensor::Sensor(QObject *parent) :
 	d->hasRainRate = false;
 	d->hasRainTotal = false;
 	d->hasTemperature = false;
-	d->hasUV = false;
-	d->hasWatt = false;
 	d->hasWindAvg = false;
 	d->hasWindGust = false;
 	d->hasWindDir = false;
+	d->hasUv = false;
+	d->hasWatt = false;
+	d->hasLuminance = false;
 	d->id = 0;
 }
 
@@ -132,16 +135,18 @@ void Sensor::onInfoReceived(const QVariantMap &info) {
 			setRainRate(info["value"].toString());
 		} else if (info["name"].toString() == "rtot") {
 			setRainTotal(info["value"].toString());
-		} else if (info["name"].toString() == "uv") {
-			setUV(info["value"].toString());
-		} else if (info["name"].toString() == "watt" && info["scale"].toString() == "2") {
-			setWatt(info["value"].toString());
 		} else if (info["name"].toString() == "wavg") {
 			setWindAvg(info["value"].toString());
 		} else if (info["name"].toString() == "wgust") {
 			setWindGust(info["value"].toString());
 		} else if (info["name"].toString() == "wdir") {
 			setWindDir(info["value"].toString());
+		} else if (info["name"].toString() == "uv") {
+			setUv(info["value"].toString());
+		} else if (info["name"].toString() == "watt" && info["scale"].toString() == "2") {
+			setWatt(info["value"].toString());
+		} else if (info["name"].toString() == "lum") {
+			setLuminance(info["value"].toString());
 		}
 	}
 }
@@ -166,44 +171,32 @@ bool Sensor::hasTemperature() const {
 }
 
 void Sensor::update(const QVariantMap &info) {
-	QVariantMap data = info["data"].toMap();
-	if (data.contains("temp")) {
-		setTemperature(data["temp"].toString());
-	} else if (data.contains("humidity")) {
-		setHumidity(data["humidity"].toString());
-	}
 	setLastUpdated(QDateTime::fromMSecsSinceEpoch(((qint64)info["time"].toInt()*1000)));
+	foreach(QVariant v, info["data"].toList()) {
+		QVariantMap info = v.toMap();
+		if (info["type"] == 1) {
+			setTemperature(info["value"].toString());
+		} else if (info["type"] == 2) {
+			setHumidity(info["value"].toString());
+		} else if (info["type"] == 4) {
+			setRainRate(info["value"].toString());
+		} else if (info["type"] == 8) {
+			setRainTotal(info["value"].toString());
+		} else if (info["type"] == 32) {
+			setWindAvg(info["value"].toString());
+		} else if (info["type"] == 64) {
+			setWindGust(info["value"].toString());
+		} else if (info["type"] == 16) {
+			setWindDir(info["value"].toString());
+		} else if (info["type"] == 128) {
+			setUv(info["value"].toString());
+		} else if (info["type"] == 256 && info["scale"] == 2) {
+			setWatt(info["value"].toString());
+		} else if (info["type"] == 512) {
+			setLuminance(info["value"].toString());
+		}
+	}
 	d->lastPolled = QDateTime::currentDateTime();
-}
-
-QString Sensor::uv() const {
-	return d->uv;
-}
-
-void Sensor::setUV(const QString &uv) {
-	d->uv = uv;
-	d->hasUV = true;
-	emit uvChanged(uv);
-	emit hasUVChanged();
-}
-
-bool Sensor::hasUV() const {
-	return d->hasUV;
-}
-
-QString Sensor::watt() const {
-	return d->watt;
-}
-
-void Sensor::setWatt(const QString &power) {
-	d->watt = power;
-	d->hasWatt = true;
-	emit wattChanged(power);
-	emit hasWattChanged();
-}
-
-bool Sensor::hasWatt() const {
-	return d->hasWatt;
 }
 
 QString Sensor::windAvg() const {
@@ -249,4 +242,52 @@ void Sensor::setWindDir(const QString &windDir) {
 
 bool Sensor::hasWindDir() const {
 	return d->hasWindDir;
+}
+
+// UV
+QString Sensor::uv() const {
+	return d->uv;
+}
+
+void Sensor::setUv(const QString &uv) {
+	d->uv = uv;
+	d->hasUv = true;
+	emit uvChanged(uv);
+	emit hasUvChanged();
+}
+
+bool Sensor::hasUv() const {
+	return d->hasUv;
+}
+
+// Watt
+QString Sensor::watt() const {
+	return d->watt;
+}
+
+void Sensor::setWatt(const QString &watt) {
+	d->watt = watt;
+	d->hasWatt = true;
+	emit wattChanged(watt);
+	emit hasWattChanged();
+}
+
+bool Sensor::hasWatt() const {
+	return d->hasWatt;
+}
+
+// UV
+QString Sensor::luminance() const {
+	return d->luminance;
+}
+
+void Sensor::setLuminance(const QString &luminance) {
+	d->luminance = luminance;
+	d->hasLuminance = true;
+	emit luminanceChanged(luminance);
+	emit hasLuminanceChanged();
+}
+
+bool Sensor::hasLuminance() const {
+	return d->hasLuminance;
 }
