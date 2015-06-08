@@ -93,7 +93,6 @@ INCLUDE_DIRECTORIES( qmlapplicationviewer )
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/parsed )
 
 INCLUDE( 3rdparty/kqoauth.cmake NO_POLICY_SCOPE )
-INCLUDE( 3rdparty/qjson.cmake NO_POLICY_SCOPE )
 
 IF (NOT TARGET_PLATFORM)
 	MESSAGE(FATAL_ERROR "Please set the target platform with -DTARGET_PLATFORM='platform'")

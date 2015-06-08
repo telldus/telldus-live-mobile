@@ -4,9 +4,10 @@
 #include "device.h"
 #include "sensormodel.h"
 #include "sensor.h"
-#include <parser.h>
 #include <QTimer>
 #include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 class Client::PrivateData {
 public:
@@ -121,10 +122,11 @@ void Client::wsConnected() {
 }
 
 void Client::wsDataReceived(const QString &string) {
-	bool ok;
-	QJson::Parser parser;
-	QVariantMap msg = parser.parse(string.toLatin1(), &ok).toMap();
-	if (!ok) {
+	QJsonParseError ok;
+	QJsonDocument jsonDocument = QJsonDocument().fromJson(string.toLatin1(), &ok);
+    QJsonObject jsonObject = jsonDocument.object();
+    QVariantMap msg = jsonObject.toVariantMap();
+    if (ok.error != QJsonParseError::NoError) {
 		qWarning() << "Could not parse json response";
 		qWarning() << string;
 		return;
