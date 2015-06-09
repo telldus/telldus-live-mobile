@@ -311,9 +311,6 @@ bool TelldusLive::working() const {
 	return d->requestPending;
 }
 
-void TelldusLive::logScreenView(const QString &screenName) {
-	qDebug() << "Screen View Logged: " << screenName;
-}
 
 void TelldusLive::logout() {
 	QSettings s;

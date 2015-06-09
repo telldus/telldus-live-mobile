@@ -48,9 +48,7 @@ QSize CommonView::windowSize() const {
 
 void CommonView::openUrl(const QUrl &url) {
 	// Get the UIView that backs our QQuickWindow:
-	UIView *view = static_cast<UIView *>(
-																			 QGuiApplication::platformNativeInterface()
-																			 ->nativeResourceForWindow("uiview", this->view()));
-	UIViewController *qtController = [[view window] rootViewController];
+//	UIView *view = static_cast<UIView *>(QGuiApplication::platformNativeInterface()->nativeResourceForWindow("uiview", this->view()));
+//	UIViewController *qtController = [[view window] rootViewController];
 
 }

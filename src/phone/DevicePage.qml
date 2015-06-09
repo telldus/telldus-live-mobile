@@ -142,15 +142,19 @@ Item {
 				HeaderMenuItem {
 					id: fav
 					title: "Favorites"
-					onActivated: favoriteModel.doFilter = true
+					onActivated: setFavoriteFilter(true)
 				},
 				HeaderMenuItem {
 					id: allDev
 					title: "All devices"
-					onActivated: favoriteModel.doFilter = false
+					onActivated: setFavoriteFilter(false)
 				}
 			]
 		}
+	}
+
+	function setFavoriteFilter(doFilter) {
+		favoriteModel.doFilter = doFilter
 	}
 
 	Component {

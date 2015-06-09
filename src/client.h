@@ -54,6 +54,7 @@ private slots:
 	void wsConnected();
 	void wsDataReceived(const QString &string);
 	void wsDisconnected();
+	void applicationStateChanged(Qt::ApplicationState state);
 
 private:
 	class PrivateData;

@@ -18,7 +18,6 @@ extern "C" int qtmn(int argc, char *argv[])
 int main(int argc, char *argv[])
 #endif
 {
-
 	QScopedPointer<QApplication> app(new QApplication(argc, argv));
 
 	QCoreApplication::setOrganizationName("telldus");

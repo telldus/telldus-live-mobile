@@ -138,6 +138,9 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 	} else if (s.width() < 600) {
 		scaleFactor = 0.75;
 	}
+#ifdef PLATFORM_IOS
+	scaleFactor = 0.5;
+#endif
 	d->view.rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 	return QObject::eventFilter(obj, event);
 }

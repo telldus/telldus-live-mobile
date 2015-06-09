@@ -26,7 +26,7 @@ Item {
 					anchors.leftMargin: 15
 					anchors.top: parent.top
 					anchors.topMargin: 15
-					width: 90
+					width: 140*SCALEFACTOR
 					Text {
 						color: sensor.name !== '' ? '#00659F' : '#8cabc5'
 						width: parent.width

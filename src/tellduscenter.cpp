@@ -1,5 +1,4 @@
 #include "tellduscenter.h"
-#include <QtQuick>
 #include "tellduslive.h"
 #include "devicemodel.h"
 #include "filtereddevicemodel.h"
@@ -14,6 +13,8 @@
 #include "user.h"
 #include "commonview.h"
 
+#include <QtQuick>
+
 class TelldusCenter::PrivateData {
 public:
 	AbstractView *view;
@@ -23,8 +24,7 @@ public:
 	User *user;
 };
 
-TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :
-	QObject(parent)
+TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(parent)
 {
 	d = new PrivateData;
 	d->view = view;
