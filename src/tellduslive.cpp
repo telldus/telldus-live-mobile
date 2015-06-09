@@ -238,7 +238,7 @@ void TelldusLive::onSessionAuthenticated(const QVariantMap &data) {
 	d->ttl = QDateTime::fromMSecsSinceEpoch((qint64)data["ttl"].toInt()*1000);
 	qint64 msecs = QDateTime::currentDateTime().msecsTo(d->ttl);
 	msecs -= 15*60*1000;  // 15 minutes to be sure
-	QTimer::singleShot(msecs, this, SLOT(authenticateSession()));  // Renew the session
+    QTimer::singleShot((int)msecs, this, SLOT(authenticateSession()));  // Renew the session
 	emit sessionAuthenticated();
 }
 

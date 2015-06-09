@@ -24,7 +24,7 @@ protected slots:
 protected:
 	bool filterAcceptsRow ( int sourceRow, const QModelIndex & ) const;
 	virtual bool filterAcceptsDevice( Device * ) const;
-	virtual void deviceAdded(Device *) const;
+	void deviceAdded(Device *) const;
 	bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 };
 
