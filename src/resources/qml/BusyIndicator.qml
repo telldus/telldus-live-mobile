@@ -8,7 +8,7 @@ Item {
 	Image {
 		id: spinner
 		property int index: 1
-		source: "throbber/throbber_" + index + ".svg"
+		source: "../images/throbber/throbber_" + index + ".svg"
 		smooth: true
 		width: root.width
 		height: root.height

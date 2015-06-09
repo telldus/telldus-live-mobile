@@ -18,7 +18,7 @@ Item {
 		onBackClicked: showDevice.backClicked()
 	}
 	BorderImage {
-		source: "rowBg.png"
+		source: "../images/rowBg.png"
 		anchors.top: deviceH.bottom
 		anchors.right: parent.right
 		anchors.left: parent.left
@@ -54,13 +54,13 @@ Item {
 				BorderImage {
 					id: dimArea
 					anchors.verticalCenter: parent.verticalCenter
-					source: "dimSliderBg.png"
+					source: "../images/dimSliderBg.png"
 					height: 12
 					width: parent.width
 					border { left: 6; top: 6; right: 6; bottom: 5 }
 					Image {
 						id: dimHandle
-						source: "dimSliderButton.png"
+						source: "../images/dimSliderButton.png"
 						anchors.verticalCenter: parent.verticalCenter
 						x: (selected.stateValue / 255) * dimArea.width - (dimHandle.width/2)
 						Connections {
@@ -106,7 +106,7 @@ Item {
 				height: childrenRect.height
 				Image {
 					id: iconFavorite
-					source: showDevice.selected.isFavorite ? "iconFavouriteActive.png" : "iconFavourite.png"
+					source: showDevice.selected.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
 					height: sourceSize.height*SCALEFACTOR;
 					width: sourceSize.width*SCALEFACTOR;
 					smooth: true

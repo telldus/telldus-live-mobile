@@ -12,7 +12,7 @@ Item {
 	height: 103 * SCALEFACTOR
 
 	Image {
-		source: "headerBg.png"
+		source: "../images/headerBg.png"
 		fillMode: Image.TileHorizontally
 		width: parent.width/SCALEFACTOR
 		scale: SCALEFACTOR
@@ -22,7 +22,7 @@ Item {
 		Image {
 			visible: title == '' && backVisible == false
 			anchors.verticalCenter: parent.verticalCenter
-			source: "headerLogo.png"
+			source: "../images/headerLogo.png"
 			smooth: true
 		}
 	}
@@ -35,7 +35,7 @@ Item {
 		anchors.leftMargin: 30 * SCALEFACTOR
 		anchors.verticalCenter: parent.verticalCenter
 		BorderImage {
-			source: backMouseArea.pressed ? "headerButtonBackActive.png" : "headerButtonBack.png"
+			source: backMouseArea.pressed ? "../images/headerButtonBackActive.png" : "../images/headerButtonBack.png"
 			border {left: 23; right: 8; top: 24; bottom: 25}
 			width: parent.width/SCALEFACTOR
 			scale: SCALEFACTOR
@@ -80,7 +80,7 @@ Item {
 	}
 
 	Image {
-		source: "headerShade.png"
+		source: "../images/headerShade.png"
 		anchors.top: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right

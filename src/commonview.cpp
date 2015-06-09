@@ -104,7 +104,7 @@ void CommonView::loadAndShow() {
 	d->view.rootContext()->setContextProperty("HEIGHT", size.height());
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
 	d->view.engine()->addImportPath(":/qmllib/common");
-	d->view.setSource(QUrl("qrc:/phone/main.qml"));
+	d->view.setSource(QUrl("qrc:/resources/qml/main.qml"));
 #endif
 
 #ifdef PLATFORM_BB10

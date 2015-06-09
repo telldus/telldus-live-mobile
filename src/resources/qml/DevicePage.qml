@@ -28,7 +28,7 @@ Item {
 				PropertyAction { target: wrapper; property: "z"; value: 0 }
 			}
 			BorderImage {
-				source: mouseArea.pressed ? "rowBgActive.png" : "rowBg.png"
+				source: mouseArea.pressed ? "../images/rowBgActive.png" : "../images/rowBg.png"
 				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.left: parent.left
@@ -88,7 +88,7 @@ Item {
 
 					Image {
 						id: arrow
-						source: "rowArrow.png"
+						source: "../images/rowArrow.png"
 						width: sourceSize.width*SCALEFACTOR
 						fillMode: Image.PreserveAspectFit
 						anchors.right: parent.right
@@ -155,6 +155,7 @@ Item {
 
 	function setFavoriteFilter(doFilter) {
 		favoriteModel.doFilter = doFilter
+		analytics.sendScreenView("/device/" + (doFilter ? "favorites": "all"))
 	}
 
 	Component {

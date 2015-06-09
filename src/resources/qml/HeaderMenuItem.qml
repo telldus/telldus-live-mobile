@@ -10,12 +10,12 @@ Item {
 
 	BorderImage {
 		anchors.fill: parent
-		source: "headerButtonActive.png"
+		source: "../images/headerButtonActive.png"
 		border {left: 20; top: 20; right: 20; bottom: 20 }
 		opacity: active ? 1 : 0
 	}
 	Image {
-		source: "headerMenuButtonDivider.png"
+		source: "../images/headerMenuButtonDivider.png"
 		height: parent.height
 		fillMode: Image.TileVertically
 		anchors.right: parent.left

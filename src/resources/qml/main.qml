@@ -1,8 +1,8 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
-import "DB.js" as DB
-import "Device.js" as Device
-import "Sensor.js" as Sensor
+import "../scripts/DB.js" as DB
+import "../scripts/Device.js" as Device
+import "../scripts/Sensor.js" as Sensor
 
 Rectangle {
 	id: screen

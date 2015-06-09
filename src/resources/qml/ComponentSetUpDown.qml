@@ -11,12 +11,12 @@ Item {
 		BorderImage {
 			anchors.fill: parent
 			border {left: 15; top: 49; right: 0; bottom: 49 }
-			source: "buttonBgClickLeft.png"
+			source: "../images/buttonBgClickLeft.png"
 			opacity: downMouseArea.pressed ? 1 : 0
 		}
 		Image {
 			anchors.centerIn: parent
-			source: device.state == 256 ? "buttonActionDownActive.png" : "buttonActionDown.png"
+			source: device.state == 256 ? "../images/buttonActionDownActive.png" : "../images/buttonActionDown.png"
 		}
 		MouseArea {
 			id: downMouseArea
@@ -33,13 +33,13 @@ Item {
 		anchors.horizontalCenter: parent.horizontalCenter
 		Image {
 			anchors.fill: parent
-			source: "buttonBgClickMiddle.png"
+			source: "../images/buttonBgClickMiddle.png"
 			opacity: stopMouseArea.pressed ? 1 : 0
 			fillMode: Image.TileHorizontally
 		}
 		Image {
 			anchors.centerIn: parent
-			source: device.state == 512 ? "buttonActionStopActive.png" : "buttonActionStop.png"
+			source: device.state == 512 ? "../images/buttonActionStopActive.png" : "../images/buttonActionStop.png"
 		}
 		MouseArea {
 			id: stopMouseArea
@@ -56,12 +56,12 @@ Item {
 		BorderImage {
 			anchors.fill: parent
 			border {left: 0; top: 49; right: 15; bottom: 49 }
-			source: "buttonBgClickRight.png"
+			source: "../images/buttonBgClickRight.png"
 			opacity: upMouseArea.pressed ? 1 : 0
 		}
 		Image {
 			anchors.centerIn: parent
-			source: device.state == 128 ? "buttonActionUpActive.png" : "buttonActionUp.png"
+			source: device.state == 128 ? "../images/buttonActionUpActive.png" : "../images/buttonActionUp.png"
 		}
 		MouseArea {
 			id: upMouseArea
@@ -77,7 +77,7 @@ Item {
 		height: parent.height
 		Image {
 			anchors.verticalCenter: parent.verticalCenter
-			source: "buttonDivider.png"
+			source: "../images/buttonDivider.png"
 			height: 70
 			fillMode: Image.TileVertically
 		}
@@ -90,7 +90,7 @@ Item {
 		width: childrenRect.width
 		Image {
 			anchors.verticalCenter: parent.verticalCenter
-			source: "buttonDivider.png"
+			source: "../images/buttonDivider.png"
 			height: 70
 			fillMode: Image.TileVertically
 		}

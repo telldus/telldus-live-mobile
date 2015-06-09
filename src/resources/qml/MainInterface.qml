@@ -4,7 +4,7 @@ import Telldus 1.0
 Item {
 	id: mainInterface
 
-	property variant screenNames: ['devices', 'sensors', 'settings']
+	property variant screenNames: ['/devices', '/sensors', '/settings']
 
 	Item {
 		anchors.top: parent.top
@@ -31,7 +31,7 @@ Item {
 
 	function setActivePage(pageId) {
 		footer.activePage = pageId
-		telldusLive.logScreenView(screenNames[pageId])
+		analytics.sendScreenView(screenNames[pageId])
 	}
 	function swipeLeft() {
 		setActivePage(Math.min(2, footer.activePage+1))

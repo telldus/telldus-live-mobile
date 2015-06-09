@@ -13,7 +13,7 @@ Item {
 		id: deviceH
 	}
 	BorderImage {
-		source: "rowBg.png"
+		source: "../images/rowBg.png"
 		anchors.top: deviceH.bottom
 		anchors.right: parent.right
 		anchors.left: parent.left

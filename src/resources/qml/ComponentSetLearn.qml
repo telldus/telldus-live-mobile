@@ -9,7 +9,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.horizontalCenter
 		border {left: 15; top: 49; right: 0; bottom: 49 }
-		source: "buttonBgClickLeft.png"
+		source: "../images/buttonBgClickLeft.png"
 		opacity: buttonArea.pressed ? 1 : 0
 	}
 	BorderImage {
@@ -18,7 +18,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		border {left: 0; top: 49; right: 15; bottom: 49 }
-		source: "buttonBgClickRight.png"
+		source: "../images/buttonBgClickRight.png"
 		opacity: buttonArea.pressed ? 1 : 0
 	}
 

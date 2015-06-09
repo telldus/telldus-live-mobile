@@ -8,7 +8,7 @@ Item {
 	height: Math.max(sensorIcon.height, valueText.height)
 	Image {
 		id: sensorIcon
-		source: icon + ".png"
+		source: "../images/" + icon + ".png"
 		height: sourceSize.height*SCALEFACTOR
 		width: sourceSize.width*SCALEFACTOR
 	}

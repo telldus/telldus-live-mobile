@@ -36,13 +36,13 @@ Item {
 		Behavior on opacity { NumberAnimation { duration: 200 } }
 		BorderImage {
 			border { left: 22; top: 20; right: 22; bottom: 24 }
-			source: "dimBg.png"
+			source: "../images/dimBg.png"
 			anchors.fill: parent
 			anchors.leftMargin: -dimHandle.width/2
 			anchors.rightMargin: -dimHandle.width/2
 		}
 		BorderImage {
-			source: "dimSliderBg.png"
+			source: "../images/dimSliderBg.png"
 			height: 12
 			border { left: 6; top: 6; right: 6; bottom: 5 }
 			anchors.verticalCenter: parent.verticalCenter
@@ -53,7 +53,7 @@ Item {
 		}
 		Image {
 			id: dimHandle
-			source: "dimSliderButton.png"
+			source: "../images/dimSliderButton.png"
 			anchors.verticalCenter: parent.verticalCenter
 			x: (device.stateValue / 255) * (dimArea.width-dimHandle.width)
 			Connections {
@@ -73,12 +73,12 @@ Item {
 			anchors.fill: parent
 			anchors.rightMargin: -15
 			border {left: 15; top: 49; right: 0; bottom: 49 }
-			source: "buttonBgClickLeft.png"
+			source: "../images/buttonBgClickLeft.png"
 			opacity: offMouseArea.pressed || buttonsMouseArea.pressed ? 1 : 0
 		}
 		Image {
 			anchors.centerIn: parent
-			source: device.state == 2 ? "buttonActionOffActive.png" : "buttonActionOff.png"
+			source: device.state == 2 ? "../images/buttonActionOffActive.png" : "../images/buttonActionOff.png"
 			smooth: true
 		}
 		MouseArea {
@@ -111,7 +111,7 @@ Item {
 		z:1
 		Image {
 			anchors.centerIn: parent
-			source: methods & 16 ? "buttonDividerDim.png" : "buttonDivider.png"
+			source: methods & 16 ? "../images/buttonDividerDim.png" : "../images/buttonDivider.png"
 			height: 70
 			fillMode: Image.TileVertically
 			Text {
@@ -138,12 +138,12 @@ Item {
 			anchors.fill: parent
 			anchors.leftMargin: -15
 			border {left: 0; top: 49; right: 15; bottom: 49 }
-			source: "buttonBgClickRight.png"
+			source: "../images/buttonBgClickRight.png"
 			opacity: onMouseArea.pressed || buttonsMouseArea.pressed ? 1 : 0
 		}
 		Image {
 			anchors.centerIn: parent
-			source: device.state == 1 || device.state == 16 ? "buttonActionOnActive.png" : "buttonActionOn.png"
+			source: device.state == 1 || device.state == 16 ? "../images/buttonActionOnActive.png" : "../images/buttonActionOn.png"
 			smooth: true
 		}
 		MouseArea {

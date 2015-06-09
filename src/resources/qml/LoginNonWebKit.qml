@@ -16,7 +16,7 @@ Rectangle {
 		height: sourceSize.height*SCALEFACTOR
 		fillMode: Image.PreserveAspectFit
 		smooth: true
-		source: "startLogo.png"
+		source: "../images/startLogo.png"
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
 		anchors.topMargin: 70*SCALEFACTOR
@@ -31,7 +31,7 @@ Rectangle {
 		anchors.rightMargin: 50*SCALEFACTOR
 		Image {
 			id: topDivider
-			source: "startDivider.png"
+			source: "../images/startDivider.png"
 			fillMode: Image.TileHorizontally
 			anchors.top: parent.top
 			anchors.topMargin: 70*SCALEFACTOR
@@ -56,7 +56,7 @@ Rectangle {
 
 		Image {
 			id: bottomDivider
-			source: "startDivider.png"
+			source: "../images/startDivider.png"
 			fillMode: Image.TileHorizontally
 			anchors.left: parent.left
 			anchors.right: parent.right
@@ -67,7 +67,7 @@ Rectangle {
 
 	Image {
 		id: loginButton
-		source: buttonArea.pressed ? "startButtonLoginActive.png" : "startButtonLogin.png"
+		source: buttonArea.pressed ? "../images/startButtonLoginActive.png" : "../images/startButtonLogin.png"
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 170*SCALEFACTOR

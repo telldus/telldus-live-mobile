@@ -11,7 +11,7 @@ Item {
 	height: 100 * SCALEFACTOR
 
 	BorderImage {
-		source: "buttonBg.png"
+		source: "../images/buttonBg.png"
 		border {left: 15; top: 49; right: 15; bottom: 49 }
 		width: parent.width/SCALEFACTOR
 		height: parent.height/SCALEFACTOR

@@ -6,7 +6,7 @@ Item {
 	height: 125*SCALEFACTOR
 	Image {
 		id: footerBg
-		source: "footerBg.png"
+		source: "../images/footerBg.png"
 		height: 140*SCALEFACTOR
 		fillMode: Image.TileHorizontally
 		anchors.bottom: parent.bottom
@@ -26,7 +26,7 @@ Item {
 			BorderImage {
 				id: deviceButtonBackground
 				anchors.fill: parent
-				source: "footerButtonActive.png"
+				source: "../images/footerButtonActive.png"
 				border {left: 20; top: 20; right: 20; bottom: 20 }
 				opacity: 0
 			}
@@ -36,7 +36,7 @@ Item {
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				anchors.centerIn: parent
-				source: "footerIconDevices.png"
+				source: "../images/footerIconDevices.png"
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -44,7 +44,7 @@ Item {
 			}
 		}
 		Image {
-			source: "menuButtonDivider.png"
+			source: "../images/menuButtonDivider.png"
 			height: parent.height
 			fillMode: Image.TileVertically
 		}
@@ -54,7 +54,7 @@ Item {
 			BorderImage {
 				id: sensorButtonBackground
 				anchors.fill: parent
-				source: "footerButtonActive.png"
+				source: "../images/footerButtonActive.png"
 				border {left: 20; top: 20; right: 20; bottom: 20 }
 				opacity: 0
 			}
@@ -64,7 +64,7 @@ Item {
 				height: sourceSize.height*SCALEFACTOR
 				smooth: true
 				fillMode: Image.PreserveAspectFit
-				source: "footerIconSensors.png"
+				source: "../images/footerIconSensors.png"
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -72,7 +72,7 @@ Item {
 			}
 		}
 		Image {
-			source: "menuButtonDivider.png"
+			source: "../images/menuButtonDivider.png"
 			height: parent.height
 			fillMode: Image.TileVertically
 		}
@@ -82,7 +82,7 @@ Item {
 			BorderImage {
 				id: settingsButtonBackground
 				anchors.fill: parent
-				source: "footerButtonActive.png"
+				source: "../images/footerButtonActive.png"
 				border {left: 20; top: 20; right: 20; bottom: 20 }
 				opacity: 0
 			}
@@ -92,7 +92,7 @@ Item {
 				height: sourceSize.height*SCALEFACTOR
 				smooth: true
 				fillMode: Image.PreserveAspectFit
-				source: "footerIconSettings.png"
+				source: "../images/footerIconSettings.png"
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -105,17 +105,17 @@ Item {
 		State {
 			when: activePage == 0
 			PropertyChanges { target: deviceButtonBackground; opacity: 1 }
-			PropertyChanges { target: deviceButton; source: "footerIconDevicesActive.png" }
+			PropertyChanges { target: deviceButton; source: "../images/footerIconDevicesActive.png" }
 		},
 		State {
 			when: activePage == 1
 			PropertyChanges { target: sensorButtonBackground; opacity: 1 }
-			PropertyChanges { target: sensorButton; source: "footerIconSensorsActive.png" }
+			PropertyChanges { target: sensorButton; source: "../images/footerIconSensorsActive.png" }
 		},
 		State {
 			when: activePage == 2
 			PropertyChanges { target: settingsButtonBackground; opacity: 1 }
-			PropertyChanges { target: settingsButton; source: "footerIconSettingsActive.png" }
+			PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
 		}
 	]
 

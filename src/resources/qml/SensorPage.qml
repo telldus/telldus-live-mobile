@@ -12,7 +12,7 @@ Item {
 			z: model.index
 			height: childrenRect.height
 			BorderImage {
-				source: "rowBg.png"
+				source: "../images/rowBg.png"
 				anchors.right: parent.right
 				anchors.left: parent.left
 				anchors.leftMargin: 10*SCALEFACTOR

@@ -12,7 +12,7 @@ Item {
 		height: 67
 		width: parent.width/SCALEFACTOR
 		anchors.top: parent.top
-		source: "headerMenuBg.png"
+		source: "../images/headerMenuBg.png"
 		fillMode: Image.TileHorizontally
 		scale: SCALEFACTOR
 		transformOrigin: Item.TopLeft
