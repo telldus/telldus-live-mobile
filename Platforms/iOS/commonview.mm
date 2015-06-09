@@ -1,8 +1,10 @@
-#include "commonview.h"
 #include <QtGui>
 #include <QtGui/qpa/qplatformnativeinterface.h>
 #include <QtQuick>
 #include <QDebug>
+
+#include "commonview.h"
+
 #import "UIKit/UIKit.h"
 #import "UIKit/UIScreen.h"
 

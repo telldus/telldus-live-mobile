@@ -1,12 +1,12 @@
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/BB10/bar-descriptor.xml ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/BB10/bar-descriptor.xml ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
 
 SET(BB10_FILES ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
 SET(FILES
-	../../icons/icon-114.png
+	../../src/icons/icon-114.png
 )
 
 SET_SOURCE_FILES_PROPERTIES(
-	../../icons/icon-114.png
+	../../src/icons/icon-114.png
 	PROPERTIES TARGET_PATH "."
 )
 
@@ -23,8 +23,8 @@ FOREACH(file ${FILES})
 	GET_FILENAME_COMPONENT(filename ${file} NAME)
 	GET_SOURCE_FILE_PROPERTY(path ${file} TARGET_PATH)
 	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_BINARY_DIR}/${path}/${filename}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Platforms/BB10/${file} ${CMAKE_BINARY_DIR}/${path}/${filename}
-		MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/Platforms/BB10/${file}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/platforms/BB10/${file} ${CMAKE_BINARY_DIR}/${path}/${filename}
+		MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/platforms/BB10/${file}
 		COMMENT "Copying ${file}"
 	)
 	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/${path}/${filename})

@@ -12,14 +12,14 @@ SET(Qt5WebView_DIR ${Qt5_Dir}/lib/cmake/Qt5WebView)
 SET(Keystore "" CACHE PATH "Path to Android keystore file")
 
 MATH(EXPR INTERNAL_VERSION "${PACKAGE_MAJOR_VERSION}*10000+${PACKAGE_MINOR_VERSION}*100+${PACKAGE_PATCH_VERSION}")
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/Android/AndroidManifest.xml ${CMAKE_BINARY_DIR}/template/AndroidManifest.xml)
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/Android/deployment-settings.json ${CMAKE_BINARY_DIR}/deployment-settings.json)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/AndroidManifest.xml ${CMAKE_BINARY_DIR}/template/AndroidManifest.xml)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/deployment-settings.json ${CMAKE_BINARY_DIR}/deployment-settings.json)
 
 SET(ANDROID_FILES
-	../../icons/icon-36.png
-	../../icons/icon-48.png
-	../../icons/icon-72.png
-	../../icons/icon-96.png
+	../../src/icons/icon-36.png
+	../../src/icons/icon-48.png
+	../../src/icons/icon-72.png
+	../../src/icons/icon-96.png
 	logo.png
 	splash.xml
 )
@@ -29,26 +29,26 @@ SET_SOURCE_FILES_PROPERTIES(
 	PROPERTIES TARGET_PATH res/drawable
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../icons/icon-36.png
+	../../src/icons/icon-36.png
 	PROPERTIES TARGET_PATH res/drawable-ldpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../icons/icon-48.png
+	../../src/icons/icon-48.png
 	PROPERTIES TARGET_PATH res/drawable-mdpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../icons/icon-72.png
+	../../src/icons/icon-72.png
 	PROPERTIES TARGET_PATH res/drawable-hdpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../icons/icon-96.png
+	../../src/icons/icon-96.png
 	PROPERTIES TARGET_PATH res/drawable-xhdpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../icons/icon-36.png
-	../../icons/icon-48.png
-	../../icons/icon-72.png
-	../../icons/icon-96.png
+	../../src/icons/icon-36.png
+	../../src/icons/icon-48.png
+	../../src/icons/icon-72.png
+	../../src/icons/icon-96.png
 	PROPERTIES TARGET_NAME icon.png
 )
 SET_SOURCE_FILES_PROPERTIES(
@@ -66,8 +66,8 @@ FOREACH(file ${ANDROID_FILES})
 		SET(name ${filename})
 	ENDIF()
 	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_BINARY_DIR}/apk/${path}/${name}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Platforms/Android/${file} ${CMAKE_BINARY_DIR}/apk/${path}/${name}
-		MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/Platforms/Android/${file}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/platforms/Android/${file} ${CMAKE_BINARY_DIR}/apk/${path}/${name}
+		MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/platforms/Android/${file}
 		COMMENT "Copying ${file}"
 	)
 	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/${path}/${name})

@@ -34,7 +34,7 @@ ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/parsed/qrc_resources.cxx
 	DEPENDS ${CMAKE_SOURCE_DIR}/src/resources.qrc
 )
 
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/Platforms/iOS/Info.plist ${CMAKE_BINARY_DIR}/Info.plist)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/iOS/Info.plist ${CMAKE_BINARY_DIR}/Info.plist)
 
 SET(CMAKE_OSX_SYSROOT "iphoneos" CACHE STRING "Path to SDK")
 SET(CMAKE_OSX_ARCHITECTURES i386 armv7 arm64)
@@ -47,7 +47,6 @@ SET(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer" CACHE STRING "Th
 SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
 SET(OPENSSL_DIR "/path/to/openssl/lib/and/include" CACHE STRING "Path to the openssl for iPhone dir")
 
-#INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtOpenGL )
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} )
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/models )
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/utils )
@@ -66,8 +65,9 @@ INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
 SET(QT_USE_QTOPENGL FALSE)
 
 LIST(APPEND SOURCES
-	Platforms/iOS/tellduscenter.mm
-	Platforms/iOS/commonview.mm
+	platforms/iOS/analytics.mm
+	platforms/iOS/tellduscenter.mm
+	platforms/iOS/commonview.mm
 	${CMAKE_CURRENT_BINARY_DIR}/parsed/qrc_resources.cxx
 )
 
@@ -112,16 +112,16 @@ LIST(APPEND LIBRARIES
 )
 
 LIST(APPEND RESOURCES
-	icons/icon-flat-57${SUFFIX}.png
-	icons/icon-flat-72${SUFFIX}.png
-	icons/icon-flat-76${SUFFIX}.png
-	icons/icon-flat-114${SUFFIX}.png
-	icons/icon-flat-120${SUFFIX}.png
-	icons/icon-flat-144${SUFFIX}.png
-	icons/icon-flat-152${SUFFIX}.png
-	Platforms/iOS/LaunchImage.png
-	Platforms/iOS/LaunchImage@2x.png
-	Platforms/iOS/LaunchImage-568h@2x.png
+	src/icons/icon-flat-57${SUFFIX}.png
+	src/icons/icon-flat-72${SUFFIX}.png
+	src/icons/icon-flat-76${SUFFIX}.png
+	src/icons/icon-flat-114${SUFFIX}.png
+	src/icons/icon-flat-120${SUFFIX}.png
+	src/icons/icon-flat-144${SUFFIX}.png
+	src/icons/icon-flat-152${SUFFIX}.png
+	platforms/iOS/LaunchImage.png
+	platforms/iOS/LaunchImage@2x.png
+	platforms/iOS/LaunchImage-568h@2x.png
 )
 
 SET_SOURCE_FILES_PROPERTIES(${RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
