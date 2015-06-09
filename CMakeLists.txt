@@ -16,25 +16,25 @@ SET(PRODUCT_NAME TelldusCenter-light )
 
 SET( SOURCES
 	src/abstractview.cpp
-	src/commonview.cpp
-	src/main.cpp
-	src/tellduslive.cpp
-	src/tlistmodel.cpp
-	src/device.cpp
-	src/sensor.cpp
-	src/schedulerjob.cpp
-	src/tellduscenter.cpp
-	src/devicemodel.cpp
-	src/sensormodel.cpp
-	src/favoritemodel.cpp
-	src/filtereddevicemodel.cpp
-	src/schedulermodel.cpp
-	src/abstractfiltereddevicemodel.cpp
-	src/groupdevicemodel.cpp
 	src/client.cpp
-	src/clientmodel.cpp
+	src/commonview.cpp
+	src/device.cpp
+	src/main.cpp
+	src/schedulerjob.cpp
+	src/sensor.cpp
 	src/swipearea.cpp
+	src/tellduscenter.cpp
+	src/tellduslive.cpp
 	src/user.cpp
+	src/models/abstractfiltereddevicemodel.cpp
+	src/models/clientmodel.cpp
+	src/models/devicemodel.cpp
+	src/models/favoritemodel.cpp
+	src/models/filtereddevicemodel.cpp
+	src/models/groupdevicemodel.cpp
+	src/models/schedulermodel.cpp
+	src/models/sensormodel.cpp
+	src/models/tlistmodel.cpp
 )
 
 SET( HEADERS
@@ -43,24 +43,24 @@ SET( HEADERS
 )
 SET( MOC_HEADERS
 	src/abstractview.h
-	src/commonview.h
-	src/tellduslive.h
-	src/tlistmodel.h
-	src/device.h
-	src/sensor.h
-	src/schedulerjob.h
-	src/tellduscenter.h
-	src/devicemodel.h
-	src/sensormodel.h
-	src/favoritemodel.h
-	src/filtereddevicemodel.h
-	src/schedulermodel.h
-	src/abstractfiltereddevicemodel.h
-	src/groupdevicemodel.h
 	src/client.h
-	src/clientmodel.h
+	src/commonview.h
+	src/device.h
+	src/schedulerjob.h
+	src/sensor.h
 	src/swipearea.h
+	src/tellduscenter.h
+	src/tellduslive.h
 	src/user.h
+	src/models/abstractfiltereddevicemodel.h
+	src/models/clientmodel.h
+	src/models/devicemodel.h
+	src/models/favoritemodel.h
+	src/models/filtereddevicemodel.h
+	src/models/groupdevicemodel.h
+	src/models/schedulermodel.h
+	src/models/sensormodel.h
+	src/models/tlistmodel.h
 )
 
 SET(RESOURCES

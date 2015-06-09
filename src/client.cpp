@@ -1,9 +1,9 @@
 #include "client.h"
-#include "tellduslive.h"
-#include "devicemodel.h"
 #include "device.h"
-#include "sensormodel.h"
 #include "sensor.h"
+#include "tellduslive.h"
+#include "models/devicemodel.h"
+#include "models/sensormodel.h"
 
 #include <QApplication>
 #include <QTimer>

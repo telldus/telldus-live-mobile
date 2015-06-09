@@ -1,19 +1,19 @@
-#include "tellduscenter.h"
-#include "tellduslive.h"
-#include "devicemodel.h"
-#include "filtereddevicemodel.h"
-#include "groupdevicemodel.h"
-#include "sensormodel.h"
-#include "favoritemodel.h"
-#include "clientmodel.h"
+#include <QtQuick>
+
 #include "client.h"
+#include "commonview.h"
 #include "device.h"
 #include "sensor.h"
 #include "swipearea.h"
+#include "tellduscenter.h"
+#include "tellduslive.h"
 #include "user.h"
-#include "commonview.h"
-
-#include <QtQuick>
+#include "models/clientmodel.h"
+#include "models/devicemodel.h"
+#include "models/favoritemodel.h"
+#include "models/filtereddevicemodel.h"
+#include "models/groupdevicemodel.h"
+#include "models/sensormodel.h"
 
 class TelldusCenter::PrivateData {
 public:

@@ -1,9 +1,10 @@
 #include "device.h"
-#include "devicemodel.h"
-#include "groupdevicemodel.h"
-#include "schedulermodel.h"
 #include "schedulerjob.h"
 #include "tellduslive.h"
+#include "models/devicemodel.h"
+#include "models/groupdevicemodel.h"
+#include "models/schedulermodel.h"
+
 #include <QStringList>
 
 class Device::PrivateData {

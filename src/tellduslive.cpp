@@ -1,6 +1,3 @@
-#include "tellduslive.h"
-#include "config.h"
-
 #include <QtKOAuth>
 #include <QSettings>
 #include <QJSEngine>
@@ -16,6 +13,8 @@
 #include <QTimer>
 #include <QDateTime>
 
+#include "config.h"
+#include "tellduslive.h"
 #ifdef PLATFORM_BB10
 #include <bb/system/InvokeRequest>
 #endif
