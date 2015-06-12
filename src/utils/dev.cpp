@@ -1,4 +1,4 @@
-#include "Dev.h"
+#include "dev.h"
 #include "config.h"
 
 #include <QDebug>
@@ -43,6 +43,10 @@ void Dev::deinit() {
 }
 
 void Dev::logScreenView(const QString &screenName) {
+#if IS_FEATURE_LOGGING_ENABLED
+	qDebug() << "logScreenView: " + screenName;
+#endif
+#if IS_FEATURE_GOOGLEANALYTICS_ENABLED
 	QNetworkRequest req(QUrl("http://www.google-analytics.com/collect"));
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
@@ -58,7 +62,7 @@ void Dev::logScreenView(const QString &screenName) {
 	query.addQueryItem("cd", screenName);
 
 	query.addQueryItem("an", "TelldusLiveMobile"); // App Name
-	query.addQueryItem("av", "1.0.5"); // App Version TODO
+	query.addQueryItem("av", VERSION); // App Version
 	query.addQueryItem("sr", "750x1334"); // Screen Resolution TODO
 	query.addQueryItem("ul", "en"); // Language TODO
 	QDateTime local(QDateTime::currentDateTime());
@@ -68,9 +72,14 @@ void Dev::logScreenView(const QString &screenName) {
 	data.append(query.query());
 	qDebug() << data;
 	nam->post(req, data);
+#endif
 }
 
 void Dev::logEvent(const QString &category, const QString &action, const QString &label) {
+#if IS_FEATURE_LOGGING_ENABLED
+	qDebug() << "logEvent: " + category + ", " + action + ", " + label;
+#endif
+#if IS_FEATURE_GOOGLEANALYTICS_ENABLED
 	QNetworkRequest req(QUrl("http://www.google-analytics.com/collect"));
 	req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
@@ -88,7 +97,7 @@ void Dev::logEvent(const QString &category, const QString &action, const QString
 	query.addQueryItem("el", label);
 
 	query.addQueryItem("an", "TelldusLiveMobile"); // App Name
-	query.addQueryItem("av", "1.0.5"); // App Version TODO
+	query.addQueryItem("av", VERSION); // App Version
 	query.addQueryItem("sr", "750x1334"); // Screen Resolution TODO
 	query.addQueryItem("ul", "en"); // Language TODO
 	QDateTime local(QDateTime::currentDateTime());
@@ -98,5 +107,6 @@ void Dev::logEvent(const QString &category, const QString &action, const QString
 	data.append(query.query());
 	qDebug() << data;
 	nam->post(req, data);
+#endif
 }
 #endif

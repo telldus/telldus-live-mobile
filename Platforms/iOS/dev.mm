@@ -25,8 +25,5 @@ void Dev::logScreenView(const QString &screenName) {
 
 void Dev::logEvent(const QString &category, const QString &action, const QString &label){
 	id tracker = [[GAI sharedInstance] defaultTracker];
-	[tracker send:[[GAIDictionaryBuilder createEventWithCategory:category.toNSString()
-														action:action.toNSString()
-														label:label.toNSString()
-														value:nil] build]];
+	[tracker send:[[GAIDictionaryBuilder createEventWithCategory:category.toNSString() action:action.toNSString() label:label.toNSString() value:nil] build]];
 }
