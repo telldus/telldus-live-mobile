@@ -129,7 +129,7 @@ Item {
 
 		Header {
 			id: header
-			anchors.topMargin: Math.min(0, -list.contentY-header.height-headerMenu.height-10)
+			anchors.topMargin: Math.min(0, Math.max(-header.height, -list.contentY-header.height-headerMenu.height-10))
 		}
 		HeaderMenu {
 			id: headerMenu

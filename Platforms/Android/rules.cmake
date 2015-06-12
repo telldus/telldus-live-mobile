@@ -1,6 +1,7 @@
 SET(HAVE_WEBKIT 1)
 
 SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
+SET(Qt5Core_DIR ${Qt5_Dir}/lib/cmake/Qt5Core)
 SET(Qt5Network_DIR ${Qt5_Dir}/lib/cmake/Qt5Network)
 SET(Qt5Qml_DIR ${Qt5_Dir}/lib/cmake/Qt5Qml)
 SET(Qt5Quick_DIR ${Qt5_Dir}/lib/cmake/Qt5Quick)
@@ -9,11 +10,20 @@ SET(Qt5WebSockets_DIR ${Qt5_Dir}/lib/cmake/Qt5WebSockets)
 SET(Qt5Widgets_DIR ${Qt5_Dir}/lib/cmake/Qt5Widgets)
 SET(Qt5WebView_DIR ${Qt5_Dir}/lib/cmake/Qt5WebView)
 
+SET(OPENSSL_DIR "/path/to/openssl/lib/and/include" CACHE STRING "Path to the openssl for android dir")
+
 SET(Keystore "" CACHE PATH "Path to Android keystore file")
 
 MATH(EXPR INTERNAL_VERSION "${PACKAGE_MAJOR_VERSION}*10000+${PACKAGE_MINOR_VERSION}*100+${PACKAGE_PATCH_VERSION}")
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/AndroidManifest.xml ${CMAKE_BINARY_DIR}/template/AndroidManifest.xml)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/deployment-settings.json ${CMAKE_BINARY_DIR}/deployment-settings.json)
+
+INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
+
+LIST(APPEND LIBRARIES
+	${OPENSSL_DIR}/lib/libssl.a
+	${OPENSSL_DIR}/lib/libcrypto.a
+)
 
 SET(ANDROID_FILES
 	../../src/icons/icon-36.png

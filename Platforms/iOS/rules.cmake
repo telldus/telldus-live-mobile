@@ -69,7 +69,7 @@ INCLUDE_DIRECTORIES( 3rdparty/googleanalytics )
 SET(QT_USE_QTOPENGL FALSE)
 
 LIST(APPEND SOURCES
-	platforms/iOS/analytics.mm
+	platforms/iOS/dev.mm
 	platforms/iOS/tellduscenter.mm
 	platforms/iOS/commonview.mm
 	${CMAKE_CURRENT_BINARY_DIR}/parsed/qrc_resources.cxx

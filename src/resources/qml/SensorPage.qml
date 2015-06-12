@@ -11,7 +11,20 @@ Item {
 			width: list.width
 			z: model.index
 			height: childrenRect.height
+			Text {
+				id: sensorName
+				font.weight: Font.Bold
+				text: sensor.name !== '' ? sensor.name : '(no name)'
+				visible: false
+			}
+			Text {
+				id: sensorLastUpdated
+				font.pixelSize: 21*SCALEFACTOR
+				text: formatLastUpdated(sensor.minutesAgo)
+				visible: false
+			}
 			BorderImage {
+				id: border
 				source: "../images/rowBg.png"
 				anchors.right: parent.right
 				anchors.left: parent.left
@@ -26,31 +39,33 @@ Item {
 					anchors.leftMargin: 15
 					anchors.top: parent.top
 					anchors.topMargin: 15
-					width: 140*SCALEFACTOR
+					width: Math.min(Math.max(sensorName.width, sensorLastUpdated.width), (list.width/2)-50)
 					Text {
 						color: sensor.name !== '' ? '#00659F' : '#8cabc5'
-						width: parent.width
 						font.weight: Font.Bold
 						text: sensor.name !== '' ? sensor.name : '(no name)'
 						elide: Text.ElideRight
+						width: parent.width
 					}
-					Text {
-						color: "#999999"
-						font.pixelSize: 28*SCALEFACTOR
-						text: ""  // TODO(micke): Add location name
-					}
+					//Text {
+					//	color: "#999999"
+					//	font.pixelSize: 28*SCALEFACTOR
+					//	text: ""  // TODO(micke): Add location name
+					//}
 					Text {
 						color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
 						font.pixelSize: 21*SCALEFACTOR
 						text: formatLastUpdated(sensor.minutesAgo)
+						width: parent.width
 					}
 				}
 				Flow {
 						id: dataRow
+						layoutDirection: Qt.RightToLeft
 						anchors.left: dataTitleRow.right
 						anchors.leftMargin: 10
 						anchors.right: parent.right
-						anchors.rightMargin: 5
+						anchors.rightMargin: 10
 						anchors.top: parent.top
 						anchors.topMargin: 15
 						spacing: 10

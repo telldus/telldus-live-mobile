@@ -35,7 +35,6 @@ signals:
 	void workingChanged();
 
 public slots:
-
 	void authorize();
 	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
