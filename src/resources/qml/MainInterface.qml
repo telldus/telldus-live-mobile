@@ -31,7 +31,7 @@ Item {
 
 	function setActivePage(pageId) {
 		footer.activePage = pageId
-		analytics.sendScreenView(screenNames[pageId])
+		dev.logScreenView(screenNames[pageId])
 	}
 	function swipeLeft() {
 		setActivePage(Math.min(2, footer.activePage+1))

@@ -35,6 +35,7 @@ SET( SOURCES
 	src/models/schedulermodel.cpp
 	src/models/sensormodel.cpp
 	src/models/tlistmodel.cpp
+	src/utils/dev.cpp
 )
 
 SET( HEADERS
@@ -61,6 +62,7 @@ SET( MOC_HEADERS
 	src/models/schedulermodel.h
 	src/models/sensormodel.h
 	src/models/tlistmodel.h
+	src/utils/dev.h
 )
 
 SET(RESOURCES
@@ -77,6 +79,8 @@ SET(TARGET_PLATFORM "" CACHE STRING "Sets the target platform. Valid values are 
 SET(TELLDUS_LIVE_API_ENDPOINT	"https://api.telldus.com"	CACHE STRING "Telldus Live! api endpoint")
 SET(TELLDUS_LIVE_PUBLIC_KEY	""	CACHE STRING "Telldus Live! public key")
 SET(TELLDUS_LIVE_PRIVATE_KEY	""	CACHE STRING "Telldus Live! private key")
+SET(GOOGLE_ANALYTICS_TRACKER	""	CACHE STRING "Google Analytics tracker")
+
 OPTION(RELEASE_BUILD "Is this a release build?" TRUE)
 IF(RELEASE_BUILD)
 	SET(IS_RELEASE_BUILD 1)

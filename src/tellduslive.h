@@ -39,7 +39,6 @@ public slots:
 	void authorize();
 	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
-	void logScreenView(const QString &screenName);
 
 private slots:
 	void onUrlOpened(const QUrl &url);

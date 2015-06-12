@@ -4,6 +4,7 @@
 #include "tellduslive.h"
 #include "models/devicemodel.h"
 #include "models/sensormodel.h"
+#include "utils/dev.h"
 
 #include <QApplication>
 #include <QTimer>
@@ -95,7 +96,7 @@ void Client::setType(const QString &type) {
 
 void Client::sessionAuthenticated() {
 	qDebug() << "Client::sessionAuthenticated";
-    if (QApplication::applicationState() == Qt::ApplicationActive) {
+	if (QApplication::applicationState() == Qt::ApplicationActive) {
 		TelldusLive *telldusLive = TelldusLive::instance();
 		if (telldusLive->session() == "" || d->id == 0) {
 			return;
@@ -122,23 +123,28 @@ void Client::addressReceived(const QVariantMap &data) {
 	d->sessionId = telldusLive->session();
 	QString url = QString("ws://%1:%2/websocket").arg(data["address"].toString(), data["port"].toString());
 	qDebug() << "-- Connecting to " + url;
+	Dev::instance()->logEvent("websocket", "tryConnection", "");
+
 	m_webSocket.open(QUrl(url));
 }
 
 void Client::wsConnected() {
+	Dev::instance()->logEvent("websocket", "connected", "");
 	m_webSocket.sendTextMessage(QString("{\"module\":\"auth\",\"action\":\"auth\",\"data\":{\"sessionid\":\"%1\",\"clientId\":\"%2\"}}").arg(d->sessionId, QString::number(d->id)));
 	m_webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"setState\"}}"));
 	m_webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"value\"}}"));
 }
 
 void Client::wsDataReceived(const QString &string) {
+	// Disabled for performance reasons
+	// Dev::instance()->logEvent("websocket", "datareceived", "");
 	qDebug() << "Websocket data received";
 	QJsonParseError ok;
 
 	QJsonDocument jsonDocument = QJsonDocument().fromJson(string.toLatin1(), &ok);
-    QJsonObject jsonObject = jsonDocument.object();
-    QVariantMap msg = jsonObject.toVariantMap();
-    if (ok.error != QJsonParseError::NoError) {
+	QJsonObject jsonObject = jsonDocument.object();
+	QVariantMap msg = jsonObject.toVariantMap();
+	if (ok.error != QJsonParseError::NoError) {
 		qWarning() << "Could not parse json response";
 		qWarning() << string;
 		return;
@@ -161,6 +167,7 @@ void Client::wsDataReceived(const QString &string) {
 }
 
 void Client::wsDisconnected() {
+	Dev::instance()->logEvent("websocket", "disconnected", "");
 	qDebug() << "Websocket disconnected, retry in 10 seconds";
 	QTimer::singleShot(10000, this, SLOT(sessionAuthenticated()));
 }
@@ -168,13 +175,15 @@ void Client::wsDisconnected() {
 void Client::applicationStateChanged(Qt::ApplicationState state) {
 	qDebug() << "Client::applicationStateChanged(" + QString::number(state) + ")";
 	switch (state) {
-        case Qt::ApplicationActive:
+		case Qt::ApplicationActive:
+		Dev::instance()->logEvent("applicationState", "active", "");
 		qDebug() << "Websocket disconnected, retry now";
 		QTimer::singleShot(100, this, SLOT(sessionAuthenticated()));
 		break;
 	case Qt::ApplicationSuspended:
-    case Qt::ApplicationHidden:
-        m_webSocket.close();
+	case Qt::ApplicationHidden:
+		Dev::instance()->logEvent("applicationState", "inactive", "");
+		m_webSocket.close();
 		QTimer::singleShot(10000, this, SLOT(sessionAuthenticated()));
 		break;
 	default:

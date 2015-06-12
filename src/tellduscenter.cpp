@@ -14,6 +14,7 @@
 #include "models/filtereddevicemodel.h"
 #include "models/groupdevicemodel.h"
 #include "models/sensormodel.h"
+#include "utils/dev.h"
 
 class TelldusCenter::PrivateData {
 public:
@@ -44,6 +45,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 
 	d->view->setContextProperty("telldusLive", TelldusLive::instance());
+	d->view->setContextProperty("dev", Dev::instance());
 	d->view->setContextProperty("core", this);
 	d->view->setContextProperty("deviceModelController", DeviceModel::instance());
 	d->view->setContextProperty("rawDeviceModel", d->rawDeviceModel);

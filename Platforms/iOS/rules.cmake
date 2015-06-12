@@ -63,6 +63,8 @@ INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWidgets )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWebView )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWebSockets )
 INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
+INCLUDE_DIRECTORIES( 3rdparty/googleanalytics )
+
 
 SET(QT_USE_QTOPENGL FALSE)
 
@@ -83,6 +85,8 @@ LIST(APPEND LIBRARIES
 	"-framework AVFoundation"
 	"-framework CoreVideo"
 	"-framework CoreMedia"
+	"-framework CoreData"
+	"-framework SystemConfiguration"
 	"-framework Security"
 	${QT_DIR}/lib/libQt5Core.a
 	${QT_DIR}/lib/libQt5Gui.a
@@ -111,6 +115,7 @@ LIST(APPEND LIBRARIES
 	libz.dylib
 	libiconv.dylib
 	libstdc++.6.dylib
+	${CMAKE_SOURCE_DIR}/platforms/iOS/libGoogleAnalyticsServices.a
 )
 
 LIST(APPEND RESOURCES

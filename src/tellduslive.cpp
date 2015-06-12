@@ -15,6 +15,8 @@
 
 #include "config.h"
 #include "tellduslive.h"
+#include "utils/dev.h"
+
 #ifdef PLATFORM_BB10
 #include <bb/system/InvokeRequest>
 #endif
@@ -163,6 +165,7 @@ void TelldusLive::onAuthorizationReceived(const QString &token, const QString &v
 }
 
 void TelldusLive::onAccessTokenReceived(const QString &token, const QString &tokenSecret) {
+	Dev::instance()->logEvent("user", "accessTokenReceived", "");
 	QSettings s;
 	s.setValue("oauthToken", token);
 	s.setValue("oauthTokenSecret", tokenSecret);
@@ -312,6 +315,7 @@ bool TelldusLive::working() const {
 
 
 void TelldusLive::logout() {
+	Dev::instance()->logEvent("user", "logout", "");
 	QSettings s;
 	s.setValue("oauthToken", "");
 	s.setValue("oauthTokenSecret", "");

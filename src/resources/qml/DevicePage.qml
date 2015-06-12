@@ -155,7 +155,7 @@ Item {
 
 	function setFavoriteFilter(doFilter) {
 		favoriteModel.doFilter = doFilter
-		analytics.sendScreenView("/device/" + (doFilter ? "favorites": "all"))
+		dev.logScreenView("/device/" + (doFilter ? "favorites": "all"))
 	}
 
 	Component {
