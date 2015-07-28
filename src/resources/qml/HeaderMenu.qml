@@ -9,7 +9,7 @@ Item {
 	anchors.left: parent.left
 	anchors.right: parent.right
 	Image {
-		height: 67
+		height: 67*SCALEFACTOR
 		width: parent.width/SCALEFACTOR
 		anchors.top: parent.top
 		source: "../images/headerMenuBg.png"

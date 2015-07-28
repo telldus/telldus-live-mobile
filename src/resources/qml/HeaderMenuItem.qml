@@ -5,7 +5,7 @@ Item {
 	property alias title: label.text
 	property bool active: parent.activeItem == headerMenuItem
 	signal activated()
-	width: parent.width/2
+	width: parent.width / 2
 	height: parent.height
 
 	BorderImage {
@@ -24,7 +24,7 @@ Item {
 	Text {
 		id: label
 		anchors.centerIn: parent
-		font.pixelSize: 30*SCALEFACTOR
+		font.pixelSize: 15*SCALEFACTOR
 		font.weight: Font.Bold
 		color: active ? "white" : "#d5ebff"
 		style: Text.Raised;

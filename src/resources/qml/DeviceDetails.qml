@@ -6,41 +6,34 @@ Item {
 	property Device selected
 	signal backClicked()
 
-	SwipeArea {
-		anchors.fill: parent
-		onSwipeRight: backClicked()
-	}
-
 	Header {
 		id: deviceH
 		title: showDevice.selected.name
 		backVisible: true
 		onBackClicked: showDevice.backClicked()
 	}
-	BorderImage {
-		source: "../images/rowBg.png"
+	Item {
 		anchors.top: deviceH.bottom
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
-		anchors.margins: 20*SCALEFACTOR
-		border {left: 21; top: 21; right: 21; bottom: 28 }
+		anchors.margins: 10 * SCALEFACTOR
 		Column {
 			anchors.fill: parent
-			anchors.margins: 20
-			spacing: 30*SCALEFACTOR
+			anchors.margins: 10 * SCALEFACTOR
+			spacing: 20 * SCALEFACTOR
 			Text {
 				text: "Location: " + showDevice.selected.clientName
 				color: "#999999"
 				width: parent.width
-				font.pixelSize: 30*SCALEFACTOR
+				font.pixelSize: 15 * SCALEFACTOR
 				font.bold: Font.Bold
 				elide: Text.ElideRight
 			}
 
 			Item {
-				width: (parent.width - dimHandle.width*SCALEFACTOR)/SCALEFACTOR
-				height: 100*SCALEFACTOR
+				width: (parent.width - dimHandle.width*SCALEFACTOR) / SCALEFACTOR
+				height: 50*SCALEFACTOR
 				scale: SCALEFACTOR
 				visible: selected.methods & 16
 				anchors.horizontalCenter: parent.horizontalCenter
@@ -107,14 +100,14 @@ Item {
 				Image {
 					id: iconFavorite
 					source: showDevice.selected.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
-					height: sourceSize.height*SCALEFACTOR;
-					width: sourceSize.width*SCALEFACTOR;
+					height: sourceSize.height / 4 * SCALEFACTOR;
+					width: sourceSize.width / 4 * SCALEFACTOR;
 					smooth: true
 				}
 				Item {
 					height: iconFavorite.height
 					anchors.left: iconFavorite.right
-					anchors.leftMargin: 20*SCALEFACTOR
+					anchors.leftMargin: 10 * SCALEFACTOR
 					anchors.right: parent.right
 					Item {
 						anchors.verticalCenter: parent.verticalCenter
@@ -129,14 +122,14 @@ Item {
 							wrapMode: Text.WordWrap
 							text: showDevice.selected.isFavorite ? "Device is in Your Favorites" : "Add device to Your Favorites"
 							color: showDevice.selected.isFavorite ? "#00659F" : "#999999"
-							font.pixelSize: 30 * SCALEFACTOR
+							font.pixelSize: 14 * SCALEFACTOR
 							font.weight: Font.Bold
 						}
 						Text {
 							anchors.top: favText.bottom
 							text: "Tap to remove"
 							color: "#00659F"
-							font.pixelSize: 16 * SCALEFACTOR
+							font.pixelSize: 10 * SCALEFACTOR
 							font.weight: Font.Bold
 							height: showDevice.selected.isFavorite ? undefined : 0
 							opacity: showDevice.selected.isFavorite ? 1 : 0

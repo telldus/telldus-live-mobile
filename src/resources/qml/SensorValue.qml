@@ -4,21 +4,21 @@ Item {
 	id: sensorValue
 	property string icon
 	property alias value: valueText.text
-	width: 180*SCALEFACTOR
+	width: sensorIcon.width + (5 * SCALEFACTOR) + valueText.width
 	height: Math.max(sensorIcon.height, valueText.height)
 	Image {
 		id: sensorIcon
 		source: "../images/" + icon + ".png"
-		height: sourceSize.height*SCALEFACTOR
-		width: sourceSize.width*SCALEFACTOR
+		height: 20 * SCALEFACTOR
+		width: 20 * SCALEFACTOR
 	}
 	Text {
 		id: valueText
 		anchors.left: sensorIcon.right
-		anchors.leftMargin: 5
+		anchors.leftMargin: 5 * SCALEFACTOR
 		anchors.verticalCenter: parent.verticalCenter
-		color: '#00659F'
-		font.pixelSize: 24*SCALEFACTOR
+		color: '#20334d'
+		font.pixelSize: 12 * SCALEFACTOR
 		font.weight: Font.Bold
 		//text: 'sensor.temperature' + '\u00B0C'
 	}
