@@ -22,9 +22,7 @@ public:
 	QQuickView view;
 };
 
-CommonView::CommonView(QObject *parent) :
-	AbstractView(parent)
-{
+CommonView::CommonView(QObject *parent):AbstractView(parent) {
 	d = new PrivateData;
 
 	// For platform specific tasks
@@ -38,7 +36,7 @@ CommonView::CommonView(QObject *parent) :
 #endif
 
 	d->view.installEventFilter(this);
-	connect(QApplication::desktop(), SIGNAL(workAreaResized(int)), this, SLOT(workAreaResized(int)));
+//	connect(QApplication::desktop(), SIGNAL(workAreaResized(int)), this, SLOT(workAreaResized(int)));
 
 	d->view.setTitle("Telldus Live! mobile");
 	d->view.rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
@@ -58,6 +56,7 @@ void CommonView::init() {
 #endif  // PLATFORM_IOS
 
 void CommonView::loadAndShow() {
+	int viewOffset = 0;
 #if defined(PLATFORM_DESKTOP)
 	d->view.show();
 	int w = 0, h = 0;
@@ -79,8 +78,11 @@ void CommonView::loadAndShow() {
 	}
 #elif defined(PLATFORM_IOS)
 	QSize size(this->windowSize());
+	d->view.showFullScreen();
+	viewOffset = 20;
+#elif defined(PLATFORM_ANDROID)
+	QSize size = QApplication::desktop()->size();
 	d->view.show();
-	d->view.resize(size);
 #elif defined(PLATFORM_BB10)
 #else
 	QRect r(QApplication::desktop()->availableGeometry());
@@ -101,6 +103,13 @@ void CommonView::loadAndShow() {
 		qDebug() << "Could not load qml files:" << d->qml->errors();
 	}*/
 #else
+	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << size;
+	qDebug().nospace().noquote() << "[DEVICE] Screen viewOffset: " << viewOffset;
+	qDebug().nospace().noquote() << "[DEVICE] Screen logicalDotsPerInch: " << QApplication::primaryScreen()->logicalDotsPerInch();
+	qDebug().nospace().noquote() << "[DEVICE] Screen physicalDotsPerInch: " << QApplication::primaryScreen()->physicalDotsPerInch();
+	qDebug().nospace().noquote() << "[DEVICE] Screen devicePixelRatio: " << QApplication::primaryScreen()->devicePixelRatio();
+
+	d->view.rootContext()->setContextProperty("VIEWOFFSET", viewOffset);
 	d->view.rootContext()->setContextProperty("HEIGHT", size.height());
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
 	d->view.engine()->addImportPath(":/qmllib/common");
@@ -132,15 +141,14 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 		return QObject::eventFilter(obj, event);
 	}
 
-	double scaleFactor = 1;
-	if (s.width() < 450) {
-		scaleFactor = 0.5;
-	} else if (s.width() < 600) {
-		scaleFactor = 0.75;
-	}
-#ifdef PLATFORM_IOS
-	scaleFactor = 0.5;
-#endif
+	double scaleFactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
+	qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << scaleFactor;
+
+//	if (s.width() < 450) {
+//		scaleFactor = 0.5;
+//	} else if (s.width() < 600) {
+//		scaleFactor = 0.75;
+//	}
 	d->view.rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
 	return QObject::eventFilter(obj, event);
 }
@@ -148,13 +156,3 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 QQuickView *CommonView::view() const {
 	return &d->view;
 }
-
-//void CommonView::changeEvent(QEvent *event) {
-	//QDeclarativeView::changeEvent(event);
-	/*if (event->type() == QEvent::WindowStateChange) {
-		if (this->windowState() == Qt::WindowFullScreen) {
-			emit fullscreen();
-		}
-	}*/
-//}
-

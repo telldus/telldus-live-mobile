@@ -7,15 +7,15 @@ Item {
 	property Device device
 	property int methods: device.methods
 
-	width: 222 * SCALEFACTOR
-	height: 100 * SCALEFACTOR
+	width: 111 * SCALEFACTOR
+	height: 50 * SCALEFACTOR
 
 	BorderImage {
 		source: "../images/buttonBg.png"
 		border {left: 15; top: 49; right: 15; bottom: 49 }
-		width: parent.width/SCALEFACTOR
-		height: parent.height/SCALEFACTOR
-		scale: SCALEFACTOR
+		width: parent.width/SCALEFACTOR*2
+		height: parent.height/SCALEFACTOR*2
+		scale: SCALEFACTOR/2
 		transformOrigin: Item.TopLeft
 		Loader {
 			id: loader
