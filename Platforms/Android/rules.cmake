@@ -6,6 +6,7 @@ ELSE()
 	SET(SUFFIX ".dev")
 ENDIF()
 
+SET(ANDROID_SDK "" CACHE DIR "Path to Android SDK")
 SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
 SET(Qt5Core_DIR ${Qt5_Dir}/lib/cmake/Qt5Core)
 SET(Qt5Network_DIR ${Qt5_Dir}/lib/cmake/Qt5Network)
