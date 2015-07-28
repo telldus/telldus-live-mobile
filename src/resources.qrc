@@ -2,7 +2,6 @@
 	<qresource prefix="/">
 		<file>resources/qml/main.qml</file>
 		<file>resources/qml/Footer.qml</file>
-		<file>resources/qml/DashboardPage.qml</file>
 		<file>resources/qml/DevicePage.qml</file>
 		<file>resources/qml/SensorPage.qml</file>
 		<file>resources/qml/SensorValue.qml</file>
@@ -24,8 +23,6 @@
 		<file>resources/qml/ComponentSetOnOff.qml</file>
 		<file>resources/qml/ButtonSet.qml</file>
 		<file>resources/qml/DeviceDetails.qml</file>
-		<file>resources/qml/SchedulerPage.qml</file>
-		<file>resources/qml/SwipeArea.qml</file>
 
 		<file>resources/images/headerBg.png</file>
 		<file>resources/images/menuButtonDivider.png</file>
@@ -82,8 +79,6 @@
 		<file>resources/images/dimSliderButton.png</file>
 		<file>resources/images/dimBg.png</file>
 		<file>resources/images/headerMenuButtonDivider.png</file>
-		<file>resources/images/shadow.png</file>
-		<file>resources/images/drawerIcon.png</file>
 
 		<file>resources/images@2x/startLogo.png</file>
 		<file>resources/images@2x/startButtonLogin.png</file>
@@ -91,7 +86,6 @@
 		<file>resources/images@2x/headerButtonBack.png</file>
 		<file>resources/images@2x/headerButtonBackActive.png</file>
 		<file>resources/images@2x/headerLogo.png</file>
-		<file>resources/images@2x/drawerIcon.png</file>
 
 		<file>resources/images/throbber/throbber_1.svg</file>
 		<file>resources/images/throbber/throbber_2.svg</file>
