@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<manifest android:versionCode="${INTERNAL_VERSION}" package="com.telldus.live.mobile" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}">
+<manifest android:versionCode="${INTERNAL_VERSION}" package="com.telldus.live.mobile${SUFFIX}" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}">
 	<application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:icon="@drawable/icon" android:label="Telldus Live! mobile">
 		<activity android:name="org.qtproject.qt5.android.bindings.QtActivity"
 			android:configChanges="orientation|locale|fontScale|keyboard|keyboardHidden"

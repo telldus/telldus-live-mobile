@@ -1,8 +1,15 @@
 SET(HAVE_WEBKIT 1)
 
+IF(RELEASE_BUILD)
+	SET(SUFFIX "")
+ELSE()
+	SET(SUFFIX ".dev")
+ENDIF()
+
 SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
 SET(Qt5Core_DIR ${Qt5_Dir}/lib/cmake/Qt5Core)
 SET(Qt5Network_DIR ${Qt5_Dir}/lib/cmake/Qt5Network)
+SET(Qt5Gui_DIR ${Qt5_Dir}/lib/cmake/Qt5Gui)
 SET(Qt5Qml_DIR ${Qt5_Dir}/lib/cmake/Qt5Qml)
 SET(Qt5Quick_DIR ${Qt5_Dir}/lib/cmake/Qt5Quick)
 SET(Qt5Svg_DIR ${Qt5_Dir}/lib/cmake/Qt5Svg)
@@ -26,39 +33,50 @@ LIST(APPEND LIBRARIES
 )
 
 SET(ANDROID_FILES
-	../../src/icons/icon-36.png
-	../../src/icons/icon-48.png
-	../../src/icons/icon-72.png
-	../../src/icons/icon-96.png
+	../../src/icons/icon-36${SUFFIX}.png
+	../../src/icons/icon-48${SUFFIX}.png
+	../../src/icons/icon-72${SUFFIX}.png
+	../../src/icons/icon-96${SUFFIX}.png
+	../../src/icons/icon-144${SUFFIX}.png
+	../../src/icons/icon-192${SUFFIX}.png
 	logo.png
 	splash.xml
 )
-
 SET_SOURCE_FILES_PROPERTIES(
 	logo.png
 	PROPERTIES TARGET_PATH res/drawable
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../src/icons/icon-36.png
+	../../src/icons/icon-36${SUFFIX}.png
 	PROPERTIES TARGET_PATH res/drawable-ldpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../src/icons/icon-48.png
+	../../src/icons/icon-48${SUFFIX}.png
 	PROPERTIES TARGET_PATH res/drawable-mdpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../src/icons/icon-72.png
+	../../src/icons/icon-72${SUFFIX}.png
 	PROPERTIES TARGET_PATH res/drawable-hdpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../src/icons/icon-96.png
+	../../src/icons/icon-96${SUFFIX}.png
 	PROPERTIES TARGET_PATH res/drawable-xhdpi
 )
 SET_SOURCE_FILES_PROPERTIES(
-	../../src/icons/icon-36.png
-	../../src/icons/icon-48.png
-	../../src/icons/icon-72.png
-	../../src/icons/icon-96.png
+	../../src/icons/icon-144${SUFFIX}.png
+	PROPERTIES TARGET_PATH res/drawable-xxhdpi
+)
+SET_SOURCE_FILES_PROPERTIES(
+	../../src/icons/icon-192${SUFFIX}.png
+	PROPERTIES TARGET_PATH res/drawable-xxxhdpi
+)
+SET_SOURCE_FILES_PROPERTIES(
+	../../src/icons/icon-36${SUFFIX}.png
+	../../src/icons/icon-48${SUFFIX}.png
+	../../src/icons/icon-72${SUFFIX}.png
+	../../src/icons/icon-96${SUFFIX}.png
+	../../src/icons/icon-144${SUFFIX}.png
+	../../src/icons/icon-192${SUFFIX}.png
 	PROPERTIES TARGET_NAME icon.png
 )
 SET_SOURCE_FILES_PROPERTIES(
@@ -93,11 +111,11 @@ FUNCTION(COMPILE target)
 	ADD_CUSTOM_COMMAND(
 		TARGET ${target}
 		POST_BUILD
-		COMMAND ${Qt5_Dir}/bin/androiddeployqt --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk
+		COMMAND ${Qt5_Dir}/bin/androiddeployqt --android-platform android-19 --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk
 	)
 	ADD_CUSTOM_TARGET(run
-		${Qt5_Dir}/bin/androiddeployqt --no-build --verbose --reinstall --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk &&
-		adb shell am start -n com.telldus.live.mobile/org.qtproject.qt5.android.bindings.QtActivity
+		${Qt5_Dir}/bin/androiddeployqt --android-platform android-19 --no-build --verbose --reinstall --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk &&
+		adb shell am start -n com.telldus.live.mobile${SUFFIX}/org.qtproject.qt5.android.bindings.QtActivity
 		DEPENDS ${target}
 		COMMENT "Package and deploy apk"
 	)
@@ -105,6 +123,11 @@ FUNCTION(COMPILE target)
 		cd ${CMAKE_BINARY_DIR}/apk/ && ant release &&
 		jarsigner -verbose -tsa http://timestamp.digicert.com -sigalg SHA1withRSA -digestalg SHA1 -keystore ${Keystore} ${CMAKE_BINARY_DIR}/apk/bin/QtApp-release-unsigned.apk telldus &&
 		zipalign -v 4 ${CMAKE_BINARY_DIR}/apk/bin/QtApp-release-unsigned.apk ${CMAKE_BINARY_DIR}/apk/bin/${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}-release-signed-aligned.apk
+		DEPENDS ${target}
+		COMMENT "Package and deploy apk"
+	)
+	ADD_CUSTOM_TARGET(release-unsigned
+		cd ${CMAKE_BINARY_DIR}/apk/ && ant release
 		DEPENDS ${target}
 		COMMENT "Package and deploy apk"
 	)
