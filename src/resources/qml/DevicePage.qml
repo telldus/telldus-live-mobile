@@ -89,7 +89,7 @@ Item {
 					Image {
 						id: arrow
 						source: "../images/rowArrow.png"
-						width: sourceSize.width * SCALEFACTOR
+						width: sourceSize.width * (SCALEFACTOR / 2)
 						fillMode: Image.PreserveAspectFit
 						anchors.right: parent.right
 						anchors.rightMargin: 10 * SCALEFACTOR

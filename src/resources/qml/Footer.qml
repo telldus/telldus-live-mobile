@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
 	id: footer
-	property int activePage: 1
+	property int activePage: 0
 	height: 60 * SCALEFACTOR
 	Image {
 		id: footerBg
@@ -33,7 +33,7 @@ Item {
 			Image {
 				id: deviceButton
 				height: sourceSize.height
-				scale: 2
+				scale: SCALEFACTOR / 2
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				anchors.centerIn: parent
@@ -63,7 +63,7 @@ Item {
 				id: sensorButton
 				anchors.centerIn: parent
 				height: sourceSize.height
-				scale: 2
+				scale: SCALEFACTOR / 2
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				source: "../images/footerIconSensors.png"
@@ -92,7 +92,7 @@ Item {
 				id: settingsButton
 				anchors.centerIn: parent
 				height: sourceSize.height
-				scale: 2
+				scale: SCALEFACTOR / 2
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				source: "../images/footerIconSettings.png"
