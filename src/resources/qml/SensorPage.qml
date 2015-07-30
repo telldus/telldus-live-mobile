@@ -10,7 +10,7 @@ Item {
 			id: wrapper
 			width: list.width
 			z: model.index
-			height: childrenRect.height
+			height: Math.max(dataTitleRow.height, dataRow.height) + (20 * SCALEFACTOR)
 			Text {
 				id: sensorName
 				font.weight: Font.Bold
@@ -19,7 +19,7 @@ Item {
 			}
 			Text {
 				id: sensorLastUpdated
-				font.pixelSize: 21*SCALEFACTOR
+				font.pixelSize: 10 * SCALEFACTOR
 				text: formatLastUpdated(sensor.minutesAgo)
 				visible: false
 			}
@@ -28,24 +28,27 @@ Item {
 				source: "../images/rowBg.png"
 				anchors.right: parent.right
 				anchors.left: parent.left
-				anchors.leftMargin: 10*SCALEFACTOR
-				anchors.rightMargin: 10*SCALEFACTOR
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.rightMargin: 10 * SCALEFACTOR
 				border { left: 21; top: 21; right: 21; bottom: 28 }
-				height: childrenRect.height + 40
+				height: wrapper.height
 
 				Column {
 					id: dataTitleRow
 					anchors.left: parent.left
-					anchors.leftMargin: 15
+					anchors.leftMargin: 10 * SCALEFACTOR
 					anchors.top: parent.top
-					anchors.topMargin: 15
+					anchors.topMargin: 10 * SCALEFACTOR
+					height: sensorNameText.height + sensorLastUpdatedText.height
 					width: Math.min(Math.max(sensorName.width, sensorLastUpdated.width), (list.width/2)-50)
 					Text {
+						id: sensorNameText
 						color: sensor.name !== '' ? '#00659F' : '#8cabc5'
 						font.weight: Font.Bold
 						text: sensor.name !== '' ? sensor.name : '(no name)'
 						elide: Text.ElideRight
 						width: parent.width
+						font.pixelSize: 16 * SCALEFACTOR
 					}
 					//Text {
 					//	color: "#999999"
@@ -53,8 +56,9 @@ Item {
 					//	text: ""  // TODO(micke): Add location name
 					//}
 					Text {
+						id: sensorLastUpdatedText
 						color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
-						font.pixelSize: 21*SCALEFACTOR
+						font.pixelSize: 12 * SCALEFACTOR
 						text: formatLastUpdated(sensor.minutesAgo)
 						width: parent.width
 					}
@@ -63,12 +67,11 @@ Item {
 						id: dataRow
 						layoutDirection: Qt.RightToLeft
 						anchors.left: dataTitleRow.right
-						anchors.leftMargin: 10
+						anchors.leftMargin: 10 * SCALEFACTOR
 						anchors.right: parent.right
-						anchors.rightMargin: 10
-						anchors.top: parent.top
-						anchors.topMargin: 15
-						spacing: 10
+						anchors.rightMargin: 10 * SCALEFACTOR
+						anchors.verticalCenter: parent.verticalCenter
+						spacing: 10 * SCALEFACTOR
 						SensorValue {
 							icon: "sensorIconHumidity"
 							visible: sensor.hasHumidity
@@ -119,18 +122,18 @@ Item {
 	ListView {
 		id: list
 		header: Item {
-			height: header.height + 20
+			height: header.height + (10 * SCALEFACTOR)
 			width: parent.width
 		}
 		footer: Item {
-			height: 10
+			height: 10 * SCALEFACTOR
 			width: parent.width
 		}
 
 		anchors.fill: parent
 		model: sensorModel
 		delegate: sensorDelegate
-		spacing: 5
+		spacing: 5 * SCALEFACTOR
 	}
 
 	Header {

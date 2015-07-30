@@ -12,7 +12,9 @@ Item {
 		backVisible: true
 		onBackClicked: showDevice.backClicked()
 	}
-	Item {
+	BorderImage {
+		source: "../images/rowBg.png"
+		border {left: 21; top: 21; right: 21; bottom: 28 }
 		anchors.top: deviceH.bottom
 		anchors.right: parent.right
 		anchors.left: parent.left
@@ -33,7 +35,7 @@ Item {
 
 			Item {
 				width: (parent.width - dimHandle.width*SCALEFACTOR) / SCALEFACTOR
-				height: 50*SCALEFACTOR
+				height: 50 * SCALEFACTOR
 				scale: SCALEFACTOR
 				visible: selected.methods & 16
 				anchors.horizontalCenter: parent.horizontalCenter

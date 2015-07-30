@@ -10,20 +10,20 @@ Item {
 			id: wrapper
 			property Device dev: device
 			width: list.width
-			height: 150*SCALEFACTOR
+			height: 75 * SCALEFACTOR
 			clip: false
 			z: model.index
 			ListView.onRemove: SequentialAnimation {
 				PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
 				PropertyAction { target: wrapper; property: "z"; value: -1 }
-				NumberAnimation { target: wrapper; properties: "height,opacity"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
+				//NumberAnimation { target: wrapper; properties: "height,opacity"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
 				PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: false }
 			}
 			ListView.onAdd: SequentialAnimation {
 				PropertyAction { target: wrapper; property: "z"; value: -1 }
 				ParallelAnimation {
-					NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150*SCALEFACTOR; duration: 250; easing.type: Easing.InOutQuad }
-					NumberAnimation { target: wrapper; properties: "opacity"; from: 0; to: 1; duration: 250; easing.type: Easing.InOutQuad }
+				//	NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150*SCALEFACTOR; duration: 250; easing.type: Easing.InOutQuad }
+				//	NumberAnimation { target: wrapper; properties: "opacity"; from: 0; to: 1; duration: 250; easing.type: Easing.InOutQuad }
 				}
 				PropertyAction { target: wrapper; property: "z"; value: 0 }
 			}
@@ -32,9 +32,9 @@ Item {
 				anchors.top: parent.top
 				anchors.right: parent.right
 				anchors.left: parent.left
-				anchors.leftMargin: 10*SCALEFACTOR
-				anchors.rightMargin: 10*SCALEFACTOR
-				height: 140*SCALEFACTOR
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.rightMargin: 10 * SCALEFACTOR
+				height: 70 * SCALEFACTOR
 				border {left: 21; top: 21; right: 21; bottom: 28 }
 
 				Item {
@@ -47,7 +47,7 @@ Item {
 						device: wrapper.dev
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.left: parent.left
-						anchors.leftMargin: 20*SCALEFACTOR
+						anchors.leftMargin: 10 * SCALEFACTOR
 					}
 
 					MouseArea {
@@ -66,13 +66,13 @@ Item {
 						id: nameCol
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.left: buttons.right
-						anchors.leftMargin: 20*SCALEFACTOR
+						anchors.leftMargin: 10 * SCALEFACTOR
 						anchors.right: arrow.left
-						anchors.rightMargin: 20*SCALEFACTOR
+						anchors.rightMargin: 10 * SCALEFACTOR
 						Text {
 							color: "#00659F"
 							width: parent.width
-							font.pixelSize: 32*SCALEFACTOR
+							font.pixelSize: 16 * SCALEFACTOR
 							font.weight: Font.Bold
 							text: device.name
 							elide: Text.ElideRight
@@ -80,7 +80,7 @@ Item {
 						Text {
 							color: "#999999"
 							width: parent.width
-							font.pixelSize: 25*SCALEFACTOR
+							font.pixelSize: 12 * SCALEFACTOR
 							text: device.clientName
 							elide: Text.ElideRight
 						}
@@ -89,10 +89,10 @@ Item {
 					Image {
 						id: arrow
 						source: "../images/rowArrow.png"
-						width: sourceSize.width*SCALEFACTOR
+						width: sourceSize.width * SCALEFACTOR
 						fillMode: Image.PreserveAspectFit
 						anchors.right: parent.right
-						anchors.rightMargin: 20*SCALEFACTOR
+						anchors.rightMargin: 10 * SCALEFACTOR
 						anchors.verticalCenter: parent.verticalCenter
 					}
 				}
@@ -113,7 +113,7 @@ Item {
 		ListView {
 			id: list
 			header: Item {
-				height: header.height + headerMenu.height + 20
+				height: header.height + headerMenu.height + (10 * SCALEFACTOR)
 				width: list.width
 			}
 			footer: Item {
@@ -129,7 +129,7 @@ Item {
 
 		Header {
 			id: header
-			anchors.topMargin: Math.min(0, Math.max(-header.height, -list.contentY-header.height-headerMenu.height-10))
+			anchors.topMargin: Math.min(0, Math.max(-header.height, -list.contentY-header.height-headerMenu.height- (10 * SCALEFACTOR)))
 		}
 		HeaderMenu {
 			id: headerMenu

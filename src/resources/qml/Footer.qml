@@ -2,12 +2,12 @@ import QtQuick 2.0
 
 Item {
 	id: footer
-	property int activePage: 0
-	height: 125*SCALEFACTOR
+	property int activePage: 1
+	height: 60 * SCALEFACTOR
 	Image {
 		id: footerBg
 		source: "../images/footerBg.png"
-		height: 140*SCALEFACTOR
+		height: 70 * SCALEFACTOR
 		fillMode: Image.TileHorizontally
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
@@ -19,7 +19,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: 122*SCALEFACTOR
+		height: 60 * SCALEFACTOR
 		Item {
 			width: parent.width/3
 			height: parent.height
@@ -32,7 +32,8 @@ Item {
 			}
 			Image {
 				id: deviceButton
-				height: sourceSize.height*SCALEFACTOR
+				height: sourceSize.height
+				scale: 2
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				anchors.centerIn: parent
@@ -61,14 +62,15 @@ Item {
 			Image {
 				id: sensorButton
 				anchors.centerIn: parent
-				height: sourceSize.height*SCALEFACTOR
+				height: sourceSize.height
+				scale: 2
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				source: "../images/footerIconSensors.png"
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked:mainInterface.setActivePage(1)
+				onClicked: mainInterface.setActivePage(1)
 			}
 		}
 		Image {
@@ -89,7 +91,8 @@ Item {
 			Image {
 				id: settingsButton
 				anchors.centerIn: parent
-				height: sourceSize.height*SCALEFACTOR
+				height: sourceSize.height
+				scale: 2
 				smooth: true
 				fillMode: Image.PreserveAspectFit
 				source: "../images/footerIconSettings.png"
@@ -124,17 +127,4 @@ Item {
 			NumberAnimation { properties: "opacity"; duration: 100 }
 		}
 	]
-
-	Item {
-		states: [
-			State {
-				// BlackBerry Q10
-				when: screen.height < 800 && SCALEFACTOR == 1
-				PropertyChanges { target: footer; height: 85 }
-				PropertyChanges { target: footerBg; height: 95 }
-				PropertyChanges { target: buttonRow; height: 83 }
-			}
-
-		]
-	}
 }

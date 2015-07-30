@@ -18,7 +18,7 @@ Item {
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
-		anchors.margins: 20
+		anchors.margins: 20 * SCALEFACTOR
 		border {left: 21; top: 21; right: 21; bottom: 28 }
 
 		Item {
@@ -36,7 +36,7 @@ Item {
 				text: "You are currently logged in as<br>" + user.firstname + "&nbsp;" + user.lastname
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
-				font.pixelSize: 30*SCALEFACTOR
+				font.pixelSize: 16 * SCALEFACTOR
 				font.bold: true
 				color: "#8cabc5"
 			}
@@ -44,12 +44,9 @@ Item {
 		Button {
 			id: button
 			title: "Logout"
-			anchors.left: parent.left
-			anchors.leftMargin: 30
-			anchors.right: parent.right
-			anchors.rightMargin: 30
+			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 30
+			anchors.bottomMargin: 30 * SCALEFACTOR
 			onClicked: telldusLive.logout()
 		}
 	}

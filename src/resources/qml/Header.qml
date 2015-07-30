@@ -9,45 +9,51 @@ Item {
 	anchors.left: parent.left
 	anchors.right: parent.right
 	anchors.top: parent.top
-	height: 103 * SCALEFACTOR
+	height: mainHeader.height
 
 	Image {
+		id: mainHeader
 		source: "../images/headerBg.png"
 		fillMode: Image.TileHorizontally
-		width: parent.width/SCALEFACTOR
-		scale: SCALEFACTOR
+		width: parent.width / SCALEFACTOR
 		transformOrigin: Item.TopLeft
 		smooth: true
-
-		Image {
-			visible: title == '' && backVisible == false
-			anchors.verticalCenter: parent.verticalCenter
-			source: "../images/headerLogo.png"
-			smooth: true
-		}
+		anchors.left: parent.left
+		anchors.top: parent.top
+		anchors.right: parent.right
+		height: 50 * SCALEFACTOR
+	}
+	Image {
+		visible: title == '' && backVisible == false
+		anchors.verticalCenter: mainHeader.verticalCenter
+		anchors.horizontalCenter: mainHeader.horizontalCenter
+		height: mainHeader.height - (10 * SCALEFACTOR)
+		source: "../" + (SCALEFACTOR > 2 ? "images@2x" : "images") + "/headerLogo.png"
+		smooth: true
+		fillMode: Image.PreserveAspectFit
 	}
 	Item {
 		id: backButton
 		visible: false
-		width: backText.width + ((25 + 15) * SCALEFACTOR)
-		height: 50
+		width: (backText.width + 15 + 5) * SCALEFACTOR
+		height: 25 * SCALEFACTOR
 		anchors.left: parent.left
-		anchors.leftMargin: 30 * SCALEFACTOR
+		anchors.leftMargin: 10 * SCALEFACTOR
 		anchors.verticalCenter: parent.verticalCenter
 		BorderImage {
 			source: backMouseArea.pressed ? "../images/headerButtonBackActive.png" : "../images/headerButtonBack.png"
 			border {left: 23; right: 8; top: 24; bottom: 25}
-			width: parent.width/SCALEFACTOR
-			scale: SCALEFACTOR
-			transformOrigin: Item.Left
+			width: parent.width / SCALEFACTOR
+			scale: SCALEFACTOR / 2
+			transformOrigin: Item.TopLeft
 		}
 		Text {
 			id: backText
 			text: "Back"
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.left: parent.left
-			anchors.leftMargin: 25 * SCALEFACTOR
-			font.pixelSize: 25 * SCALEFACTOR
+			anchors.leftMargin: 20 * SCALEFACTOR
+			font.pixelSize: 12 * SCALEFACTOR
 			font.weight: Font.Bold
 			color: "#06456a"
 			style: Text.Raised;
@@ -67,11 +73,8 @@ Item {
 	Text {
 		id: titleText
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.left: backButton.right
-		anchors.leftMargin: 30 * SCALEFACTOR
-		anchors.right: parent.right
-		anchors.rightMargin: 30 * SCALEFACTOR
-		font.pixelSize: 40 * SCALEFACTOR
+		anchors.horizontalCenter: parent.horizontalCenter
+		font.pixelSize: 20 * SCALEFACTOR
 		font.weight: Font.Bold
 		color: "white"
 		style: Text.Raised;

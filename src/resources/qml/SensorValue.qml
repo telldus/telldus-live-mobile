@@ -17,8 +17,8 @@ Item {
 		anchors.left: sensorIcon.right
 		anchors.leftMargin: 5 * SCALEFACTOR
 		anchors.verticalCenter: parent.verticalCenter
-		color: '#20334d'
-		font.pixelSize: 12 * SCALEFACTOR
+		color: '#00659F'
+		font.pixelSize: 16 * SCALEFACTOR
 		font.weight: Font.Bold
 		//text: 'sensor.temperature' + '\u00B0C'
 	}
