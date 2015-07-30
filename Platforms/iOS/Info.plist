@@ -23,28 +23,16 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>icon-flat-57${SUFFIX}.png</string>
-		<string>icon-flat-72${SUFFIX}.png</string>
-		<string>icon-flat-76${SUFFIX}.png</string>
-		<string>icon-flat-114${SUFFIX}.png</string>
-		<string>icon-flat-120${SUFFIX}.png</string>
-		<string>icon-flat-144${SUFFIX}.png</string>
-		<string>icon-flat-152${SUFFIX}.png</string>
-	</array>
-	<key>UIPrerenderedIcon</key>
-	<true/>
 	<key>UILaunchImageFile</key>
 	<string>LaunchImage</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.telldus.live.mobile${SUFFIX}</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>
 	<string></string>
 	<key>CFBundleName</key>
-	<string>Telldus mobile</string>
+	<string>Telldus Live! mobile</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -61,5 +49,18 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 </dict>
 </plist>
