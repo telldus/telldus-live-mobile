@@ -35,7 +35,7 @@ Item {
 	Item {
 		id: backButton
 		visible: false
-		width: backText.width + (30 * SCALEFACTOR)
+		width: backText.width + (22 * SCALEFACTOR)
 		height: 25 * SCALEFACTOR
 		anchors.left: parent.left
 		anchors.leftMargin: 10 * SCALEFACTOR
@@ -43,15 +43,17 @@ Item {
 		BorderImage {
 			source: backMouseArea.pressed ? "../images/headerButtonBackActive.png" : "../images/headerButtonBack.png"
 			border {left: 23; right: 8; top: 24; bottom: 25}
-			width: parent.width
-			height: parent.height
+			width: parent.width / SCALEFACTOR * 2
+			height: parent.height / SCALEFACTOR * 2
+			scale: SCALEFACTOR / 2
+			transformOrigin: Item.TopLeft
 		}
 		Text {
 			id: backText
 			text: "Back"
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.left: parent.left
-			anchors.leftMargin: 20 * SCALEFACTOR
+			anchors.leftMargin: 15 * SCALEFACTOR
 			font.pixelSize: 12 * SCALEFACTOR
 			font.weight: Font.Bold
 			color: "#06456a"

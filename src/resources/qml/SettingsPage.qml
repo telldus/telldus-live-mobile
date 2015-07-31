@@ -24,7 +24,7 @@ Item {
 			anchors.top: parent.top
 			anchors.left: parent.left
 			height: wrapper.height / SCALEFACTOR * 2
-			width: (wrapper.width / SCALEFACTOR * 2)
+			width: wrapper.width / SCALEFACTOR * 2
 			border {left: 21; top: 21; right: 21; bottom: 28 }
 			scale: SCALEFACTOR / 2
 			transformOrigin: Item.TopLeft
