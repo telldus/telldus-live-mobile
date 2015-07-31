@@ -11,18 +11,6 @@ Item {
 			width: list.width
 			z: model.index
 			height: Math.max(dataTitleRow.height, dataRow.height) + (20 * SCALEFACTOR)
-			Text {
-				id: sensorName
-				font.weight: Font.Bold
-				text: sensor.name !== '' ? sensor.name : '(no name)'
-				visible: false
-			}
-			Text {
-				id: sensorLastUpdated
-				font.pixelSize: 10 * SCALEFACTOR
-				text: formatLastUpdated(sensor.minutesAgo)
-				visible: false
-			}
 			BorderImage {
 				id: border
 				source: "../images/rowBg.png"
@@ -43,15 +31,17 @@ Item {
 				anchors.top: parent.top
 				anchors.topMargin: 10 * SCALEFACTOR
 				height: sensorNameText.height + sensorLastUpdatedText.height
-				width: Math.min(Math.max(sensorName.width, sensorLastUpdated.width), (list.width/2)-50)
+				width: (wrapper.width / 2) - (50 * SCALEFACTOR)
 				Text {
 					id: sensorNameText
 					color: sensor.name !== '' ? '#00659F' : '#8cabc5'
 					font.weight: Font.Bold
 					text: sensor.name !== '' ? sensor.name : '(no name)'
-					elide: Text.ElideRight
 					width: parent.width
 					font.pixelSize: 16 * SCALEFACTOR
+					wrapMode: Text.Wrap
+					elide: Text.ElideRight
+					maximumLineCount: 3
 				}
 				//Text {
 				//	color: "#999999"
@@ -60,10 +50,12 @@ Item {
 				//}
 				Text {
 					id: sensorLastUpdatedText
-					color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
+					color: sensor.minutesAgo < 1440 ? "#999999" : "#80990000"
 					font.pixelSize: 12 * SCALEFACTOR
 					text: formatLastUpdated(sensor.minutesAgo)
-					width: parent.width
+					wrapMode: Text.Wrap
+					elide: Text.ElideRight
+					maximumLineCount: 3
 				}
 			}
 			Flow {

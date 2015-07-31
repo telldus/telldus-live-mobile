@@ -7,7 +7,7 @@ Item {
 	property Device device
 	property int methods: device.methods
 
-	width: 100 * SCALEFACTOR
+	width: 92 * SCALEFACTOR
 	height: 40 * SCALEFACTOR
 
 	BorderImage {
