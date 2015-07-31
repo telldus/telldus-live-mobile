@@ -10,7 +10,7 @@ Item {
 			id: wrapper
 			property Device dev: device
 			width: list.width
-			height: 75 * SCALEFACTOR
+			height: 50 * SCALEFACTOR
 			clip: false
 			z: model.index
 			ListView.onRemove: SequentialAnimation {
@@ -30,71 +30,75 @@ Item {
 			BorderImage {
 				source: mouseArea.pressed ? "../images/rowBgActive.png" : "../images/rowBg.png"
 				anchors.top: parent.top
-				anchors.right: parent.right
 				anchors.left: parent.left
 				anchors.leftMargin: 10 * SCALEFACTOR
 				anchors.rightMargin: 10 * SCALEFACTOR
-				height: 70 * SCALEFACTOR
+				height: wrapper.height / SCALEFACTOR * 2
+				width: (wrapper.width / SCALEFACTOR * 2) - 40
 				border {left: 21; top: 21; right: 21; bottom: 28 }
+				scale: SCALEFACTOR / 2
+				transformOrigin: Item.TopLeft
+			}
 
-				Item {
-					anchors.fill: parent
-					anchors.topMargin: 2
-					anchors.bottomMargin: 10
+			Item {
+				anchors.fill: parent
+				anchors.topMargin: 5 * SCALEFACTOR
+				anchors.bottomMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.rightMargin: 10 * SCALEFACTOR
 
-					ButtonSet {
-						id: buttons
-						device: wrapper.dev
-						anchors.verticalCenter: parent.verticalCenter
-						anchors.left: parent.left
-						anchors.leftMargin: 10 * SCALEFACTOR
+				ButtonSet {
+					id: buttons
+					device: wrapper.dev
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.left
+					anchors.leftMargin: 5 * SCALEFACTOR
+				}
+
+				MouseArea {
+					id: mouseArea
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					anchors.left: nameCol.left
+					anchors.right: parent.right
+					onClicked: {
+						devicePage.state = 'showDevice'
+						showDevice.selected = device
 					}
+				}
 
-					MouseArea {
-						id: mouseArea
-						anchors.top: parent.top
-						anchors.bottom: parent.bottom
-						anchors.left: nameCol.left
-						anchors.right: parent.right
-						onClicked: {
-							devicePage.state = 'showDevice'
-							showDevice.selected = device
-						}
+				Column {
+					id: nameCol
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: buttons.right
+					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.right: arrow.left
+					anchors.rightMargin: 10 * SCALEFACTOR
+					Text {
+						color: "#00659F"
+						width: parent.width
+						font.pixelSize: 16 * SCALEFACTOR
+						font.weight: Font.Bold
+						text: device.name
+						elide: Text.ElideRight
 					}
+					Text {
+						color: "#999999"
+						width: parent.width
+						font.pixelSize: 12 * SCALEFACTOR
+						text: device.clientName
+						elide: Text.ElideRight
+					}
+				}
 
-					Column {
-						id: nameCol
-						anchors.verticalCenter: parent.verticalCenter
-						anchors.left: buttons.right
-						anchors.leftMargin: 10 * SCALEFACTOR
-						anchors.right: arrow.left
-						anchors.rightMargin: 10 * SCALEFACTOR
-						Text {
-							color: "#00659F"
-							width: parent.width
-							font.pixelSize: 16 * SCALEFACTOR
-							font.weight: Font.Bold
-							text: device.name
-							elide: Text.ElideRight
-						}
-						Text {
-							color: "#999999"
-							width: parent.width
-							font.pixelSize: 12 * SCALEFACTOR
-							text: device.clientName
-							elide: Text.ElideRight
-						}
-					}
-
-					Image {
-						id: arrow
-						source: "../images/rowArrow.png"
-						width: sourceSize.width * (SCALEFACTOR / 2)
-						fillMode: Image.PreserveAspectFit
-						anchors.right: parent.right
-						anchors.rightMargin: 10 * SCALEFACTOR
-						anchors.verticalCenter: parent.verticalCenter
-					}
+				Image {
+					id: arrow
+					source: "../images/rowArrow.png"
+					width: sourceSize.width * (SCALEFACTOR / 2)
+					fillMode: Image.PreserveAspectFit
+					anchors.right: parent.right
+					anchors.rightMargin: 10 * SCALEFACTOR
+					anchors.verticalCenter: parent.verticalCenter
 				}
 			}
 		}
@@ -113,7 +117,7 @@ Item {
 		ListView {
 			id: list
 			header: Item {
-				height: header.height + headerMenu.height + (10 * SCALEFACTOR)
+				height: header.height + headerMenu.height + (15 * SCALEFACTOR)
 				width: list.width
 			}
 			footer: Item {
@@ -124,7 +128,8 @@ Item {
 			anchors.fill: parent
 			model: favoriteModel
 			delegate: deviceDelegate
-			spacing: 0
+			spacing: 5 * SCALEFACTOR
+			maximumFlickVelocity: 1500 * SCALEFACTOR
 		}
 
 		Header {

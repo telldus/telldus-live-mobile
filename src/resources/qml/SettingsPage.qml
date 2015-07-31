@@ -10,23 +10,31 @@ Item {
 		onSwipeRight: mainInterface.swipeRight()
 	}
 	Header {
-		id: deviceH
+		id: header
 	}
-	BorderImage {
-		source: "../images/rowBg.png"
-		anchors.top: deviceH.bottom
-		anchors.right: parent.right
+	Item {
+		id: wrapper
 		anchors.left: parent.left
+		anchors.top: header.bottom
+		anchors.right: parent.right
 		anchors.bottom: parent.bottom
 		anchors.margins: 20 * SCALEFACTOR
-		border {left: 21; top: 21; right: 21; bottom: 28 }
-
+		BorderImage {
+			source: "../images/rowBg.png"
+			anchors.top: parent.top
+			anchors.left: parent.left
+			height: wrapper.height / SCALEFACTOR * 2
+			width: (wrapper.width / SCALEFACTOR * 2)
+			border {left: 21; top: 21; right: 21; bottom: 28 }
+			scale: SCALEFACTOR / 2
+			transformOrigin: Item.TopLeft
+		}
 		Item {
 			anchors.top: parent.top
 			anchors.left: parent.left
-			anchors.leftMargin: 30
+			anchors.leftMargin: 30 * SCALEFACTOR
 			anchors.right: parent.right
-			anchors.rightMargin: 30
+			anchors.rightMargin: 30 * SCALEFACTOR
 			anchors.bottom: button.top
 			Text {
 				anchors.verticalCenter: parent.verticalCenter
@@ -36,7 +44,7 @@ Item {
 				text: "You are currently logged in as<br>" + user.firstname + "&nbsp;" + user.lastname
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
-				font.pixelSize: 16 * SCALEFACTOR
+				font.pixelSize: 14 * SCALEFACTOR
 				font.bold: true
 				color: "#8cabc5"
 			}

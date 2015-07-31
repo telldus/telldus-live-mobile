@@ -20,10 +20,12 @@ Q_IMPORT_PLUGIN(QWebViewModule)
 class CommonView::PrivateData {
 public:
 	QQuickView view;
+	double scalefactor;
 };
 
 CommonView::CommonView(QObject *parent):AbstractView(parent) {
 	d = new PrivateData;
+    d->scalefactor = 0;
 
 	// For platform specific tasks
 	this->init();
@@ -68,6 +70,11 @@ void CommonView::loadAndShow() {
 			continue;
 		} else if (args.at(i) == "--height") {
 			h = args.at(i+1).toInt();
+			++i;
+			continue;
+		} else if (args.at(i) == "--scalefactor") {
+			d->scalefactor = args.at(i+1).toDouble();
+            qDebug() << "--scalefactor" << args.at(i+1).toDouble();
 			++i;
 			continue;
 		}
@@ -140,16 +147,18 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 	if (s.width() == 0 || s.height() == 0) {
 		return QObject::eventFilter(obj, event);
 	}
-
-	double scaleFactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
-	qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << scaleFactor;
+    
+    if (d->scalefactor == 0) {
+        d->scalefactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
+    }
+    qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << d->scalefactor;
 
 //	if (s.width() < 450) {
 //		scaleFactor = 0.5;
 //	} else if (s.width() < 600) {
 //		scaleFactor = 0.75;
 //	}
-	d->view.rootContext()->setContextProperty("SCALEFACTOR", scaleFactor);
+	d->view.rootContext()->setContextProperty("SCALEFACTOR", d->scalefactor);
 	return QObject::eventFilter(obj, event);
 }
 
