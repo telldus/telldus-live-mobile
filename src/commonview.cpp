@@ -34,7 +34,6 @@ CommonView::CommonView(QObject *parent):AbstractView(parent) {
 	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QtQuick2Plugin().instance())->registerTypes("QtQuick");
 	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QQmlLocalStoragePlugin().instance())->registerTypes("QtQuick.LocalStorage");
 	qobject_cast<QQmlExtensionPlugin*>(qt_static_plugin_QWebViewModule().instance())->registerTypes("QtWebView");
-	d->view.engine()->setImportPathList(QStringList());
 #endif
 
 	d->view.installEventFilter(this);

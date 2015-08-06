@@ -108,6 +108,7 @@ LIST(APPEND LIBRARIES
 )
 
 LIST(APPEND RESOURCES
+	src/resources/QtGraphicalEffects
 	src/icons/Assets${SUFFIX}.xcassets
 	platforms/iOS/LaunchImage.png
 	platforms/iOS/LaunchImage@2x.png
