@@ -11,5 +11,6 @@
 	"target-architecture": "armeabi-v7a",
 	"qml-root-path": "${CMAKE_SOURCE_DIR}/src/resources/qml",
 	"application-binary": "${CMAKE_BINARY_DIR}/apk/libs/armeabi-v7a/libTelldusLiveMobile.so",
-	"android-package-source-directory": "${CMAKE_BINARY_DIR}/template"
+	"android-package-source-directory": "${CMAKE_BINARY_DIR}/template",
+	"android-extra-libs": "${OPENSSL_DIR}/lib/libssl.so,${OPENSSL_DIR}/lib/libcrypto.so"
 }
