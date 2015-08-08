@@ -51,7 +51,6 @@ private slots:
 	void handleInvoke(const bb::system::InvokeRequest&);
 #endif
 
-
 private:
 	explicit TelldusLive(QObject *parent = 0);
 	void doCall();

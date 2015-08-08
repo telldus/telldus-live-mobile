@@ -5,12 +5,6 @@
 #include <QResizeEvent>
 #include "config.h"
 
-#ifdef PLATFORM_BB10
-#include <bb/cascades/Application>
-#include <bb/cascades/QmlDocument>
-#include <bb/cascades/Page>
-#endif
-
 #ifdef PLATFORM_IOS
 Q_IMPORT_PLUGIN(QtQuick2Plugin)
 Q_IMPORT_PLUGIN(QQmlLocalStoragePlugin)
@@ -89,26 +83,12 @@ void CommonView::loadAndShow() {
 #elif defined(PLATFORM_ANDROID)
 	QSize size = QApplication::desktop()->size();
 	d->view.show();
-#elif defined(PLATFORM_BB10)
 #else
 	QRect r(QApplication::desktop()->availableGeometry());
 	QSize size(r.width(), r.height());
 	d->view.show();
 #endif
 
-#ifdef PLATFORM_BB10
-/*	QDeclarativeEngine *engine = bb::cascades::QmlDocument::defaultDeclarativeEngine();
-	engine->addImportPath(QString("%1/app/native/assets/import").arg(QDir::currentPath()));
-	d->qml = bb::cascades::QmlDocument::create("asset:///main.qml");
-	if (!d->qml->hasErrors()) {
-		bb::cascades::Page *page = d->qml->createRootObject<bb::cascades::Page>();
-		if (page) {
-			bb::cascades::Application::instance()->setScene(page);
-		}
-	} else {
-		qDebug() << "Could not load qml files:" << d->qml->errors();
-	}*/
-#else
 	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << size;
 	qDebug().nospace().noquote() << "[DEVICE] Screen viewOffset: " << viewOffset;
 	qDebug().nospace().noquote() << "[DEVICE] Screen logicalDotsPerInch: " << QApplication::primaryScreen()->logicalDotsPerInch();
@@ -120,11 +100,6 @@ void CommonView::loadAndShow() {
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
 	d->view.engine()->addImportPath(":/qmllib/common");
 	d->view.setSource(QUrl("qrc:/resources/qml/main.qml"));
-#endif
-
-#ifdef PLATFORM_BB10
-//	this->resize(size);
-#endif
 }
 
 void CommonView::setContextProperty(const QString &name, QObject *value) {

@@ -42,9 +42,6 @@ public:
 	QQueue<TelldusLiveCall> queue;
 	bool requestPending, sessionIsAuthenticated;
 	QDateTime ttl;
-#ifdef PLATFORM_BB10
-	bb::system::InvokeManager *m;
-#endif
 	static TelldusLive *instance;
 };
 
@@ -89,7 +86,6 @@ TelldusLive::TelldusLive(QObject *parent) :
 	d->session = s.value("session", "").toString();
 
 	QDesktopServices::setUrlHandler("x-com-telldus-live-mobile", this, "onUrlOpened");
-
 #ifdef PLATFORM_BB10
 	d->m = new bb::system::InvokeManager(this);
 	connect(d->m, SIGNAL(invoked(const bb::system::InvokeRequest&)), this, SLOT(handleInvoke(const bb::system::InvokeRequest&)));
@@ -115,15 +111,6 @@ void TelldusLive::authenticateSession() {
 TelldusLive::~TelldusLive() {
 	delete d;
 }
-
-#ifdef PLATFORM_BB10
-void TelldusLive::handleInvoke(const bb::system::InvokeRequest &r) {
-	QMultiMap<QString, QString> queryParams;
-	QString token = r.uri().queryItemValue("oauth_token");
-	QString verifier = r.uri().queryItemValue("oauth_verifier");
-	d->manager->verifyToken(token, verifier);
-}
-#endif
 
 void TelldusLive::authorize() {
 	d->requestPending = true;
@@ -243,7 +230,7 @@ void TelldusLive::onSessionAuthenticated(const QVariantMap &data) {
 	d->ttl = QDateTime::fromMSecsSinceEpoch((qint64)data["ttl"].toInt()*1000);
 	qint64 msecs = QDateTime::currentDateTime().msecsTo(d->ttl);
 	msecs -= 15*60*1000;  // 15 minutes to be sure
-    QTimer::singleShot((int)msecs, this, SLOT(authenticateSession()));  // Renew the session
+	QTimer::singleShot((int)msecs, this, SLOT(authenticateSession()));  // Renew the session
 	emit sessionAuthenticated();
 }
 
