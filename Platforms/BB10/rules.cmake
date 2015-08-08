@@ -19,6 +19,7 @@ SET_SOURCE_FILES_PROPERTIES(
 LIST(APPEND LIBRARIES -lcpp -lbbsystem )
 
 SET(QNX_TARGET $ENV{QNX_TARGET} CACHE PATH "Path to QNX_TARGET")
+SET(QNX_HOST $ENV{QNX_HOST} CACHE PATH "Path to QNX_HOST")
 SET(DEBUG_TOKEN "" CACHE FILEPATH "Path to the debug token to sign with")
 SET(DEVICE_PASSWORD "" CACHE FILEPATH "Password to the device")
 SET(DEVICE_IP "169.254.0.1" CACHE STRING "IP address to the device")
@@ -40,13 +41,13 @@ ENDFOREACH()
 FUNCTION(COMPILE target)
 	SET(BARFILE "${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}${SUFFIX}")
 	ADD_CUSTOM_TARGET(run
-		blackberry-nativepackager -package ${BARFILE}-debug.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} ${BB10_FILES} ${target}
+		${QNX_HOST}/usr/bin/blackberry-nativepackager -package ${BARFILE}-debug.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} ${BB10_FILES} ${target}
 		DEPENDS ${target}
 		COMMENT "Package and deploy ${BARFILE}-debug.bar file"
 	)
 	ADD_CUSTOM_TARGET(release
-		COMMAND blackberry-nativepackager -package ${BARFILE}-release.bar ${BB10_FILES} ${target}
-		COMMAND blackberry-signer -storepass ${SIGNING_PASSWORD} ${target}-release.bar
+		COMMAND ${QNX_HOST}/usr/bin/blackberry-nativepackager -package ${BARFILE}-release.bar ${BB10_FILES} ${target}
+		COMMAND ${QNX_HOST}/usr/bin/blackberry-signer -storepass ${SIGNING_PASSWORD} ${target}-release.bar
 		DEPENDS ${target}
 		COMMENT "Package and sign ${BARFILE}-release.bar file"
 	)
