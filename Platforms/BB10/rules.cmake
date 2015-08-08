@@ -1,5 +1,11 @@
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/BB10/bar-descriptor.xml ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
 
+IF(RELEASE_BUILD)
+	SET(SUFFIX "")
+ELSE()
+	SET(SUFFIX ".dev")
+ENDIF()
+
 SET(BB10_FILES ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
 SET(FILES
 	../../src/icons/icon-114.png
@@ -32,7 +38,7 @@ FOREACH(file ${FILES})
 ENDFOREACH()
 
 FUNCTION(COMPILE target)
-	SET(BARFILE "${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}")
+	SET(BARFILE "${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}${SUFFIX}")
 	ADD_CUSTOM_TARGET(run
 		blackberry-nativepackager -package ${BARFILE}-debug.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} ${BB10_FILES} ${target}
 		DEPENDS ${target}

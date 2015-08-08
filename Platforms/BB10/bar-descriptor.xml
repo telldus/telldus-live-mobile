@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
-	<id>com.telldus.live.mobile</id>
+	<id>com.telldus.live.mobile${SUFFIX}</id>
 	<name>Telldus Live! mobile</name>
 	<author>Telldus Technologies AB</author>
 	<versionNumber>${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}</versionNumber>
