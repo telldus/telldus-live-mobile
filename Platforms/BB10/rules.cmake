@@ -39,16 +39,24 @@ FOREACH(file ${FILES})
 ENDFOREACH()
 
 FUNCTION(COMPILE target)
-	SET(BARFILE "${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}${SUFFIX}")
+	SET(BARFILE "${target}-${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}${SUFFIX}.bar")
+	IF(RELEASE_BUILD)
+		ADD_CUSTOM_TARGET(bar
+			COMMAND ${QNX_HOST}/usr/bin/blackberry-nativepackager -package ${BARFILE} ${DEBUG_TOKEN} bar-descriptor.xml
+			COMMAND ${QNX_HOST}/usr/bin/blackberry-signer -storepass ${SIGNING_PASSWORD} ${target}-release.bar
+			DEPENDS ${target}
+			COMMENT "Package and sign ${BARFILE} file"
+		)
+	ELSE()
+		ADD_CUSTOM_TARGET(bar
+			COMMAND ${QNX_HOST}/usr/bin/blackberry-nativepackager -package ${BARFILE} -devMode -debugToken ${DEBUG_TOKEN} bar-descriptor.xml
+			DEPENDS ${target}
+			COMMENT "Package ${BARFILE} file"
+		)
+	ENDIF()
 	ADD_CUSTOM_TARGET(run
-		${QNX_HOST}/usr/bin/blackberry-nativepackager -package ${BARFILE}-debug.bar -devMode -debugToken ${DEBUG_TOKEN} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD} ${BB10_FILES} ${target}
-		DEPENDS ${target}
-		COMMENT "Package and deploy ${BARFILE}-debug.bar file"
-	)
-	ADD_CUSTOM_TARGET(release
-		COMMAND ${QNX_HOST}/usr/bin/blackberry-nativepackager -package ${BARFILE}-release.bar ${BB10_FILES} ${target}
-		COMMAND ${QNX_HOST}/usr/bin/blackberry-signer -storepass ${SIGNING_PASSWORD} ${target}-release.bar
-		DEPENDS ${target}
-		COMMENT "Package and sign ${BARFILE}-release.bar file"
+		COMMAND ${QNX_HOST}/usr/bin/blackberry-deploy -package ${BARFILE} -installApp -launchApp -device ${DEVICE_IP} -password ${DEVICE_PASSWORD}
+		DEPENDS bar
+		COMMENT "Deploy and run ${BARFILE} file"
 	)
 ENDFUNCTION()
