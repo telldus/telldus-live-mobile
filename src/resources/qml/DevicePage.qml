@@ -1,72 +1,52 @@
+import QtGraphicalEffects 1.0
 import QtQuick 2.0
 import Telldus 1.0
 
 Item {
 	id: devicePage
+	property bool showEditButtons: false
 
 	Component {
 		id: deviceDelegate
-		Item {
-			id: wrapper
-			property Device dev: device
-			width: list.width
-			height: 50 * SCALEFACTOR
-			clip: false
-			z: model.index
-			ListView.onRemove: SequentialAnimation {
-				PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
-				PropertyAction { target: wrapper; property: "z"; value: -1 }
-				//NumberAnimation { target: wrapper; properties: "height,opacity"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
-				PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: false }
-			}
-			ListView.onAdd: SequentialAnimation {
-				PropertyAction { target: wrapper; property: "z"; value: -1 }
-				ParallelAnimation {
-				//	NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150*SCALEFACTOR; duration: 250; easing.type: Easing.InOutQuad }
-				//	NumberAnimation { target: wrapper; properties: "opacity"; from: 0; to: 1; duration: 250; easing.type: Easing.InOutQuad }
-				}
-				PropertyAction { target: wrapper; property: "z"; value: 0 }
-			}
-			BorderImage {
-				source: mouseArea.pressed ? "../images/rowBgActive.png" : "../images/rowBg.png"
-				anchors.top: parent.top
+		Rectangle {
+			color: "#eeeeee"
+			height: wrapper.height
+			width: parent.width
+
+			Rectangle {
+				id: wrapper
+				property Device dev: device
+				state: showEditButtons ? 'showEditButtons' : ''
+				width: devicePage.width
+				height: Math.max(buttons.height, nameCol.height, arrow.height) + (20 * SCALEFACTOR)
+				clip: false
+				//color: index % 2 == 0 ? "#ffffff" : "#eaeaea"
+				color: "#ffffff"
+				z: model.index
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
-				anchors.rightMargin: 10 * SCALEFACTOR
-				height: wrapper.height / SCALEFACTOR * 2
-				width: (wrapper.width / SCALEFACTOR * 2) - 40
-				border {left: 21; top: 21; right: 21; bottom: 28 }
-				scale: SCALEFACTOR / 2
-				transformOrigin: Item.TopLeft
-			}
-
-			Item {
-				anchors.fill: parent
-				anchors.topMargin: 5 * SCALEFACTOR
-				anchors.bottomMargin: 10 * SCALEFACTOR
-				anchors.leftMargin: 10 * SCALEFACTOR
-				anchors.rightMargin: 10 * SCALEFACTOR
-
+				anchors.leftMargin: 0
+				anchors.top: parent.top
+				ListView.onRemove: SequentialAnimation {
+					PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
+					PropertyAction { target: wrapper; property: "z"; value: -1 }
+	//				NumberAnimation { target: wrapper; properties: "height,opacity"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
+					PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: false }
+				}
+				ListView.onAdd: SequentialAnimation {
+					PropertyAction { target: wrapper; property: "z"; value: -1 }
+					ParallelAnimation {
+	//					NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150; duration: 250; easing.type: Easing.InOutQuad }
+	//					NumberAnimation { target: wrapper; properties: "opacity"; from: 0; to: 1; duration: 250; easing.type: Easing.InOutQuad }
+					}
+					PropertyAction { target: wrapper; property: "z"; value: 0 }
+				}
 				ButtonSet {
 					id: buttons
 					device: wrapper.dev
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
-					anchors.leftMargin: 5 * SCALEFACTOR
+					anchors.leftMargin: 10 * SCALEFACTOR
 				}
-
-				MouseArea {
-					id: mouseArea
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.left: nameCol.left
-					anchors.right: parent.right
-					onClicked: {
-						devicePage.state = 'showDevice'
-						showDevice.selected = device
-					}
-				}
-
 				Column {
 					id: nameCol
 					anchors.verticalCenter: parent.verticalCenter
@@ -75,7 +55,7 @@ Item {
 					anchors.right: arrow.left
 					anchors.rightMargin: 10 * SCALEFACTOR
 					Text {
-						color: "#00659F"
+						color: "#20334d"
 						width: parent.width
 						font.pixelSize: 16 * SCALEFACTOR
 						font.weight: Font.Bold
@@ -90,79 +70,130 @@ Item {
 						elide: Text.ElideRight
 					}
 				}
-
+				MouseArea {
+					id: mouseArea
+					anchors.left: buttons.right
+					anchors.top: parent.top
+					anchors.right: parent.right
+					anchors.bottom: parent.bottom
+					onClicked: {
+						devicePage.state = 'showDevice'
+						showDevice.selected = device
+					}
+				}
 				Image {
 					id: arrow
 					source: "../images/rowArrow.png"
-					width: sourceSize.width * (SCALEFACTOR / 2)
+					width: (sourceSize.width / 2) * SCALEFACTOR
 					fillMode: Image.PreserveAspectFit
-					anchors.right: parent.right
+					anchors.right: wrapper.right
 					anchors.rightMargin: 10 * SCALEFACTOR
 					anchors.verticalCenter: parent.verticalCenter
+				}
+				MouseArea {
+					anchors.fill: parent
+					enabled: showEditButtons
+					onClicked: {
+						devicePage.showEditButtons = false
+					}
+				}
+				states: [
+					State {
+						name: 'showEditButtons'
+						PropertyChanges { target: wrapper; anchors.leftMargin: underMenu.height * (underMenu.children.length - 1) }
+					}
+				]
+				transitions: [
+					Transition {
+						to: 'showEditButtons'
+						reversible: true
+						PropertyAnimation { property: "anchors.leftMargin";  duration: 300; easing.type: Easing.InOutQuad }
+					}
+				]
+			}
+			Rectangle {
+				id: underMenu
+				anchors.right: wrapper.left
+				anchors.top: parent.top
+				anchors.left: parent.left
+				anchors.bottom: parent.bottom
+				color: "#f8f8f8"
+				clip: true
+				Item {
+					id: editButton1
+					height: parent.height
+					width: editButton1.height
+					anchors.left: parent.left
+					anchors.top: parent.top
+					Image {
+						anchors.centerIn: parent
+						source: device.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
+						height: 30 * SCALEFACTOR
+						width: 30 * SCALEFACTOR
+						smooth: true
+					}
+					MouseArea {
+						anchors.fill: parent
+						onClicked: device.isFavorite = !device.isFavorite
+					}
+				}
+/* Prototype for 2nd button				Item {
+					id: editButton2
+					height: parent.height
+					width: editButton2.height
+					anchors.left: editButton1.right
+					anchors.top: parent.top
+					Image {
+						anchors.centerIn: parent
+						source: device.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
+						height: 30 * SCALEFACTOR
+						width: 30 * SCALEFACTOR
+						smooth: true
+					}
+					MouseArea {
+						anchors.fill: parent
+						onClicked: device.isFavorite = !device.isFavorite
+					}
+				}*/
+				LinearGradient {
+					anchors.top: parent.top
+					anchors.right: parent.right
+					anchors.bottom: parent.bottom
+					width: 3 * SCALEFACTOR
+					start: Qt.point(0, 0)
+					end: Qt.point(3 * SCALEFACTOR, 0)
+					gradient: Gradient {
+						GradientStop { position: 0.0; color: "#00999999" }
+						GradientStop { position: 1.0; color: "#80999999" }
+					}
 				}
 			}
 		}
 	}
-
-	SwipeArea {
+	Rectangle {
 		id: listPage
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
-		filterTouchEvent: true
-		filterMouseEvent: false
-		onSwipeLeft: mainInterface.swipeLeft()
-
+		color: "#80999999"
 		ListView {
 			id: list
-			header: Item {
-				height: header.height + headerMenu.height + (15 * SCALEFACTOR)
-				width: list.width
-			}
-			footer: Item {
-				height: 10
-				width: list.width
-			}
-
 			anchors.fill: parent
-			model: favoriteModel
+			anchors.topMargin: screen.isPortrait ? header.height : 0
+			anchors.leftMargin: screen.isPortrait ? 0 : header.width
+			model: deviceModel
 			delegate: deviceDelegate
-			spacing: 5 * SCALEFACTOR
 			maximumFlickVelocity: 1500 * SCALEFACTOR
+			spacing: 1 * SCALEFACTOR
 		}
-
 		Header {
 			id: header
-			anchors.topMargin: Math.min(0, Math.max(-header.height, -list.contentY-header.height-headerMenu.height- (10 * SCALEFACTOR)))
-		}
-		HeaderMenu {
-			id: headerMenu
-			activeItem: favoriteModel.doFilter ? fav : allDev
-			onActiveItemChanged: {
-				list.positionViewAtBeginning()
-			}
-
-			items: [
-				HeaderMenuItem {
-					id: fav
-					title: "Favorites"
-					onActivated: setFavoriteFilter(true)
-				},
-				HeaderMenuItem {
-					id: allDev
-					title: "All devices"
-					onActivated: setFavoriteFilter(false)
-				}
-			]
+			title: "Devices"
+			editButtonVisible: true
+			onEditClicked: showEditButtons = !showEditButtons;
 		}
 	}
-
-	function setFavoriteFilter(doFilter) {
-		favoriteModel.doFilter = doFilter
-		dev.logScreenView("/device/" + (doFilter ? "favorites": "all"))
-	}
-
 	Component {
 		id: componentShowDevice
 		DeviceDetails {
@@ -179,8 +210,6 @@ Item {
 		width: parent.width
 		sourceComponent: selected ? componentShowDevice : undefined
 	}
-
-
 	states: [
 		State {
 			name: 'showDevice'
