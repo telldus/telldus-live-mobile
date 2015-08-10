@@ -6,12 +6,13 @@ Rectangle {
 	property alias title: titleText.text
 	property alias backVisible: backButton.visible
 	property alias editButtonVisible: editButton.visible
+	property var headerHeight: 40
 	signal backClicked()
 	signal editClicked()
 	anchors.left: parent.left
 	anchors.top: parent.top
-	height: screen.isPortrait ? 50 * SCALEFACTOR : screen.height
-	width: screen.isPortrait ? screen.width : 50 * SCALEFACTOR
+	height: screen.isPortrait ? headerHeight * SCALEFACTOR : screen.height
+	width: screen.isPortrait ? screen.width : headerHeight * SCALEFACTOR
 	color: "#20334d"
 
 	Item {
@@ -22,8 +23,8 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		Item {
 			id: leftButton
-			width: 50 * SCALEFACTOR
-			height: 50 * SCALEFACTOR
+			width: headerHeight * SCALEFACTOR
+			height: headerHeight * SCALEFACTOR
 			anchors.top: parent.top
 			anchors.left: parent.left
 			clip: true
@@ -31,7 +32,7 @@ Rectangle {
 				id: backButton
 				visible: false
 				width: backText.width + ((12 + 8) * SCALEFACTOR)
-				height: 25 * SCALEFACTOR
+				height: headerHeight / 2 * SCALEFACTOR
 				anchors.centerIn: parent
 				clip: true
 				BorderImage {
@@ -67,7 +68,7 @@ Rectangle {
 				id: drawerButton
 				visible: !backButton.visible
 				anchors.centerIn: parent
-				height: 40 * SCALEFACTOR
+				height: (headerHeight - 10) * SCALEFACTOR
 				width: drawerButton.height
 				source: "../" + (SCALEFACTOR > 2 ? "images@2x" : "images") + "/drawerIcon.png"
 				smooth: true
@@ -85,8 +86,8 @@ Rectangle {
 		}
 		Item {
 			id: rightButton
-			width: 50 * SCALEFACTOR
-			height: 50 * SCALEFACTOR
+			width: headerHeight * SCALEFACTOR
+			height: headerHeight * SCALEFACTOR
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
 			clip: true
