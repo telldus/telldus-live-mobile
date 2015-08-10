@@ -130,8 +130,11 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 	}
 
 	if (d->scalefactor == 0) {
-		d->scalefactor = QApplication::primaryScreen()->physicalDotsPerInch() / 72 /  QApplication::primaryScreen()->devicePixelRatio();
+		d->scalefactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
 	}
+	#ifdef PLATFORM_BB10
+	d->scalefactor = d->scalefactor / 2.3
+	#endif
 	qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << d->scalefactor;
 
 //	if (s.width() < 450) {
