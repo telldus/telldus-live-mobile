@@ -130,7 +130,7 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 	}
 
 	if (d->scalefactor == 0) {
-		d->scalefactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
+		d->scalefactor = QApplication::primaryScreen()->physicalDotsPerInch() / 72 /  QApplication::primaryScreen()->devicePixelRatio();
 	}
 	qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << d->scalefactor;
 
