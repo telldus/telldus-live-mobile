@@ -5,7 +5,6 @@
 #include <QMetaMethod>
 #include <QApplication>
 #include <QDesktopServices>
-#include <QSslSocket>
 #include <QUrlQuery>
 #include <QJsonDocument>
 #include <QUuid>
@@ -15,10 +14,16 @@
 
 #include "config.h"
 #include "tellduslive.h"
+#include "tellduscenter.h"
 #include "utils/dev.h"
 
 #ifdef PLATFORM_BB10
 #include <bb/system/InvokeRequest>
+#endif
+
+#ifdef PLATFORM_ANDROID
+#include <QAndroidJniObject>
+#include <QAndroidJniEnvironment>
 #endif
 
 class TelldusLiveCall {
@@ -47,9 +52,8 @@ public:
 
 TelldusLive *TelldusLive::PrivateData::instance = 0;
 
-TelldusLive::TelldusLive(QObject *parent) :
-	QObject(parent)
-{
+TelldusLive::TelldusLive(QObject *parent):QObject(parent) {
+
 	d = new PrivateData;
 	d->manager = 0;
 	d->request = 0;
@@ -57,10 +61,6 @@ TelldusLive::TelldusLive(QObject *parent) :
 	d->sessionIsAuthenticated = false;
 
 	d->base = TELLDUS_LIVE_API_ENDPOINT;
-
-//	QSslSocket::addDefaultCaCertificates(":/Equifax_Secure_CA.pem");
-//	QSslSocket::addDefaultCaCertificates(":/GeoTrustGlobalCA.pem");
-//	QSslSocket::addDefaultCaCertificates(":/RapidSSLCA.pem");
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
@@ -91,11 +91,11 @@ TelldusLive::TelldusLive(QObject *parent) :
 	connect(d->m, SIGNAL(invoked(const bb::system::InvokeRequest&)), this, SLOT(handleInvoke(const bb::system::InvokeRequest&)));
 #endif
 
-	this->setupManager();
 }
 
 void TelldusLive::authenticateSession() {
 	registerForPush();
+
 #if IS_FEATURE_WEBSOCKETS_ENABLED
 	if (d->session == "") {
 		QSettings s;
@@ -104,7 +104,6 @@ void TelldusLive::authenticateSession() {
 	}
 	TelldusLiveParams params;
 	params["session"] = d->session;
-	qDebug() << d->session;
 	this->call("user/authenticateSession", params, this, SLOT(onSessionAuthenticated(QVariantMap)));
 #endif
 }
@@ -179,7 +178,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 	}
 
 	if (d->queue.length() == 0) {
-		qWarning() << "No pending call, should not happen!";
+		qWarning() << "[API] No pending call, should not happen!";
 		return;
 	}
 
@@ -202,9 +201,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 	QJsonDocument json(QJsonDocument::fromJson(response, &error));
 	QVariantMap result = json.toVariant().toMap();
 	if (error.error != QJsonParseError::NoError) {
-		qDebug() << "Could not parse json response from" << call.endpoint;
-		qDebug() << error.errorString();
-		qDebug() << response;
+		qDebug() << "[API] Could not parse json response from: " << call.endpoint << " (" << error.errorString() << ") (" << response << ")";
 		return;
 	}
 
@@ -224,7 +221,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 
 void TelldusLive::onSessionAuthenticated(const QVariantMap &data) {
 	if (data["status"] != "success") {
-		qWarning() << "Could not authenticate websockets";
+		qWarning() << "[WEBSOCKETS] Could not authenticate websockets";
 		return;
 	}
 	d->sessionIsAuthenticated = true;
@@ -240,7 +237,7 @@ bool TelldusLive::isAuthorized() {
 }
 
 void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJSValue &expression) {
-	qDebug() << "Queue call to" << endpoint;
+	qDebug() << "[API] Queue call to" << endpoint;
 
 	TelldusLiveCall call;
 	call.receiver = 0;
@@ -267,6 +264,8 @@ void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJ
 		}
 
 	}
+	qDebug() << "      Params: " << call.params;
+
 	d->queue.enqueue(call);
 	if (!d->requestPending) {
 		this->doCall();
@@ -274,7 +273,7 @@ void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJ
 }
 
 void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra) {
-	qDebug() << "Queue call to" << endpoint;
+	qDebug() << "[API] Queue call to" << endpoint;
 
 	TelldusLiveCall call;
 	call.endpoint = endpoint;
@@ -285,6 +284,7 @@ void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params,
 	for(QMap<QString, QVariant>::const_iterator it = params.constBegin(); it != params.constEnd(); ++it) {
 		call.params.insert(it.key(), it.value().toString());
 	}
+	qDebug() << "      Params: " << call.params;
 
 	d->queue.enqueue(call);
 	if (!d->requestPending) {
@@ -330,7 +330,7 @@ void TelldusLive::doCall() {
 	d->requestPending = true;
 	emit workingChanged();
 	TelldusLiveCall call(d->queue.head());
-	qDebug() << "Calling" << call.endpoint;
+	qDebug().noquote() << "[API] Calling" << call.endpoint;
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();

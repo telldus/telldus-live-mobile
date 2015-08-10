@@ -1,3 +1,9 @@
+rm -r * && cmake .. -DTARGET_PLATFORM=Android -DCMAKE_TOOLCHAIN_FILE=platforms/Android/android.toolchain.cmake -DANDROID_NDK=/Users/mark/Downloads/android-ndk-r10e -DCMAKE_BUILD_TYPE=Release -DANDROID_ABI="armeabi-v7a with NEON" -DQt5_Dir=/Users/mark/Qt/5.4/android_armv7
+
+export CC=/Users/mark/Downloads/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-gcc
+export AR=/Users/mark/Downloads/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-ar
+export ANDROID_DEV=/Users/mark/Downloads/android-ndk-r10e/platforms/android-15
+
 export NECESSITAS_DIR=
 export ANDROID_NDK=${NECESSITAS_DIR}/android-ndk
 cmake .. -DTARGET_PLATFORM=Android \

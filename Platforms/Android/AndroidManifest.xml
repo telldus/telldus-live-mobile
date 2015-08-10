@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest android:versionCode="${INTERNAL_VERSION}" package="com.telldus.live.mobile${SUFFIX}" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="${PACKAGE_MAJOR_VERSION}.${PACKAGE_MINOR_VERSION}.${PACKAGE_PATCH_VERSION}">
 	<application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:icon="@drawable/icon" android:label="Telldus Live! mobile">
-		<activity android:name="org.qtproject.qt5.android.bindings.QtActivity"
-			android:configChanges="orientation|locale|fontScale|keyboard|keyboardHidden"
+		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+		<activity android:name="com.telldus.live.mobile.MainActivity"
+			android:configChanges="orientation|locale|fontScale|keyboard|keyboardHidden|screenSize"
 			android:label="Telldus Live! mobile"
 			android:launchMode="singleTop"
-			android:screenOrientation="portrait">
+			android:screenOrientation="fullSensor">
 			<intent-filter>
 					<action android:name="android.intent.action.MAIN"/>
 					<category android:name="android.intent.category.LAUNCHER"/>
@@ -38,6 +39,34 @@
 			<!-- Splash screen -->
 			<meta-data android:name="android.app.background_running" android:value="false"/>
 		</activity>
+		<receiver
+			android:name="com.google.android.gms.gcm.GcmReceiver"
+			android:exported="true"
+			android:permission="com.google.android.c2dm.permission.SEND" >
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<category android:name="com.telldus.live.mobile" />
+			</intent-filter>
+		</receiver>
+		<service
+			android:name="com.telldus.live.mobile.MyGcmListenerService"
+			android:exported="false" >
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+			</intent-filter>
+		</service>
+		<service
+			android:name="com.telldus.live.mobile.MyInstanceIDListenerService"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.android.gms.iid.InstanceID"/>
+			</intent-filter>
+		</service>
+		<service
+			android:name="com.telldus.live.mobile.RegistrationIntentService"
+			android:exported="false">
+		</service>
 	</application>
 	<supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="false"/>
 	<uses-sdk android:minSdkVersion="11" android:targetSdkVersion="19" />
@@ -48,4 +77,12 @@
 		<!-- The following comment will be replaced upon deployment with default features based on the dependencies of the application.
 				 Remove the comment if you do not require these default features. -->
 		<!-- %%INSERT_FEATURES -->
+
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<permission android:name="com.telldus.live.mobile${SUFFIX}.gcm.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.telldus.live.mobile${SUFFIX}.gcm.permission.C2D_MESSAGE" />
+
 </manifest>

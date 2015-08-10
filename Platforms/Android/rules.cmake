@@ -1,12 +1,13 @@
 SET(HAVE_WEBKIT 1)
 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 IF(RELEASE_BUILD)
 	SET(SUFFIX "")
 ELSE()
 	SET(SUFFIX ".dev")
 ENDIF()
 
-SET(ANDROID_SDK "" CACHE DIR "Path to Android SDK")
 SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
 SET(Qt5Core_DIR ${Qt5_Dir}/lib/cmake/Qt5Core)
 SET(Qt5Network_DIR ${Qt5_Dir}/lib/cmake/Qt5Network)
@@ -18,13 +19,21 @@ SET(Qt5WebSockets_DIR ${Qt5_Dir}/lib/cmake/Qt5WebSockets)
 SET(Qt5Widgets_DIR ${Qt5_Dir}/lib/cmake/Qt5Widgets)
 SET(Qt5WebView_DIR ${Qt5_Dir}/lib/cmake/Qt5WebView)
 
+SET(Qt5AndroidExtras_DIR ${Qt5_Dir}/lib/cmake/Qt5AndroidExtras)
+FIND_PACKAGE( Qt5AndroidExtras REQUIRED )
+LIST(APPEND LIBRARIES Qt5::AndroidExtras)
+
 SET(OPENSSL_DIR "/path/to/openssl/lib/and/include" CACHE STRING "Path to the openssl for android dir")
 
 SET(Keystore "" CACHE PATH "Path to Android keystore file")
+SET(GCM_SERVER_ID "" CACHE STRING "CGM Server ID for Push")
 
 MATH(EXPR INTERNAL_VERSION "${PACKAGE_MAJOR_VERSION}*10000+${PACKAGE_MINOR_VERSION}*100+${PACKAGE_PATCH_VERSION}")
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/AndroidManifest.xml ${CMAKE_BINARY_DIR}/template/AndroidManifest.xml)
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/deployment-settings.json ${CMAKE_BINARY_DIR}/deployment-settings.json)
+
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/src/com/telldus/live/mobile/MyGcmListenerService.java ${CMAKE_BINARY_DIR}/apk/src/com/telldus/live/mobile/MyGcmListenerService.java)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/src/com/telldus/live/mobile/RegistrationIntentService.java ${CMAKE_BINARY_DIR}/apk/src/com/telldus/live/mobile/RegistrationIntentService.java)
 
 INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
 
@@ -102,6 +111,34 @@ FOREACH(file ${ANDROID_FILES})
 	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/${path}/${name})
 ENDFOREACH()
 
+INCLUDE_DIRECTORIES( platforms/Android/src )
+LIST(APPEND SOURCES
+	platforms/Android/src/AndroidPushNotifications.cpp
+)
+
+SET(JAVA_SOURCES
+	src/com/telldus/live/mobile/MainActivity.java
+	src/com/telldus/live/mobile/MyInstanceIDListenerService.java
+	src/com/telldus/live/mobile/QuickstartPreferences.java
+	libs/android-support-v4.jar
+	libs/google-play-services.jar
+	libs/android-support-v7-appcompat.jar
+	res/values/common_strings.xml
+	res/values/version.xml
+)
+
+FOREACH(filename ${JAVA_SOURCES})
+	ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_BINARY_DIR}/apk/${filename}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/platforms/Android/${filename} ${CMAKE_BINARY_DIR}/apk/${filename}
+		MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/platforms/Android/${filename}
+		COMMENT "Copying ${filename}"
+	)
+	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/${filename})
+ENDFOREACH()
+
+LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/src/com/telldus/live/mobile/MyGcmListenerService.java)
+LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/src/com/telldus/live/mobile/RegistrationIntentService.java)
+
 ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/parsed/qrc_resources.cxx
 	COMMAND ${QT_DIR}/bin/rcc
 	ARGS -name resources -o ${CMAKE_CURRENT_BINARY_DIR}/parsed/qrc_resources.cxx ${CMAKE_SOURCE_DIR}/src/resources.qrc
@@ -116,7 +153,7 @@ FUNCTION(COMPILE target)
 	)
 	ADD_CUSTOM_TARGET(run
 		${Qt5_Dir}/bin/androiddeployqt --android-platform android-19 --no-build --verbose --reinstall --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk &&
-		adb shell am start -n com.telldus.live.mobile${SUFFIX}/org.qtproject.qt5.android.bindings.QtActivity
+		adb shell am start -n com.telldus.live.mobile${SUFFIX}/com.telldus.live.mobile.MainActivity
 		DEPENDS ${target}
 		COMMENT "Package and deploy apk"
 	)

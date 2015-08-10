@@ -95,7 +95,7 @@ void Client::setType(const QString &type) {
 }
 
 void Client::sessionAuthenticated() {
-	qDebug() << "Client::sessionAuthenticated";
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Session authenticated";
 	if (QApplication::applicationState() == Qt::ApplicationActive) {
 		TelldusLive *telldusLive = TelldusLive::instance();
 		if (telldusLive->session() == "" || d->id == 0) {
@@ -103,7 +103,7 @@ void Client::sessionAuthenticated() {
 		}
 		// Check to see if we are already connected
 		if (m_webSocket.state() == QAbstractSocket::ConnectedState) {
-			qDebug() << "Websocket already connected";
+			qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Already connected";
 			return;
 		}
 		TelldusLiveParams params;
@@ -113,16 +113,17 @@ void Client::sessionAuthenticated() {
 }
 
 void Client::addressReceived(const QVariantMap &data) {
-	qDebug() << "Client::addressReceived";
+	TelldusLiveParams params;
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Websocket address received";
 	if (data["address"].toString() == "") {
-		qDebug() << "No server to connect to, client offline? Retry in 5 minutes";
+		qDebug() << "[CLIENT:" << d->id << ":WEBSOCKET] No server to connect to, client offline? Retry in 5 minutes";
 		QTimer::singleShot(300000, this, SLOT(sessionAuthenticated()));
 		return;
 	}
 	TelldusLive *telldusLive = TelldusLive::instance();
 	d->sessionId = telldusLive->session();
 	QString url = QString("ws://%1:%2/websocket").arg(data["address"].toString(), data["port"].toString());
-	qDebug() << "-- Connecting to " + url;
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Connecting to " + url;
 	Dev::instance()->logEvent("websocket", "tryConnection", "");
 
 	m_webSocket.open(QUrl(url));
@@ -138,15 +139,14 @@ void Client::wsConnected() {
 void Client::wsDataReceived(const QString &string) {
 	// Disabled for performance reasons
 	// Dev::instance()->logEvent("websocket", "datareceived", "");
-	qDebug() << "Websocket data received";
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Data received";
 	QJsonParseError ok;
 
 	QJsonDocument jsonDocument = QJsonDocument().fromJson(string.toLatin1(), &ok);
 	QJsonObject jsonObject = jsonDocument.object();
 	QVariantMap msg = jsonObject.toVariantMap();
 	if (ok.error != QJsonParseError::NoError) {
-		qWarning() << "Could not parse json response";
-		qWarning() << string;
+		qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Could not parse json response: " << string;
 		return;
 	}
 	QVariantMap data = msg["data"].toMap();
@@ -168,16 +168,16 @@ void Client::wsDataReceived(const QString &string) {
 
 void Client::wsDisconnected() {
 	Dev::instance()->logEvent("websocket", "disconnected", "");
-	qDebug() << "Websocket disconnected, retry in 10 seconds";
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Disconnected, retry in 10 seconds";
 	QTimer::singleShot(10000, this, SLOT(sessionAuthenticated()));
 }
 
 void Client::applicationStateChanged(Qt::ApplicationState state) {
-	qDebug() << "Client::applicationStateChanged(" + QString::number(state) + ")";
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Application state changed: " + QString::number(state);
 	switch (state) {
 		case Qt::ApplicationActive:
 		Dev::instance()->logEvent("applicationState", "active", "");
-		qDebug() << "Websocket disconnected, retry now";
+		qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Disconnected, retry now";
 		QTimer::singleShot(100, this, SLOT(sessionAuthenticated()));
 		break;
 	case Qt::ApplicationSuspended:
