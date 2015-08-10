@@ -1,32 +1,39 @@
 #include <QtWidgets/QApplication>
-#include "tellduscenter.h"
-#include "tellduslive.h"
-#include "config.h"
 #include <QDebug>
 
 #include "commonview.h"
+#include "config.h"
+#include "tellduscenter.h"
+#include "tellduslive.h"
 
 #ifdef PLATFORM_IOS
 	#include <QtPlugin>
 	Q_IMPORT_PLUGIN(QSvgPlugin)
 	Q_IMPORT_PLUGIN(QSQLiteDriverPlugin)
+
+	#include "ObjectiveUtils.h"
+	#include "QtAppDelegate-C-Interface.h"
 #endif
 
-#ifdef Q_OS_IOS
-extern "C" int qtmn(int argc, char *argv[])
-#else
-int main(int argc, char *argv[])
+int init(int argc, char *argv[]) {
+
+#ifdef PLATFORM_IOS
+	QtAppDelegateInitialize();
+	ObjectiveUtils::setGoodStatusBarStyle();
 #endif
-{
+
+	qDebug().noquote() << QString("[FEATURE] Logging: %1").arg(IS_FEATURE_LOGGING_ENABLED ? "Enabled" : "Disabled");
+	qDebug().noquote() << QString("[FEATURE] Websockets: %1").arg(IS_FEATURE_WEBSOCKETS_ENABLED ? "Enabled" : "Disabled");
+	qDebug().noquote() << QString("[FEATURE] GoogleAnalytics: %1").arg(IS_FEATURE_GOOGLEANALYTICS_ENABLED ? "Enabled" : "Disabled");
+
 	QScopedPointer<QApplication> app(new QApplication(argc, argv));
-
 	QCoreApplication::setOrganizationName("telldus");
 	QCoreApplication::setOrganizationDomain("com.telldus");
 	QCoreApplication::setApplicationName("Telldus Live! Mobile");
 	QCoreApplication::setApplicationVersion(VERSION);
 
 	CommonView *viewer = new CommonView();
-	TelldusCenter tc(viewer);
+	TelldusCenter::instance(viewer);
 
 	viewer->loadAndShow();
 
@@ -37,4 +44,12 @@ int main(int argc, char *argv[])
 	exit(0);
 #endif
 	return retval;
+}
+
+#ifdef PLATFORM_IOS
+extern "C" int qtmn(int argc, char *argv[]) {
+#else
+int main(int argc, char *argv[]) {
+#endif
+return init(argc, argv);
 }

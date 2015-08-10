@@ -13,7 +13,7 @@ ENDIF()
 IF (BUILD_FOR_DEVICE)
 	SET(QT_DIR "${QT_SOURCE_DIR}/ios")
 ELSE()
-	SET(QT_DIR "${QT_SOURCE_DIR}/ios_x86")
+	SET(QT_DIR "${QT_SOURCE_DIR}/clang_64")
 ENDIF()
 SET(USE_QMAKE FALSE)
 
@@ -52,13 +52,15 @@ INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWebView )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtWebSockets )
 INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
 INCLUDE_DIRECTORIES( 3rdparty/googleanalytics )
-
+INCLUDE_DIRECTORIES( platforms/iOS/src )
 
 SET(QT_USE_QTOPENGL FALSE)
 
 LIST(APPEND SOURCES
+	platforms/iOS/src/QtAppDelegate.mm
+	platforms/iOS/src/ObjectiveUtils.mm
 	platforms/iOS/dev.mm
-	platforms/iOS/tellduscenter.mm
+	platforms/iOS/tellduslive.mm
 	platforms/iOS/commonview.mm
 )
 

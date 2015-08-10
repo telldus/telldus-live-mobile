@@ -38,7 +38,7 @@ public:
 	State state;
 	KQOAuthManager *manager;
 	KQOAuthRequest *request;
-	QString base, session;
+	QString base, session, pushToken;
 	QQueue<TelldusLiveCall> queue;
 	bool requestPending, sessionIsAuthenticated;
 	QDateTime ttl;
@@ -95,6 +95,7 @@ TelldusLive::TelldusLive(QObject *parent) :
 }
 
 void TelldusLive::authenticateSession() {
+	registerForPush();
 #if IS_FEATURE_WEBSOCKETS_ENABLED
 	if (d->session == "") {
 		QSettings s;
@@ -376,6 +377,41 @@ void TelldusLive::setupManager() {
 	if (d->state == PrivateData::Authorized) {
 		this->authenticateSession();
 	}
+}
+
+#ifndef PLATFORM_IOS
+void TelldusLive::registerForPush() {
+	#ifdef PLATFORM_ANDROID
+	JNINativeMethod methods[] {{"callNativeSendRegistrationToServer", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", reinterpret_cast<void *>(TelldusCenter::fromJavaSendRegistrationToServer)}};
+	QAndroidJniObject javaClass("com/telldus/live/mobile/RegistrationIntentService");
+	QAndroidJniEnvironment env;
+	jclass objectClass = env->GetObjectClass(javaClass.object<jobject>());
+	env->RegisterNatives(objectClass, methods, sizeof(methods) / sizeof(methods[0]));
+	env->DeleteLocalRef(objectClass);
+	QAndroidJniObject::callStaticMethod<void>("com/telldus/live/mobile/MainActivity", "sendRegistration", "()V");
+	#endif
+}
+#endif
+
+void TelldusLive::registerPushTokenWithApi(const QString &token, const QString &name, const QString &manufacturer, const QString &model, const QString &os_version) {
+	qDebug() << "[PUSH] Registering push token with API";
+	TelldusLiveParams params;
+	params["token"] = token;
+	params["name"] = name;
+	params["manufacturer"] = manufacturer;
+	params["model"] = model;
+	params["osVersion"] = os_version;
+	params["pushServiceId"] = PUSH_SERVICE_ID;
+	this->call("user/registerPushToken", params, this, SLOT(registerPushTokenWithApiCallback(QVariantMap)));
+}
+
+void TelldusLive::registerPushTokenWithApiCallback(const QVariantMap &data) {
+	if (data["status"] != "success") {
+		qDebug() << "[PUSH] Could not register push token with API";
+		qDebug().noquote().nospace() << "       Error: " << data.value("error").toString();
+		return;
+	}
+	qDebug() << "[PUSH] Successfully registered push token with API";
 }
 
 TelldusLive * TelldusLive::instance() {

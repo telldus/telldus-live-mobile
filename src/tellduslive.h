@@ -25,6 +25,7 @@ public:
 	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap());
 	QString session() const;
 	bool working() const;
+	void setupManager();
 
 	static TelldusLive *instance();
 
@@ -33,11 +34,13 @@ signals:
 	void sessionAuthenticated();
 	void authorizationNeeded(const QUrl &url);
 	void workingChanged();
+	void pushTokenChanged(QString token);
 
 public slots:
 	void authorize();
 	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
+	void registerPushTokenWithApi(const QString &phone_id, const QString &name, const QString &manufacturer, const QString &model, const QString &os_version);
 
 private slots:
 	void onUrlOpened(const QUrl &url);
@@ -47,6 +50,7 @@ private slots:
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);
 	void onRequestReady(const QByteArray &response);
 	void onSessionAuthenticated(const QVariantMap &data);
+	void registerPushTokenWithApiCallback(const QVariantMap &data);
 #ifdef PLATFORM_BB10
 	void handleInvoke(const bb::system::InvokeRequest&);
 #endif
@@ -54,7 +58,10 @@ private slots:
 private:
 	explicit TelldusLive(QObject *parent = 0);
 	void doCall();
-	void setupManager();
+	void registerForPush();
+#ifdef PLATFORM_IOS
+	void updateWatchData();
+#endif
 	class PrivateData;
 	PrivateData *d;
 };

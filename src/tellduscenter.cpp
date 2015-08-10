@@ -44,7 +44,6 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
 	qmlRegisterType<Sensor>("Telldus", 1, 0, "Sensor");
 	qmlRegisterType<GroupDeviceModel>("Telldus", 1, 0, "GroupDeviceModel");
-	qmlRegisterType<SwipeArea>("Telldus", 1, 0, "SwipeArea");
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 
 	d->view->setContextProperty("telldusLive", TelldusLive::instance());
@@ -59,10 +58,6 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("clientModel", d->clientModel);
 	d->view->setContextProperty("sensorModel", SensorModel::instance());
 	d->view->setContextProperty("user", d->user);
-
-#ifdef PLATFORM_IOS
-	this->init();
-#endif
 }
 
 TelldusCenter::~TelldusCenter() {

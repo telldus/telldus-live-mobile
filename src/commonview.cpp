@@ -20,7 +20,7 @@ public:
 
 CommonView::CommonView(QObject *parent):AbstractView(parent) {
 	d = new PrivateData;
-    d->scalefactor = 0;
+	d->scalefactor = 0;
 
 	// For platform specific tasks
 	this->init();
@@ -53,7 +53,6 @@ void CommonView::init() {
 #endif  // PLATFORM_IOS
 
 void CommonView::loadAndShow() {
-	int viewOffset = 0;
 #if defined(PLATFORM_DESKTOP)
 	d->view.show();
 	int w = 0, h = 0;
@@ -69,7 +68,7 @@ void CommonView::loadAndShow() {
 			continue;
 		} else if (args.at(i) == "--scalefactor") {
 			d->scalefactor = args.at(i+1).toDouble();
-            qDebug() << "--scalefactor" << args.at(i+1).toDouble();
+			qDebug() << "--scalefactor" << args.at(i+1).toDouble();
 			++i;
 			continue;
 		}
@@ -81,7 +80,6 @@ void CommonView::loadAndShow() {
 #elif defined(PLATFORM_IOS)
 	QSize size(this->windowSize());
 	d->view.showFullScreen();
-	viewOffset = 20;
 #elif defined(PLATFORM_ANDROID)
 	QSize size = QApplication::desktop()->size();
 	d->view.show();
@@ -92,12 +90,19 @@ void CommonView::loadAndShow() {
 #endif
 
 	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << size;
-	qDebug().nospace().noquote() << "[DEVICE] Screen viewOffset: " << viewOffset;
 	qDebug().nospace().noquote() << "[DEVICE] Screen logicalDotsPerInch: " << QApplication::primaryScreen()->logicalDotsPerInch();
 	qDebug().nospace().noquote() << "[DEVICE] Screen physicalDotsPerInch: " << QApplication::primaryScreen()->physicalDotsPerInch();
 	qDebug().nospace().noquote() << "[DEVICE] Screen devicePixelRatio: " << QApplication::primaryScreen()->devicePixelRatio();
+	qDebug().nospace().noquote() << "[DEVICE] Screen virtualGeometry: " << QApplication::primaryScreen()->virtualGeometry();
+	qDebug().nospace().noquote() << "[DEVICE] Screen virtualSize: " << QApplication::primaryScreen()->virtualSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << QApplication::primaryScreen()->size();
+	qDebug().nospace().noquote() << "[DEVICE] Screen physicalSize: " << QApplication::primaryScreen()->physicalSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen geometry : " << QApplication::primaryScreen()->geometry ();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableVirtualSize: " << QApplication::primaryScreen()->availableVirtualSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableVirtualGeometry: " << QApplication::primaryScreen()->availableVirtualGeometry();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableSize: " << QApplication::primaryScreen()->availableSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableGeometry : " << QApplication::primaryScreen()->availableGeometry();
 
-	d->view.rootContext()->setContextProperty("VIEWOFFSET", viewOffset);
 	d->view.rootContext()->setContextProperty("HEIGHT", size.height());
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
 	d->view.engine()->addImportPath(":/qmllib/common");
@@ -123,11 +128,11 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 	if (s.width() == 0 || s.height() == 0) {
 		return QObject::eventFilter(obj, event);
 	}
-    
-    if (d->scalefactor == 0) {
-        d->scalefactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
-    }
-    qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << d->scalefactor;
+
+	if (d->scalefactor == 0) {
+		d->scalefactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
+	}
+	qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << d->scalefactor;
 
 //	if (s.width() < 450) {
 //		scaleFactor = 0.5;
