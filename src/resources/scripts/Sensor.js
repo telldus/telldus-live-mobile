@@ -18,6 +18,8 @@ function setupCache(sensorModel, database) {
 			sensor.windAvgChanged.connect(sensor, function(value) { save(this, "windAvg", value) });
 			sensor.windGustChanged.connect(sensor, function(value) { save(this, "windGust", value) });
 			sensor.windDirChanged.connect(sensor, function(value) { save(this, "windDir", value) });
+			sensor.windDirChanged.connect(sensor, function(value) { save(this, "luminance", value) });
+			sensor.isFavoriteChanged.connect(sensor, function(value) {  save(this, "favorite", value) });
 			save(sensor, "name", sensor.name);
 			save(sensor, "lastUpdated", sensor.lastUpdated.getTime()/1000);
 		}
@@ -52,7 +54,7 @@ function setupCache(sensorModel, database) {
 	});
 
 	db.transaction(function(tx) {
-		var rs = tx.executeSql('SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir FROM Sensor ORDER BY name');
+		var rs = tx.executeSql('SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite FROM Sensor ORDER BY name');
 		var sensorList = [];
 		for(var i = 0; i < rs.rows.length; ++i) {
 			sensorList.push({
@@ -67,7 +69,9 @@ function setupCache(sensorModel, database) {
 				'watt':  parseFloat(rs.rows.item(i).watt),
 				'windAvg':  parseFloat(rs.rows.item(i).windAvg),
 				'windGust':  parseFloat(rs.rows.item(i).windGust),
-				'windDir':  parseFloat(rs.rows.item(i).windDir)
+				'windDir':  parseFloat(rs.rows.item(i).windDir),
+				'luminance': parseFloat(rs.rows.item(i).luminance),
+				'isfavorite': rs.rows.item(i).favorite
 			});
 		}
 		sensorModel.addSensors(sensorList);

@@ -29,6 +29,7 @@ class Sensor : public QObject
 	Q_PROPERTY(QString uv READ uv WRITE setUv NOTIFY uvChanged)
 	Q_PROPERTY(QString watt READ watt WRITE setWatt NOTIFY wattChanged)
 	Q_PROPERTY(QString luminance READ luminance WRITE setLuminance NOTIFY luminanceChanged)
+	Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY isFavoriteChanged)
 
 	Q_PROPERTY(int id READ sensorId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(QDateTime lastUpdated READ lastUpdated WRITE setLastUpdated NOTIFY lastUpdatedChanged)
@@ -52,6 +53,9 @@ public:
 
 	int sensorId() const;
 	void setId(int id);
+
+	bool isFavorite() const;
+	void setIsFavorite(bool isFavorite);
 
 	QDateTime lastUpdated() const;
 	void setLastUpdated(const QDateTime &lastUpdated);
@@ -115,6 +119,7 @@ signals:
 	void uvChanged(const QString &);
 	void wattChanged(const QString &);
 	void luminanceChanged(const QString &);
+	void isFavoriteChanged(const bool &);
 
 private slots:
 	void fetchData();

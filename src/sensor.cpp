@@ -7,7 +7,7 @@ class Sensor::PrivateData {
 public:
 	bool hasHumidity, hasRainRate, hasRainTotal;
 	bool hasTemperature, hasWindAvg, hasWindGust, hasWindDir;
-	bool hasUv, hasWatt, hasLuminance;
+	bool hasUv, hasWatt, hasLuminance, isFavorite;
 	int id;
 	QString name;
 	QString humidity, rainRate, rainTotal;
@@ -30,6 +30,7 @@ Sensor::Sensor(QObject *parent) :
 	d->hasUv = false;
 	d->hasWatt = false;
 	d->hasLuminance = false;
+	d->isFavorite = false;
 	d->id = 0;
 }
 
@@ -99,6 +100,18 @@ int Sensor::sensorId() const {
 void Sensor::setId(int id) {
 	d->id = id;
 	emit idChanged();
+}
+
+bool Sensor::isFavorite() const {
+	return d->isFavorite;
+}
+
+void Sensor::setIsFavorite(bool isFavorite) {
+	if (isFavorite == d->isFavorite) {
+		return;
+	}
+	d->isFavorite = isFavorite;
+	emit isFavoriteChanged(isFavorite);
 }
 
 QDateTime Sensor::lastUpdated() const {

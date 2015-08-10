@@ -3,137 +3,168 @@ import Telldus 1.0
 
 Item {
 	id: sensorPage
+	property bool showEditButtons: false
 
 	Component {
 		id: sensorDelegate
-		Item {
-			id: wrapper
-			width: list.width
-			z: model.index
-			height: Math.max(dataTitleRow.height, dataRow.height) + (20 * SCALEFACTOR)
-			BorderImage {
-				id: border
-				source: "../images/rowBg.png"
+		Rectangle {
+			color: "#eeeeee"
+			height: wrapper.height + 1
+			width: parent.width
+			Rectangle {
+				id: wrapper
+				width: sensorPage.width
+				z: model.index
+				height: childrenRect.height + (20 * SCALEFACTOR)
+	//			color: index % 2 == 0 ? "#eaeaea" : "#ffffff"
+				color: "#ffffff"
+				state: showEditButtons ? 'showEditButtons' : ''
+				anchors.left: parent.left
+				anchors.leftMargin: 0
+				anchors.top: parent.top
+				Column {
+					id: dataTitleRow
+					anchors.left: parent.left
+					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.top: parent.top
+					anchors.topMargin: 10 * SCALEFACTOR
+					width: (list.width - 30) / 2
+					Text {
+						id: sensorName
+						color: sensor.name !== '' ? '#20334d' : '#8020334d'
+						font.weight: Font.Bold
+						text: sensor.name !== '' ? sensor.name : '(no name)'
+						font.pixelSize: 14 * SCALEFACTOR
+						width: parent.width
+						wrapMode: Text.Wrap
+						elide: Text.ElideRight
+						maximumLineCount: 3
+					}
+					//Text {
+					//	color: "#999999"
+					//	font.pixelSize: 28*SCALEFACTOR
+					//	text: ""  // TODO(micke): Add location name
+					//}
+					Text {
+						id: sensorUpdated
+						color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
+						font.pixelSize: 12 * SCALEFACTOR
+						text: formatLastUpdated(sensor.minutesAgo)
+						wrapMode: Text.Wrap
+						width: parent.width
+					}
+				}
+				Flow {
+					id: dataRow
+					layoutDirection: Qt.RightToLeft
+					anchors.left: dataTitleRow.right
+					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.right: parent.right
+					anchors.rightMargin: 10 * SCALEFACTOR
+					anchors.top: parent.top
+					anchors.topMargin: 10 * SCALEFACTOR
+					spacing: 10 * SCALEFACTOR
+					SensorValue {
+						icon: "sensorIconHumidity"
+						visible: sensor.hasHumidity
+						value: sensor.humidity + '%'
+					}
+					SensorValue {
+						icon: "sensorIconTemperature"
+						visible: sensor.hasTemperature
+						value: sensor.temperature + '\u00B0C'
+					}
+					SensorValue {
+						icon: "sensorIconRain"
+						visible: sensor.hasRainRate
+						value: sensor.rainRate + ' mm/h\n' + sensor.rainTotal + ' mm'
+					}
+					SensorValue {
+						icon: "sensorIconWind"
+						visible: sensor.hasWindGust
+						value: sensor.windAvg + ' m/s\n' + sensor.windGust + ' m/s*\n' + sensor.windDir + '\u00B0'
+					}
+					SensorValue {
+						icon: "sensorIconUv"
+						visible: sensor.hasUv
+						value: sensor.uv
+					}
+					SensorValue {
+						icon: "sensorIconWatt"
+						visible: sensor.hasWatt
+						value: sensor.watt + ' W'
+					}
+					SensorValue {
+						icon: "sensorIconLuminance"
+						visible: sensor.hasLuminance
+						value: sensor.luminance + ' lx'
+					}
+				}
+				/*MouseArea {
+					anchors.fill: parent
+					enabled: showEditButtons
+					onClicked: {
+						devicePage.showEditButtons = false
+					}
+				}*/
+				states: [
+					State {
+						name: 'showEditButtons'
+						PropertyChanges { target: wrapper; anchors.leftMargin: 50 * SCALEFACTOR * underMenu.children.length }
+					}
+				]
+				transitions: [
+					Transition {
+						to: 'showEditButtons'
+						reversible: true
+						PropertyAnimation { property: "anchors.leftMargin";  duration: 300; easing.type: Easing.InOutQuad }
+					}
+				]
+			}
+			Rectangle {
+				id: underMenu
+				anchors.right: wrapper.left
 				anchors.top: parent.top
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
-				anchors.rightMargin: 10 * SCALEFACTOR
-				height: wrapper.height / SCALEFACTOR * 2
-				width: (wrapper.width / SCALEFACTOR * 2) - 40
-				border {left: 21; top: 21; right: 21; bottom: 28 }
-				scale: SCALEFACTOR / 2
-				transformOrigin: Item.TopLeft
-			}
-			Column {
-				id: dataTitleRow
-				anchors.left: parent.left
-				anchors.leftMargin: 20 * SCALEFACTOR
-				anchors.top: parent.top
-				anchors.topMargin: 10 * SCALEFACTOR
-				height: sensorNameText.height + sensorLastUpdatedText.height
-				width: (wrapper.width / 2) - (50 * SCALEFACTOR)
-				Text {
-					id: sensorNameText
-					color: sensor.name !== '' ? '#00659F' : '#8cabc5'
-					font.weight: Font.Bold
-					text: sensor.name !== '' ? sensor.name : '(no name)'
-					width: parent.width
-					font.pixelSize: 16 * SCALEFACTOR
-					wrapMode: Text.Wrap
-					elide: Text.ElideRight
-					maximumLineCount: 3
-				}
-				//Text {
-				//	color: "#999999"
-				//	font.pixelSize: 28*SCALEFACTOR
-				//	text: ""  // TODO(micke): Add location name
-				//}
-				Text {
-					id: sensorLastUpdatedText
-					color: sensor.minutesAgo < 1440 ? "#999999" : "#80990000"
-					font.pixelSize: 12 * SCALEFACTOR
-					text: formatLastUpdated(sensor.minutesAgo)
-					wrapMode: Text.Wrap
-					elide: Text.ElideRight
-					maximumLineCount: 3
-				}
-			}
-			Flow {
-				id: dataRow
-				layoutDirection: Qt.RightToLeft
-				anchors.left: dataTitleRow.right
-				anchors.leftMargin: 10 * SCALEFACTOR
-				anchors.right: parent.right
-				anchors.rightMargin: 20 * SCALEFACTOR
-				anchors.verticalCenter: parent.verticalCenter
-				spacing: 10 * SCALEFACTOR
-				SensorValue {
-					icon: "sensorIconHumidity"
-					visible: sensor.hasHumidity
-					value: sensor.humidity + '%'
-				}
-				SensorValue {
-					icon: "sensorIconTemperature"
-					visible: sensor.hasTemperature
-					value: sensor.temperature + '\u00B0C'
-				}
-				SensorValue {
-					icon: "sensorIconRain"
-					visible: sensor.hasRainRate
-					value: sensor.rainRate + ' mm/h\n' + sensor.rainTotal + ' mm'
-				}
-				SensorValue {
-					icon: "sensorIconWind"
-					visible: sensor.hasWindGust
-					value: sensor.windAvg + ' m/s\n' + sensor.windGust + ' m/s*\n' + sensor.windDir + '\u00B0'
-				}
-				SensorValue {
-					icon: "sensorIconUv"
-					visible: sensor.hasUv
-					value: sensor.uv
-				}
-				SensorValue {
-					icon: "sensorIconWatt"
-					visible: sensor.hasWatt
-					value: sensor.watt + ' W'
-				}
-				SensorValue {
-					icon: "sensorIconLuminance"
-					visible: sensor.hasLuminance
-					value: sensor.luminance + ' lx'
+				anchors.bottom: parent.bottom
+				color: "#f8f8f8"
+				clip: true
+				Item {
+					id: editButton1
+					height: parent.height
+					width: 50 * SCALEFACTOR
+					anchors.left: parent.left
+					anchors.top: parent.top
+					Image {
+						anchors.centerIn: parent
+						source: sensor.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
+						height: 30 * SCALEFACTOR
+						width: 30 * SCALEFACTOR
+						smooth: true
+					}
+					MouseArea {
+						anchors.fill: parent
+						onClicked: sensor.isFavorite = !sensor.isFavorite
+					}
 				}
 			}
 		}
-	}
-
-	SwipeArea {
-		anchors.fill: list
-		filterTouchEvent: true
-		filterMouseEvent: false
-		onSwipeLeft: mainInterface.swipeLeft()
-		onSwipeRight: mainInterface.swipeRight()
 	}
 	ListView {
 		id: list
-		header: Item {
-			height: header.height + (15 * SCALEFACTOR)
-			width: parent.width
-		}
-		footer: Item {
-			height: 10 * SCALEFACTOR
-			width: parent.width
-		}
-
 		anchors.fill: parent
+		anchors.topMargin: screen.isPortrait ? header.height : 0
+		anchors.leftMargin: screen.isPortrait ? 0 : header.width
 		model: sensorModel
 		delegate: sensorDelegate
-		spacing: 5 * SCALEFACTOR
 		maximumFlickVelocity: 1500 * SCALEFACTOR
+		spacing: 0
 	}
-
 	Header {
 		id: header
-		anchors.topMargin: Math.min(0, -list.contentY-header.height-10)
+		title: "Sensors"
+		editButtonVisible: true
+		onEditClicked: showEditButtons = !showEditButtons;
 	}
 
 	function formatLastUpdated(minutes) {

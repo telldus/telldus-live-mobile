@@ -64,6 +64,9 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 		if (dev.contains("windDir") && !isnan(dev["windDir"].toDouble())) {
 			sensor->setWindDir(dev["windDir"].toString());
 		}
+		if (dev.contains("isfavorite")) {
+			sensor->setIsFavorite(dev["isfavorite"].toBool());
+		}
 	}
 	if (list.size()) {
 		//Appends all in one go

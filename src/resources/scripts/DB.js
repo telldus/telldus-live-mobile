@@ -1,6 +1,6 @@
 var db = LocalStorage.openDatabaseSync("TelldusLiveMobile", "", "Settings used by Telldus Live! mobile", 1000000);
 
-var latestVersion = "1.1";
+var latestVersion = "1.2";
 
 db.changeVersion(db.version, latestVersion, function(tx) {
 	if (db.version < 1.0) {
@@ -15,5 +15,9 @@ db.changeVersion(db.version, latestVersion, function(tx) {
 		tx.executeSql('ALTER TABLE Sensor ADD windAvg REAL');
 		tx.executeSql('ALTER TABLE Sensor ADD windGust REAL');
 		tx.executeSql('ALTER TABLE Sensor ADD windDir REAL');
+	}
+	if (db.version < 1.2) {
+		tx.executeSql('ALTER TABLE Sensor ADD luminance REAL');
+		tx.executeSql('ALTER TABLE Sensor ADD favorite INTEGER');
 	}
 });
