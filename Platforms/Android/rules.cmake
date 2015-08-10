@@ -38,8 +38,8 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/src/com/telldus/live/mobile
 INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
 
 LIST(APPEND LIBRARIES
-	${OPENSSL_DIR}/lib/libssl.a
-	${OPENSSL_DIR}/lib/libcrypto.a
+	${OPENSSL_DIR}/lib/libssl.so
+	${OPENSSL_DIR}/lib/libcrypto.so
 )
 
 SET(ANDROID_FILES
