@@ -21,4 +21,19 @@
 			<property var="uris" value="x-com-telldus-live-mobile://"/>
 		</filter>
 	</invoke-target>
+	<asset path="${Qt5Path}/lib/libQt5Core.so.5">lib/libQt5Core.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5Gui.so.5">lib/libQt5Gui.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5Network.so.5">lib/libQt5Network.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5Qml.so.5">lib/libQt5Qml.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5Quick.so.5">lib/libQt5Quick.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5Sql.so.5">lib/libQt5Sql.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5Svg.so.5">lib/libQt5Svg.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5WebSockets.so.5">lib/libQt5WebSockets.so.5</asset>
+	<asset path="${Qt5Path}/lib/libQt5Widgets.so.5">lib/libQt5Widgets.so.5</asset>
+	<asset path="${Qt5Path}/plugins">plugins</asset>
+	<asset path="${Qt5Path}/qml">qml</asset>
+	<asset path="${CMAKE_SOURCE_DIR}/src/icons/icon-114${SUFFIX}.png">icon-114.png</asset>
+	<env var="LD_LIBRARY_PATH" value="app/native/lib"/>
+	<env var="QT_PLUGIN_PATH" value="app/native/plugins"/>
+	<env var="QML2_IMPORT_PATH" value="app/native/qml"/>
 </qnx>
