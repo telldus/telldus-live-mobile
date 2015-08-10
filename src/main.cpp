@@ -30,5 +30,11 @@ int main(int argc, char *argv[])
 
 	viewer->loadAndShow();
 
-	return app->exec();
+	int retval = app->exec();
+#ifdef PLATFORM_BB10
+	// For some reason the app won't quit properly on BB10. This is a workaround.
+	// Feel free to remove it if is fixed in a later SDK.
+	exit(0);
+#endif
+	return retval;
 }
