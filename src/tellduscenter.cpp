@@ -9,7 +9,7 @@
 #include "user.h"
 #include "models/clientmodel.h"
 #include "models/devicemodel.h"
-#include "models/dashboardModel.h"
+#include "models/dashboardmodel.h"
 #include "models/favoritemodel.h"
 #include "models/filtereddevicemodel.h"
 #include "models/groupdevicemodel.h"
