@@ -13,6 +13,7 @@
 #include "models/favoritemodel.h"
 #include "models/filtereddevicemodel.h"
 #include "models/groupdevicemodel.h"
+#include "models/schedulermodel.h"
 #include "models/sensormodel.h"
 #include "utils/dev.h"
 #include "config.h"
@@ -65,6 +66,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("core", this);
 	d->view->setContextProperty("deviceModelController", DeviceModel::instance());
 	d->view->setContextProperty("rawDeviceModel", d->rawDeviceModel);
+	d->view->setContextProperty("schedulerModel", SchedulerModel::instance());
 	d->view->setContextProperty("deviceModel", d->deviceModel);
 	d->view->setContextProperty("groupModel", d->groupModel);
 	d->view->setContextProperty("favoriteModel", d->favoriteModel);

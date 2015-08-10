@@ -25,6 +25,7 @@
 		<file>resources/qml/ComponentSetOnOff.qml</file>
 		<file>resources/qml/ButtonSet.qml</file>
 		<file>resources/qml/DeviceDetails.qml</file>
+		<file>resources/qml/SchedulerPage.qml</file>
 		<file>resources/qml/SwipeArea.qml</file>
 
 		<file>resources/images/headerBg.png</file>

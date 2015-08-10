@@ -62,7 +62,7 @@ Item {
 				onClicked: changePage(2)
 			}
 		}
-/*		Item {
+		Item {
 			width: parent.width
 			height: parent.height
 			Text {
@@ -78,7 +78,7 @@ Item {
 				anchors.fill: parent
 				onClicked: changePage(3)
 			}
-		}*/
+		}
 		Item {
 			width: parent.width
 			height: parent.height
@@ -96,7 +96,7 @@ Item {
 				onClicked: changePage(4)
 			}
 		}
-/*		Item {
+		Item {
 			width: parent.width
 			height: parent.height
 			Text {
@@ -112,7 +112,7 @@ Item {
 				anchors.fill: parent
 				onClicked: changePage(5)
 			}
-		}*/
+		}
 	}
 
 	states: [
@@ -131,21 +131,21 @@ Item {
 			//PropertyChanges { target: sensorButtonBackground; opacity: 1 }
 			//PropertyChanges { target: sensorButton; source: "../images/footerIconSensorsActive.png" }
 		},
-//		State {
-//			when: activePage == 3
-//			//PropertyChanges { target: schedulerButtonBackground; opacity: 1 }
-//			//PropertyChanges { target: schedulerButton; source: "../images/footerIconSensorsActive.png" }
+		State {
+			when: activePage == 3
+			//PropertyChanges { target: schedulerButtonBackground; opacity: 1 }
+			//PropertyChanges { target: schedulerButton; source: "../images/footerIconSensorsActive.png" }
 		},
 		State {
 			when: activePage == 4
 			//PropertyChanges { target: settingsButtonBackground; opacity: 1 }
 			//PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
-		}//,
-//		State {
-//			when: activePage == 5
-//			//PropertyChanges { target: settingsButtonBackground; opacity: 1 }
-//			//PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
-//		}
+		},
+		State {
+			when: activePage == 5
+			//PropertyChanges { target: settingsButtonBackground; opacity: 1 }
+			//PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
+		}
 	]
 
 	transitions: [
