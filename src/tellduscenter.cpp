@@ -10,6 +10,7 @@
 #include "user.h"
 #include "models/clientmodel.h"
 #include "models/devicemodel.h"
+#include "models/dashboardModel.h"
 #include "models/favoritemodel.h"
 #include "models/filtereddevicemodel.h"
 #include "models/groupdevicemodel.h"
@@ -20,6 +21,7 @@ class TelldusCenter::PrivateData {
 public:
 	AbstractView *view;
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
+	DashboardModel *dashboardModel;
 	FavoriteModel *favoriteModel;
 	ClientModel *clientModel;
 	User *user;
@@ -32,6 +34,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
 	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
+	d->dashboardModel = new DashboardModel(DeviceModel::instance(), this);
 	d->favoriteModel = new FavoriteModel(DeviceModel::instance(), this);
 	d->clientModel = new ClientModel(this);
 	d->user = new User(this);
@@ -52,6 +55,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("deviceModel", d->deviceModel);
 	d->view->setContextProperty("groupModel", d->groupModel);
 	d->view->setContextProperty("favoriteModel", d->favoriteModel);
+	d->view->setContextProperty("dashboardModel", d->dashboardModel);
 	d->view->setContextProperty("clientModel", d->clientModel);
 	d->view->setContextProperty("sensorModel", SensorModel::instance());
 	d->view->setContextProperty("user", d->user);

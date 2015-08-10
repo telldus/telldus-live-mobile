@@ -68,12 +68,12 @@ SET( SOURCES
 	src/main.cpp
 	src/schedulerjob.cpp
 	src/sensor.cpp
-	src/swipearea.cpp
 	src/tellduscenter.cpp
 	src/tellduslive.cpp
 	src/user.cpp
 	src/models/abstractfiltereddevicemodel.cpp
 	src/models/clientmodel.cpp
+	src/models/dashboardModel.cpp
 	src/models/devicemodel.cpp
 	src/models/favoritemodel.cpp
 	src/models/filtereddevicemodel.cpp
@@ -95,12 +95,12 @@ SET( MOC_HEADERS
 	src/device.h
 	src/schedulerjob.h
 	src/sensor.h
-	src/swipearea.h
 	src/tellduscenter.h
 	src/tellduslive.h
 	src/user.h
 	src/models/abstractfiltereddevicemodel.h
 	src/models/clientmodel.h
+	src/models/dashboardModel.h
 	src/models/devicemodel.h
 	src/models/favoritemodel.h
 	src/models/filtereddevicemodel.h

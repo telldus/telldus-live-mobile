@@ -2,124 +2,150 @@ import QtQuick 2.0
 
 Item {
 	id: footer
-	property int activePage: 0
-	height: 60 * SCALEFACTOR
-	Image {
-		id: footerBg
-		source: "../images/footerBg.png"
-		height: 70 * SCALEFACTOR
-		fillMode: Image.TileHorizontally
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-	}
+	property int activePage: 1
+	height: 64 * SCALEFACTOR
 
-	Row {
+	Column {
 		id: buttonRow
-		anchors.bottom: parent.bottom
+		anchors.top: parent.top
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: 60 * SCALEFACTOR
+		height: parent.height
 		Item {
-			width: parent.width/3
+			width: parent.width
 			height: parent.height
-			BorderImage {
-				id: deviceButtonBackground
-				anchors.fill: parent
-				source: "../images/footerButtonActive.png"
-				border {left: 20; top: 20; right: 20; bottom: 20 }
-				opacity: 0
+			Text {
+				id: dashboardButton
+				color: "#ffffff"
+				font.pixelSize: 24 * SCALEFACTOR
+				text: "Dashboard"
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
 			}
-			Image {
+			MouseArea {
+				anchors.fill: parent
+				onClicked: changePage(0)
+			}
+		}
+		Item {
+			width: parent.width
+			height: parent.height
+			Text {
 				id: deviceButton
-				height: sourceSize.height
-				scale: SCALEFACTOR / 2
-				smooth: true
-				fillMode: Image.PreserveAspectFit
-				anchors.centerIn: parent
-				source: "../images/footerIconDevices.png"
+				color: "#ffffff"
+				font.pixelSize: 24 * SCALEFACTOR
+				text: "Devices"
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: mainInterface.setActivePage(0)
+				onClicked: changePage(1)
 			}
-		}
-		Image {
-			source: "../images/menuButtonDivider.png"
-			height: parent.height
-			fillMode: Image.TileVertically
 		}
 		Item {
-			width: parent.width/3
+			width: parent.width
 			height: parent.height
-			BorderImage {
-				id: sensorButtonBackground
-				anchors.fill: parent
-				source: "../images/footerButtonActive.png"
-				border {left: 20; top: 20; right: 20; bottom: 20 }
-				opacity: 0
-			}
-			Image {
+			Text {
 				id: sensorButton
-				anchors.centerIn: parent
-				height: sourceSize.height
-				scale: SCALEFACTOR / 2
-				smooth: true
-				fillMode: Image.PreserveAspectFit
-				source: "../images/footerIconSensors.png"
+				color: "#ffffff"
+				font.pixelSize: 24 * SCALEFACTOR
+				text: "Sensors"
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: mainInterface.setActivePage(1)
+				onClicked: changePage(2)
 			}
 		}
-		Image {
-			source: "../images/menuButtonDivider.png"
+/*		Item {
+			width: parent.width
 			height: parent.height
-			fillMode: Image.TileVertically
-		}
+			Text {
+				id: schedulerButton
+				color: "#ffffff"
+				font.pixelSize: 24 * SCALEFACTOR
+				text: "Scheduler"
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+			}
+			MouseArea {
+				anchors.fill: parent
+				onClicked: changePage(3)
+			}
+		}*/
 		Item {
-			width: parent.width/3
+			width: parent.width
 			height: parent.height
-			BorderImage {
-				id: settingsButtonBackground
-				anchors.fill: parent
-				source: "../images/footerButtonActive.png"
-				border {left: 20; top: 20; right: 20; bottom: 20 }
-				opacity: 0
-			}
-			Image {
+			Text {
 				id: settingsButton
-				anchors.centerIn: parent
-				height: sourceSize.height
-				scale: SCALEFACTOR / 2
-				smooth: true
-				fillMode: Image.PreserveAspectFit
-				source: "../images/footerIconSettings.png"
+				color: "#ffffff"
+				font.pixelSize: 24 * SCALEFACTOR
+				text: "Settings"
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: mainInterface.setActivePage(2)
+				onClicked: changePage(4)
 			}
 		}
+/*		Item {
+			width: parent.width
+			height: parent.height
+			Text {
+				id: debugButton
+				color: "#ffffff"
+				font.pixelSize: 24 * SCALEFACTOR
+				text: "Debug"
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+			}
+			MouseArea {
+				anchors.fill: parent
+				onClicked: changePage(5)
+			}
+		}*/
 	}
 
 	states: [
 		State {
 			when: activePage == 0
-			PropertyChanges { target: deviceButtonBackground; opacity: 1 }
-			PropertyChanges { target: deviceButton; source: "../images/footerIconDevicesActive.png" }
+			//PropertyChanges { target: dashboardButtonBackground; opacity: 1 }
+			//PropertyChanges { target: deviceButton; source: "../images/footerIconDevicesActive.png" }
 		},
 		State {
 			when: activePage == 1
-			PropertyChanges { target: sensorButtonBackground; opacity: 1 }
-			PropertyChanges { target: sensorButton; source: "../images/footerIconSensorsActive.png" }
+			//PropertyChanges { target: deviceButtonBackground; opacity: 1 }
+			//PropertyChanges { target: deviceButton; source: "../images/footerIconDevicesActive.png" }
 		},
 		State {
 			when: activePage == 2
-			PropertyChanges { target: settingsButtonBackground; opacity: 1 }
-			PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
-		}
+			//PropertyChanges { target: sensorButtonBackground; opacity: 1 }
+			//PropertyChanges { target: sensorButton; source: "../images/footerIconSensorsActive.png" }
+		},
+//		State {
+//			when: activePage == 3
+//			//PropertyChanges { target: schedulerButtonBackground; opacity: 1 }
+//			//PropertyChanges { target: schedulerButton; source: "../images/footerIconSensorsActive.png" }
+		},
+		State {
+			when: activePage == 4
+			//PropertyChanges { target: settingsButtonBackground; opacity: 1 }
+			//PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
+		}//,
+//		State {
+//			when: activePage == 5
+//			//PropertyChanges { target: settingsButtonBackground; opacity: 1 }
+//			//PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
+//		}
 	]
 
 	transitions: [
@@ -127,4 +153,9 @@ Item {
 			NumberAnimation { properties: "opacity"; duration: 100 }
 		}
 	]
+
+	function changePage(pageId) {
+		mainInterface.setActivePage(pageId);
+		mainInterface.onMenu();
+	}
 }
