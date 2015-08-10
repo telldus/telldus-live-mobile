@@ -17,10 +17,6 @@
 #include "tellduscenter.h"
 #include "utils/dev.h"
 
-#ifdef PLATFORM_BB10
-#include <bb/system/InvokeRequest>
-#endif
-
 #ifdef PLATFORM_ANDROID
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
@@ -86,11 +82,6 @@ TelldusLive::TelldusLive(QObject *parent):QObject(parent) {
 	d->session = s.value("session", "").toString();
 
 	QDesktopServices::setUrlHandler("x-com-telldus-live-mobile", this, "onUrlOpened");
-#ifdef PLATFORM_BB10
-	d->m = new bb::system::InvokeManager(this);
-	connect(d->m, SIGNAL(invoked(const bb::system::InvokeRequest&)), this, SLOT(handleInvoke(const bb::system::InvokeRequest&)));
-#endif
-
 }
 
 void TelldusLive::authenticateSession() {
