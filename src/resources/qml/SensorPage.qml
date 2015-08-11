@@ -67,37 +67,37 @@ Item {
 					SensorValue {
 						icon: "sensorIconHumidity"
 						visible: sensor.hasHumidity
-						value: sensor.humidity + '%'
+						value: Number(sensor.humidity).toLocaleString(Qt.locale("en_GB"), 'f', 0) + '%'
 					}
 					SensorValue {
 						icon: "sensorIconTemperature"
 						visible: sensor.hasTemperature
-						value: sensor.temperature + '\u00B0C'
+						value: Number(sensor.temperature).toLocaleString(Qt.locale("en_GB"), 'f', 1) + '\u00B0C'
 					}
 					SensorValue {
 						icon: "sensorIconRain"
 						visible: sensor.hasRainRate
-						value: sensor.rainRate + ' mm/h\n' + sensor.rainTotal + ' mm'
+						value: Number(sensor.rainRate).toLocaleString(Qt.locale("en_GB"), 'f', 0) + ' mm/h\n' + Number(sensor.rainTotal).toLocaleString(Qt.locale("en_GB"), 'f', 0) + ' mm'
 					}
 					SensorValue {
 						icon: "sensorIconWind"
 						visible: sensor.hasWindGust
-						value: sensor.windAvg + ' m/s\n' + sensor.windGust + ' m/s*\n' + sensor.windDir + '\u00B0'
+						value: Number(sensor.windAvg).toLocaleString(Qt.locale("en_GB"), 'f', 1) + ' m/s\n' + Number(sensor.windGust).toLocaleString(Qt.locale("en_GB"), 'f', 1) + ' m/s*\n' + Number(sensor.windDir).toLocaleString(Qt.locale("en_GB"), 'f', 0) + '\u00B0'
 					}
 					SensorValue {
 						icon: "sensorIconUv"
 						visible: sensor.hasUv
-						value: sensor.uv
+						value: Number(sensor.uv).toLocaleString(Qt.locale("en_GB"), 'f', 0)
 					}
 					SensorValue {
 						icon: "sensorIconWatt"
 						visible: sensor.hasWatt
-						value: sensor.watt + ' W'
+						value: Number(sensor.watt).toLocaleString(Qt.locale("en_GB"), 'f', 1) + ' W'
 					}
 					SensorValue {
 						icon: "sensorIconLuminance"
 						visible: sensor.hasLuminance
-						value: sensor.luminance + ' lx'
+						value: Number(sensor.luminance).toLocaleString(Qt.locale("en_GB"), 'f', 0) + ' lx'
 					}
 				}
 				/*MouseArea {

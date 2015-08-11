@@ -4,6 +4,7 @@ Item {
 	id: sensorValue
 	property string icon
 	property alias value: valueText.text
+	property alias textColor: valueText.color
 	width: sensorIcon.width + (5 * SCALEFACTOR) + valueText.width
 	height: Math.max(sensorIcon.height, valueText.height)
 	Image {

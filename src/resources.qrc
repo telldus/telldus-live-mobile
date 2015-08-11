@@ -27,6 +27,10 @@
 		<file>resources/qml/DeviceDetails.qml</file>
 		<file>resources/qml/SchedulerPage.qml</file>
 		<file>resources/qml/SwipeArea.qml</file>
+		<file>resources/qml/tiles/DeviceTile.qml</file>
+		<file>resources/qml/tiles/SensorTile.qml</file>
+		<file>resources/qml/tiles/WeatherTile.qml</file>
+		<file>resources/qml/tiles/UnknownTile.qml</file>
 
 		<file>resources/images/headerBg.png</file>
 		<file>resources/images/menuButtonDivider.png</file>

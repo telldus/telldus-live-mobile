@@ -82,6 +82,7 @@ SET( SOURCES
 	src/models/schedulermodel.cpp
 	src/models/sensormodel.cpp
 	src/models/tlistmodel.cpp
+	src/objects/DashboardItem.cpp
 	src/utils/dev.cpp
 )
 
@@ -109,6 +110,7 @@ SET( MOC_HEADERS
 	src/models/schedulermodel.h
 	src/models/sensormodel.h
 	src/models/tlistmodel.h
+	src/objects/DashboardItem.h
 	src/utils/dev.h
 )
 

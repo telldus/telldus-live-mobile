@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
 	id: footer
-	property int activePage: 1
+	property int activePage: 0
 	height: 64 * SCALEFACTOR
 
 	Column {

@@ -15,6 +15,7 @@
 #include "models/groupdevicemodel.h"
 #include "models/schedulermodel.h"
 #include "models/sensormodel.h"
+#include "objects/DashboardItem.h"
 #include "utils/dev.h"
 #include "config.h"
 
@@ -28,7 +29,6 @@ class TelldusCenter::PrivateData {
 public:
 	AbstractView *view;
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
-	DashboardModel *dashboardModel;
 	FavoriteModel *favoriteModel;
 	ClientModel *clientModel;
 	User *user;
@@ -50,7 +50,6 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
 	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
-	d->dashboardModel = new DashboardModel(DeviceModel::instance(), this);
 	d->favoriteModel = new FavoriteModel(DeviceModel::instance(), this);
 	d->clientModel = new ClientModel(this);
 	d->user = new User(this);
@@ -58,6 +57,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Client>("Telldus", 1, 0, "Client");
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
+	qmlRegisterType<DashboardItem>("Telldus", 1, 0, "DashboardItem");
 	qmlRegisterType<Sensor>("Telldus", 1, 0, "Sensor");
 	qmlRegisterType<GroupDeviceModel>("Telldus", 1, 0, "GroupDeviceModel");
 	qRegisterMetaType<QModelIndex>("QModelIndex");
@@ -70,7 +70,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("deviceModel", d->deviceModel);
 	d->view->setContextProperty("groupModel", d->groupModel);
 	d->view->setContextProperty("favoriteModel", d->favoriteModel);
-	d->view->setContextProperty("dashboardModel", d->dashboardModel);
+	d->view->setContextProperty("dashboardModel", DashboardModel::instance());
 	d->view->setContextProperty("clientModel", d->clientModel);
 	d->view->setContextProperty("sensorModel", SensorModel::instance());
 	d->view->setContextProperty("user", d->user);
