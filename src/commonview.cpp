@@ -131,10 +131,11 @@ bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
 
 	if (d->scalefactor == 0) {
 		d->scalefactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
-	}
 #ifdef PLATFORM_BB10
-	d->scalefactor = d->scalefactor / 2.3;
+		// BB10 has a DU which is multiplied by 16 gets the logicalDPI
+		d->scalefactor = (((QApplication::primaryScreen()->physicalDotsPerInch() / 25.4) / 1.5) * 16) / 72;
 #endif
+	}
 	qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << d->scalefactor;
 
 //	if (s.width() < 450) {
