@@ -6,7 +6,7 @@ Rectangle {
 	property alias title: titleText.text
 	property alias backVisible: backButton.visible
 	property alias editButtonVisible: editButton.visible
-	property var headerHeight: 40
+	property var headerHeight: 50
 	signal backClicked()
 	signal editClicked()
 	anchors.left: parent.left
