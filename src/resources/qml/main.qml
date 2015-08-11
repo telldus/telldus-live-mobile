@@ -7,26 +7,7 @@ import "../scripts/Sensor.js" as Sensor
 Rectangle {
 	id: screen
 
-	property bool changeOfWidth: false
-	property bool changeOfHeight: false
-	property bool newOrientation: false
-	property bool isPortrait: true
-
-	onWidthChanged: {changeOfWidth = true; newOrientation = (changeOfWidth && changeOfHeight)}
-	onHeightChanged: {changeOfHeight = true; newOrientation = (changeOfWidth && changeOfHeight)}
-
-	onNewOrientationChanged: {
-		if (newOrientation) {
-			changeOfWidth = false;
-			changeOfHeight = false;
-
-			if (width > height) {
-				isPortrait = false
-			} else {
-				isPortrait = true
-			}
-		}
-	}
+	property bool isPortrait: width <= height
 
 	Component.onCompleted: {
 		Device.setupCache(deviceModelController, DB.db)
