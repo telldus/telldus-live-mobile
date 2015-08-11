@@ -9,7 +9,7 @@ Rectangle {
 	property variant screenNames: ['/dashboard', '/devices', '/sensors', '/schedular', '/settings']
 	property bool menuViewVisible: false
 	property bool timelineViewVisible: false
-	color: screen.isPortrait ? "#20334d" : "#000000";
+	color: "#000000";
 
 	Rectangle {
 		id: menuView
@@ -57,7 +57,6 @@ Rectangle {
 	Item {
 		id: mainView
 		anchors.fill: parent
-		anchors.topMargin: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 		clip: true
 
 		/* this is what moves the normal view aside */

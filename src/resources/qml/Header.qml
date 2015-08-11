@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Telldus 1.0
+import QtQuick.Window 2.2
 
 Rectangle {
 	id: header
@@ -11,7 +12,7 @@ Rectangle {
 	signal editClicked()
 	anchors.left: parent.left
 	anchors.top: parent.top
-	height: screen.isPortrait ? headerHeight * SCALEFACTOR : screen.height
+	height: (screen.isPortrait ? headerHeight * SCALEFACTOR : screen.height) + mainHeader.anchors.topMargin
 	width: screen.isPortrait ? screen.width : headerHeight * SCALEFACTOR
 	color: "#20334d"
 
@@ -19,6 +20,7 @@ Rectangle {
 		id: mainHeader
 		anchors.left: parent.left
 		anchors.top: parent.top
+		anchors.topMargin: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
 		Item {
