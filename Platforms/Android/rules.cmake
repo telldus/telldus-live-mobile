@@ -9,17 +9,6 @@ ELSE()
 ENDIF()
 
 SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
-SET(Qt5Core_DIR ${Qt5_Dir}/lib/cmake/Qt5Core)
-SET(Qt5Network_DIR ${Qt5_Dir}/lib/cmake/Qt5Network)
-SET(Qt5Gui_DIR ${Qt5_Dir}/lib/cmake/Qt5Gui)
-SET(Qt5Qml_DIR ${Qt5_Dir}/lib/cmake/Qt5Qml)
-SET(Qt5Quick_DIR ${Qt5_Dir}/lib/cmake/Qt5Quick)
-SET(Qt5Svg_DIR ${Qt5_Dir}/lib/cmake/Qt5Svg)
-SET(Qt5WebSockets_DIR ${Qt5_Dir}/lib/cmake/Qt5WebSockets)
-SET(Qt5Widgets_DIR ${Qt5_Dir}/lib/cmake/Qt5Widgets)
-SET(Qt5WebView_DIR ${Qt5_Dir}/lib/cmake/Qt5WebView)
-
-SET(Qt5AndroidExtras_DIR ${Qt5_Dir}/lib/cmake/Qt5AndroidExtras)
 FIND_PACKAGE( Qt5AndroidExtras REQUIRED )
 LIST(APPEND LIBRARIES Qt5::AndroidExtras)
 
