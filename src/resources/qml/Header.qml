@@ -66,23 +66,29 @@ Rectangle {
 				anchors.right: backButton.right
 				onClicked: backClicked()
 			}
-			Image {
+			Item {
 				id: drawerButton
 				visible: !backButton.visible
 				anchors.centerIn: parent
-				height: (headerHeight - 10) * SCALEFACTOR
-				width: drawerButton.height
-				source: "../" + (SCALEFACTOR > 2 ? "images@2x" : "images") + "/drawerIcon.png"
-				smooth: true
-				fillMode: Image.PreserveAspectFit
+				height: (leftButton.height - 10) * SCALEFACTOR
+				width: height
+				Image {
+					id: drawerButtonImage
+					anchors.centerIn: parent
+					height: parent.height * 0.6 / SCALEFACTOR
+					width: height
+					source: "../svgs/iconHamburger.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+				}
 			}
 			MouseArea {
 				id: drawerMouseArea
 				enabled: !backButton.visible
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
-				anchors.left: drawerButton.left
-				anchors.right: drawerButton.right
+				anchors.left: parent.left
+				anchors.right: parent.right
 				onClicked: mainInterface.onMenu();
 			}
 		}
@@ -114,15 +120,20 @@ Rectangle {
 			anchors.right: screen.isPortrait ? rightButton.left : parent.right
 			anchors.bottom: screen.isPortrait ? parent.bottom : rightButton.top
 			clip: true
-			Image {
+			Item {
 				visible: title == '' && backVisible == false
 				anchors.centerIn: parent
 				width: screen.isPortrait ? parent.width : parent.height
 				height: (screen.isPortrait ? parent.height : parent.width) - (10 * SCALEFACTOR)
 				rotation: screen.isPortrait ? 0 : 270
-				source: "../" + (SCALEFACTOR > 2 ? "images@2x" : "images") + "/headerLogo.png"
-				smooth: true
-				fillMode: Image.PreserveAspectFit
+				Image {
+					anchors.centerIn: parent
+					width: parent.width * 0.825
+					height: parent.height * 0.825
+					source: "../svgs/logoTelldusLive.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+				}
 			}
 			Text {
 				id: titleText
