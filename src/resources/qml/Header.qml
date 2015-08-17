@@ -80,6 +80,8 @@ Rectangle {
 					source: "../svgs/iconHamburger.svg"
 					smooth: true
 					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
 				}
 			}
 			MouseArea {
@@ -99,12 +101,23 @@ Rectangle {
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
 			clip: true
-			Text {
+			Item {
 				id: editButton
 				visible: false
-				color: "#ffffff"
-				text: "Edit"
 				anchors.centerIn: parent
+				height: (rightButton.height - 10) * SCALEFACTOR
+				width: height
+				Image {
+					id: editButtonImage
+					anchors.centerIn: parent
+					height: parent.height * 0.6 / SCALEFACTOR
+					width: height
+					source: "../svgs/iconFavourite.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
 			}
 			MouseArea {
 				id: editButtonMouseArea
@@ -133,6 +146,8 @@ Rectangle {
 					source: "../svgs/logoTelldusLive.svg"
 					smooth: true
 					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
 				}
 			}
 			Text {
