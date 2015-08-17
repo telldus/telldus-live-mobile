@@ -1,3 +1,4 @@
+import QtGraphicalEffects 1.0
 import QtQuick 2.4
 import Telldus 1.0
 
@@ -35,7 +36,7 @@ Item {
 						opacity: sensor.name !== '' ? 1 : 0.5
 						font.weight: Font.Bold
 						text: sensor.name !== '' ? sensor.name : '(no name)'
-						font.pixelSize: 14 * SCALEFACTOR
+						font.pixelSize: 16 * SCALEFACTOR
 						width: parent.width
 						wrapMode: Text.Wrap
 						elide: Text.ElideRight
@@ -111,7 +112,7 @@ Item {
 				states: [
 					State {
 						name: 'showEditButtons'
-						PropertyChanges { target: wrapper; anchors.leftMargin: 50 * SCALEFACTOR * underMenu.children.length }
+						PropertyChanges { target: wrapper; anchors.leftMargin: (50 * SCALEFACTOR) * (underMenu.children.length-1) }
 					}
 				]
 				transitions: [
@@ -131,41 +132,66 @@ Item {
 				color: "#f8f8f8"
 				clip: true
 				Item {
-					id: editButton1
+					id: favouriteButton
 					height: parent.height
 					width: 50 * SCALEFACTOR
 					anchors.left: parent.left
 					anchors.top: parent.top
 					Image {
+						id: favouriteButtonImage
 						anchors.centerIn: parent
-						source: sensor.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
 						height: 30 * SCALEFACTOR
-						width: 30 * SCALEFACTOR
+						width: height
+						source: "image://icons/favourite/" + properties.theme.colors.telldusOrange
 						smooth: true
+						fillMode: Image.PreserveAspectFit
+						sourceSize.width: width * 2
+						sourceSize.height: height * 2
+						opacity: sensor.isFavorite ? 1 : 0.2
 					}
 					MouseArea {
 						anchors.fill: parent
 						onClicked: sensor.isFavorite = !sensor.isFavorite
 					}
 				}
+				LinearGradient {
+					anchors.top: parent.top
+					anchors.right: parent.right
+					anchors.bottom: parent.bottom
+					width: 3 * SCALEFACTOR
+					start: Qt.point(0, 0)
+					end: Qt.point(3 * SCALEFACTOR, 0)
+					gradient: Gradient {
+						GradientStop { position: 0.0; color: "#00999999" }
+						GradientStop { position: 1.0; color: "#80999999" }
+					}
+				}
 			}
 		}
 	}
-	ListView {
-		id: list
-		anchors.fill: parent
-		anchors.topMargin: screen.isPortrait ? header.height : 0
-		anchors.leftMargin: screen.isPortrait ? 0 : header.width
-		model: sensorModel
-		delegate: sensorDelegate
-		maximumFlickVelocity: 1500 * SCALEFACTOR
-		spacing: 0
-	}
-	Header {
-		id: header
-		title: "Sensors"
-		editButtonVisible: true
-		onEditClicked: showEditButtons = !showEditButtons;
+	Rectangle {
+		id: listPage
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
+		anchors.right: parent.right
+		width: parent.width
+		color: "#80999999"
+		ListView {
+			id: list
+			anchors.fill: parent
+			anchors.topMargin: screen.isPortrait ? header.height : 0
+			anchors.leftMargin: screen.isPortrait ? 0 : header.width
+			model: sensorModel
+			delegate: sensorDelegate
+			maximumFlickVelocity: 1500 * SCALEFACTOR
+			spacing: 1 * SCALEFACTOR
+		}
+		Header {
+			id: header
+			title: "Sensors"
+			editButtonVisible: true
+			onEditClicked: showEditButtons = !showEditButtons;
+		}
 	}
 
 	function formatLastUpdated(minutes) {

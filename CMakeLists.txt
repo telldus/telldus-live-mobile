@@ -65,6 +65,7 @@ SET( SOURCES
 	src/abstractview.cpp
 	src/client.cpp
 	src/commonview.cpp
+	src/ColorImageProvider.cpp
 	src/device.cpp
 	src/main.cpp
 	src/schedulerjob.cpp
@@ -98,6 +99,7 @@ SET( MOC_HEADERS
 	src/abstractview.h
 	src/client.h
 	src/commonview.h
+	src/ColorImageProvider.h
 	src/device.h
 	src/schedulerjob.h
 	src/sensor.h

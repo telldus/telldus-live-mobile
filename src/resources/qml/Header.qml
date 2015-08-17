@@ -112,7 +112,7 @@ Rectangle {
 					anchors.centerIn: parent
 					height: parent.height * 0.6 / SCALEFACTOR
 					width: height
-					source: "../svgs/iconFavourite.svg"
+					source: "image://icons/favourite/#ffffff"
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -156,7 +156,7 @@ Rectangle {
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.leftMargin: 10 * SCALEFACTOR
 				anchors.rightMargin: 10 * SCALEFACTOR
-				font.pixelSize: 18 * SCALEFACTOR
+				font.pixelSize: 22 * SCALEFACTOR
 				font.weight: Font.Bold
 				color: "white"
 				style: Text.Raised;

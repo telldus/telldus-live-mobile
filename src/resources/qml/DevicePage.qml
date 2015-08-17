@@ -100,7 +100,7 @@ Item {
 				states: [
 					State {
 						name: 'showEditButtons'
-						PropertyChanges { target: wrapper; anchors.leftMargin: underMenu.height * (underMenu.children.length - 1) }
+						PropertyChanges { target: wrapper; anchors.leftMargin: (50 * SCALEFACTOR) * (underMenu.children.length - 1) }
 					}
 				]
 				transitions: [
@@ -120,17 +120,22 @@ Item {
 				color: "#f8f8f8"
 				clip: true
 				Item {
-					id: editButton1
+					id: favouriteButton
 					height: parent.height
-					width: editButton1.height
+					width: 50 * SCALEFACTOR
 					anchors.left: parent.left
 					anchors.top: parent.top
 					Image {
+						id: favouriteButtonImage
 						anchors.centerIn: parent
-						source: device.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
 						height: 30 * SCALEFACTOR
-						width: 30 * SCALEFACTOR
+						width: height
+						source: "image://icons/favourite/" + properties.theme.colors.telldusOrange
 						smooth: true
+						fillMode: Image.PreserveAspectFit
+						sourceSize.width: width * 2
+						sourceSize.height: height * 2
+						opacity: device.isFavorite ? 1 : 0.2
 					}
 					MouseArea {
 						anchors.fill: parent

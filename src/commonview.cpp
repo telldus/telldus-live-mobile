@@ -1,9 +1,12 @@
 #include "commonview.h"
+
 #include <QApplication>
 #include <QtQuick>
 #include <QDesktopWidget>
 #include <QResizeEvent>
+
 #include "config.h"
+#include "ColorImageProvider.h"
 
 #ifdef PLATFORM_IOS
 Q_IMPORT_PLUGIN(QtQuick2Plugin)
@@ -40,6 +43,11 @@ CommonView::CommonView(QObject *parent):AbstractView(parent) {
 
 	d->view.setResizeMode(QQuickView::SizeRootObjectToView);
 	d->view.rootContext()->setContextProperty("SCALEFACTOR", 1);  // Default value, resizeEvent() overrides this
+
+    QQmlEngine *engine = d->view.engine();
+    //QQuickImageProvider *i = new QQuickImageProvider(QQuickImageProvider::Pixmap);
+    ColorImageProvider *i = new ColorImageProvider();
+    engine->addImageProvider(QLatin1String("icons"), i);
 }
 
 CommonView::~CommonView() {
