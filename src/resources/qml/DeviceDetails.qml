@@ -124,14 +124,14 @@ Item {
 							anchors.right: parent.right
 							wrapMode: Text.WordWrap
 							text: showDevice.selected.isFavorite ? "Device is shown on the dashboard" : "Show device on dashboard"
-							color: showDevice.selected.isFavorite ? "#00659F" : "#999999"
+							color: showDevice.selected.isFavorite ? "#1b365d" : "#999999"
 							font.pixelSize: 14 * SCALEFACTOR
 							font.weight: Font.Bold
 						}
 						Text {
 							anchors.top: favText.bottom
 							text: "Tap to remove"
-							color: "#00659F"
+							color: "#1b365d"
 							font.pixelSize: 10 * SCALEFACTOR
 							font.weight: Font.Bold
 							height: showDevice.selected.isFavorite ? undefined : 0

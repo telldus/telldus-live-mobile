@@ -23,6 +23,8 @@
 	<string></string>
 	<key>UILaunchImageFile</key>
 	<string>LaunchImage</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

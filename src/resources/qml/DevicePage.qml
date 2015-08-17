@@ -55,7 +55,7 @@ Item {
 					anchors.right: arrow.left
 					anchors.rightMargin: 10 * SCALEFACTOR
 					Text {
-						color: "#20334d"
+						color: "#1b365d"
 						width: parent.width
 						font.pixelSize: 16 * SCALEFACTOR
 						font.weight: Font.Bold

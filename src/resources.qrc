@@ -111,6 +111,10 @@
 		<file>resources/images/throbber/throbber_11.svg</file>
 		<file>resources/images/throbber/throbber_12.svg</file>
 
+		<file>resources/svgs/iconFavourite.svg</file>
+		<file>resources/svgs/iconHamburger.svg</file>
+		<file>resources/svgs/logoTelldusLive.svg</file>
+
 		<file>resources/scripts/Device.js</file>
 		<file>resources/scripts/Sensor.js</file>
 		<file>resources/scripts/DB.js</file>

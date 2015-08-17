@@ -28,7 +28,7 @@ Item {
 				textFormat: Text.RichText
 				font.pixelSize: 15*SCALEFACTOR
 				font.bold: true
-				color: "#20334d"
+				color: "#093266"
 			}
 		}
 		Button {

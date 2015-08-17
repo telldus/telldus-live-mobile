@@ -14,7 +14,7 @@ Rectangle {
 	anchors.top: parent.top
 	height: (screen.isPortrait ? headerHeight * SCALEFACTOR : screen.height) + mainHeader.anchors.topMargin
 	width: screen.isPortrait ? screen.width : headerHeight * SCALEFACTOR
-	color: "#20334d"
+	color: "#1b365d"
 
 	Item {
 		id: mainHeader

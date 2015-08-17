@@ -9,7 +9,7 @@ Rectangle {
 	property variant screenNames: ['/dashboard', '/devices', '/sensors', '/schedular', '/settings']
 	property bool menuViewVisible: false
 	property bool timelineViewVisible: false
-	color: "#000000";
+	color: "#404040";
 
 	Rectangle {
 		id: menuView
@@ -19,7 +19,7 @@ Rectangle {
 		anchors.left: parent.left
 		opacity: mainInterface.menuViewVisible ? 1 : 0
 		width: (screen.isPortrait ? mainInterface.width : mainInterface.height) * 0.8
-		color: "#000000";
+		color: "#404040";
 		Behavior on opacity { NumberAnimation { duration: 300 } }
 
 		Footer {

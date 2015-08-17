@@ -6,7 +6,7 @@ Item {
 	Component {
 		id: schedulerDelegate
 		Text {
-			color: "#20334d"
+			color: "#1b365d"
 			width: list.width
 			font.pixelSize: 16 * SCALEFACTOR
 			font.weight: Font.Bold
