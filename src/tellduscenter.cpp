@@ -1,10 +1,12 @@
+#include "tellduscenter.h"
+
 #include <QtQuick>
 
 #include "client.h"
 #include "commonview.h"
+#include "config.h"
 #include "device.h"
 #include "sensor.h"
-#include "tellduscenter.h"
 #include "tellduslive.h"
 #include "user.h"
 #include "models/clientmodel.h"
@@ -17,7 +19,6 @@
 #include "models/sensormodel.h"
 #include "objects/DashboardItem.h"
 #include "utils/dev.h"
-#include "config.h"
 
 #ifdef PLATFORM_ANDROID
 #include <QAndroidJniObject>
