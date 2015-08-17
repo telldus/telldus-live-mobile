@@ -21,7 +21,7 @@ Item {
 	}
 	Rectangle {
 		id: contentHeader
-		height: contentBackground.height / 3.5
+		height: Math.floor(contentBackground.height / 3.5)
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right

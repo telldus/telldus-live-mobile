@@ -17,7 +17,7 @@ Item {
 	MouseArea {
 		id: buttonsMouseArea
 		preventStealing: true
-		anchors.fill: tile
+		anchors.fill: parent
 //		onPressAndHold: pressedAndHeld()
 //		onPressedChanged: {
 //			if (!pressed) {
