@@ -18,6 +18,10 @@
 #include "models/schedulermodel.h"
 #include "models/sensormodel.h"
 #include "objects/DashboardItem.h"
+#include "properties/Properties.h"
+#include "properties/PropertiesTheme.h"
+#include "properties/PropertiesThemeColors.h"
+#include "properties/PropertiesThemeCore.h"
 #include "utils/dev.h"
 
 #ifdef PLATFORM_ANDROID
@@ -61,7 +65,12 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	qmlRegisterType<DashboardItem>("Telldus", 1, 0, "DashboardItem");
 	qmlRegisterType<Sensor>("Telldus", 1, 0, "Sensor");
 	qmlRegisterType<GroupDeviceModel>("Telldus", 1, 0, "GroupDeviceModel");
+	qmlRegisterType<PropertiesTheme>("Telldus", 1, 0, "PropertiesTheme");
+	qmlRegisterType<PropertiesThemeColors>("Telldus", 1, 0, "PropertiesThemeColors");
+	qmlRegisterType<PropertiesThemeCore>("Telldus", 1, 0, "PropertiesThemeCore");
+
 	qRegisterMetaType<QModelIndex>("QModelIndex");
+
 	d->view->setContextProperty("telldusLive", tdLive);
 	d->view->setContextProperty("dev", Dev::instance());
 	d->view->setContextProperty("core", this);
@@ -75,6 +84,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("clientModel", d->clientModel);
 	d->view->setContextProperty("sensorModel", SensorModel::instance());
 	d->view->setContextProperty("user", d->user);
+	d->view->setContextProperty("properties", Properties::instance());
 }
 
 TelldusCenter::~TelldusCenter() {

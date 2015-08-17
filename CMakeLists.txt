@@ -84,6 +84,10 @@ SET( SOURCES
 	src/models/tlistmodel.cpp
 	src/objects/DashboardItem.cpp
 	src/utils/dev.cpp
+	src/properties/Properties.cpp
+	src/properties/PropertiesTheme.cpp
+	src/properties/PropertiesThemeColors.cpp
+	src/properties/PropertiesThemeCore.cpp
 )
 
 SET( HEADERS
@@ -112,6 +116,10 @@ SET( MOC_HEADERS
 	src/models/tlistmodel.h
 	src/objects/DashboardItem.h
 	src/utils/dev.h
+	src/properties/Properties.h
+	src/properties/PropertiesTheme.h
+	src/properties/PropertiesThemeColors.h
+	src/properties/PropertiesThemeCore.h
 )
 
 SET(RESOURCES

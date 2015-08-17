@@ -31,7 +31,8 @@ Item {
 					width: (list.width - 30) / 2
 					Text {
 						id: sensorName
-						color: sensor.name !== '' ? '#1b365d' : '#801b365d'
+						color: properties.theme.colors.telldusBlue
+						opacity: sensor.name !== '' ? 1 : 0.5
 						font.weight: Font.Bold
 						text: sensor.name !== '' ? sensor.name : '(no name)'
 						font.pixelSize: 14 * SCALEFACTOR

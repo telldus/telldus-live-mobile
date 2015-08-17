@@ -5,8 +5,8 @@ import Telldus 1.0
 
 Rectangle {
 	id: dashboardPage
-	color: "#e6e7e8"
-	property var tilePadding: 10 * SCALEFACTOR
+	color: properties.theme.colors.dashboardBackground
+	readonly property var tilePadding: properties.theme.core.tilePadding * SCALEFACTOR
 
 	Component {
 		id: dashboardItemDelegate
@@ -112,11 +112,11 @@ Rectangle {
 		//var maxHue = 0.85;
 		//var indexedHue = (index / tilesForFullHueRange) - Math.floor(index / tilesForFullHueRange)
 		//var hue = (indexedHue * (maxHue - minHue)) + minHue
-		//return 1 - hue
+		//return 1 - hue;
 		if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
-			return 0.06;
+			return rgbToHsl(properties.theme.colors.telldusOrange).hue;
 		} else if (dashboardItem.childObjectType == DashboardItem.SensorChildObjectType) {
-			return 0.60;
+			return rgbToHsl(properties.theme.colors.telldusBlue).hue;
 		} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
 			return 0.16;
 		}
@@ -124,9 +124,9 @@ Rectangle {
 	}
 	function calculateTileSaturation(dashboardItem) {
 		if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
-			return 0.73;
+			return rgbToHsl(properties.theme.colors.telldusOrange).saturation;
 		} else if (dashboardItem.childObjectType == DashboardItem.SensorChildObjectType) {
-			return 0.55;
+			return rgbToHsl(properties.theme.colors.telldusBlue).saturation;
 		} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
 			return 0.73;
 		}
@@ -134,13 +134,34 @@ Rectangle {
 	}
 	function calculateTileLightness(dashboardItem) {
 		if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
-			return 0.51;
+			return rgbToHsl(properties.theme.colors.telldusOrange).lightness;
 		} else if (dashboardItem.childObjectType == DashboardItem.SensorChildObjectType) {
-			return 0.24;
+			return rgbToHsl(properties.theme.colors.telldusBlue).lightness;
 		} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
 			return 0.51;
 		}
 		return 0.5;
+	}
+	function rgbToHsl(color){
+		var r = color.r
+		var g = color.g
+		var b = color.b
+		var max = Math.max(r, g, b), min = Math.min(r, g, b);
+		var h, s, l = (max + min) / 2;
+
+		if(max == min){
+			h = s = 0; // achromatic
+		}else{
+			var d = max - min;
+			s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+			switch(max){
+				case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+				case g: h = (b - r) / d + 2; break;
+				case b: h = (r - g) / d + 4; break;
+			}
+			h /= 6;
+		}
+		return {hue: h, saturation: s, lightness: l};
 	}
 
 }

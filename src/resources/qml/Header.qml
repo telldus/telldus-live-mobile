@@ -14,7 +14,7 @@ Rectangle {
 	anchors.top: parent.top
 	height: (screen.isPortrait ? headerHeight * SCALEFACTOR : screen.height) + mainHeader.anchors.topMargin
 	width: screen.isPortrait ? screen.width : headerHeight * SCALEFACTOR
-	color: "#1b365d"
+	color: properties.theme.colors.telldusBlue
 
 	Item {
 		id: mainHeader

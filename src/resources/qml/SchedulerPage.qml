@@ -6,7 +6,7 @@ Item {
 	Component {
 		id: schedulerDelegate
 		Text {
-			color: "#1b365d"
+			color: properties.theme.colors.telldusBlue
 			width: list.width
 			font.pixelSize: 16 * SCALEFACTOR
 			font.weight: Font.Bold

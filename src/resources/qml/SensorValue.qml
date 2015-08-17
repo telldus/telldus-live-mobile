@@ -18,7 +18,7 @@ Item {
 		anchors.left: sensorIcon.right
 		anchors.leftMargin: 5 * SCALEFACTOR
 		anchors.verticalCenter: parent.verticalCenter
-		color: '#1b365d'
+		color: properties.theme.colors.telldusBlue
 		font.pixelSize: 12 * SCALEFACTOR
 		font.weight: Font.Bold
 		//text: 'sensor.temperature' + '\u00B0C'

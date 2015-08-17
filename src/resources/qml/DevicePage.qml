@@ -55,7 +55,7 @@ Item {
 					anchors.right: arrow.left
 					anchors.rightMargin: 10 * SCALEFACTOR
 					Text {
-						color: "#1b365d"
+						color: properties.theme.colors.telldusBlue
 						width: parent.width
 						font.pixelSize: 16 * SCALEFACTOR
 						font.weight: Font.Bold
