@@ -27,6 +27,8 @@
 		<file>resources/qml/DeviceDetails.qml</file>
 		<file>resources/qml/SchedulerPage.qml</file>
 		<file>resources/qml/SwipeArea.qml</file>
+		<file>resources/qml/ButtonSetTile.qml</file>
+		<file>resources/qml/ComponentSetOnOffTile.qml</file>
 		<file>resources/qml/tiles/DeviceTile.qml</file>
 		<file>resources/qml/tiles/SensorTile.qml</file>
 		<file>resources/qml/tiles/WeatherTile.qml</file>

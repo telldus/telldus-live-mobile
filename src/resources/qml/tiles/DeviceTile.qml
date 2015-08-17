@@ -9,18 +9,28 @@ Item {
 	anchors.verticalCenter: parent.verticalCenter
 	anchors.horizontalCenter: parent.horizontalCenter
 	clip: true
-	Item {
+	Rectangle {
+		id: contentHeaderBackgroundSquarer
+		height: contentHeader.height / 2
+		anchors.left: contentHeader.left
+		anchors.top: contentHeader.top
+		anchors.right: contentHeader.right
+		color: contentHeader.color
+	}
+	Rectangle {
 		id: contentHeader
-		height: deviceName.height + (10 * SCALEFACTOR)
+		height: contentBackground.height / 3.5
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
+		color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+		radius: tileWhite.radius
 		Text {
 			id: deviceName
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.verticalCenter: parent.verticalCenter
-			color: wrapper.color
-			font.pixelSize: 12 * SCALEFACTOR
+			color: "#ffffff"
+			font.pixelSize: contentBackground.height / 10
 			font.bold: true
 			text: dashboardItem.childObject.name
 			width: parent.width - (10 * SCALEFACTOR)
@@ -34,11 +44,10 @@ Item {
 		anchors.top: parent.top
 		anchors.right: parent.right
 		anchors.bottom: contentHeader.top
-		ButtonSet {
+		ButtonSetTile {
 			id: buttons
 			device: dashboardItem.childObject
-			anchors.horizontalCenter: parent.horizontalCenter
-			anchors.verticalCenter: parent.verticalCenter
+			anchors.fill: parent
 		}
 
 	}

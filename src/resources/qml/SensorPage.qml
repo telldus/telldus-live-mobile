@@ -31,7 +31,7 @@ Item {
 					width: (list.width - 30) / 2
 					Text {
 						id: sensorName
-						color: sensor.name !== '' ? '#093266' : '#80093266'
+						color: sensor.name !== '' ? '#1b365d' : '#801b365d'
 						font.weight: Font.Bold
 						text: sensor.name !== '' ? sensor.name : '(no name)'
 						font.pixelSize: 14 * SCALEFACTOR
