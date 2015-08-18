@@ -61,10 +61,6 @@ function setupCache(deviceModel, database) {
 				haveFav = true;
 			}
 		}
-		if (haveFav) {
-			// At lease one is marked as favorite. Switch over to fav view
-			favoriteModel.doFilter = true;
-		}
 
 		deviceModel.addDevices(deviceList);
 	});

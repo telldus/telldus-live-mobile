@@ -16,7 +16,6 @@ AbstractFilteredDeviceModel::AbstractFilteredDeviceModel(DeviceModel *model, QOb
 }
 
 AbstractFilteredDeviceModel::~AbstractFilteredDeviceModel() {
-	
 }
 
 bool AbstractFilteredDeviceModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const {

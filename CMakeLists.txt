@@ -77,7 +77,8 @@ SET( SOURCES
 	src/models/clientmodel.cpp
 	src/models/dashboardmodel.cpp
 	src/models/devicemodel.cpp
-	src/models/favoritemodel.cpp
+	src/models/favoritedevicemodel.cpp
+	src/models/favoritesensormodel.cpp
 	src/models/filtereddevicemodel.cpp
 	src/models/groupdevicemodel.cpp
 	src/models/schedulermodel.cpp
@@ -110,7 +111,8 @@ SET( MOC_HEADERS
 	src/models/clientmodel.h
 	src/models/dashboardmodel.h
 	src/models/devicemodel.h
-	src/models/favoritemodel.h
+	src/models/favoritedevicemodel.h
+	src/models/favoritesensormodel.h
 	src/models/filtereddevicemodel.h
 	src/models/groupdevicemodel.h
 	src/models/schedulermodel.h

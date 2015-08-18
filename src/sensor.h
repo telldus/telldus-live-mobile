@@ -111,7 +111,7 @@ signals:
 	void rainRateChanged(const QString &);
 	void rainTotalChanged(const QString &);
 	void lastUpdatedChanged(const QDateTime &lastUpdated);
-	void nameChanged(const QString &name);
+	void nameChanged(const QString &);
 	void temperatureChanged(const QString &temperature);
 	void windAvgChanged(const QString &);
 	void windGustChanged(const QString &);

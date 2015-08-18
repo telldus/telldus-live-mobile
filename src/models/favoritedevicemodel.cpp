@@ -1,19 +1,12 @@
-#include "favoritemodel.h"
-#include "devicemodel.h"
-#include "device.h"
+#include "favoritedevicemodel.h"
 
 #include <QDebug>
 
-class FavoriteModel::PrivateData {
-public:
-	bool doFilter;
-};
+#include "device.h"
+#include "devicemodel.h"
 
-FavoriteModel::FavoriteModel(DeviceModel *model, QObject *parent) :
-	QSortFilterProxyModel(parent)
+FavoriteDeviceModel::FavoriteDeviceModel(DeviceModel *model, QObject *parent) : QSortFilterProxyModel(parent)
 {
-	d = new PrivateData;
-	d->doFilter = false;
 	this->setSourceModel(model);
 	this->setDynamicSortFilter(true);
 	this->sort(0);
@@ -22,41 +15,27 @@ FavoriteModel::FavoriteModel(DeviceModel *model, QObject *parent) :
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
 }
 
-FavoriteModel::~FavoriteModel() {
-	delete d;
+FavoriteDeviceModel::~FavoriteDeviceModel() {
 }
 
-bool FavoriteModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const {
+bool FavoriteDeviceModel::filterAcceptsRow(int sourceRow, const QModelIndex &) const {
 	DeviceModel *model = qobject_cast<DeviceModel *>(this->sourceModel());
 	if (!model) {
 		//Should not happen
 		return false;
 	}
-	if (!d->doFilter) {
-		return true;
-	}
 	Device *device = qobject_cast<Device *>(model->get(sourceRow).value<QObject *>());
 	return device->isFavorite();
 }
 
-bool FavoriteModel::lessThan(const QModelIndex &left, const QModelIndex &right) const {
+bool FavoriteDeviceModel::lessThan(const QModelIndex &left, const QModelIndex &right) const {
 	Device *leftDevice = qobject_cast<Device *>(this->sourceModel()->data(left).value<QObject *>());
 	Device *rightDevice = qobject_cast<Device *>(this->sourceModel()->data(right).value<QObject *>());
 
 	return QString::localeAwareCompare(leftDevice->name(), rightDevice->name()) < 0;
 }
 
-bool FavoriteModel::doFilter() const {
-	return d->doFilter;
-}
-
-void FavoriteModel::setDoFilter(bool doFilter) {
-	d->doFilter = doFilter;
-	emit doFilterChanged();
-	this->invalidateFilter();
-}
-
-void FavoriteModel::rowsAdded(const QModelIndex &, int start, int end) {
+void FavoriteDeviceModel::rowsAdded(const QModelIndex &, int start, int end) {
 	DeviceModel *model = qobject_cast<DeviceModel *>(this->sourceModel());
 	if (!model) {
 		return;
@@ -68,6 +47,6 @@ void FavoriteModel::rowsAdded(const QModelIndex &, int start, int end) {
 	}
 }
 
-void FavoriteModel::deviceChanged() {
+void FavoriteDeviceModel::deviceChanged() {
 	this->invalidateFilter();
 }

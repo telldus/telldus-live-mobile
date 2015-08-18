@@ -6,13 +6,11 @@
 #include "commonview.h"
 #include "config.h"
 #include "device.h"
-#include "sensor.h"
-#include "tellduslive.h"
-#include "user.h"
 #include "models/clientmodel.h"
 #include "models/devicemodel.h"
 #include "models/dashboardmodel.h"
-#include "models/favoritemodel.h"
+#include "models/favoritedevicemodel.h"
+#include "models/favoritesensormodel.h"
 #include "models/filtereddevicemodel.h"
 #include "models/groupdevicemodel.h"
 #include "models/schedulermodel.h"
@@ -22,6 +20,9 @@
 #include "properties/PropertiesTheme.h"
 #include "properties/PropertiesThemeColors.h"
 #include "properties/PropertiesThemeCore.h"
+#include "sensor.h"
+#include "tellduslive.h"
+#include "user.h"
 #include "utils/dev.h"
 
 #ifdef PLATFORM_ANDROID
@@ -34,8 +35,8 @@ class TelldusCenter::PrivateData {
 public:
 	AbstractView *view;
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
-	FavoriteModel *favoriteModel;
 	ClientModel *clientModel;
+	DashboardModel *dashboardModel;
 	User *user;
 	static TelldusCenter *instance;
 };
@@ -55,7 +56,11 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
 	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
-	d->favoriteModel = new FavoriteModel(DeviceModel::instance(), this);
+	d->dashboardModel = new DashboardModel(
+		new FavoriteDeviceModel(DeviceModel::instance(), this),
+		new FavoriteSensorModel(SensorModel::instance(), this),
+		this
+	);
 	d->clientModel = new ClientModel(this);
 	d->user = new User(this);
 
@@ -79,8 +84,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("schedulerModel", SchedulerModel::instance());
 	d->view->setContextProperty("deviceModel", d->deviceModel);
 	d->view->setContextProperty("groupModel", d->groupModel);
-	d->view->setContextProperty("favoriteModel", d->favoriteModel);
-	d->view->setContextProperty("dashboardModel", DashboardModel::instance());
+	d->view->setContextProperty("dashboardModel", d->dashboardModel);
 	d->view->setContextProperty("clientModel", d->clientModel);
 	d->view->setContextProperty("sensorModel", SensorModel::instance());
 	d->view->setContextProperty("user", d->user);

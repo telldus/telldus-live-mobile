@@ -4,45 +4,52 @@
 
 #include "device.h"
 #include "devicemodel.h"
+#include "favoritedevicemodel.h"
+#include "favoritesensormodel.h"
+#include "objects/DashboardItem.h"
 #include "sensor.h"
 #include "sensormodel.h"
 #include "tellduslive.h"
-#include "objects/DashboardItem.h"
 
 class DashboardModel::PrivateData {
 public:
-	static DashboardModel *instance;
+	FavoriteDeviceModel *favoriteDeviceModel;
+	FavoriteSensorModel *filteredSensorModel;
 };
-DashboardModel *DashboardModel::PrivateData::instance = 0;
 
-DashboardModel::DashboardModel(QObject *parent) : TListModel("dashboardItem", parent)
+DashboardModel::DashboardModel(FavoriteDeviceModel *favoriteDeviceModel, FavoriteSensorModel *filteredSensorModel, QObject *parent) : TListModel("dashboardItem", parent)
 {
-	connect(DeviceModel::instance(), SIGNAL(countChanged()), this, SLOT(addDashboardItems()));
-	connect(SensorModel::instance(), SIGNAL(countChanged()), this, SLOT(addDashboardItems()));
+	d = new PrivateData;
+
+	d->favoriteDeviceModel = favoriteDeviceModel;
+	connect(d->favoriteDeviceModel, SIGNAL(countChanged()), this, SLOT(addDashboardItems()));
+
+	d->filteredSensorModel = filteredSensorModel;
+	connect(d->filteredSensorModel, SIGNAL(countChanged()), this, SLOT(addDashboardItems()));
+}
+
+DashboardModel::~DashboardModel() {
+	delete d;
 }
 
 void DashboardModel::addDashboardItems() {
 	this->clear();
 	QList<QObject *> list;
-	qDebug() << "Device RowCount: " << DeviceModel::instance()->rowCount();
-	for(int a = 0; a < DeviceModel::instance()->rowCount(); a = a + 1) {
-		Device *device = qvariant_cast<Device*>(DeviceModel::instance()->get(a));
-		if (device->isFavorite()) {
-			DashboardItem *dashboardItem = new DashboardItem(this);
-			dashboardItem->setId(10000 + device->deviceId());
-			dashboardItem->setChildObject(QVariant::fromValue(device));
-			list << dashboardItem;
-		}
+	qDebug() << "Favorited Device RowCount: " << d->favoriteDeviceModel->rowCount();
+	for(int a = 0; a < d->favoriteDeviceModel->rowCount(); a = a + 1) {
+		Device *device = qvariant_cast<Device*>(d->favoriteDeviceModel->index(a, 0).data());
+		DashboardItem *dashboardItem = new DashboardItem(this);
+		dashboardItem->setId(10000 + device->deviceId());
+		dashboardItem->setChildObject(QVariant::fromValue(device));
+		list << dashboardItem;
 	}
-	qDebug() << "Sensor RowCount: " << SensorModel::instance()->rowCount();
-	for(int a = 0; a < SensorModel::instance()->rowCount(); a = a + 1) {
-		Sensor *sensor = qvariant_cast<Sensor*>(SensorModel::instance()->get(a));
-		if (sensor->isFavorite()) {
-			DashboardItem *dashboardItem = new DashboardItem(this);
-			dashboardItem->setId(10000 + sensor->sensorId());
-			dashboardItem->setChildObject(QVariant::fromValue(sensor));
-			list << dashboardItem;
-		}
+	qDebug() << "Favorited Sensor RowCount: " << d->filteredSensorModel->rowCount();
+	for(int a = 0; a < d->filteredSensorModel->rowCount(); a = a + 1) {
+		Sensor *sensor = qvariant_cast<Sensor*>(d->filteredSensorModel->index(a, 0).data());
+		DashboardItem *dashboardItem = new DashboardItem(this);
+		dashboardItem->setId(10000 + sensor->sensorId());
+		dashboardItem->setChildObject(QVariant::fromValue(sensor));
+		list << dashboardItem;
 	}
 	if (list.size()) {
 		//Appends all in one go
@@ -65,13 +72,6 @@ DashboardItem *DashboardModel::findDashboardItem(int id) const {
 		}
 	}
 	return 0;
-}
-
-DashboardModel * DashboardModel::instance() {
-	if (PrivateData::instance == 0) {
-		PrivateData::instance = new DashboardModel;
-	}
-	return PrivateData::instance;
 }
 
 void DashboardModel::onDashboardItemInfo(const QVariantMap &result) {
@@ -103,4 +103,3 @@ void DashboardModel::onDashboardItemsList(const QVariantMap &result) {
 
 void DashboardModel::removeDashboardItem(int id) {
 }
-
