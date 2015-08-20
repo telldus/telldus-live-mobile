@@ -12,6 +12,7 @@
 	<icon><image>icon-114.png</image></icon>
 	<asset path="TelldusLiveMobile" entry="true" type="Qnx/Elf">TelldusLiveMobile</asset>
 	<permission system="true">run_native</permission>
+	<permission system="true">_sys_use_consumer_push</permission>
 	<action>access_internet</action>
 	<invoke-target id="com.telldus.TARGET">
 		<filter>
@@ -19,6 +20,13 @@
 			<action>bb.action.OPEN</action>
 			<mime-type>*</mime-type>
 			<property var="uris" value="x-com-telldus-live-mobile://"/>
+		</filter>
+	</invoke-target>
+	<invoke-target id="com.telldus.live.mobile.invoke.push">
+		<type>APPLICATION</type>
+		<filter>
+			<action>bb.action.PUSH</action>
+			<mime-type>application/vnd.push</mime-type>
 		</filter>
 	</invoke-target>
 	<asset path="${Qt5Path}/lib/libQt5Core.so.5">lib/libQt5Core.so.5</asset>
