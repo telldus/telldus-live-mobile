@@ -143,8 +143,13 @@ void Push::onCreateSessionComplete(push_service_t *ps, int status_code) {
 	}
 	int rc = push_service_set_ppg_url(ps, PUSH_PPGURL);
 	if (rc == PUSH_SUCCESS) {
-		rc = push_service_create_channel(ps, Push::onCreateChannelComplete, Push::createChannelOnPushTransportReady);
+		push_service_register_to_launch(ps, Push::onRegisterToLaunchComplete);
+		push_service_create_channel(ps, Push::onCreateChannelComplete, Push::createChannelOnPushTransportReady);
 	}
+}
+
+void Push::onRegisterToLaunchComplete(push_service_t *ps, int status_code) {
+	// Do nothing
 }
 
 int Push::pushIoHandler(int fd, int io_events, void *opaque) {
