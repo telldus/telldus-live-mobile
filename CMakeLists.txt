@@ -18,12 +18,13 @@ IF(ENABLE_FEATURE_LOGGING)
 	ENDIF()
 ENDIF()
 
+OPTION(ENABLE_FEATURE_PUSH "Should support for push be built in?" FALSE)
+
 # Environment settings
 SET(TARGET_PLATFORM "" CACHE STRING "Sets the target platform. Valid values are 'iOS', 'Android', 'Desktop', or 'BB10'")
 SET(TELLDUS_LIVE_API_ENDPOINT	"https://api.telldus.com"	CACHE STRING "Telldus Live! api endpoint")
 SET(TELLDUS_LIVE_PUBLIC_KEY	""	CACHE STRING "Telldus Live! public key")
 SET(TELLDUS_LIVE_PRIVATE_KEY	""	CACHE STRING "Telldus Live! private key")
-SET(PUSH_SERVICE_ID	""	CACHE STRING "Push Notification Service Id")
 
 IF(RELEASE_BUILD)
 	SET(IS_RELEASE_BUILD 1)
@@ -35,6 +36,13 @@ IF(ENABLE_FEATURE_WEBSOCKETS)
 	SET(IS_FEATURE_WEBSOCKETS_ENABLED 1)
 ELSE()
 	SET(IS_FEATURE_WEBSOCKETS_ENABLED 0)
+ENDIF()
+
+IF(ENABLE_FEATURE_PUSH)
+	SET(IS_FEATURE_PUSH_ENABLED 1)
+	SET(PUSH_SERVICE_ID	""	CACHE STRING "Push Notification Service Id")
+ELSE()
+	SET(IS_FEATURE_PUSH_ENABLED 0)
 ENDIF()
 
 IF(ENABLE_FEATURE_LOGGING)
@@ -62,6 +70,7 @@ ENDIF(COMMAND CMAKE_POLICY)
 SET(PRODUCT_NAME TelldusCenter-light )
 
 SET( SOURCES
+	src/AbstractPush.cpp
 	src/abstractview.cpp
 	src/client.cpp
 	src/commonview.cpp
@@ -97,6 +106,7 @@ SET( HEADERS
 	src/config.h.in
 )
 SET( MOC_HEADERS
+	src/AbstractPush.h
 	src/abstractview.h
 	src/client.h
 	src/commonview.h

@@ -26,6 +26,9 @@ public slots:
 	static void fromJavaSendRegistrationToServer(JNIEnv *env, jobject thiz, jstring token, jstring name, jstring manufacturer, jstring model, jstring os_version);
 #endif
 
+private slots:
+	void pushMessageReceived(const QString &message);
+
 private:
 	class PrivateData;
 	PrivateData *d;

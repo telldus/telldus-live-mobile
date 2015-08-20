@@ -25,6 +25,10 @@
 #include "user.h"
 #include "utils/dev.h"
 
+#if IS_FEATURE_PUSH_ENABLED
+#include "Push.h"
+#endif  // IS_FEATURE_PUSH_ENABLED
+
 #ifdef PLATFORM_ANDROID
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
@@ -38,6 +42,9 @@ public:
 	ClientModel *clientModel;
 	DashboardModel *dashboardModel;
 	User *user;
+#if IS_FEATURE_PUSH_ENABLED
+	Push *push;
+#endif  // IS_FEATURE_PUSH_ENABLED
 	static TelldusCenter *instance;
 };
 
@@ -63,6 +70,10 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	);
 	d->clientModel = new ClientModel(this);
 	d->user = new User(this);
+#if IS_FEATURE_PUSH_ENABLED
+	d->push = new Push(this);
+	connect(d->push, SIGNAL(messageReceived(QString)), this, SLOT(pushMessageReceived(QString)));
+#endif  // IS_FEATURE_PUSH_ENABLED
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Client>("Telldus", 1, 0, "Client");
@@ -101,6 +112,11 @@ void TelldusCenter::openUrl(const QUrl &url) {
 #else
 	QDesktopServices::openUrl(url);
 #endif  // PLATFORM_IOS
+}
+
+void TelldusCenter::pushMessageReceived(const QString &message) {
+	// TODO(micke): Handle the message and show a notification
+	qDebug() << "Received a push message. Show notificaiton" << message;
 }
 
 #ifdef PLATFORM_ANDROID
