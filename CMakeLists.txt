@@ -70,6 +70,7 @@ ENDIF(COMMAND CMAKE_POLICY)
 SET(PRODUCT_NAME TelldusCenter-light )
 
 SET( SOURCES
+	src/AbstractNotification.cpp
 	src/AbstractPush.cpp
 	src/abstractview.cpp
 	src/client.cpp
@@ -106,6 +107,7 @@ SET( HEADERS
 	src/config.h.in
 )
 SET( MOC_HEADERS
+	src/AbstractNotification.h
 	src/AbstractPush.h
 	src/abstractview.h
 	src/client.h
