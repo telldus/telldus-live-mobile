@@ -5,7 +5,6 @@
 #include <QMetaType>
 #include <QVariantMap>
 #include <QDateTime>
-#include <QtWebSockets/QWebSocket>
 
 class Client : public QObject
 {
@@ -59,8 +58,6 @@ private slots:
 private:
 	class PrivateData;
 	PrivateData *d;
-	QWebSocket m_webSocket;
-
 };
 
 Q_DECLARE_METATYPE(Client*)

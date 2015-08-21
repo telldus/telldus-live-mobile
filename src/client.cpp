@@ -11,12 +11,14 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QWebSocket>
 
 class Client::PrivateData {
 public:
 	bool online, editable;
 	int id;
 	QString name, version, type, sessionId;
+	QWebSocket webSocket;
 };
 
 Client::Client(QObject *parent) :
@@ -29,9 +31,9 @@ Client::Client(QObject *parent) :
 
 	connect(QApplication::instance(), SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(applicationStateChanged(Qt::ApplicationState)));
 	connect(TelldusLive::instance(), SIGNAL(sessionAuthenticated()), this, SLOT(sessionAuthenticated()));
-	connect(&m_webSocket, &QWebSocket::connected, this, &Client::wsConnected);
-	connect(&m_webSocket, &QWebSocket::disconnected, this, &Client::wsDisconnected);
-	connect(&m_webSocket, &QWebSocket::textMessageReceived, this, &Client::wsDataReceived);
+	connect(&d->webSocket, &QWebSocket::connected, this, &Client::wsConnected);
+	connect(&d->webSocket, &QWebSocket::disconnected, this, &Client::wsDisconnected);
+	connect(&d->webSocket, &QWebSocket::textMessageReceived, this, &Client::wsDataReceived);
 
 }
 
@@ -102,7 +104,7 @@ void Client::sessionAuthenticated() {
 			return;
 		}
 		// Check to see if we are already connected
-		if (m_webSocket.state() == QAbstractSocket::ConnectedState) {
+		if (d->webSocket.state() == QAbstractSocket::ConnectedState) {
 			qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Already connected";
 			return;
 		}
@@ -126,14 +128,14 @@ void Client::addressReceived(const QVariantMap &data) {
 	qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Connecting to " + url;
 	Dev::instance()->logEvent("websocket", "tryConnection", "");
 
-	m_webSocket.open(QUrl(url));
+	d->webSocket.open(QUrl(url));
 }
 
 void Client::wsConnected() {
 	Dev::instance()->logEvent("websocket", "connected", "");
-	m_webSocket.sendTextMessage(QString("{\"module\":\"auth\",\"action\":\"auth\",\"data\":{\"sessionid\":\"%1\",\"clientId\":\"%2\"}}").arg(d->sessionId, QString::number(d->id)));
-	m_webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"setState\"}}"));
-	m_webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"value\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"auth\",\"action\":\"auth\",\"data\":{\"sessionid\":\"%1\",\"clientId\":\"%2\"}}").arg(d->sessionId, QString::number(d->id)));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"setState\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"value\"}}"));
 }
 
 void Client::wsDataReceived(const QString &string) {
@@ -183,7 +185,7 @@ void Client::applicationStateChanged(Qt::ApplicationState state) {
 	case Qt::ApplicationSuspended:
 	case Qt::ApplicationHidden:
 		Dev::instance()->logEvent("applicationState", "inactive", "");
-		m_webSocket.close();
+		d->webSocket.close();
 		QTimer::singleShot(10000, this, SLOT(sessionAuthenticated()));
 		break;
 	default:
