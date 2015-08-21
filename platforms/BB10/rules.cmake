@@ -7,9 +7,11 @@ ENDIF()
 SET(BB10_FILES ${CMAKE_BINARY_DIR}/bar-descriptor.xml)
 
 LIST(APPEND SOURCES
+	platforms/BB10/Notification.cpp
 	platforms/BB10/Push.cpp
 )
 LIST(APPEND MOC_HEADERS
+	platforms/BB10/Notification.h
 	platforms/BB10/Push.h
 )
 

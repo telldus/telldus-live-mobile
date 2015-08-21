@@ -15,6 +15,7 @@
 #include "models/groupdevicemodel.h"
 #include "models/schedulermodel.h"
 #include "models/sensormodel.h"
+#include "Notification.h"
 #include "objects/DashboardItem.h"
 #include "properties/Properties.h"
 #include "properties/PropertiesTheme.h"
@@ -115,8 +116,8 @@ void TelldusCenter::openUrl(const QUrl &url) {
 }
 
 void TelldusCenter::pushMessageReceived(const QString &message) {
-	// TODO(micke): Handle the message and show a notification
-	qDebug() << "Received a push message. Show notificaiton" << message;
+	Notification notification(message);
+	notification.notify();
 }
 
 #ifdef PLATFORM_ANDROID
