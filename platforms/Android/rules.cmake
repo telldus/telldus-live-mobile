@@ -9,9 +9,11 @@ ELSE()
 ENDIF()
 
 LIST(APPEND SOURCES
+	platforms/Android/Notification.cpp
 	platforms/Android/Push.cpp
 )
 LIST(APPEND MOC_HEADERS
+	platforms/Android/Notification.h
 	platforms/Android/Push.h
 )
 
