@@ -15,12 +15,10 @@ class Push::PrivateData {
 public:
 	push_service_t *ps;
 	int pushPpsFd;
-	static Push *instance;
 };
-Push *Push::PrivateData::instance = 0;
 
-Push::Push(QObject *parent)
-	:AbstractPush(parent), QAbstractNativeEventFilter()
+Push::Push()
+	:AbstractPush(), QAbstractNativeEventFilter()
 {
 	d = new PrivateData;
 	QAbstractEventDispatcher::instance()->installNativeEventFilter(this);
@@ -52,14 +50,12 @@ Push::Push(QObject *parent)
 	if (rc == PUSH_FAILURE) {
 		return;
 	}
-	PrivateData::instance = this;
 }
 
 Push::~Push() {
 	push_service_cleanup(d->ps);
 	bps_remove_fd(d->pushPpsFd);
 	delete d;
-	PrivateData::instance = 0;
 }
 
 bool Push::nativeEventFilter(const QByteArray &eventType, void *message, long *result) {
@@ -112,9 +108,6 @@ void Push::createChannelOnPushTransportReady(push_service_t *ps, int status_code
 }
 
 void Push::onCreateChannelComplete(push_service_t *ps, int status_code) {
-	if (!PrivateData::instance) {
-		return;
-	}
 	QString token(push_service_get_token(ps));
 	QString deviceName = "Unknown";
 	QString model = "Unknown";
@@ -134,7 +127,7 @@ void Push::onCreateChannelComplete(push_service_t *ps, int status_code) {
 		deviceName = QString::fromLatin1(buffer);
 	}
 
-	PrivateData::instance->registerToken(token, deviceName, "BlackBerry", model, osVersion);
+	Push::instance()->registerToken(token, deviceName, "BlackBerry", model, osVersion);
 }
 
 void Push::onCreateSessionComplete(push_service_t *ps, int status_code) {

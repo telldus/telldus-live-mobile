@@ -43,9 +43,6 @@ public:
 	ClientModel *clientModel;
 	DashboardModel *dashboardModel;
 	User *user;
-#if IS_FEATURE_PUSH_ENABLED
-	Push *push;
-#endif  // IS_FEATURE_PUSH_ENABLED
 	static TelldusCenter *instance;
 };
 
@@ -72,8 +69,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->clientModel = new ClientModel(this);
 	d->user = new User(this);
 #if IS_FEATURE_PUSH_ENABLED
-	d->push = new Push(this);
-	connect(d->push, SIGNAL(messageReceived(QString)), this, SLOT(pushMessageReceived(QString)));
+	connect(Push::instance(), SIGNAL(messageReceived(QString)), this, SLOT(pushMessageReceived(QString)));
 #endif  // IS_FEATURE_PUSH_ENABLED
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");

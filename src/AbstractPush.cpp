@@ -1,5 +1,6 @@
 #include "AbstractPush.h"
 #include "config.h"
+#include "Push.h"
 #include "tellduslive.h"
 
 #include <QDebug>
@@ -9,11 +10,12 @@ class AbstractPush::PrivateData {
 public:
 	QString token, deviceName, manufacturer, model, osVersion;
 	bool pushEnabled;
+	static Push *instance;
 };
+Push *AbstractPush::PrivateData::instance = 0;
 
-
-AbstractPush::AbstractPush(QObject *parent)
-	:QObject(parent)
+AbstractPush::AbstractPush()
+	:QObject()
 {
 	d = new PrivateData;
 
@@ -25,6 +27,13 @@ AbstractPush::AbstractPush(QObject *parent)
 
 AbstractPush::~AbstractPush() {
 	delete d;
+}
+
+Push *AbstractPush::instance() {
+	if (PrivateData::instance == 0) {
+		PrivateData::instance = new Push();
+	}
+	return PrivateData::instance;
 }
 
 void AbstractPush::registerToken(const QString &token, const QString &deviceName, const QString &manufacturer, const QString &model, const QString &osVersion) {
