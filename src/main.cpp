@@ -33,7 +33,7 @@ int init(int argc, char *argv[]) {
 	QCoreApplication::setApplicationVersion(VERSION);
 
 	CommonView *viewer = new CommonView();
-	TelldusCenter::instance(viewer);
+	TelldusCenter tc(viewer);
 
 	viewer->loadAndShow();
 

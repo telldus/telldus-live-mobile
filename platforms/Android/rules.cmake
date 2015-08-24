@@ -8,6 +8,13 @@ ELSE()
 	SET(SUFFIX ".dev")
 ENDIF()
 
+LIST(APPEND SOURCES
+	platforms/Android/Push.cpp
+)
+LIST(APPEND MOC_HEADERS
+	platforms/Android/Push.h
+)
+
 SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
 FIND_PACKAGE( Qt5AndroidExtras REQUIRED )
 LIST(APPEND LIBRARIES Qt5::AndroidExtras)
@@ -99,11 +106,6 @@ FOREACH(file ${ANDROID_FILES})
 	)
 	LIST(APPEND SOURCES ${CMAKE_BINARY_DIR}/apk/${path}/${name})
 ENDFOREACH()
-
-INCLUDE_DIRECTORIES( platforms/Android/src )
-LIST(APPEND SOURCES
-	platforms/Android/src/AndroidPushNotifications.cpp
-)
 
 SET(JAVA_SOURCES
 	src/com/telldus/live/mobile/MainActivity.java

@@ -30,12 +30,6 @@
 #include "Push.h"
 #endif  // IS_FEATURE_PUSH_ENABLED
 
-#ifdef PLATFORM_ANDROID
-#include <QAndroidJniObject>
-#include <QAndroidJniEnvironment>
-#include "AndroidPushNotifications.h"
-#endif
-
 class TelldusCenter::PrivateData {
 public:
 	AbstractView *view;
@@ -50,9 +44,6 @@ TelldusCenter *TelldusCenter::PrivateData::instance = 0;
 
 TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(parent) {
 	TelldusLive *tdLive = TelldusLive::instance();
-#ifdef PLATFORM_ANDROID
-	connect(AndroidPushNotifications::instance(), &AndroidPushNotifications::sendRegisterPushTokenWithApi, tdLive, &TelldusLive::registerPushTokenWithApi );
-#endif
 
 	tdLive->setupManager();
 
@@ -114,27 +105,4 @@ void TelldusCenter::openUrl(const QUrl &url) {
 void TelldusCenter::pushMessageReceived(const QString &message) {
 	Notification notification(message);
 	notification.notify();
-}
-
-#ifdef PLATFORM_ANDROID
-void TelldusCenter::fromJavaSendRegistrationToServer(JNIEnv *env, jobject thiz, jstring token, jstring name, jstring manufacturer, jstring model, jstring os_version) {
-	Q_UNUSED(thiz);
-	const char* nativeToken = env->GetStringUTFChars(token, 0);
-	const char* nativeName = env->GetStringUTFChars(name, 0);
-	const char* nativeManufacturer = env->GetStringUTFChars(manufacturer, 0);
-	const char* nativeModel = env->GetStringUTFChars(model, 0);
-	const char* nativeOsVersion = env->GetStringUTFChars(os_version, 0);
-	qDebug() << "[TelldusCenter] Token from Java in C++" << QString(nativeToken);
-	qDebug() << "[TelldusCenter] Name from Java in C++" << QString(nativeName);
-	qDebug() << "[TelldusCenter] Model from Java in C++" << QString(nativeModel);
-	qDebug() << "[TelldusCenter] Manufacturer from Java in C++" << QString(nativeManufacturer);
-	qDebug() << "[TelldusCenter] OsVersion from Java in C++" << QString(nativeOsVersion);
-	AndroidPushNotifications::instance()->receivePushData(QString(nativeToken), QString(nativeName), QString(nativeManufacturer), QString(nativeModel), QString(nativeOsVersion));
-}
-#endif
-TelldusCenter * TelldusCenter::instance(AbstractView *view, QObject *parent) {
-	if (PrivateData::instance == 0) {
-		PrivateData::instance = new TelldusCenter(view, parent);
-	}
-	return PrivateData::instance;
 }

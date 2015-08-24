@@ -17,11 +17,6 @@
 #include "tellduscenter.h"
 #include "utils/dev.h"
 
-#ifdef PLATFORM_ANDROID
-#include <QAndroidJniObject>
-#include <QAndroidJniEnvironment>
-#endif
-
 class TelldusLiveCall {
 public:
 	QString endpoint;
@@ -85,8 +80,6 @@ TelldusLive::TelldusLive(QObject *parent):QObject(parent) {
 }
 
 void TelldusLive::authenticateSession() {
-	registerForPush();
-
 #if IS_FEATURE_WEBSOCKETS_ENABLED
 	if (d->session == "") {
 		QSettings s;
@@ -369,20 +362,6 @@ void TelldusLive::setupManager() {
 		this->authenticateSession();
 	}
 }
-
-#ifndef PLATFORM_IOS
-void TelldusLive::registerForPush() {
-	#ifdef PLATFORM_ANDROID
-	JNINativeMethod methods[] {{"callNativeSendRegistrationToServer", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", reinterpret_cast<void *>(TelldusCenter::fromJavaSendRegistrationToServer)}};
-	QAndroidJniObject javaClass("com/telldus/live/mobile/RegistrationIntentService");
-	QAndroidJniEnvironment env;
-	jclass objectClass = env->GetObjectClass(javaClass.object<jobject>());
-	env->RegisterNatives(objectClass, methods, sizeof(methods) / sizeof(methods[0]));
-	env->DeleteLocalRef(objectClass);
-	QAndroidJniObject::callStaticMethod<void>("com/telldus/live/mobile/MainActivity", "sendRegistration", "()V");
-	#endif
-}
-#endif
 
 void TelldusLive::registerPushTokenWithApi(const QString &token, const QString &name, const QString &manufacturer, const QString &model, const QString &os_version) {
 	qDebug() << "[PUSH] Registering push token with API";
