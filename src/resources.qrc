@@ -1,7 +1,7 @@
 <RCC>
 	<qresource prefix="/">
 		<file>resources/qml/main.qml</file>
-		<file>resources/qml/Footer.qml</file>
+		<file>resources/qml/MainMenu.qml</file>
 		<file>resources/qml/DashboardPage.qml</file>
 		<file>resources/qml/DevicePage.qml</file>
 		<file>resources/qml/DebugPage.qml</file>

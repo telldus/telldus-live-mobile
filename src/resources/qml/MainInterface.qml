@@ -22,11 +22,48 @@ Rectangle {
 		color: "#404040";
 		Behavior on opacity { NumberAnimation { duration: 300 } }
 
-		Footer {
-			id: footer
+		Item {
+			id: menuUserDetails
+			anchors.left: parent.left
 			anchors.top: parent.top
+			anchors.topMargin: 10 * SCALEFACTOR
+			anchors.right: parent.right
+			height: childrenRect.height
+			Rectangle {
+				id: menuUserDetailsInitialsBox
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.top: parent.top
+				color: properties.theme.colors.telldusOrange
+				width: 24 * SCALEFACTOR
+				height: width
+				Text {
+					anchors.centerIn: parent
+					text: user.firstname.charAt(0) + user.lastname.charAt(0)
+					font.pixelSize: 16 * SCALEFACTOR
+					color: "#ffffff"
+				}
+
+			}
+			Text {
+				anchors.left: menuUserDetailsInitialsBox.right
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.verticalCenter: parent.verticalCenter
+				text: user.firstname + " " + user.lastname
+				width: parent.width
+				wrapMode: Text.WordWrap
+				font.pixelSize: 16 * SCALEFACTOR
+				color: "#ffffff"
+			}
+		}
+
+		MainMenu {
+			id: mainMenu
+			anchors.top: menuUserDetails.bottom
+			anchors.topMargin: 40 * SCALEFACTOR
 			anchors.left: parent.left
 			anchors.right: parent.right
+			anchors.bottom: parent.bottom
 		}
 	}
 
@@ -71,33 +108,33 @@ Rectangle {
 		TabPage {
 			component: "DashboardPage.qml"
 			pageId: 0
-			currentPage: footer.activePage
+			currentPage: mainMenu.activePage
 		}
 
 		TabPage {
 			component: "DevicePage.qml"
 			pageId: 1
-			currentPage: footer.activePage
+			currentPage: mainMenu.activePage
 		}
 		TabPage {
 			component: "SensorPage.qml"
 			pageId: 2
-			currentPage: footer.activePage
+			currentPage: mainMenu.activePage
 		}
 		TabPage {
 			component: "SchedulerPage.qml"
 			pageId: 3
-			currentPage: footer.activePage
+			currentPage: mainMenu.activePage
 		}
 		TabPage {
 			component: "SettingsPage.qml"
 			pageId: 4
-			currentPage: footer.activePage
+			currentPage: mainMenu.activePage
 		}
 		TabPage {
 			component: "DebugPage.qml"
 			pageId: 5
-			currentPage: footer.activePage
+			currentPage: mainMenu.activePage
 		}
 		SwipeArea {
 			anchors.left: parent.left
@@ -146,7 +183,7 @@ Rectangle {
 	}
 
 	function setActivePage(pageId) {
-		footer.activePage = pageId
+		mainMenu.activePage = pageId
 		dev.logScreenView(screenNames[pageId])
 	}
 	function swipeLeft() {

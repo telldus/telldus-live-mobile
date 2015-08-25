@@ -1,9 +1,9 @@
 import QtQuick 2.0
 
 Item {
-	id: footer
+	id: componentRoot
 	property int activePage: 0
-	height: 64 * SCALEFACTOR
+	anchors.fill: parent
 
 	Column {
 		id: buttonRow
@@ -13,7 +13,7 @@ Item {
 		height: parent.height
 		Item {
 			width: parent.width
-			height: parent.height
+			height: 64 * SCALEFACTOR
 			Text {
 				id: dashboardButton
 				color: "#ffffff"
@@ -30,7 +30,7 @@ Item {
 		}
 		Item {
 			width: parent.width
-			height: parent.height
+			height: 64 * SCALEFACTOR
 			Text {
 				id: deviceButton
 				color: "#ffffff"
@@ -47,7 +47,7 @@ Item {
 		}
 		Item {
 			width: parent.width
-			height: parent.height
+			height: 64 * SCALEFACTOR
 			Text {
 				id: sensorButton
 				color: "#ffffff"
@@ -64,7 +64,7 @@ Item {
 		}
 		Item {
 			width: parent.width
-			height: parent.height
+			height: 64 * SCALEFACTOR
 			Text {
 				id: schedulerButton
 				color: "#ffffff"
@@ -81,7 +81,7 @@ Item {
 		}
 		Item {
 			width: parent.width
-			height: parent.height
+			height: 64 * SCALEFACTOR
 			Text {
 				id: settingsButton
 				color: "#ffffff"
@@ -98,7 +98,7 @@ Item {
 		}
 		Item {
 			width: parent.width
-			height: parent.height
+			height: 64 * SCALEFACTOR
 			Text {
 				id: debugButton
 				color: "#ffffff"
