@@ -1,5 +1,5 @@
 SET(HAVE_WEBKIT 1)
-SET(QT_SOURCE_DIR "/path/to/qt" CACHE STRING "Path to qt source dir")
+SET(QT_DIR "/path/to/qt" CACHE STRING "Path to qt source dir")
 SET(OPENSSL_DIR "/path/to/openssl/lib/and/include" CACHE STRING "Path to the openssl for iPhone dir")
 
 OPTION(BUILD_FOR_DEVICE "Whatever to build for device or simulator" TRUE)
@@ -10,11 +10,6 @@ ELSE()
 	SET(SUFFIX "-dev")
 ENDIF()
 
-IF (BUILD_FOR_DEVICE)
-	SET(QT_DIR "${QT_SOURCE_DIR}/ios")
-ELSE()
-	SET(QT_DIR "${QT_SOURCE_DIR}/clang_64")
-ENDIF()
 SET(USE_QMAKE FALSE)
 
 SET(Qt5Core_DIR ${QT_DIR}/lib/cmake/Qt5Core)
@@ -44,7 +39,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/utils )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtCore )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtGui )
-INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtGui/5.5.0 )
+INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtGui/5.5.1 )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtNetwork )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtQuick )
 INCLUDE_DIRECTORIES( ${QT_DIR}/include/QtQml )
@@ -60,9 +55,11 @@ SET(QT_USE_QTOPENGL FALSE)
 LIST(APPEND SOURCES
 	platforms/iOS/src/QtAppDelegate.mm
 	platforms/iOS/src/ObjectiveUtils.mm
-	platforms/iOS/dev.mm
-	platforms/iOS/tellduslive.mm
-	platforms/iOS/commonview.mm
+	platforms/iOS/src/Dev.mm
+	platforms/iOS/src/TelldusLive.mm
+	platforms/iOS/src/CommonView.mm
+	platforms/iOS/src/Notification.cpp
+	platforms/iOS/src/Push.cpp
 )
 
 LIST(APPEND LIBRARIES
