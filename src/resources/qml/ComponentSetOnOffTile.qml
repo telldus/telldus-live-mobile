@@ -4,13 +4,22 @@ import Telldus 1.0
 Item {
 	property var deviceState: device.state
 	anchors.fill: parent
+	Component.onCompleted: {
+		tile.showBorder = true;
+	}
 	onDeviceStateChanged: {
 		if (deviceState == 1 || deviceState == 16) {
+			tile.hue = 0.33
+			tile.saturation = 1
+			tile.lightness = 0.3
+		} else if (deviceState == 2) {
+			tile.hue = 0.1
+			tile.saturation = 0.3
+			tile.lightness = 0.7
+		} else {
+			tile.hue = tile.hueDefault
 			tile.saturation = tile.saturationDefault
 			tile.lightness = tile.lightnessDefault
-		} else {
-			tile.saturation = 0
-			tile.lightness = tile.lightnessDefault * 1.2
 		}
 	}
 
@@ -18,12 +27,6 @@ Item {
 		id: buttonsMouseArea
 		preventStealing: true
 		anchors.fill: parent
-//		onPressAndHold: pressedAndHeld()
-//		onPressedChanged: {
-//			if (!pressed) {
-				//dimArea.shown = false
-//			}
-//		}
 		onReleased: {
 			var maxY = dimArea.height - dimHandle.height;
 			var value = Math.round(dimHandle.y / maxY * 255);
@@ -57,16 +60,19 @@ Item {
 	Rectangle {
 		id: onButton
 		height: parent.height
-		width: parent.width / 2
+		anchors.right: tileSeperator.left
 		anchors.left: parent.left
-		color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness * 1.2, 1) : "#ffffff"
+		color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
 		radius: tileWhite.radius
-		Rectangle {
+		Text {
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
-			color: (deviceState == 1 || deviceState == 16) ? "#ffffff" : Qt.hsla(tile.hue, tile.saturation, tile.lightness * 1.2, 1)
-			width: parent.width / 15
-			height: parent.height / 3.25
+			color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
+			font.pixelSize: parent.width / 3
+			font.weight: Font.Bold
+			text: "On"
+			style: Text.Sunken
+			styleColor: "#ffffff"
 		}
 		MouseArea {
 			id: onMouseArea
@@ -78,16 +84,26 @@ Item {
 			drag.maximumX: 0
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
-			onPressAndHold: pressedAndHeld()
+			onPressed: {
+				onButton.color = Qt.hsla(tile.hue, 0.1, 0.8, 1)
+			}
 			onClicked: {
 				device.turnOn()
 			}
-			onPressedChanged: {
-				if (!pressed) {
-					//dimArea.shown = false
-				}
+			onReleased: {
+				onButton.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
+				offButton.color = (deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
 			}
 		}
+	}
+
+	Rectangle {
+		id: tileSeperator
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
+		anchors.horizontalCenter: parent.horizontalCenter
+		width: 1 * SCALEFACTOR
+		color: Qt.hsla(tile.hue, 0.3, 0.5, 1)
 	}
 
 	Rectangle {
@@ -109,23 +125,19 @@ Item {
 	Rectangle {
 		id: offButton
 		height: parent.height
-		width: parent.width / 2
+		anchors.left: tileSeperator.right
 		anchors.right: parent.right
-		color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness * 1.2, 1) : "#ffffff"
+		color: deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
 		radius: tileWhite.radius
-		Rectangle {
+		Text {
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
-			color: deviceState == 2 ? "#ffffff" : Qt.hsla(tile.hue, tile.saturation, tile.lightness * 1.2, 1)
-			height: parent.height / 3.25
-			width: height
-			radius: width / 2
-			Rectangle {
-				anchors.fill: parent
-				anchors.margins: offButton.width / 15
-				color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness * 1.2, 1) : "#ffffff"
-				radius: width / 2
-			}
+			color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
+			font.pixelSize: parent.width / 3
+			font.weight: Font.Bold
+			text: "Off"
+			style: Text.Sunken
+			styleColor: "#ffffff"
 		}
 		MouseArea {
 			id: offMouseArea
@@ -137,12 +149,15 @@ Item {
 			drag.maximumX: 0
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
-			onClicked: device.turnOff()
-			onPressAndHold: pressedAndHeld()
-			onPressedChanged: {
-				if (!pressed) {
-					//dimArea.shown = false
-				}
+			onPressed: {
+				offButton.color = Qt.hsla(tile.hue, 0.1, 0.8, 1)
+			}
+			onClicked: {
+				device.turnOff()
+			}
+			onReleased: {
+				onButton.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
+				offButton.color = (deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
 			}
 		}
 	}
@@ -164,7 +179,7 @@ Item {
 				//	console.log("Sending new dim value: " + value);
 				//	device.dim(value);
 			}
-			color: Qt.hsla(tile.hue, tile.saturation, tile.lightness * 0.8, 1)
+			color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
 			Connections {
 				target: device
 				onStateValueChanged: {

@@ -75,7 +75,7 @@ Rectangle {
 				Image {
 					id: drawerButtonImage
 					anchors.centerIn: parent
-					height: parent.height * 0.6 / SCALEFACTOR
+					height: parent.height * (0.5 / SCALEFACTOR)
 					width: height
 					source: "../svgs/iconHamburger.svg"
 					smooth: true

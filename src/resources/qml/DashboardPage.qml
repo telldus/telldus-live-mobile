@@ -12,11 +12,13 @@ Rectangle {
 		id: dashboardItemDelegate
 		Item {
 			id: tile
-			property var hue: calculateTileHue(dashboardItem)
-			property var saturation: calculateTileSaturation(dashboardItem)
-			property var lightness: calculateTileLightness(dashboardItem)
-			readonly property var saturationDefault: calculateTileSaturation(dashboardItem)
-			readonly property var lightnessDefault: calculateTileLightness(dashboardItem)
+			property var showBorder: false
+			property var hue: 0.6
+			property var saturation: 0.55
+			property var lightness: 0.24
+			readonly property var hueDefault: 0.6
+			readonly property var saturationDefault: 0.55
+			readonly property var lightnessDefault: 0.24
 
 			width: list.cellWidth
 			height: list.cellHeight
@@ -41,28 +43,57 @@ Rectangle {
 				anchors.fill: parent
 				anchors.rightMargin: tilePadding
 				anchors.bottomMargin: tilePadding
-				color: "#ffffff"
+				color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
 				radius: width / 15
-				Loader {
-					id: tileContent
-					source: {
-						if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
-							return 'tiles/DeviceTile.qml';
-						} else if (dashboardItem.childObjectType == DashboardItem.SensorChildObjectType) {
-							return 'tiles/SensorTile.qml';
-						} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
-							return 'tiles/WeatherTile.qml';
-						}
-						return 'UnknownTile.qml';
-					}
+				Rectangle {
+					id: tileBorder
 					anchors.fill: parent
+					anchors.margins: tile.showBorder ? 1 * SCALEFACTOR : 0
+					color: "#ffffff"
+					radius: width / 15
+					Loader {
+						id: tileContent
+						source: {
+							if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
+								return 'tiles/DeviceTile.qml';
+							} else if (dashboardItem.childObjectType == DashboardItem.SensorChildObjectType) {
+								return 'tiles/SensorTile.qml';
+							} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
+								return 'tiles/WeatherTile.qml';
+							}
+							return 'UnknownTile.qml';
+						}
+						anchors.fill: parent
+					}
 				}
+			}
+			/*DropShadow {
+				anchors.fill: tileWhite
+				horizontalOffset: 2 * SCALEFACTOR
+				verticalOffset: horizontalOffset
+				radius: horizontalOffset * 0.8
+				spread: 0.0
+				samples: horizontalOffset * 2
+				color: "#40000000"
+				source: tileWhite
+				transparentBorder: true
+			}*/
+			DropShadow {
+				anchors.fill: tileWhite
+				horizontalOffset: -1
+				verticalOffset: 6 * SCALEFACTOR
+				radius: verticalOffset
+				spread: 0.0
+				samples: verticalOffset * 2
+				color: "#30000000"
+				source: tileWhite
+				transparentBorder: true
 			}
 			DropShadow {
 				anchors.fill: tileWhite
 				horizontalOffset: 2 * SCALEFACTOR
 				verticalOffset: horizontalOffset
-				radius: horizontalOffset / 2
+				radius: horizontalOffset
 				spread: 0.0
 				samples: horizontalOffset * 2
 				color: "#40000000"

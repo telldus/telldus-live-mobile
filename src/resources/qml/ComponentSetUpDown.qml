@@ -3,6 +3,11 @@ import Telldus 1.0
 
 Item {
 	property bool supportsStop: methods & 512
+	anchors.fill: parent
+	anchors.margins: 10 * SCALEFACTOR
+	Component.onCompleted: {
+		tile.showBorder = true;
+	}
 	Item {
 		id: downButton
 		height: parent.height

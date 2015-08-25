@@ -2,6 +2,9 @@ import QtQuick 2.0
 import Telldus 1.0
 
 Item {
+	Component.onCompleted: {
+		tile.showBorder = true;
+	}
 	BorderImage {
 		anchors.left: parent.left
 		anchors.top: parent.top
