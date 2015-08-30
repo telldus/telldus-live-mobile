@@ -11,7 +11,7 @@ PropertiesThemeColors::PropertiesThemeColors(QObject *parent):QObject(parent) {
 	d = new PrivateData;
 	d->dashboardBackground = QColor("#e6e7e8");
 	d->telldusBlue = QColor("#1b365d");
-	d->telldusOrange = QColor("#fe5000");
+	d->telldusOrange = QColor("#e26901");
 }
 
 PropertiesThemeColors::~PropertiesThemeColors() {

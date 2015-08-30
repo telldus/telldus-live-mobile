@@ -33,28 +33,19 @@ Rectangle {
 			Item {
 				id: backButton
 				visible: false
-				width: backText.width + ((12 + 8) * SCALEFACTOR)
-				height: headerHeight / 2 * SCALEFACTOR
 				anchors.centerIn: parent
-				clip: true
-				BorderImage {
-					source: "../" + (SCALEFACTOR > 2 ? "images@2x" : "images") + (backMouseArea.pressed ? "/headerButtonBackActive.png" : "/headerButtonBack.png")
-					border {left: SCALEFACTOR > 2 ? 46 : 23 ; right: SCALEFACTOR > 2 ? 16 : 8 ; top: SCALEFACTOR > 2 ? 48 : 24 ; bottom: SCALEFACTOR > 2 ? 50 : 25 }
-					width: parent.width * 2 / SCALEFACTOR
-					scale: SCALEFACTOR / 2
-					transformOrigin: Item.TopLeft
-				}
-				Text {
-					id: backText
-					text: "Back"
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: parent.left
-					anchors.leftMargin: 12 * SCALEFACTOR
-					font.pixelSize: 12 * SCALEFACTOR
-					font.weight: Font.Bold
-					color: "#06456a"
-					style: Text.Raised;
-					styleColor: "#ffffff"
+				height: (leftButton.height - 10) * SCALEFACTOR
+				width: height
+				Image {
+					id: backButtonImage
+					anchors.centerIn: parent
+					height: parent.height * (0.5 / SCALEFACTOR)
+					width: height
+					source: "../svgs/iconArrowLeft.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
 				}
 			}
 			MouseArea {
@@ -154,15 +145,15 @@ Rectangle {
 				id: titleText
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.leftMargin: 10 * SCALEFACTOR
-				anchors.rightMargin: 10 * SCALEFACTOR
-				font.pixelSize: 22 * SCALEFACTOR
+				width: parent.width
+				font.pixelSize: 18 * SCALEFACTOR
 				font.weight: Font.Bold
 				color: "white"
 				style: Text.Raised;
 				styleColor: "#003959"
 				elide: Text.ElideRight
 				rotation: screen.isPortrait ? 0 : 270
+				horizontalAlignment: Text.AlignHCenter
 			}
 		}
 	}

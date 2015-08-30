@@ -35,7 +35,7 @@ Item {
 			}
 
 			Item {
-				width: (parent.width - dimHandle.width*SCALEFACTOR) / SCALEFACTOR
+				width: (parent.width - dimHandle.width * SCALEFACTOR) / SCALEFACTOR
 				height: 50*SCALEFACTOR
 				scale: SCALEFACTOR
 				visible: selected.methods & 16
@@ -102,10 +102,15 @@ Item {
 				height: childrenRect.height
 				Image {
 					id: iconFavorite
-					source: showDevice.selected.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
-					height: sourceSize.height / 4 * SCALEFACTOR;
-					width: sourceSize.width / 4 * SCALEFACTOR;
+					anchors.centerIn: parent
+					height: parent.height * 0.6 / SCALEFACTOR
+					width: height
+					source: "image://icons/favourite/" + properties.theme.colors.telldusOrange
 					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+					opacity: showDevice.selected.isFavorite ? 1 : 0.2
 				}
 				Item {
 					height: iconFavorite.height

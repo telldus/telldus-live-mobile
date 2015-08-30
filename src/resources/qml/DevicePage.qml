@@ -53,7 +53,6 @@ Item {
 					anchors.left: buttons.right
 					anchors.leftMargin: 10 * SCALEFACTOR
 					anchors.right: arrow.left
-					anchors.rightMargin: 10 * SCALEFACTOR
 					Text {
 						color: properties.theme.colors.telldusBlue
 						width: parent.width
@@ -81,14 +80,23 @@ Item {
 						showDevice.selected = device
 					}
 				}
-				Image {
+				Item {
 					id: arrow
-					source: "../images/rowArrow.png"
-					width: (sourceSize.width / 2) * SCALEFACTOR
-					fillMode: Image.PreserveAspectFit
 					anchors.right: wrapper.right
-					anchors.rightMargin: 10 * SCALEFACTOR
 					anchors.verticalCenter: parent.verticalCenter
+					height: (buttons.height - 10) * SCALEFACTOR
+					width: height
+					Image {
+						id: backButtonImage
+						anchors.centerIn: parent
+						height: parent.height * (0.5 / SCALEFACTOR)
+						width: height
+						source: "../svgs/iconArrowRight.svg"
+						smooth: true
+						fillMode: Image.PreserveAspectFit
+						sourceSize.width: width * 2
+						sourceSize.height: height * 2
+					}
 				}
 				MouseArea {
 					anchors.fill: parent

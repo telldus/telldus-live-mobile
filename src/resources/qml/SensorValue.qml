@@ -9,9 +9,13 @@ Item {
 	height: Math.max(sensorIcon.height, valueText.height)
 	Image {
 		id: sensorIcon
-		source: "../images/" + icon + ".png"
+		source: "../svgs/" + icon + ".svg"
 		height: 20 * SCALEFACTOR
 		width: 20 * SCALEFACTOR
+		smooth: true
+		fillMode: Image.PreserveAspectFit
+		sourceSize.width: width * 2
+		sourceSize.height: height * 2
 	}
 	Text {
 		id: valueText
