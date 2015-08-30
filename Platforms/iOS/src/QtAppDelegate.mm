@@ -3,6 +3,7 @@
 
 #import "QtAppDelegate.h"
 #include "TelldusLive.h"
+#include "Push.h"
 
 
 @implementation QtAppDelegate
@@ -67,36 +68,16 @@ void QtAppDelegateInitialize ()
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    qDebug().noquote() << "[PUSH] Token: " << QString::fromNSString(token);
-    qDebug().noquote() << "[PUSH] Device Name: " << QString::fromNSString([[UIDevice currentDevice] name]);
-    qDebug().noquote() << "[PUSH] Device System Version: " << QString::fromNSString([[UIDevice currentDevice] systemVersion]);
-    qDebug().noquote() << "[PUSH] Device Model: " << QString::fromNSString([QtAppDelegate deviceName]);
-
     TelldusLive *telldusLive = TelldusLive::instance();
     if (!telldusLive->isAuthorized()) {
         return;
     }
-    telldusLive->registerPushTokenWithApi(QString::fromNSString(token),
-                                          QString::fromNSString([[UIDevice currentDevice] name]),
-                                          "Apple",
-                                          QString::fromNSString([QtAppDelegate deviceName]),
-                                          QString::fromNSString([[UIDevice currentDevice] systemVersion])
-                                          );
+    Push::instance()->didRegisterForRemoteNotificationsWithDeviceToken(deviceToken);
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
     qDebug().noquote() << QString("[PUSH] Failed to get token, error: %1").arg(QString::fromNSString(error.description));
-}
-
-+ (NSString*) deviceName
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-
-    return [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 }
 
 @end

@@ -8,11 +8,14 @@ class Push : public AbstractPush {
 	friend class AbstractPush;
 public:
 	virtual ~Push();
+	void didRegisterForRemoteNotificationsWithDeviceToken(NSData *deviceToken);
 
 protected:
 	explicit Push();
 
 private:
+	void registerForPush();
+
 	class PrivateData;
 	PrivateData *d;
 };

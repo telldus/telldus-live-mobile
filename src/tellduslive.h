@@ -36,7 +36,6 @@ public slots:
 	void authorize();
 	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
-	void registerPushTokenWithApi(const QString &phone_id, const QString &name, const QString &manufacturer, const QString &model, const QString &os_version);
 
 private slots:
 	void onUrlOpened(const QUrl &url);
@@ -46,15 +45,11 @@ private slots:
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);
 	void onRequestReady(const QByteArray &response);
 	void onSessionAuthenticated(const QVariantMap &data);
-	void registerPushTokenWithApiCallback(const QVariantMap &data);
 
 private:
 	explicit TelldusLive(QObject *parent = 0);
 	void doCall();
 	void registerForPush();
-#ifdef PLATFORM_IOS
-	void updateWatchData();
-#endif
 	class PrivateData;
 	PrivateData *d;
 };

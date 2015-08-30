@@ -56,10 +56,10 @@ LIST(APPEND SOURCES
 	platforms/iOS/src/QtAppDelegate.mm
 	platforms/iOS/src/ObjectiveUtils.mm
 	platforms/iOS/src/Dev.mm
-	platforms/iOS/src/TelldusLive.mm
 	platforms/iOS/src/CommonView.mm
 	platforms/iOS/src/Notification.cpp
 	platforms/iOS/src/Push.cpp
+	platforms/iOS/src/Push.mm
 )
 
 LIST(APPEND LIBRARIES

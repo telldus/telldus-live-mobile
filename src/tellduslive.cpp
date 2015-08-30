@@ -363,27 +363,6 @@ void TelldusLive::setupManager() {
 	}
 }
 
-void TelldusLive::registerPushTokenWithApi(const QString &token, const QString &name, const QString &manufacturer, const QString &model, const QString &os_version) {
-	qDebug() << "[PUSH] Registering push token with API";
-	TelldusLiveParams params;
-	params["token"] = token;
-	params["name"] = name;
-	params["manufacturer"] = manufacturer;
-	params["model"] = model;
-	params["osVersion"] = os_version;
-	params["pushServiceId"] = PUSH_SERVICE_ID;
-	this->call("user/registerPushToken", params, this, SLOT(registerPushTokenWithApiCallback(QVariantMap)));
-}
-
-void TelldusLive::registerPushTokenWithApiCallback(const QVariantMap &data) {
-	if (data["status"] != "success") {
-		qDebug() << "[PUSH] Could not register push token with API";
-		qDebug().noquote().nospace() << "       Error: " << data.value("error").toString();
-		return;
-	}
-	qDebug() << "[PUSH] Successfully registered push token with API";
-}
-
 TelldusLive * TelldusLive::instance() {
 	if (PrivateData::instance == 0) {
 		PrivateData::instance = new TelldusLive();

@@ -11,6 +11,7 @@ Push::Push()
 	:AbstractPush()
 {
 	d = new PrivateData;
+	registerForPush();
 }
 
 Push::~Push() {
