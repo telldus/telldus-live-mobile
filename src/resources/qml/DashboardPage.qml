@@ -39,6 +39,34 @@ Rectangle {
 				}
 				PropertyAction { target: tile; property: "z"; value: 0 }
 			}
+			DropShadow {
+				anchors.fill: tileBorder
+				horizontalOffset: 0
+				verticalOffset: 1.5 * SCALEFACTOR
+				radius: 8.0
+				spread: 0.0
+				samples: 16
+				cached: true
+				color: "#000000"
+				source: tileBorder
+				transparentBorder: true
+				smooth: true
+				opacity: 0.16
+			}
+			DropShadow {
+				anchors.fill: tileBorder
+				horizontalOffset: 0
+				verticalOffset: 1.5 * SCALEFACTOR
+				radius: 8.0
+				spread: 0.0
+				samples: 16
+				cached: true
+				color: "#000000"
+				source: tileBorder
+				transparentBorder: true
+				smooth: true
+				opacity: 0.23
+			}
 			Rectangle {
 				id: tileBorder
 				anchors.fill: parent
@@ -75,28 +103,6 @@ Rectangle {
 						anchors.fill: parent
 					}
 				}
-			}
-			DropShadow {
-				anchors.fill: tileBorder
-				horizontalOffset: -1
-				verticalOffset: 6 * SCALEFACTOR
-				radius: verticalOffset
-				spread: 0.0
-				samples: verticalOffset * 2
-				color: "#30000000"
-				source: tileBorder
-				transparentBorder: true
-			}
-			DropShadow {
-				anchors.fill: tileBorder
-				horizontalOffset: 2 * SCALEFACTOR
-				verticalOffset: horizontalOffset
-				radius: horizontalOffset
-				spread: 0.0
-				samples: horizontalOffset * 2
-				color: "#40000000"
-				source: tileBorder
-				transparentBorder: true
 			}
 		}
 	}
