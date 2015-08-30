@@ -12,9 +12,6 @@ Item {
 			tile.hue = 0.08
 			tile.saturation = 0.99
 			tile.lightness = 0.45
-//			tile.hue = 0.33
-//			tile.saturation = 1
-//			tile.lightness = 0.3
 		} else if (deviceState == 2) {
 			tile.hue = 0.08
 			tile.saturation = 0.25
