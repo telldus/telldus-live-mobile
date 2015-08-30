@@ -17,7 +17,6 @@ Item {
 				width: sensorPage.width
 				z: model.index
 				height: childrenRect.height + (20 * SCALEFACTOR)
-	//			color: index % 2 == 0 ? "#eaeaea" : "#ffffff"
 				color: "#ffffff"
 				state: showEditButtons ? 'showEditButtons' : ''
 				anchors.left: parent.left
@@ -42,14 +41,9 @@ Item {
 						elide: Text.ElideRight
 						maximumLineCount: 3
 					}
-					//Text {
-					//	color: "#999999"
-					//	font.pixelSize: 28*SCALEFACTOR
-					//	text: ""  // TODO(micke): Add location name
-					//}
 					Text {
 						id: sensorUpdated
-						color: "#999999"  // TODO(micke): Red color if minutesAgo > some large number
+						color: sensor.minutesAgo < 1440 ? "#999999" : "#80990000"
 						font.pixelSize: 12 * SCALEFACTOR
 						text: formatLastUpdated(sensor.minutesAgo)
 						wrapMode: Text.Wrap

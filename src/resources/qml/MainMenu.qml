@@ -119,32 +119,26 @@ Item {
 		State {
 			when: activePage == 0
 			//PropertyChanges { target: dashboardButtonBackground; opacity: 1 }
-			//PropertyChanges { target: deviceButton; source: "../images/footerIconDevicesActive.png" }
 		},
 		State {
 			when: activePage == 1
 			//PropertyChanges { target: deviceButtonBackground; opacity: 1 }
-			//PropertyChanges { target: deviceButton; source: "../images/footerIconDevicesActive.png" }
 		},
 		State {
 			when: activePage == 2
 			//PropertyChanges { target: sensorButtonBackground; opacity: 1 }
-			//PropertyChanges { target: sensorButton; source: "../images/footerIconSensorsActive.png" }
 		},
 		State {
 			when: activePage == 3
 			//PropertyChanges { target: schedulerButtonBackground; opacity: 1 }
-			//PropertyChanges { target: schedulerButton; source: "../images/footerIconSensorsActive.png" }
 		},
 		State {
 			when: activePage == 4
 			//PropertyChanges { target: settingsButtonBackground; opacity: 1 }
-			//PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
 		},
 		State {
 			when: activePage == 5
 			//PropertyChanges { target: settingsButtonBackground; opacity: 1 }
-			//PropertyChanges { target: settingsButton; source: "../images/footerIconSettingsActive.png" }
 		}
 	]
 

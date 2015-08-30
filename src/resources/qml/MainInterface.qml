@@ -6,7 +6,7 @@ import Telldus 1.0
 Rectangle {
 	id: mainInterface
 
-	property variant screenNames: ['/dashboard', '/devices', '/sensors', '/schedular', '/settings']
+	property variant screenNames: ['/dashboard', '/devices', '/sensors', '/scheduler', '/settings', '/debug']
 	property bool menuViewVisible: false
 	property bool timelineViewVisible: false
 	color: "#404040";

@@ -7,9 +7,8 @@
 		<file>resources/qml/DebugPage.qml</file>
 		<file>resources/qml/SensorPage.qml</file>
 		<file>resources/qml/SensorValue.qml</file>
+		<file>resources/qml/SensorValueTile.qml</file>
 		<file>resources/qml/SettingsPage.qml</file>
-		<file>resources/qml/HeaderMenu.qml</file>
-		<file>resources/qml/HeaderMenuItem.qml</file>
 		<file>resources/qml/Header.qml</file>
 		<file>resources/qml/MainInterface.qml</file>
 		<file>resources/qml/LoginScreen.qml</file>
@@ -34,21 +33,7 @@
 		<file>resources/qml/tiles/WeatherTile.qml</file>
 		<file>resources/qml/tiles/UnknownTile.qml</file>
 
-		<file>resources/images/headerBg.png</file>
-		<file>resources/images/menuButtonDivider.png</file>
-		<file>resources/images/footerBg.png</file>
-		<file>resources/images/footerButtonActive.png</file>
-		<file>resources/images/footerIconDevices.png</file>
-		<file>resources/images/footerIconDevicesActive.png</file>
-		<file>resources/images/footerIconSensors.png</file>
-		<file>resources/images/footerIconSensorsActive.png</file>
-		<file>resources/images/footerIconSettings.png</file>
-		<file>resources/images/footerIconSettingsActive.png</file>
-		<file>resources/images/headerButtonActive.png</file>
-		<file>resources/images/headerLogo.png</file>
-		<file>resources/images/headerMenuBg.png</file>
 		<file>resources/images/rowArrow.png</file>
-		<file>resources/images/rowBg.png</file>
 		<file>resources/images/buttonBg.png</file>
 		<file>resources/images/buttonActionOff.png</file>
 		<file>resources/images/buttonActionOffActive.png</file>
@@ -65,40 +50,15 @@
 		<file>resources/images/buttonActionToggleActive.png</file>
 		<file>resources/images/buttonActionUp.png</file>
 		<file>resources/images/buttonActionUpActive.png</file>
-		<file>resources/images/rowBgActive.png</file>
 		<file>resources/images/buttonBgClickLeft.png</file>
 		<file>resources/images/buttonBgClickRight.png</file>
-		<file>resources/images/startLogo.png</file>
 		<file>resources/images/startDivider.png</file>
 		<file>resources/images/startButtonLogin.png</file>
 		<file>resources/images/startButtonLoginActive.png</file>
-		<file>resources/images/sensorIconHumidity.png</file>
-		<file>resources/images/sensorIconRain.png</file>
-		<file>resources/images/sensorIconTemperature.png</file>
-		<file>resources/images/sensorIconWind.png</file>
-		<file>resources/images/sensorIconUv.png</file>
-		<file>resources/images/sensorIconWatt.png</file>
-		<file>resources/images/sensorIconLuminance.png</file>
-		<file>resources/images/iconFavourite.png</file>
-		<file>resources/images/iconFavouriteActive.png</file>
 		<file>resources/images/buttonBgClickMiddle.png</file>
-		<file>resources/images/headerButtonBack.png</file>
-		<file>resources/images/headerButtonBackActive.png</file>
-		<file>resources/images/headerShade.png</file>
 		<file>resources/images/dimSliderBg.png</file>
 		<file>resources/images/dimSliderButton.png</file>
 		<file>resources/images/dimBg.png</file>
-		<file>resources/images/headerMenuButtonDivider.png</file>
-		<file>resources/images/shadow.png</file>
-		<file>resources/images/drawerIcon.png</file>
-
-		<file>resources/images@2x/startLogo.png</file>
-		<file>resources/images@2x/startButtonLogin.png</file>
-		<file>resources/images@2x/startButtonLoginActive.png</file>
-		<file>resources/images@2x/headerButtonBack.png</file>
-		<file>resources/images@2x/headerButtonBackActive.png</file>
-		<file>resources/images@2x/headerLogo.png</file>
-		<file>resources/images@2x/drawerIcon.png</file>
 
 		<file>resources/images/throbber/throbber_1.svg</file>
 		<file>resources/images/throbber/throbber_2.svg</file>
@@ -113,16 +73,30 @@
 		<file>resources/images/throbber/throbber_11.svg</file>
 		<file>resources/images/throbber/throbber_12.svg</file>
 
+		<file>resources/svgs/deviceIconBell.svg</file>
+		<file>resources/svgs/deviceIconDown.svg</file>
+		<file>resources/svgs/deviceIconUp.svg</file>
+		<file>resources/svgs/iconArrowLeft.svg</file>
+		<file>resources/svgs/iconArrowRight.svg</file>
+		<file>resources/svgs/iconDashboard.svg</file>
+		<file>resources/svgs/iconDevices.svg</file>
 		<file>resources/svgs/iconFavourite.svg</file>
 		<file>resources/svgs/iconHamburger.svg</file>
+		<file>resources/svgs/iconLogout.svg</file>
+		<file>resources/svgs/iconScheduler.svg</file>
+		<file>resources/svgs/iconSensors.svg</file>
 		<file>resources/svgs/logoTelldusLive.svg</file>
+		<file>resources/svgs/sensorIconHumidity.svg</file>
+		<file>resources/svgs/sensorIconLuminance.svg</file>
+		<file>resources/svgs/sensorIconRain.svg</file>
+		<file>resources/svgs/sensorIconTemperature.svg</file>
+		<file>resources/svgs/sensorIconUv.svg</file>
+		<file>resources/svgs/sensorIconWatt.svg</file>
+		<file>resources/svgs/sensorIconWind.svg</file>
 
 		<file>resources/scripts/Device.js</file>
 		<file>resources/scripts/Sensor.js</file>
 		<file>resources/scripts/DB.js</file>
 
-		<file>resources/certs/Equifax_Secure_CA.pem</file>
-		<file>resources/certs/GeoTrustGlobalCA.pem</file>
-		<file>resources/certs/RapidSSLCA.pem</file>
 	</qresource>
 </RCC>

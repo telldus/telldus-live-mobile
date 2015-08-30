@@ -19,6 +19,7 @@ Rectangle {
 			readonly property var hueDefault: 0.6
 			readonly property var saturationDefault: 0.55
 			readonly property var lightnessDefault: 0.24
+			readonly property var hasNameInTile: true
 
 			width: list.cellWidth
 			height: list.cellHeight
@@ -39,20 +40,28 @@ Rectangle {
 				PropertyAction { target: tile; property: "z"; value: 0 }
 			}
 			Rectangle {
-				id: tileWhite
+				id: tileBorder
 				anchors.fill: parent
 				anchors.rightMargin: tilePadding
 				anchors.bottomMargin: tilePadding
 				color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
 				radius: width / 15
 				Rectangle {
-					id: tileBorder
+					id: tileWhite
 					anchors.fill: parent
 					anchors.margins: tile.showBorder ? 1 * SCALEFACTOR : 0
 					color: "#ffffff"
 					radius: width / 15
 					Loader {
 						id: tileContent
+						Connections {
+							target: tileTimer
+							onTriggered: {
+								if (tileContent.item.switchTileSlides) {
+									tileContent.item.switchTileSlides()
+								}
+							}
+						}
 						source: {
 							if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
 								return 'tiles/DeviceTile.qml';
@@ -67,37 +76,26 @@ Rectangle {
 					}
 				}
 			}
-			/*DropShadow {
-				anchors.fill: tileWhite
-				horizontalOffset: 2 * SCALEFACTOR
-				verticalOffset: horizontalOffset
-				radius: horizontalOffset * 0.8
-				spread: 0.0
-				samples: horizontalOffset * 2
-				color: "#40000000"
-				source: tileWhite
-				transparentBorder: true
-			}*/
 			DropShadow {
-				anchors.fill: tileWhite
+				anchors.fill: tileBorder
 				horizontalOffset: -1
 				verticalOffset: 6 * SCALEFACTOR
 				radius: verticalOffset
 				spread: 0.0
 				samples: verticalOffset * 2
 				color: "#30000000"
-				source: tileWhite
+				source: tileBorder
 				transparentBorder: true
 			}
 			DropShadow {
-				anchors.fill: tileWhite
+				anchors.fill: tileBorder
 				horizontalOffset: 2 * SCALEFACTOR
 				verticalOffset: horizontalOffset
 				radius: horizontalOffset
 				spread: 0.0
 				samples: horizontalOffset * 2
 				color: "#40000000"
-				source: tileWhite
+				source: tileBorder
 				transparentBorder: true
 			}
 		}
@@ -106,6 +104,12 @@ Rectangle {
 		id: listPage
 		anchors.fill: parent
 
+		Timer {
+			id: tileTimer
+			interval: 5000
+			running: true
+			repeat: true
+		}
 		GridView {
 			id: list
 			anchors.top: parent.top

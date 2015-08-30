@@ -1,42 +1,38 @@
 import QtQuick 2.0
+import Telldus 1.0
 
 Item {
-	id: button
-
-	BorderImage {
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.right: parent.horizontalCenter
-		border {left: 15; top: 49; right: 0; bottom: 49 }
-		source: "../images/buttonBgClickLeft.png"
-		opacity: buttonArea.pressed ? 1 : 0
+	Component.onCompleted: {
+		tile.showBorder = true;
+		tile.hue = 0.08
+		tile.saturation = 0.99
+		tile.lightness = 0.45
 	}
-	BorderImage {
-		anchors.left: parent.horizontalCenter
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.right: parent.right
-		border {left: 0; top: 49; right: 15; bottom: 49 }
-		source: "../images/buttonBgClickRight.png"
-		opacity: buttonArea.pressed ? 1 : 0
-	}
-
 	Text {
 		id: text
 		smooth: true
 		anchors.centerIn: parent
-		color: "#00659F"
-		font.pixelSize: 40
+		color: properties.theme.colors.telldusOrange
+		font.pixelSize: 32 * SCALEFACTOR
 		font.weight: Font.Bold
 		style: Text.Raised
 		styleColor: "white"
 		text: "Learn"
 	}
 	MouseArea {
-		id: buttonArea
+		id: buttonMouseArea
+		preventStealing: true
 		anchors.fill: parent
-		onClicked: device.learn()
+		onPressed: {
+			bellIcon.opacity = 0.85
+			tileWhite.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
+		}
+		onReleased: {
+			bellIcon.opacity = 1
+			tileWhite.color = "#ffffff"
+		}
+		onClicked: {
+			device.learn()
+		}
 	}
-
 }

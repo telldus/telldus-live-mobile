@@ -2,37 +2,49 @@ import QtQuick 2.0
 import Telldus 1.0
 
 Item {
-	id: buttonSet
+	id: tile
 	property int set: primarySet()
 	property Device device
 	property int methods: device.methods
+	property var showBorder: false
+	property var hue: 0.6
+	property var saturation: 0.55
+	property var lightness: 0.24
+	readonly property var hueDefault: 0.6
+	readonly property var saturationDefault: 0.55
+	readonly property var lightnessDefault: 0.24
+	readonly property var hasNameInTile: false
 
 	width: 100 * SCALEFACTOR
 	height: 40 * SCALEFACTOR
-
-	BorderImage {
-		source: "../images/buttonBg.png"
-		border {left: 15; top: 49; right: 15; bottom: 49 }
-		width: parent.width/SCALEFACTOR*2
-		height: parent.height/SCALEFACTOR*2
-		scale: SCALEFACTOR/2
-		transformOrigin: Item.TopLeft
-		Loader {
-			id: loader
-			source: {
-				if (set == 0) {
-					return 'ComponentSetOnOff.qml';
-				} else if (set == 1) {
-					return 'ComponentSetUpDown.qml';
-				} else if (set == 2) {
-					return 'ComponentSetBell.qml';
-				} else if (set == 3) {
-					return 'ComponentSetLearn.qml';
-				}
-
-				return '';
-			}
+	Rectangle {
+		id: tileBorder
+		anchors.fill: parent
+		color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+		radius: height / 5
+		Rectangle {
+			id: tileWhite
 			anchors.fill: parent
+			anchors.margins: tile.showBorder ? 1 * SCALEFACTOR : 0
+			color: "#ffffff"
+			radius: height / 5
+			Loader {
+				id: tileContent
+				source: {
+					if (set == 0) {
+						return 'ComponentSetOnOffTile.qml';
+					} else if (set == 1) {
+						return 'ComponentSetUpDown.qml';
+					} else if (set == 2) {
+						return 'ComponentSetBell.qml';
+					} else if (set == 3) {
+						return 'ComponentSetLearn.qml';
+					}
+
+					return '';
+				}
+				anchors.fill: parent
+			}
 		}
 	}
 

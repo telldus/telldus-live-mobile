@@ -4,33 +4,36 @@ import Telldus 1.0
 Item {
 	Component.onCompleted: {
 		tile.showBorder = true;
-	}
-	BorderImage {
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.right: parent.horizontalCenter
-		border {left: 15; top: 49; right: 0; bottom: 49 }
-		source: "../images/buttonBgClickLeft.png"
-		opacity: bellMouseArea.pressed ? 1 : 0
-	}
-	BorderImage {
-		anchors.left: parent.horizontalCenter
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.right: parent.right
-		border {left: 0; top: 49; right: 15; bottom: 49 }
-		source: "../images/buttonBgClickRight.png"
-		opacity: bellMouseArea.pressed ? 1 : 0
+		tile.hue = 0.08
+		tile.saturation = 0.99
+		tile.lightness = 0.45
 	}
 	Image {
+		id: bellIcon
+		source: "../svgs/deviceIconBell.svg"
 		anchors.centerIn: parent
-		source: "../images/buttonActionBell.png"
+		height: parent.height * 0.6
+		width: height
+		smooth: true
+		fillMode: Image.PreserveAspectFit
+		sourceSize.width: width * 2
+		sourceSize.height: height * 2
+		opacity: 1
 	}
 	MouseArea {
 		id: bellMouseArea
 		preventStealing: true
 		anchors.fill: parent
-		onClicked: device.bell()
+		onPressed: {
+			bellIcon.opacity = 0.85
+			tileWhite.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
+		}
+		onReleased: {
+			bellIcon.opacity = 1
+			tileWhite.color = "#ffffff"
+		}
+		onClicked: {
+			device.bell()
+		}
 	}
 }

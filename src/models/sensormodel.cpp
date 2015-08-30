@@ -55,6 +55,9 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 		if (dev.contains("watt") && !isnan(dev["watt"].toDouble())) {
 			sensor->setWatt(dev["watt"].toString());
 		}
+		if (dev.contains("luminance") && !isnan(dev["luminance"].toDouble())) {
+			sensor->setLuminance(dev["luminance"].toString());
+		}
 		if (dev.contains("windAvg") && !isnan(dev["windAvg"].toDouble())) {
 			sensor->setWindAvg(dev["windAvg"].toString());
 		}

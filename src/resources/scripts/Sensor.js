@@ -18,7 +18,7 @@ function setupCache(sensorModel, database) {
 			sensor.windAvgChanged.connect(sensor, function(value) { save(this, "windAvg", value) });
 			sensor.windGustChanged.connect(sensor, function(value) { save(this, "windGust", value) });
 			sensor.windDirChanged.connect(sensor, function(value) { save(this, "windDir", value) });
-			sensor.windDirChanged.connect(sensor, function(value) { save(this, "luminance", value) });
+			sensor.luminanceChanged.connect(sensor, function(value) { save(this, "luminance", value) });
 			sensor.isFavoriteChanged.connect(sensor, function(value) {  save(this, "favorite", value) });
 			save(sensor, "name", sensor.name);
 			save(sensor, "lastUpdated", sensor.lastUpdated.getTime()/1000);

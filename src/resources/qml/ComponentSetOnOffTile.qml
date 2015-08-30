@@ -9,13 +9,16 @@ Item {
 	}
 	onDeviceStateChanged: {
 		if (deviceState == 1 || deviceState == 16) {
-			tile.hue = 0.33
-			tile.saturation = 1
-			tile.lightness = 0.3
+			tile.hue = 0.08
+			tile.saturation = 0.99
+			tile.lightness = 0.45
+//			tile.hue = 0.33
+//			tile.saturation = 1
+//			tile.lightness = 0.3
 		} else if (deviceState == 2) {
-			tile.hue = 0.1
-			tile.saturation = 0.3
-			tile.lightness = 0.7
+			tile.hue = 0.08
+			tile.saturation = 0.25
+			tile.lightness = 0.8
 		} else {
 			tile.hue = tile.hueDefault
 			tile.saturation = tile.saturationDefault
@@ -51,6 +54,7 @@ Item {
 	}
 	Rectangle {
 		id: onButtonBackgroundSquarer2
+		visible: tile.hasNameInTile
 		height: onButton.height / 2
 		anchors.left: onButton.left
 		anchors.right: onButton.right
@@ -63,16 +67,15 @@ Item {
 		anchors.right: tileSeperator.left
 		anchors.left: parent.left
 		color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
-		radius: tileWhite.radius
+		radius: tileBorder.radius
 		Text {
+			id: onButtonText
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
 			color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
 			font.pixelSize: parent.width / 3
 			font.weight: Font.Bold
 			text: "On"
-			style: Text.Sunken
-			styleColor: "#ffffff"
 		}
 		MouseArea {
 			id: onMouseArea
@@ -85,7 +88,9 @@ Item {
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
 			onPressed: {
-				onButton.color = Qt.hsla(tile.hue, 0.1, 0.8, 1)
+				onButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
+				onButtonText.color = "#ffffff"
+
 			}
 			onClicked: {
 				device.turnOn()
@@ -93,6 +98,8 @@ Item {
 			onReleased: {
 				onButton.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
 				offButton.color = (deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
+				onButtonText.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
+				offButtonText.color = (deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
 			}
 		}
 	}
@@ -103,7 +110,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.horizontalCenter: parent.horizontalCenter
 		width: 1 * SCALEFACTOR
-		color: Qt.hsla(tile.hue, 0.3, 0.5, 1)
+		color: Qt.hsla(tile.hue, 0.3, 0.7, 1)
 	}
 
 	Rectangle {
@@ -116,6 +123,7 @@ Item {
 	}
 	Rectangle {
 		id: offButtonBackgroundSquarer2
+		visible: tile.hasNameInTile
 		height: offButton.height / 2
 		anchors.left: offButton.left
 		anchors.right: offButton.right
@@ -128,16 +136,15 @@ Item {
 		anchors.left: tileSeperator.right
 		anchors.right: parent.right
 		color: deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
-		radius: tileWhite.radius
+		radius: tileBorder.radius
 		Text {
+			id: offButtonText
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
 			color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
 			font.pixelSize: parent.width / 3
 			font.weight: Font.Bold
 			text: "Off"
-			style: Text.Sunken
-			styleColor: "#ffffff"
 		}
 		MouseArea {
 			id: offMouseArea
@@ -150,7 +157,8 @@ Item {
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
 			onPressed: {
-				offButton.color = Qt.hsla(tile.hue, 0.1, 0.8, 1)
+				offButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
+				offButtonText.color = "#ffffff"
 			}
 			onClicked: {
 				device.turnOff()
@@ -158,6 +166,8 @@ Item {
 			onReleased: {
 				onButton.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
 				offButton.color = (deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
+				onButtonText.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
+				offButtonText.color = (deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
 			}
 		}
 	}

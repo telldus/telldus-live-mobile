@@ -23,13 +23,13 @@ Item {
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-		color: Qt.hsla(0, 0, 0.99, 1)
-		radius: tileBorder.radius
+		color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+		radius: tileWhite.radius
 		Text {
 			id: deviceName
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.verticalCenter: parent.verticalCenter
-			color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+			color: "#ffffff" //Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
 			font.pixelSize: contentBackground.height / 10
 			font.bold: true
 			text: dashboardItem.childObject.name
@@ -38,14 +38,6 @@ Item {
 			horizontalAlignment: Text.AlignHCenter
 			verticalAlignment: Text.AlignVCenter
 		}
-	}
-	Rectangle {
-		id: contentHeaderSeperator
-		height: 1 * SCALEFACTOR
-		anchors.left: contentHeader.left
-		anchors.top: contentHeaderBackgroundSquarer.top
-		anchors.right: contentHeader.right
-		color: Qt.hsla(tile.hue, 0.3, 0.7, 1)
 	}
 	Item {
 		anchors.left: parent.left
