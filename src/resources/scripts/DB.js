@@ -1,6 +1,6 @@
 var db = LocalStorage.openDatabaseSync("TelldusLiveMobile", "", "Settings used by Telldus Live! mobile", 1000000);
 
-var latestVersion = "1.2";
+var latestVersion = "1.3";
 
 db.changeVersion(db.version, latestVersion, function(tx) {
 	if (db.version < 1.0) {
@@ -19,5 +19,9 @@ db.changeVersion(db.version, latestVersion, function(tx) {
 	if (db.version < 1.2) {
 		tx.executeSql('ALTER TABLE Sensor ADD luminance REAL');
 		tx.executeSql('ALTER TABLE Sensor ADD favorite INTEGER');
+	}
+	if (db.version < 1.3) {
+		tx.executeSql('CREATE TABLE IF NOT EXISTS Scheduler (id INTEGER PRIMARY KEY, deviceId INTEGER, method INTEGER, methodValue TEXT, nextRunTime INTEGER, type INTEGER, hour INTEGER, minute INTEGER, offset INTEGER, randomInterval INTEGER, retries INTEGER, retryInterval INTEGER, weekdays TEXT)');
+
 	}
 });

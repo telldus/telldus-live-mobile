@@ -91,10 +91,13 @@ SET( SOURCES
 	src/models/favoritesensormodel.cpp
 	src/models/filtereddevicemodel.cpp
 	src/models/groupdevicemodel.cpp
+	src/models/SchedulerDayModel.cpp
+	src/models/SchedulerDaySortFilterModel.cpp
 	src/models/schedulermodel.cpp
 	src/models/sensormodel.cpp
 	src/models/tlistmodel.cpp
 	src/objects/DashboardItem.cpp
+	src/objects/SchedulerJobInstance.cpp
 	src/utils/dev.cpp
 	src/properties/Properties.cpp
 	src/properties/PropertiesTheme.cpp
@@ -127,10 +130,13 @@ SET( MOC_HEADERS
 	src/models/favoritesensormodel.h
 	src/models/filtereddevicemodel.h
 	src/models/groupdevicemodel.h
+	src/models/SchedulerDayModel.h
+	src/models/SchedulerDaySortFilterModel.h
 	src/models/schedulermodel.h
 	src/models/sensormodel.h
 	src/models/tlistmodel.h
 	src/objects/DashboardItem.h
+	src/objects/SchedulerJobInstance.h
 	src/utils/dev.h
 	src/properties/Properties.h
 	src/properties/PropertiesTheme.h

@@ -13,6 +13,8 @@
 #include "models/favoritesensormodel.h"
 #include "models/filtereddevicemodel.h"
 #include "models/groupdevicemodel.h"
+#include "models/SchedulerDayModel.h"
+#include "models/SchedulerDaySortFilterModel.h"
 #include "models/schedulermodel.h"
 #include "models/sensormodel.h"
 #include "Notification.h"
@@ -36,6 +38,8 @@ public:
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
 	ClientModel *clientModel;
 	DashboardModel *dashboardModel;
+	SchedulerDayModel *schedulerDayModel;
+	SchedulerDaySortFilterModel *schedulerDaySortFilterModel;
 	User *user;
 	static TelldusCenter *instance;
 };
@@ -57,6 +61,8 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 		new FavoriteSensorModel(SensorModel::instance(), this),
 		this
 	);
+	d->schedulerDayModel = new SchedulerDayModel(SchedulerModel::instance(), this);
+	d->schedulerDaySortFilterModel = new SchedulerDaySortFilterModel(d->schedulerDayModel, this);
 	d->clientModel = new ClientModel(this);
 	d->user = new User(this);
 #if IS_FEATURE_PUSH_ENABLED
@@ -80,6 +86,8 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("core", this);
 	d->view->setContextProperty("deviceModelController", DeviceModel::instance());
 	d->view->setContextProperty("rawDeviceModel", d->rawDeviceModel);
+	d->view->setContextProperty("schedulerDayModel", d->schedulerDayModel);
+	d->view->setContextProperty("schedulerDaySortFilterModel", d->schedulerDaySortFilterModel);
 	d->view->setContextProperty("schedulerModel", SchedulerModel::instance());
 	d->view->setContextProperty("deviceModel", d->deviceModel);
 	d->view->setContextProperty("groupModel", d->groupModel);

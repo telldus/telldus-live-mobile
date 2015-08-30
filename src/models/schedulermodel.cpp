@@ -9,9 +9,7 @@ public:
 };
 SchedulerModel *SchedulerModel::PrivateData::instance = 0;
 
-SchedulerModel::SchedulerModel() :
-	TListModel("job")
-{
+SchedulerModel::SchedulerModel() : TListModel("job") {
 	d = new PrivateData();
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();

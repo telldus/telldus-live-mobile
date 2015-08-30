@@ -3,6 +3,7 @@ import QtQuick.LocalStorage 2.0
 import "../scripts/DB.js" as DB
 import "../scripts/Device.js" as Device
 import "../scripts/Sensor.js" as Sensor
+import "../scripts/Scheduler.js" as Scheduler
 
 Rectangle {
 	id: screen
@@ -12,6 +13,7 @@ Rectangle {
 	Component.onCompleted: {
 		Device.setupCache(deviceModelController, DB.db)
 		Sensor.setupCache(sensorModel, DB.db)
+		Scheduler.setupCache(schedulerModel, DB.db)
 	}
 	Loader {
 		id: loader_mainInterface

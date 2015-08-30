@@ -94,9 +94,10 @@
 		<file>resources/svgs/sensorIconWatt.svg</file>
 		<file>resources/svgs/sensorIconWind.svg</file>
 
-		<file>resources/scripts/Device.js</file>
-		<file>resources/scripts/Sensor.js</file>
 		<file>resources/scripts/DB.js</file>
+		<file>resources/scripts/Device.js</file>
+		<file>resources/scripts/Scheduler.js</file>
+		<file>resources/scripts/Sensor.js</file>
 
 	</qresource>
 </RCC>
