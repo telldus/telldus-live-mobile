@@ -45,7 +45,7 @@ Item {
 		id: onButtonBackgroundSquarer1
 		width: onButton.width / 2
 		anchors.top: onButton.top
-		anchors.right: onButton.right
+		anchors.left: onButton.left
 		anchors.bottom: onButton.bottom
 		color: onButton.color
 	}
@@ -61,8 +61,8 @@ Item {
 	Rectangle {
 		id: onButton
 		height: parent.height
-		anchors.right: tileSeperator.left
-		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.left: tileSeperator.right
 		color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
 		radius: tileBorder.radius
 		Text {
@@ -114,7 +114,7 @@ Item {
 		id: offButtonBackgroundSquarer1
 		width: offButton.width / 2
 		anchors.top: offButton.top
-		anchors.left: offButton.left
+		anchors.right: offButton.right
 		anchors.bottom: offButton.bottom
 		color: offButton.color
 	}
@@ -130,8 +130,8 @@ Item {
 	Rectangle {
 		id: offButton
 		height: parent.height
-		anchors.left: tileSeperator.right
-		anchors.right: parent.right
+		anchors.left: parent.left
+		anchors.right: tileSeperator.left
 		color: deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
 		radius: tileBorder.radius
 		Text {
