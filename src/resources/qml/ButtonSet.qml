@@ -21,13 +21,13 @@ Item {
 		id: tileBorder
 		anchors.fill: parent
 		color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
-		radius: height / 5
+		radius: height / 6
 		Rectangle {
 			id: tileWhite
 			anchors.fill: parent
 			anchors.margins: tile.showBorder ? 1 * SCALEFACTOR : 0
 			color: "#ffffff"
-			radius: height / 5
+			radius: height / 6
 			Loader {
 				id: tileContent
 				source: {

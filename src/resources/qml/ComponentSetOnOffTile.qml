@@ -70,7 +70,7 @@ Item {
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
 			color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
-			font.pixelSize: parent.width / 3
+			font.pixelSize: onButton.height < onButton.width ? parent.height * 0.4 : parent.height * 0.2
 			font.weight: Font.Bold
 			text: "On"
 		}
@@ -136,7 +136,7 @@ Item {
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
 			color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
-			font.pixelSize: parent.width / 3
+			font.pixelSize: offButton.height < offButton.width ? parent.height * 0.4 : parent.height * 0.2
 			font.weight: Font.Bold
 			text: "Off"
 		}

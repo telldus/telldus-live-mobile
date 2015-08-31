@@ -13,7 +13,7 @@ Item {
 		smooth: true
 		anchors.centerIn: parent
 		color: properties.theme.colors.telldusOrange
-		font.pixelSize: 32 * SCALEFACTOR
+		font.pixelSize: parent.height * 0.4
 		font.weight: Font.Bold
 		style: Text.Raised
 		styleColor: "white"
