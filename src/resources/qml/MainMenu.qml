@@ -97,6 +97,7 @@ Item {
 			}
 		}
 		Item {
+			visible: false
 			width: parent.width
 			height: 64 * SCALEFACTOR
 			Text {

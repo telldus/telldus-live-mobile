@@ -5,7 +5,7 @@
 #include <QMetaType>
 #include <QVariantMap>
 #include <QDateTime>
-#include "Schedulerjob.h"
+#include "schedulerjob.h"
 
 class SchedulerJobInstance : public QObject
 {

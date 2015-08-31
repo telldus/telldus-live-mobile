@@ -40,6 +40,7 @@ Rectangle {
 				PropertyAction { target: tile; property: "z"; value: 0 }
 			}
 			DropShadow {
+				visible: properties.theme.isMaterialDesign
 				anchors.fill: tileBorder
 				horizontalOffset: 0
 				verticalOffset: 1.5 * SCALEFACTOR
@@ -54,6 +55,7 @@ Rectangle {
 				opacity: 0.16
 			}
 			DropShadow {
+				visible: properties.theme.isMaterialDesign
 				anchors.fill: tileBorder
 				horizontalOffset: 0
 				verticalOffset: 1.5 * SCALEFACTOR

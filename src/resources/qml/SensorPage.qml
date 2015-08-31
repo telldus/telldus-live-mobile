@@ -57,8 +57,7 @@ Item {
 					anchors.leftMargin: 10 * SCALEFACTOR
 					anchors.right: parent.right
 					anchors.rightMargin: 10 * SCALEFACTOR
-					anchors.top: parent.top
-					anchors.topMargin: 10 * SCALEFACTOR
+					anchors.verticalCenter: parent.verticalCenter
 					spacing: 10 * SCALEFACTOR
 					SensorValue {
 						icon: "sensorIconHumidity"

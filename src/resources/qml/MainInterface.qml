@@ -35,7 +35,7 @@ Rectangle {
 				anchors.leftMargin: 10 * SCALEFACTOR
 				anchors.top: parent.top
 				color: properties.theme.colors.telldusOrange
-				width: 24 * SCALEFACTOR
+				width: 28 * SCALEFACTOR
 				height: width
 				Text {
 					anchors.centerIn: parent
