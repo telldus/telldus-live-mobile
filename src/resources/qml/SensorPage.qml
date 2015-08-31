@@ -26,8 +26,7 @@ Item {
 					id: dataTitleRow
 					anchors.left: parent.left
 					anchors.leftMargin: 10 * SCALEFACTOR
-					anchors.top: parent.top
-					anchors.topMargin: 10 * SCALEFACTOR
+					anchors.verticalCenter: parent.verticalCenter
 					width: (list.width - 30) / 2
 					Text {
 						id: sensorName

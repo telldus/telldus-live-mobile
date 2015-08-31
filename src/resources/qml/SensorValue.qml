@@ -10,8 +10,8 @@ Item {
 	Image {
 		id: sensorIcon
 		source: "../svgs/" + icon + ".svg"
-		height: 20 * SCALEFACTOR
-		width: 20 * SCALEFACTOR
+		height: 26 * SCALEFACTOR
+		width: 26 * SCALEFACTOR
 		smooth: true
 		fillMode: Image.PreserveAspectFit
 		sourceSize.width: width * 2
@@ -23,8 +23,7 @@ Item {
 		anchors.leftMargin: 5 * SCALEFACTOR
 		anchors.verticalCenter: parent.verticalCenter
 		color: properties.theme.colors.telldusBlue
-		font.pixelSize: 12 * SCALEFACTOR
+		font.pixelSize: 14 * SCALEFACTOR
 		font.weight: Font.Bold
-		//text: 'sensor.temperature' + '\u00B0C'
 	}
 }
