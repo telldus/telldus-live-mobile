@@ -84,13 +84,11 @@ Item {
 					id: arrow
 					anchors.right: wrapper.right
 					anchors.verticalCenter: parent.verticalCenter
-					height: (buttons.height - 10) * SCALEFACTOR
-					width: height
+					height: buttons.height / 2
+					width: buttons.height
 					Image {
-						id: backButtonImage
-						anchors.centerIn: parent
-						height: parent.height * (0.5 / SCALEFACTOR)
-						width: height
+						id: arrowImage
+						anchors.fill: parent
 						source: "../svgs/iconArrowRight.svg"
 						smooth: true
 						fillMode: Image.PreserveAspectFit
