@@ -86,7 +86,6 @@ Item {
 			drag.maximumY: dimArea.height - dimHandle.height
 			onPressed: {
 				onButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
-				onButtonText.color = "#ffffff"
 
 			}
 			onClicked: {
@@ -95,8 +94,6 @@ Item {
 			onReleased: {
 				onButton.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
 				offButton.color = (deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
-				onButtonText.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
-				offButtonText.color = (deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
 			}
 		}
 	}
@@ -155,7 +152,6 @@ Item {
 			drag.maximumY: dimArea.height - dimHandle.height
 			onPressed: {
 				offButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
-				offButtonText.color = "#ffffff"
 			}
 			onClicked: {
 				device.turnOff()
@@ -163,8 +159,6 @@ Item {
 			onReleased: {
 				onButton.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
 				offButton.color = (deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff")
-				onButtonText.color = ((deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
-				offButtonText.color = (deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1))
 			}
 		}
 	}
