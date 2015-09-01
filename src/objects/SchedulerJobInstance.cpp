@@ -1,11 +1,17 @@
 #include "SchedulerJobInstance.h"
 
+#include <QDebug>
+#include <QDate>
+
+#include "models/devicemodel.h"
+
 class SchedulerJobInstance::PrivateData {
 public:
 	int id, deviceId, method, hour, minute, offset, randomInterval;
 	int retries, retryInterval, weekday;
 	QString methodValue;
 	QDateTime nextRunTime;
+	QDate nextRunDate;
 	SchedulerJob::Type type;
 };
 
@@ -27,6 +33,10 @@ SchedulerJobInstance::SchedulerJobInstance(QObject *parent) :
 
 SchedulerJobInstance::~SchedulerJobInstance() {
 	delete d;
+}
+
+Device *SchedulerJobInstance::device() const {
+	return DeviceModel::instance()->findDevice(d->deviceId);
 }
 
 int SchedulerJobInstance::deviceId() const {
@@ -66,12 +76,41 @@ void SchedulerJobInstance::setMethodValue(const QString &methodValue) {
 }
 
 QDateTime SchedulerJobInstance::nextRunTime() const {
-	return d->nextRunTime;
+	QDateTime nextRun;
+	QTime nextRunTime = QTime(hour(), minute(), 0);
+	nextRun.setTime(nextRunTime);
+
+	nextRun.setDate(QDate::currentDate().addDays( (weekday() + 1) - QDate::currentDate().dayOfWeek() ));
+
+	if (nextRun < QDateTime::currentDateTime()) {
+		nextRun = nextRun.addDays(7);
+	}
+
+	return nextRun;
 }
 
 void SchedulerJobInstance::setNextRunTime(const QDateTime &nextRunTime) {
 	d->nextRunTime = nextRunTime;
 	emit nextRunTimeChanged();
+}
+
+QDate SchedulerJobInstance::nextRunDate() const {
+	QDateTime nextRun;
+	QTime nextRunTime = QTime(hour(), minute(), 0);
+	nextRun.setTime(nextRunTime);
+
+	nextRun.setDate(QDate::currentDate().addDays( (weekday() + 1) - QDate::currentDate().dayOfWeek() ));
+
+	if (nextRun < QDateTime::currentDateTime()) {
+		nextRun = nextRun.addDays(7);
+	}
+
+	return nextRun.date();
+}
+
+void SchedulerJobInstance::setNextRunDate(const QDate &nextRunDate) {
+	d->nextRunDate = nextRunDate;
+	emit nextRunDateChanged();
 }
 
 SchedulerJob::Type SchedulerJobInstance::type() const {

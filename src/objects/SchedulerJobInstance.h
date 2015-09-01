@@ -5,17 +5,22 @@
 #include <QMetaType>
 #include <QVariantMap>
 #include <QDateTime>
+#include <QDate>
 #include "schedulerjob.h"
+
+class Device;
 
 class SchedulerJobInstance : public QObject
 {
 	Q_OBJECT
 	Q_ENUMS(Type)
+	Q_PROPERTY(Device *device READ device NOTIFY deviceChanged)
 	Q_PROPERTY(int deviceId READ deviceId WRITE setDeviceId NOTIFY deviceIdChanged)
 	Q_PROPERTY(int schedulerJobId READ schedulerJobId WRITE setSchedulerJobId NOTIFY schedulerJobIdChanged)
 	Q_PROPERTY(int method READ method WRITE setMethod NOTIFY methodChanged)
 	Q_PROPERTY(QString methodValue READ methodValue WRITE setMethodValue NOTIFY methodValueChanged)
 	Q_PROPERTY(QDateTime nextRunTime READ nextRunTime WRITE setNextRunTime NOTIFY nextRunTimeChanged)
+	Q_PROPERTY(QDate nextRunDate READ nextRunDate WRITE setNextRunDate NOTIFY nextRunDateChanged)
 	Q_PROPERTY(SchedulerJob::Type type READ type WRITE setType NOTIFY typeChanged)
 	Q_PROPERTY(int hour READ hour WRITE setHour NOTIFY hourChanged)
 	Q_PROPERTY(int minute READ minute WRITE setMinute NOTIFY minuteChanged)
@@ -27,6 +32,8 @@ class SchedulerJobInstance : public QObject
 public:
 	explicit SchedulerJobInstance(QObject *parent = 0);
 	~SchedulerJobInstance();
+
+	Device *device() const;
 
 	int deviceId() const;
 	void setDeviceId(int deviceId);
@@ -42,6 +49,9 @@ public:
 
 	QDateTime nextRunTime() const;
 	void setNextRunTime(const QDateTime &nextRunTime );
+
+	QDate nextRunDate() const;
+	void setNextRunDate(const QDate &nextRunDate );
 
 	SchedulerJob::Type type() const;
 	void setType(SchedulerJob::Type type);
@@ -69,11 +79,13 @@ public:
 	void setWeekday(int weekday);
 
 signals:
+	void deviceChanged();
 	void deviceIdChanged();
 	void schedulerJobIdChanged();
 	void methodChanged();
 	void methodValueChanged();
 	void nextRunTimeChanged();
+	void nextRunDateChanged();
 	void typeChanged();
 	void hourChanged();
 	void minuteChanged();
