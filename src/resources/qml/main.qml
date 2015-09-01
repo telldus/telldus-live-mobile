@@ -10,6 +10,7 @@ Rectangle {
 	id: screen
 
 	property bool isPortrait: width <= height
+	property bool showHeaderAtTop: 50 * SCALEFACTOR < height * 0.1
 
 	Component.onCompleted: {
 		Client.setupCache(clientModel, DB.db)

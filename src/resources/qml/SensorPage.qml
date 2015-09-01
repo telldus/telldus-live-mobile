@@ -171,8 +171,8 @@ Item {
 		ListView {
 			id: list
 			anchors.fill: parent
-			anchors.topMargin: screen.isPortrait ? header.height : 0
-			anchors.leftMargin: screen.isPortrait ? 0 : header.width
+			anchors.topMargin: screen.showHeaderAtTop ? header.height : 0
+			anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
 			model: sensorModel
 			delegate: sensorDelegate
 			maximumFlickVelocity: 1500 * SCALEFACTOR

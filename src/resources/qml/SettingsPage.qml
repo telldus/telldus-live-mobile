@@ -9,8 +9,8 @@ Item {
 	}
 	Item {
 		anchors.fill: parent
-		anchors.topMargin: screen.isPortrait ? header.height : 0
-		anchors.leftMargin: screen.isPortrait ? 0 : header.width
+		anchors.topMargin: screen.showHeaderAtTop ? header.height : 0
+		anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
 		Item {
 			anchors.top: parent.top
 			anchors.left: parent.left

@@ -83,9 +83,10 @@ Item {
 				Item {
 					id: arrow
 					anchors.right: wrapper.right
+					anchors.rightMargin: 5 * SCALEFACTOR
 					anchors.verticalCenter: parent.verticalCenter
-					height: buttons.height / 2
-					width: buttons.height
+					height: 20 * SCALEFACTOR
+					width: 20 * SCALEFACTOR
 					Image {
 						id: arrowImage
 						anchors.fill: parent
@@ -190,9 +191,10 @@ Item {
 		color: "#80999999"
 		ListView {
 			id: list
-			anchors.fill: parent
-			anchors.topMargin: screen.isPortrait ? header.height : 0
-			anchors.leftMargin: screen.isPortrait ? 0 : header.width
+			anchors.left: screen.showHeaderAtTop ? parent.left : header.right
+			anchors.top: screen.showHeaderAtTop ? header.bottom : parent.top
+			anchors.right: parent.right
+			anchors.bottom: parent.bottom
 			model: deviceModel
 			delegate: deviceDelegate
 			maximumFlickVelocity: 1500 * SCALEFACTOR

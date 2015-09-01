@@ -122,8 +122,8 @@ Rectangle {
 			id: list
 			anchors.top: parent.top
 			anchors.left: parent.left
-			anchors.topMargin: screen.isPortrait ? header.height + tilePadding : tilePadding
-			anchors.leftMargin: screen.isPortrait ? tilePadding : header.width + tilePadding
+			anchors.topMargin: screen.showHeaderAtTop ? header.height + tilePadding : tilePadding
+			anchors.leftMargin: screen.showHeaderAtTop ? tilePadding : header.width + tilePadding
 			anchors.bottomMargin: tilePadding
 			anchors.rightMargin: tilePadding
 			width: parent.width - list.anchors.leftMargin

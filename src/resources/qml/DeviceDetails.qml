@@ -15,8 +15,8 @@ Item {
 	Item {
 		anchors.top: parent.top
 		anchors.left: parent.left
-		anchors.topMargin: screen.isPortrait ? deviceH.height + (10 * SCALEFACTOR) : 0
-		anchors.leftMargin: screen.isPortrait ? 0 : deviceH.width + (10 * SCALEFACTOR)
+		anchors.topMargin: screen.showHeaderAtTop ? deviceH.height + (10 * SCALEFACTOR) : 0
+		anchors.leftMargin: screen.showHeaderAtTop ? 0 : deviceH.width + (10 * SCALEFACTOR)
 		anchors.rightMargin: 10 * SCALEFACTOR
 		anchors.bottomMargin: 10 * SCALEFACTOR
 		width: parent.width + (10 * SCALEFACTOR) - list.anchors.leftMargin

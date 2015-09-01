@@ -7,10 +7,10 @@ Rectangle {
 	property int currentPage: 0
 	property string component: ''
 	property string bgcolor: '#ffffff'
-	width: parent.width
-	height: parent.height
 	anchors.left: parent.left
+	anchors.top: mainViewOffset.bottom
 	anchors.right: parent.right
+	anchors.bottom: parent.bottom
 
 	Loader {
 		id: loader

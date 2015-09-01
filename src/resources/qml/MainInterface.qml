@@ -18,7 +18,7 @@ Rectangle {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		opacity: mainInterface.menuViewVisible ? 1 : 0
-		width: (screen.isPortrait ? mainInterface.width : mainInterface.height) * 0.8
+		width: (screen.showHeaderAtTop ? mainInterface.width : mainInterface.height) * 0.8
 		color: "#404040";
 		Behavior on opacity { NumberAnimation { duration: 300 } }
 
@@ -103,6 +103,14 @@ Rectangle {
 			//y: 0
 			Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 			//Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
+		}
+		Rectangle {
+			id: mainViewOffset
+			anchors.left: parent.left
+			anchors.top: parent.top
+			anchors.right: parent.right
+			color: properties.theme.colors.telldusBlue
+			height: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 		}
 
 		TabPage {

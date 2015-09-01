@@ -12,15 +12,14 @@ Rectangle {
 	signal editClicked()
 	anchors.left: parent.left
 	anchors.top: parent.top
-	height: (screen.isPortrait ? headerHeight * SCALEFACTOR : screen.height) + mainHeader.anchors.topMargin
-	width: screen.isPortrait ? screen.width : headerHeight * SCALEFACTOR
+	height: screen.showHeaderAtTop ? headerHeight * SCALEFACTOR : mainView.height
+	width: screen.showHeaderAtTop ? mainView.width : headerHeight * SCALEFACTOR
 	color: properties.theme.colors.telldusBlue
 
 	Item {
 		id: mainHeader
 		anchors.left: parent.left
 		anchors.top: parent.top
-		anchors.topMargin: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
 		Item {
@@ -119,17 +118,17 @@ Rectangle {
 		}
 		Item {
 			id: mainHeaderCenter
-			anchors.left: screen.isPortrait ? leftButton.right : parent.left
-			anchors.top: screen.isPortrait ? parent.top : leftButton.bottom
-			anchors.right: screen.isPortrait ? rightButton.left : parent.right
-			anchors.bottom: screen.isPortrait ? parent.bottom : rightButton.top
+			anchors.left: screen.showHeaderAtTop ? leftButton.right : parent.left
+			anchors.top: screen.showHeaderAtTop ? parent.top : leftButton.bottom
+			anchors.right: screen.showHeaderAtTop ? rightButton.left : parent.right
+			anchors.bottom: screen.showHeaderAtTop ? parent.bottom : rightButton.top
 			clip: true
 			Item {
 				visible: title == '' && backVisible == false
 				anchors.centerIn: parent
-				width: screen.isPortrait ? parent.width : parent.height
-				height: (screen.isPortrait ? parent.height : parent.width) - (10 * SCALEFACTOR)
-				rotation: screen.isPortrait ? 0 : 270
+				width: screen.showHeaderAtTop ? parent.width : parent.height
+				height: (screen.showHeaderAtTop ? parent.height : parent.width) - (10 * SCALEFACTOR)
+				rotation: screen.showHeaderAtTop ? 0 : 270
 				Image {
 					anchors.centerIn: parent
 					width: parent.width * 0.825
@@ -145,14 +144,14 @@ Rectangle {
 				id: titleText
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				width: parent.width
+				width: screen.showHeaderAtTop ? parent.width : parent.height
 				font.pixelSize: 18 * SCALEFACTOR
 				font.weight: Font.Bold
 				color: "white"
 				style: Text.Raised;
 				styleColor: "#003959"
 				elide: Text.ElideRight
-				rotation: screen.isPortrait ? 0 : 270
+				rotation: screen.showHeaderAtTop ? 0 : 270
 				horizontalAlignment: Text.AlignHCenter
 			}
 		}
