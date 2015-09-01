@@ -13,14 +13,12 @@ Item {
 		onBackClicked: showDevice.backClicked()
 	}
 	Item {
-		anchors.top: parent.top
-		anchors.left: parent.left
+		anchors.fill: parent
 		anchors.topMargin: screen.showHeaderAtTop ? deviceH.height + (10 * SCALEFACTOR) : 0
 		anchors.leftMargin: screen.showHeaderAtTop ? 0 : deviceH.width + (10 * SCALEFACTOR)
-		anchors.rightMargin: 10 * SCALEFACTOR
-		anchors.bottomMargin: 10 * SCALEFACTOR
-		width: parent.width + (10 * SCALEFACTOR) - list.anchors.leftMargin
-		height: parent.height + (10 * SCALEFACTOR) - list.anchors.topMargin
+		anchors.rightMargin: 0
+		anchors.bottomMargin: 0
+
 		Column {
 			anchors.fill: parent
 			anchors.margins: 10 * SCALEFACTOR
@@ -112,7 +110,7 @@ Item {
 					sourceSize.height: height * 2
 					opacity: showDevice.selected.isFavorite ? 1 : 0.2
 				}
-				Item {
+/*				Item {
 					height: iconFavorite.height
 					anchors.left: iconFavorite.right
 					anchors.leftMargin: 10 * SCALEFACTOR
@@ -144,7 +142,7 @@ Item {
 							Behavior on opacity { NumberAnimation { duration: 200 } }
 						}
 					}
-				}
+				}*/
 				MouseArea {
 					anchors.fill: parent
 					onClicked: showDevice.selected.isFavorite = !showDevice.selected.isFavorite

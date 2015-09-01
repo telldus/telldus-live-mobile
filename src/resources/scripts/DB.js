@@ -26,6 +26,5 @@ db.changeVersion(db.version, latestVersion, function(tx) {
 	}
 	if (db.version < 1.4) {
 		tx.executeSql('CREATE TABLE IF NOT EXISTS Client (id INTEGER PRIMARY KEY, name TEXT, online INTEGER, editable INTEGER, version TEXT, type TEXT)');
-
 	}
 });

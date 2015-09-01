@@ -26,20 +26,6 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: 0
 				anchors.top: parent.top
-				ListView.onRemove: SequentialAnimation {
-					PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
-					PropertyAction { target: wrapper; property: "z"; value: -1 }
-	//				NumberAnimation { target: wrapper; properties: "height,opacity"; to: 0; duration: 250; easing.type: Easing.InOutQuad }
-					PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: false }
-				}
-				ListView.onAdd: SequentialAnimation {
-					PropertyAction { target: wrapper; property: "z"; value: -1 }
-					ParallelAnimation {
-	//					NumberAnimation { target: wrapper; properties: "height"; from: 0; to: 150; duration: 250; easing.type: Easing.InOutQuad }
-	//					NumberAnimation { target: wrapper; properties: "opacity"; from: 0; to: 1; duration: 250; easing.type: Easing.InOutQuad }
-					}
-					PropertyAction { target: wrapper; property: "z"; value: 0 }
-				}
 				ButtonSet {
 					id: buttons
 					device: wrapper.dev
@@ -149,24 +135,6 @@ Item {
 						onClicked: device.isFavorite = !device.isFavorite
 					}
 				}
-/* Prototype for 2nd button				Item {
-					id: editButton2
-					height: parent.height
-					width: editButton2.height
-					anchors.left: editButton1.right
-					anchors.top: parent.top
-					Image {
-						anchors.centerIn: parent
-						source: device.isFavorite ? "../images/iconFavouriteActive.png" : "../images/iconFavourite.png"
-						height: 30 * SCALEFACTOR
-						width: 30 * SCALEFACTOR
-						smooth: true
-					}
-					MouseArea {
-						anchors.fill: parent
-						onClicked: device.isFavorite = !device.isFavorite
-					}
-				}*/
 				LinearGradient {
 					anchors.top: parent.top
 					anchors.right: parent.right
