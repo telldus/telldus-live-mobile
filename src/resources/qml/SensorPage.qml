@@ -11,10 +11,10 @@ Item {
 		Rectangle {
 			color: "#eeeeee"
 			height: wrapper.height + 1
-			width: parent.width
+			width: list.width
 			Rectangle {
 				id: wrapper
-				width: sensorPage.width
+				width: list.width
 				z: model.index
 				height: childrenRect.height + (20 * SCALEFACTOR)
 				color: "#ffffff"

@@ -11,13 +11,13 @@ Item {
 		Rectangle {
 			color: "#eeeeee"
 			height: wrapper.height
-			width: parent.width
+			width: list.width
 
 			Rectangle {
 				id: wrapper
 				property Device dev: device
 				state: showEditButtons ? 'showEditButtons' : ''
-				width: devicePage.width
+				width: list.width
 				height: Math.max(buttons.height, nameCol.height, arrow.height) + (20 * SCALEFACTOR)
 				clip: false
 				//color: index % 2 == 0 ? "#ffffff" : "#eaeaea"
