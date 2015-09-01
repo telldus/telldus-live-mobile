@@ -74,6 +74,7 @@
 		<file>resources/images/throbber/throbber_12.svg</file>
 
 		<file>resources/svgs/deviceIconBell.svg</file>
+		<file>resources/svgs/deviceIconDim.svg</file>
 		<file>resources/svgs/deviceIconDown.svg</file>
 		<file>resources/svgs/deviceIconUp.svg</file>
 		<file>resources/svgs/iconArrowLeft.svg</file>
@@ -85,6 +86,7 @@
 		<file>resources/svgs/iconLogout.svg</file>
 		<file>resources/svgs/iconScheduler.svg</file>
 		<file>resources/svgs/iconSensors.svg</file>
+		<file>resources/svgs/iconSettings.svg</file>
 		<file>resources/svgs/logoTelldusLive.svg</file>
 		<file>resources/svgs/sensorIconHumidity.svg</file>
 		<file>resources/svgs/sensorIconLuminance.svg</file>
