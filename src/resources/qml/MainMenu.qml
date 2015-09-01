@@ -4,6 +4,7 @@ Item {
 	id: componentRoot
 	property int activePage: 0
 	anchors.fill: parent
+	anchors.leftMargin: 10 * SCALEFACTOR
 
 	Column {
 		id: buttonRow
@@ -11,16 +12,35 @@ Item {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		height: parent.height
-		Item {
+		spacing: 15 * SCALEFACTOR
+		Rectangle {
 			width: parent.width
-			height: 64 * SCALEFACTOR
+			height: 42 * SCALEFACTOR
+			color: activePage == 0 ? properties.theme.colors.telldusOrange : "transparent"
+			Item {
+				id: dashboardIcon
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.verticalCenter: parent.verticalCenter
+				height: 24 * SCALEFACTOR
+				width: 24 * SCALEFACTOR
+				Image {
+					id: dashboardIconImage
+					anchors.fill: parent
+					source: "../svgs/iconDashboard.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+			}
 			Text {
 				id: dashboardButton
 				color: "#ffffff"
-				font.pixelSize: 24 * SCALEFACTOR
+				font.pixelSize: 22 * SCALEFACTOR
 				text: "Dashboard"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
+				anchors.left: dashboardIcon.right
 				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
@@ -28,16 +48,34 @@ Item {
 				onClicked: changePage(0)
 			}
 		}
-		Item {
+		Rectangle {
 			width: parent.width
-			height: 64 * SCALEFACTOR
+			height: 42 * SCALEFACTOR
+			color: activePage == 1 ? properties.theme.colors.telldusOrange : "transparent"
+			Item {
+				id: deviceIcon
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.verticalCenter: parent.verticalCenter
+				height: 24 * SCALEFACTOR
+				width: 24 * SCALEFACTOR
+				Image {
+					id: deviceIconImage
+					anchors.fill: parent
+					source: "../svgs/iconDevices.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+			}
 			Text {
 				id: deviceButton
 				color: "#ffffff"
-				font.pixelSize: 24 * SCALEFACTOR
+				font.pixelSize: 22 * SCALEFACTOR
 				text: "Devices"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
+				anchors.left: deviceIcon.right
 				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
@@ -45,16 +83,34 @@ Item {
 				onClicked: changePage(1)
 			}
 		}
-		Item {
+		Rectangle {
 			width: parent.width
-			height: 64 * SCALEFACTOR
+			height: 42 * SCALEFACTOR
+			color: activePage == 2 ? properties.theme.colors.telldusOrange : "transparent"
+			Item {
+				id: sensorIcon
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.verticalCenter: parent.verticalCenter
+				height: 24 * SCALEFACTOR
+				width: 24 * SCALEFACTOR
+				Image {
+					id: sensorIconImage
+					anchors.fill: parent
+					source: "../svgs/iconSensors.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+			}
 			Text {
 				id: sensorButton
 				color: "#ffffff"
-				font.pixelSize: 24 * SCALEFACTOR
+				font.pixelSize: 22 * SCALEFACTOR
 				text: "Sensors"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
+				anchors.left: sensorIcon.right
 				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
@@ -62,16 +118,34 @@ Item {
 				onClicked: changePage(2)
 			}
 		}
-		Item {
+		Rectangle {
 			width: parent.width
-			height: 64 * SCALEFACTOR
+			height: 42 * SCALEFACTOR
+			color: activePage == 3 ? properties.theme.colors.telldusOrange : "transparent"
+			Item {
+				id: schedulerIcon
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.verticalCenter: parent.verticalCenter
+				height: 24 * SCALEFACTOR
+				width: 24 * SCALEFACTOR
+				Image {
+					id: schedulerIconImage
+					anchors.fill: parent
+					source: "../svgs/iconScheduler.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+			}
 			Text {
 				id: schedulerButton
 				color: "#ffffff"
-				font.pixelSize: 24 * SCALEFACTOR
+				font.pixelSize: 22 * SCALEFACTOR
 				text: "Scheduler"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
+				anchors.left: schedulerIcon.right
 				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
@@ -79,16 +153,34 @@ Item {
 				onClicked: changePage(3)
 			}
 		}
-		Item {
+		Rectangle {
 			width: parent.width
-			height: 64 * SCALEFACTOR
+			height: 42 * SCALEFACTOR
+			color: activePage == 4 ? properties.theme.colors.telldusOrange : "transparent"
+			Item {
+				id: settingsIcon
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.verticalCenter: parent.verticalCenter
+				height: 24 * SCALEFACTOR
+				width: 24 * SCALEFACTOR
+				Image {
+					id: settingsIconImage
+					anchors.fill: parent
+					source: "../svgs/iconSettings.svg"
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+			}
 			Text {
 				id: settingsButton
 				color: "#ffffff"
-				font.pixelSize: 24 * SCALEFACTOR
+				font.pixelSize: 22 * SCALEFACTOR
 				text: "Settings"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
+				anchors.left: settingsIcon.right
 				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {
@@ -96,17 +188,26 @@ Item {
 				onClicked: changePage(4)
 			}
 		}
-		Item {
+		Rectangle {
 			visible: false
 			width: parent.width
-			height: 64 * SCALEFACTOR
+			height: 42 * SCALEFACTOR
+			color: activePage == 5 ? properties.theme.colors.telldusOrange : "transparent"
+			Item {
+				id: debugIcon
+				anchors.left: parent.left
+				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.verticalCenter: parent.verticalCenter
+				height: 24 * SCALEFACTOR
+				width: 24 * SCALEFACTOR
+			}
 			Text {
 				id: debugButton
 				color: "#ffffff"
-				font.pixelSize: 24 * SCALEFACTOR
+				font.pixelSize: 22 * SCALEFACTOR
 				text: "Debug"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
+				anchors.left: debugIcon.right
 				anchors.leftMargin: 10 * SCALEFACTOR
 			}
 			MouseArea {

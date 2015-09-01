@@ -17,10 +17,10 @@ Rectangle {
 		anchors.topMargin: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
-		opacity: mainInterface.menuViewVisible ? 1 : 0
+//		opacity: mainInterface.menuViewVisible ? 1 : 0
 		width: (screen.showHeaderAtTop ? mainInterface.width : mainInterface.height) * 0.8
 		color: "#404040";
-		Behavior on opacity { NumberAnimation { duration: 300 } }
+//		Behavior on opacity { NumberAnimation { duration: 300 } }
 
 		Item {
 			id: menuUserDetails
@@ -60,7 +60,7 @@ Rectangle {
 		MainMenu {
 			id: mainMenu
 			anchors.top: menuUserDetails.bottom
-			anchors.topMargin: 40 * SCALEFACTOR
+			anchors.topMargin: 50 * SCALEFACTOR
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
@@ -111,6 +111,7 @@ Rectangle {
 			anchors.right: parent.right
 			color: properties.theme.colors.telldusBlue
 			height: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
+			z: 999999999999
 		}
 
 		TabPage {
