@@ -60,12 +60,12 @@ Rectangle {
 				anchors.fill: parent
 				anchors.rightMargin: tilePadding
 				anchors.bottomMargin: tilePadding
-				color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+				color: tile.showBorder ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : "#ffffff"
 				radius: width / 15
 				Rectangle {
 					id: tileWhite
 					anchors.fill: parent
-					anchors.margins: tile.showBorder ? 1 * SCALEFACTOR : 0
+					anchors.margins: tile.showBorder ? Math.floor(1 * SCALEFACTOR) : 0
 					color: "#ffffff"
 					radius: width / 15
 					Loader {
@@ -134,7 +134,7 @@ Rectangle {
 		console.log("Number of tiles: " + numberOfTiles);
 		var tileSize = listWidth / numberOfTiles;
 		console.log("Tile Size:" + tileSize);
-		return tileSize;
+		return Math.floor(tileSize);
 	}
 
 }
