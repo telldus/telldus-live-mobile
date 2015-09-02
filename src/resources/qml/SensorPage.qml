@@ -135,6 +135,7 @@ Item {
 						height: 30 * SCALEFACTOR
 						width: height
 						source: "image://icons/favourite/" + properties.theme.colors.telldusOrange
+						asynchronous: true
 						smooth: true
 						fillMode: Image.PreserveAspectFit
 						sourceSize.width: width * 2

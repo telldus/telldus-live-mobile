@@ -10,6 +10,7 @@ Item {
 	Image {
 		id: sensorIcon
 		source: "../svgs/" + icon + ".svg"
+		asynchronous: true
 		height: 26 * SCALEFACTOR
 		width: 26 * SCALEFACTOR
 		smooth: true

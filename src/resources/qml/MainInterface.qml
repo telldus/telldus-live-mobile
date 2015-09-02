@@ -88,28 +88,42 @@ Rectangle {
 
 		TabPage {
 			component: "DashboardPage.qml"
+			pageId: 0
+			currentPage: mainMenu.activePage
 			visible: mainMenu.activePage == 0
 		}
+
 		TabPage {
 			component: "DevicePage.qml"
+			pageId: 1
+			currentPage: mainMenu.activePage
 			visible: mainMenu.activePage == 1
 		}
 		TabPage {
 			component: "SensorPage.qml"
+			pageId: 2
+			currentPage: mainMenu.activePage
 			visible: mainMenu.activePage == 2
 		}
 		TabPage {
 			component: "SchedulerPage.qml"
+			pageId: 3
+			currentPage: mainMenu.activePage
 			visible: mainMenu.activePage == 3
 		}
 		TabPage {
 			component: "SettingsPage.qml"
+			pageId: 4
+			currentPage: mainMenu.activePage
 			visible: mainMenu.activePage == 4
 		}
 		TabPage {
 			component: "DebugPage.qml"
+			pageId: 5
+			currentPage: mainMenu.activePage
 			visible: mainMenu.activePage == 5
 		}
+
 
 		SwipeArea {
 			anchors.left: parent.left
@@ -144,34 +158,34 @@ Rectangle {
 	/* this functions toggles the menu and starts the animation */
 	function onMenu()
 	{
-		console.log("onMenu")
-		mainViewTranslate.x = mainInterface.menuViewVisible ? 0 : menuView.width
+		console.log("onMenu");
+		mainViewTranslate.x = mainInterface.menuViewVisible ? 0 : menuView.width;
 		mainInterface.menuViewVisible = !mainInterface.menuViewVisible;
 	}
 
 	function closeMenu()
 	{
 		console.log("closeMenu")
-		mainViewTranslate.x = 0
+		mainViewTranslate.x = 0;
 		mainInterface.menuViewVisible = false;
 	}
 
 	function setActivePage(pageId) {
-		mainMenu.activePage = pageId
-		dev.logScreenView(screenNames[pageId])
+		mainMenu.activePage = pageId;
+		dev.logScreenView(screenNames[pageId]);
 	}
 	function swipeLeft() {
-		console.log("swipeLeft")
-		swipeBoth()
+		console.log("swipeLeft");
+		swipeBoth();
 	}
 	function swipeRight() {
-		console.log("swipeRight")
+		console.log("swipeRight");
 		if (mainInterface.menuViewVisible == false) {
-			onMenu()
+			onMenu();
 		}
 	}
 	function swipeBoth() {
-		mainViewTranslate.x = 0
+		mainViewTranslate.x = 0;
 		mainInterface.menuViewVisible = false;
 	}
 }

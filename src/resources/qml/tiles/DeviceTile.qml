@@ -19,7 +19,7 @@ Item {
 	}
 	Rectangle {
 		id: contentHeader
-		height: Math.floor(contentBackground.height / 3.5)
+		height: list.tileLabelHeight
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
@@ -44,11 +44,40 @@ Item {
 		anchors.top: parent.top
 		anchors.right: parent.right
 		anchors.bottom: contentHeader.top
-		ButtonSetTile {
+		Item {
 			id: buttons
-			device: dashboardItem.childObject
+
 			anchors.fill: parent
+			Loader {
+				id: loader
+				property Device device: dashboardItem.childObject
+				property int methods: device.methods
+				source: {
+					var set =  primarySet()
+					if (set == 0) {
+						return '../ComponentSetOnOffTile.qml';
+					} else if (set == 1) {
+						return '../ComponentSetUpDown.qml';
+					} else if (set == 2) {
+						return '../ComponentSetBell.qml';
+					} else if (set == 3) {
+						return '../ComponentSetLearn.qml';
+					}
+					return '';
+				}
+				anchors.fill: parent
+			}
+		}
+	}
+	function primarySet() {
+		var methods = dashboardItem.childObject.methods
+		if (methods & (128+256)) {
+			return 1; // Up and Down
+		}
+		if (methods & 4) {
+			return 2;
 		}
 
+		return 0;
 	}
 }

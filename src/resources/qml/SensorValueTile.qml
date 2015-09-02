@@ -16,6 +16,7 @@ Item {
 		Image {
 			id: sensorIcon
 			source: "../svgs/" + icon + ".svg"
+			asynchronous: true
 			width: splitLeft.width * 0.8
 			height: splitLeft.height * 0.9
 			anchors.centerIn: parent

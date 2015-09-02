@@ -12,12 +12,13 @@ Rectangle {
 	anchors.right: parent.right
 	anchors.bottom: parent.bottom
 
+	// This loader shouldn't be asynchronous as it is rather distracting when switching views, most other loaders should be!
 	Loader {
 		id: loader
 		anchors.fill: parent
-		source: tabPage.component
+		source: ''
 	}
-/*	states: [
+	states: [
 		State {
 			name: 'left'
 			when: currentPage > pageId
@@ -36,6 +37,6 @@ Rectangle {
 			PropertyChanges { target: loader; source: ''; }
 			PropertyChanges { target: tabPage; visible: false; }
 		}
-	]*/
+	]
 
 }

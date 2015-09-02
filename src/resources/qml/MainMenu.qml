@@ -28,6 +28,7 @@ Item {
 					id: dashboardIconImage
 					anchors.fill: parent
 					source: "../svgs/iconDashboard.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -63,6 +64,7 @@ Item {
 					id: deviceIconImage
 					anchors.fill: parent
 					source: "../svgs/iconDevices.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -98,6 +100,7 @@ Item {
 					id: sensorIconImage
 					anchors.fill: parent
 					source: "../svgs/iconSensors.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -133,6 +136,7 @@ Item {
 					id: schedulerIconImage
 					anchors.fill: parent
 					source: "../svgs/iconScheduler.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -168,6 +172,7 @@ Item {
 					id: settingsIconImage
 					anchors.fill: parent
 					source: "../svgs/iconSettings.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2

@@ -21,8 +21,8 @@ Rectangle {
 			readonly property real lightnessDefault: 0.24
 			readonly property bool hasNameInTile: true
 
-			width: list.cellWidth
-			height: list.cellHeight
+			width: list.tileSize
+			height: list.tileSize
 			z: model.index
 
 			DropShadow {
@@ -70,6 +70,7 @@ Rectangle {
 					radius: width / 15
 					Loader {
 						id: tileContent
+						asynchronous: true
 						Connections {
 							target: tileTimer
 							onTriggered: {
@@ -106,6 +107,10 @@ Rectangle {
 		}
 		GridView {
 			id: list
+			property int tileSize: 0
+			property int tileLabelHeight: 0
+			onWidthChanged: calculateTileSize()
+
 			anchors.top: parent.top
 			anchors.left: parent.left
 			anchors.topMargin: screen.showHeaderAtTop ? header.height + tilePadding : tilePadding
@@ -116,8 +121,8 @@ Rectangle {
 			height: parent.height - list.anchors.topMargin
 			model: dashboardModel
 			delegate: dashboardItemDelegate
-			cellWidth: calculateTileSize(list.width)
-			cellHeight: list.cellWidth
+			cellWidth: this.tileSize
+			cellHeight: this.tileSize
 			maximumFlickVelocity: 1500 * SCALEFACTOR
 		}
 		Header {
@@ -125,16 +130,23 @@ Rectangle {
 		}
 	}
 
-	function calculateTileSize(listWidth) {
-		console.log("List width: " + listWidth);
-		var numberOfTiles = Math.floor(listWidth / (116 * SCALEFACTOR));
-		if (numberOfTiles == 0) {
-			return (100 * SCALEFACTOR);
+	function calculateTileSize() {
+		var listWidth = list.width
+		if (listWidth > 0) {
+			console.log("List width: " + listWidth);
+			var numberOfTiles = Math.floor(listWidth / (116 * SCALEFACTOR));
+			console.log("Number of tiles: " + numberOfTiles);
+
+			var tileSize = listWidth / numberOfTiles;
+			if (numberOfTiles == 0) {
+				tileSize = 100 * SCALEFACTOR
+			}
+			console.log("Tile Size:" + tileSize);
+
+
+			list.tileSize = Math.floor(tileSize);
+			list.tileLabelHeight = Math.floor(tileSize * 0.25);
 		}
-		console.log("Number of tiles: " + numberOfTiles);
-		var tileSize = listWidth / numberOfTiles;
-		console.log("Tile Size:" + tileSize);
-		return Math.floor(tileSize);
 	}
 
 }

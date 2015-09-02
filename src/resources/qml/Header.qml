@@ -41,6 +41,7 @@ Rectangle {
 					height: parent.height * (0.5 / SCALEFACTOR)
 					width: height
 					source: "../svgs/iconArrowLeft.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -68,6 +69,7 @@ Rectangle {
 					height: parent.height * (0.5 / SCALEFACTOR)
 					width: height
 					source: "../svgs/iconHamburger.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -103,6 +105,7 @@ Rectangle {
 					height: parent.height * 0.6 / SCALEFACTOR
 					width: height
 					source: "image://icons/favourite/#ffffff"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
@@ -134,6 +137,7 @@ Rectangle {
 					width: parent.width * 0.825
 					height: parent.height * 0.825
 					source: "../svgs/logoTelldusLive.svg"
+					asynchronous: true
 					smooth: true
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2

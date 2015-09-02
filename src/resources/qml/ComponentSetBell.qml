@@ -11,6 +11,7 @@ Item {
 	Image {
 		id: bellIcon
 		source: "../svgs/deviceIconBell.svg"
+		asynchronous: true
 		anchors.centerIn: parent
 		height: parent.height * 0.6
 		width: height
