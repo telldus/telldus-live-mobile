@@ -8,7 +8,6 @@ Rectangle {
 
 	property variant screenNames: ['/dashboard', '/devices', '/sensors', '/scheduler', '/settings', '/debug']
 	property bool menuViewVisible: false
-	property bool timelineViewVisible: false
 	color: "#404040";
 
 	Rectangle {
@@ -68,41 +67,14 @@ Rectangle {
 	}
 
 	Item {
-		id: timelineView
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.right: parent.right
-		opacity: mainInterface.timelineViewVisible ? 1 : 0
-		width: mainInterface.width
-		Behavior on opacity { NumberAnimation { duration: 300 } }
-
-		Column {
-			anchors.top: parent.top
-			anchors.left: parent.left
-			anchors.right: parent.right
-			Text {
-				color: "#ffffff";
-				font.pixelSize: 24
-				text: "Timeline"
-				width: parent.width
-				anchors.topMargin: 10
-				anchors.horizontalCenter: parent.horizontalCenter
-			}
-		}
-	}
-
-	Item {
 		id: mainView
 		anchors.fill: parent
 		clip: true
 
-		/* this is what moves the normal view aside */
 		transform: Translate {
 			id: mainViewTranslate
 			x: 0
-			//y: 0
 			Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
-			//Behavior on y { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 		}
 		Rectangle {
 			id: mainViewOffset
@@ -116,35 +88,29 @@ Rectangle {
 
 		TabPage {
 			component: "DashboardPage.qml"
-			pageId: 0
-			currentPage: mainMenu.activePage
+			visible: mainMenu.activePage == 0
 		}
-
 		TabPage {
 			component: "DevicePage.qml"
-			pageId: 1
-			currentPage: mainMenu.activePage
+			visible: mainMenu.activePage == 1
 		}
 		TabPage {
 			component: "SensorPage.qml"
-			pageId: 2
-			currentPage: mainMenu.activePage
+			visible: mainMenu.activePage == 2
 		}
 		TabPage {
 			component: "SchedulerPage.qml"
-			pageId: 3
-			currentPage: mainMenu.activePage
+			visible: mainMenu.activePage == 3
 		}
 		TabPage {
 			component: "SettingsPage.qml"
-			pageId: 4
-			currentPage: mainMenu.activePage
+			visible: mainMenu.activePage == 4
 		}
 		TabPage {
 			component: "DebugPage.qml"
-			pageId: 5
-			currentPage: mainMenu.activePage
+			visible: mainMenu.activePage == 5
 		}
+
 		SwipeArea {
 			anchors.left: parent.left
 			anchors.top: parent.top
@@ -180,15 +146,14 @@ Rectangle {
 	{
 		console.log("onMenu")
 		mainViewTranslate.x = mainInterface.menuViewVisible ? 0 : menuView.width
-		//mainViewTranslate.y = mainInterface.menuViewVisible ? 0 : 20
 		mainInterface.menuViewVisible = !mainInterface.menuViewVisible;
 	}
-	function onTimeline()
+
+	function closeMenu()
 	{
-		console.log("onTimeline")
-		mainViewTranslate.x = mainInterface.timelineViewVisible ? 0 : -menuView.width
-		//mainViewTranslate.y = mainInterface.menuViewVisible ? 0 : 20
-		mainInterface.timelineViewVisible = !mainInterface.timelineViewVisible;
+		console.log("closeMenu")
+		mainViewTranslate.x = 0
+		mainInterface.menuViewVisible = false;
 	}
 
 	function setActivePage(pageId) {
@@ -198,9 +163,6 @@ Rectangle {
 	function swipeLeft() {
 		console.log("swipeLeft")
 		swipeBoth()
-		if (mainInterface.timelineViewVisible == false) {
-//			onTimeline()
-		}
 	}
 	function swipeRight() {
 		console.log("swipeRight")
@@ -210,8 +172,6 @@ Rectangle {
 	}
 	function swipeBoth() {
 		mainViewTranslate.x = 0
-		//mainViewTranslate.y = 0
 		mainInterface.menuViewVisible = false;
-		mainInterface.timelineViewVisible = false;
 	}
 }

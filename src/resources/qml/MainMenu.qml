@@ -246,12 +246,12 @@ Item {
 
 	transitions: [
 		Transition {
-			NumberAnimation { properties: "opacity"; duration: 100 }
+//			NumberAnimation { properties: "opacity"; duration: 100 }
 		}
 	]
 
 	function changePage(pageId) {
-		mainInterface.setActivePage(pageId);
 		mainInterface.onMenu();
+		mainInterface.setActivePage(pageId);
 	}
 }

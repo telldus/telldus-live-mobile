@@ -15,9 +15,9 @@ Rectangle {
 	Loader {
 		id: loader
 		anchors.fill: parent
-		source: ''
+		source: tabPage.component
 	}
-	states: [
+/*	states: [
 		State {
 			name: 'left'
 			when: currentPage > pageId
@@ -36,6 +36,6 @@ Rectangle {
 			PropertyChanges { target: loader; source: ''; }
 			PropertyChanges { target: tabPage; visible: false; }
 		}
-	]
+	]*/
 
 }
