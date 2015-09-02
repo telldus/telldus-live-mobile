@@ -6,20 +6,20 @@ import Telldus 1.0
 Rectangle {
 	id: dashboardPage
 	color: properties.theme.colors.dashboardBackground
-	readonly property var tilePadding: properties.theme.core.tilePadding * SCALEFACTOR
+	readonly property real tilePadding: properties.theme.core.tilePadding * SCALEFACTOR
 
 	Component {
 		id: dashboardItemDelegate
 		Item {
 			id: tile
-			property var showBorder: false
-			property var hue: 0.6
-			property var saturation: 0.55
-			property var lightness: 0.24
-			readonly property var hueDefault: 0.6
-			readonly property var saturationDefault: 0.55
-			readonly property var lightnessDefault: 0.24
-			readonly property var hasNameInTile: true
+			property bool showBorder: false
+			property real hue: 0.6
+			property real saturation: 0.55
+			property real lightness: 0.24
+			readonly property real hueDefault: 0.6
+			readonly property real saturationDefault: 0.55
+			readonly property real lightnessDefault: 0.24
+			readonly property bool hasNameInTile: true
 
 			width: list.cellWidth
 			height: list.cellHeight
@@ -86,7 +86,7 @@ Rectangle {
 							} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
 								return 'tiles/WeatherTile.qml';
 							}
-							return 'UnknownTile.qml';
+							return 'tiles/UnknownTile.qml';
 						}
 						anchors.fill: parent
 					}

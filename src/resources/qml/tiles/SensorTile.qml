@@ -49,9 +49,9 @@ Item {
 		anchors.bottom: contentHeader.top
 		anchors.margins: 10
 
-		property var allowFade: false
+		property bool allowFade: false
 		property var tileScreens: []
-		property var currentTileScreen: 0
+		property int currentTileScreen: 0
 
 		Component.onCompleted: {
 			if (sensor.hasHumidity) {

@@ -5,7 +5,7 @@ Item {
 	property string icon
 	property alias value: valueText.text
 	property alias textColor: valueText.color
-	property var textSizeScaleFactor: 1
+	property real textSizeScaleFactor: 1
 	anchors.fill: parent
 	Item {
 		id: splitLeft
