@@ -37,7 +37,6 @@ Item {
 			anchors.centerIn: parent
 			color: properties.theme.colors.telldusBlue
 			font.pixelSize: sensorValue.height * 0.2 * textSizeScaleFactor
-			font.weight: Font.Bold
 		}
 	}
 }
