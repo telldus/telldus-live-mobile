@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
+import Tui 0.1
 import "../scripts/DB.js" as DB
 import "../scripts/Client.js" as Client
 import "../scripts/Device.js" as Device
@@ -10,8 +11,7 @@ Rectangle {
 	id: screen
 
 	property bool isPortrait: width <= height
-	property bool showHeaderAtTop: 50 * SCALEFACTOR < height * 0.1
-
+	property bool showHeaderAtTop: Units.dp(56) < height * 0.1
 	Component.onCompleted: {
 		Client.setupCache(clientModel, DB.db)
 		Device.setupCache(deviceModelController, DB.db)

@@ -2,24 +2,21 @@ import QtGraphicalEffects 1.0
 import QtQuick 2.0
 import QtQuick.Window 2.2
 import Telldus 1.0
+import Tui 0.1
 
 Rectangle {
 	id: mainInterface
-
 	property variant screenNames: ['/dashboard', '/devices', '/sensors', '/scheduler', '/settings', '/debug']
 	property bool menuViewVisible: false
 	color: "#404040";
-
 	Rectangle {
 		id: menuView
 		anchors.top: parent.top
 		anchors.topMargin: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
-//		opacity: mainInterface.menuViewVisible ? 1 : 0
 		width: (screen.showHeaderAtTop ? mainInterface.width : mainInterface.height) * 0.8
 		color: "#404040";
-//		Behavior on opacity { NumberAnimation { duration: 300 } }
 
 		Item {
 			id: menuUserDetails
@@ -66,11 +63,11 @@ Rectangle {
 		}
 	}
 
-	Item {
+	View {
 		id: mainView
 		anchors.fill: parent
-		clip: true
-
+		elevation: 4
+		tintColor: properties.theme.colors.dashboardBackground
 		transform: Translate {
 			id: mainViewTranslate
 			x: 0
@@ -85,7 +82,6 @@ Rectangle {
 			height: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 			z: 999999999999
 		}
-
 		TabPage {
 			component: "DashboardPage.qml"
 			pageId: 0
@@ -123,8 +119,6 @@ Rectangle {
 			currentPage: mainMenu.activePage
 			visible: mainMenu.activePage == 5
 		}
-
-
 		SwipeArea {
 			anchors.left: parent.left
 			anchors.top: parent.top

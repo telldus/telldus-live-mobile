@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Telldus 1.0
+import Tui 0.1
 import ".."
 
 Item {
@@ -26,7 +27,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		color: Qt.hsla(0.6, 0.55, 0.24, 1)
-		radius: tileWhite.radius
+		radius: tileCard.radius
 		Text {
 			id: deviceName
 			anchors.horizontalCenter: parent.horizontalCenter

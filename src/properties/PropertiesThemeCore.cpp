@@ -7,7 +7,7 @@ public:
 
 PropertiesThemeCore::PropertiesThemeCore(QObject *parent):QObject(parent) {
 	d = new PrivateData;
-	d->tilePadding = 10;
+	d->tilePadding = 8;
 }
 
 PropertiesThemeCore::~PropertiesThemeCore() {

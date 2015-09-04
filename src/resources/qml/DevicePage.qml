@@ -1,6 +1,7 @@
 import QtGraphicalEffects 1.0
 import QtQuick 2.0
 import Telldus 1.0
+import Tui 0.1
 
 Item {
 	id: devicePage
@@ -9,7 +10,7 @@ Item {
 	Component {
 		id: deviceDelegate
 		Rectangle {
-			color: "#eeeeee"
+			color: "#EEEEEE"
 			height: wrapper.height
 			width: list.width
 
@@ -18,31 +19,40 @@ Item {
 				property Device dev: device
 				state: showEditButtons ? 'showEditButtons' : ''
 				width: list.width
-				height: Math.max(buttons.height, nameCol.height, arrow.height) + (20 * SCALEFACTOR)
+				height: Units.dp(72)
 				clip: false
-				//color: index % 2 == 0 ? "#ffffff" : "#eaeaea"
 				color: "#ffffff"
 				z: model.index
 				anchors.left: parent.left
 				anchors.leftMargin: 0
 				anchors.top: parent.top
+				Rectangle {
+					id: divider
+					anchors.left: parent.left
+					anchors.right: parent.right
+					anchors.bottom: parent.bottom
+					height: Units.dp(1)
+					color: "#F5F5F5"
+				}
 				ButtonSet {
 					id: buttons
 					device: wrapper.dev
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
-					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.leftMargin: Units.dp(16)
+					height: Units.dp(40)
+					width: Units.dp(100)
 				}
 				Column {
 					id: nameCol
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: buttons.right
-					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.leftMargin: Units.dp(16)
 					anchors.right: arrow.left
 					Text {
 						color: properties.theme.colors.telldusBlue
 						width: parent.width
-						font.pixelSize: 16 * SCALEFACTOR
+						font.pixelSize: Units.dp(16)
 						font.weight: Font.Bold
 						text: device.name
 						elide: Text.ElideRight
@@ -50,7 +60,7 @@ Item {
 					Text {
 						color: "#999999"
 						width: parent.width
-						font.pixelSize: 12 * SCALEFACTOR
+						font.pixelSize: Units.dp(14)
 						text: device.clientName
 						elide: Text.ElideRight
 					}
@@ -69,17 +79,17 @@ Item {
 				Item {
 					id: arrow
 					anchors.right: wrapper.right
-					anchors.rightMargin: 5 * SCALEFACTOR
+					anchors.rightMargin: Units.dp(16)
 					anchors.verticalCenter: parent.verticalCenter
-					height: 20 * SCALEFACTOR
-					width: 20 * SCALEFACTOR
+					height: Units.dp(24)
+					width: Units.dp(24 * 0.57)
 					Image {
 						id: arrowImage
 						anchors.fill: parent
 						source: "../svgs/iconArrowRight.svg"
 						asynchronous: true
 						smooth: true
-						fillMode: Image.PreserveAspectFit
+						fillMode: Image.PreserveAspectCrop
 						sourceSize.width: width * 2
 						sourceSize.height: height * 2
 					}
@@ -94,7 +104,7 @@ Item {
 				states: [
 					State {
 						name: 'showEditButtons'
-						PropertyChanges { target: wrapper; anchors.leftMargin: (50 * SCALEFACTOR) * (underMenu.children.length - 1) }
+						PropertyChanges { target: wrapper; anchors.leftMargin: Units.dp(72) * (underMenu.children.length - 1) }
 					}
 				]
 				transitions: [
@@ -111,18 +121,18 @@ Item {
 				anchors.top: parent.top
 				anchors.left: parent.left
 				anchors.bottom: parent.bottom
-				color: "#f8f8f8"
+				color: "#F5F5F5"
 				clip: true
 				Item {
 					id: favouriteButton
 					height: parent.height
-					width: 50 * SCALEFACTOR
+					width: Units.dp(72)
 					anchors.left: parent.left
 					anchors.top: parent.top
 					Image {
 						id: favouriteButtonImage
 						anchors.centerIn: parent
-						height: 30 * SCALEFACTOR
+						height: Units.dp(36)
 						width: height
 						source: "image://icons/favourite/" + properties.theme.colors.telldusOrange
 						asynchronous: true
@@ -141,9 +151,9 @@ Item {
 					anchors.top: parent.top
 					anchors.right: parent.right
 					anchors.bottom: parent.bottom
-					width: 3 * SCALEFACTOR
+					width: Units.dp(3)
 					start: Qt.point(0, 0)
-					end: Qt.point(3 * SCALEFACTOR, 0)
+					end: Qt.point(Units.dp(3), 0)
 					gradient: Gradient {
 						GradientStop { position: 0.0; color: "#00999999" }
 						GradientStop { position: 1.0; color: "#80999999" }
@@ -158,7 +168,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
-		color: "#80999999"
+		color: "#F5F5F5"
 		ListView {
 			id: list
 			anchors.left: screen.showHeaderAtTop ? parent.left : header.right
@@ -167,8 +177,8 @@ Item {
 			anchors.bottom: parent.bottom
 			model: deviceModel
 			delegate: deviceDelegate
-			maximumFlickVelocity: 1500 * SCALEFACTOR
-			spacing: 1 * SCALEFACTOR
+			maximumFlickVelocity: Units.dp(1500)
+			spacing: Units.dp(0)
 		}
 		Header {
 			id: header

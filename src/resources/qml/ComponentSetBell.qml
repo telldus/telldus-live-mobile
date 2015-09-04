@@ -13,7 +13,7 @@ Item {
 		source: "../svgs/deviceIconBell.svg"
 		asynchronous: true
 		anchors.centerIn: parent
-		height: parent.height * 0.6
+		height: parent.height * 0.5
 		width: height
 		smooth: true
 		fillMode: Image.PreserveAspectFit

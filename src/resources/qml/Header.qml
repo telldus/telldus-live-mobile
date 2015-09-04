@@ -1,20 +1,22 @@
 import QtQuick 2.0
-import Telldus 1.0
 import QtQuick.Window 2.2
+import Telldus 1.0
+import Tui 0.1
 
-Rectangle {
+View {
 	id: header
 	property alias title: titleText.text
 	property alias backVisible: backButton.visible
 	property alias editButtonVisible: editButton.visible
-	property var headerHeight: 50
+	property var headerHeight: 56
 	signal backClicked()
 	signal editClicked()
 	anchors.left: parent.left
 	anchors.top: parent.top
 	height: screen.showHeaderAtTop ? headerHeight * SCALEFACTOR : mainView.height
 	width: screen.showHeaderAtTop ? mainView.width : headerHeight * SCALEFACTOR
-	color: properties.theme.colors.telldusBlue
+	tintColor: properties.theme.colors.telldusBlue
+	elevation: 2
 
 	Item {
 		id: mainHeader

@@ -35,7 +35,7 @@ Item {
 		anchors.right: tileSeperator.left
 		anchors.left: parent.left
 		color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
-		radius: tileBorder.radius
+		radius: tileCard.radius
 		Text {
 			id: upButtonText
 			anchors.verticalCenter: parent.verticalCenter
@@ -72,7 +72,7 @@ Item {
 		anchors.right: tileSeperator.left
 		anchors.left: parent.left
 		color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
-		radius: tileBorder.radius
+		radius: tileCardti.radius
 		Text {
 			id: downButtonText
 			anchors.verticalCenter: parent.verticalCenter
@@ -135,7 +135,7 @@ Item {
 		anchors.left: tileSeperator.right
 		anchors.right: parent.right
 		color: deviceState == 2 ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
-		radius: tileBorder.radius
+		radius: tileCard.radius
 		Text {
 			id: stopButtonText
 			anchors.verticalCenter: parent.verticalCenter

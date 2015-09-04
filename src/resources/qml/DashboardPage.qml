@@ -2,11 +2,12 @@ import QtGraphicalEffects 1.0
 import QtQuick 2.0
 import QtQuick.Window 2.2
 import Telldus 1.0
+import Tui 0.1
 
 Rectangle {
 	id: dashboardPage
 	color: properties.theme.colors.dashboardBackground
-	readonly property real tilePadding: properties.theme.core.tilePadding * SCALEFACTOR
+	readonly property real tilePadding: Units.dp(properties.theme.core.tilePadding)
 
 	Component {
 		id: dashboardItemDelegate
@@ -25,72 +26,34 @@ Rectangle {
 			height: list.tileSize
 			z: model.index
 
-			DropShadow {
-				visible: properties.theme.isMaterialDesign
-				anchors.fill: tileBorder
-				horizontalOffset: 0
-				verticalOffset: 1.5 * SCALEFACTOR
-				radius: 8.0
-				spread: 0.0
-				samples: 16
-				cached: true
-				color: "#000000"
-				source: tileBorder
-				transparentBorder: true
-				smooth: true
-				opacity: 0.16
-			}
-			DropShadow {
-				visible: properties.theme.isMaterialDesign
-				anchors.fill: tileBorder
-				horizontalOffset: 0
-				verticalOffset: 1.5 * SCALEFACTOR
-				radius: 8.0
-				spread: 0.0
-				samples: 16
-				cached: true
-				color: "#000000"
-				source: tileBorder
-				transparentBorder: true
-				smooth: true
-				opacity: 0.23
-			}
-			Rectangle {
-				id: tileBorder
+			Card {
+				id: tileCard
 				anchors.fill: parent
 				anchors.rightMargin: tilePadding
 				anchors.bottomMargin: tilePadding
-				color: tile.showBorder ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : "#ffffff"
-				radius: width / 15
-				Rectangle {
-					id: tileWhite
-					anchors.fill: parent
-					anchors.margins: tile.showBorder ? Math.floor(1 * SCALEFACTOR) : 0
-					color: "#ffffff"
-					radius: width / 15
-					Loader {
-						id: tileContent
-						asynchronous: true
-						Connections {
-							target: tileTimer
-							onTriggered: {
-								if (tileContent.item.switchTileSlides) {
-									tileContent.item.switchTileSlides()
-								}
+				tintColor: "#FAFAFA"
+				Loader {
+					id: tileContent
+					asynchronous: true
+					Connections {
+						target: tileTimer
+						onTriggered: {
+							if (tileContent.item.switchTileSlides) {
+								tileContent.item.switchTileSlides()
 							}
 						}
-						source: {
-							if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
-								return 'tiles/DeviceTile.qml';
-							} else if (dashboardItem.childObjectType == DashboardItem.SensorChildObjectType) {
-								return 'tiles/SensorTile.qml';
-							} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
-								return 'tiles/WeatherTile.qml';
-							}
-							return 'tiles/UnknownTile.qml';
-						}
-						anchors.fill: parent
 					}
+					source: {
+						if (dashboardItem.childObjectType == DashboardItem.DeviceChildObjectType) {
+							return 'tiles/DeviceTile.qml';
+						} else if (dashboardItem.childObjectType == DashboardItem.SensorChildObjectType) {
+							return 'tiles/SensorTile.qml';
+						} else if (dashboardItem.childObjectType == DashboardItem.WeatherChildObjectType) {
+							return 'tiles/WeatherTile.qml';
+						}
+						return 'tiles/UnknownTile.qml';
+					}
+					anchors.fill: parent
 				}
 			}
 		}
@@ -123,7 +86,7 @@ Rectangle {
 			delegate: dashboardItemDelegate
 			cellWidth: this.tileSize
 			cellHeight: this.tileSize
-			maximumFlickVelocity: 1500 * SCALEFACTOR
+			maximumFlickVelocity: Units.dp(1500)
 		}
 		Header {
 			id: header
@@ -133,17 +96,14 @@ Rectangle {
 	function calculateTileSize() {
 		var listWidth = list.width
 		if (listWidth > 0) {
-			console.log("List width: " + listWidth);
-			var numberOfTiles = Math.floor(listWidth / (116 * SCALEFACTOR));
-			console.log("Number of tiles: " + numberOfTiles);
-
+//			console.log("List width: " + listWidth);
+			var numberOfTiles = Math.floor(listWidth / Units.dp(100));
+//			console.log("Number of tiles: " + numberOfTiles);
 			var tileSize = listWidth / numberOfTiles;
 			if (numberOfTiles == 0) {
-				tileSize = 100 * SCALEFACTOR
+				tileSize = Units.dp(100)
 			}
-			console.log("Tile Size:" + tileSize);
-
-
+//			console.log("Tile Size:" + tileSize);
 			list.tileSize = Math.floor(tileSize);
 			list.tileLabelHeight = Math.floor(tileSize * 0.25);
 		}

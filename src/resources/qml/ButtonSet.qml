@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Telldus 1.0
+import Tui 0.1
 
 Item {
 	id: tile
@@ -15,15 +16,15 @@ Item {
 	readonly property var lightnessDefault: 0.24
 	readonly property var hasNameInTile: false
 
-	width: 100 * SCALEFACTOR
-	height: 40 * SCALEFACTOR
-	Rectangle {
+	width: Units.dp(100)
+	height: Units.dp(40)
+	Card {
 		id: tileBorder
 		anchors.fill: parent
-		color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+		tintColor: "#BDBDBD"
 		radius: height / 6
 		Rectangle {
-			id: tileWhite
+			id: tileCard
 			anchors.fill: parent
 			anchors.margins: tile.showBorder ? 1 * SCALEFACTOR : 0
 			color: "#ffffff"

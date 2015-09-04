@@ -1,10 +1,11 @@
 import QtQuick 2.0
+import Tui 0.1
 
 Item {
 	id: componentRoot
 	property int activePage: 0
 	anchors.fill: parent
-	anchors.leftMargin: 10 * SCALEFACTOR
+	anchors.leftMargin: Units.dp(16)
 
 	Column {
 		id: buttonRow

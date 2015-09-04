@@ -9,7 +9,7 @@ public:
 
 PropertiesThemeColors::PropertiesThemeColors(QObject *parent):QObject(parent) {
 	d = new PrivateData;
-	d->dashboardBackground = QColor("#e6e7e8");
+	d->dashboardBackground = QColor("#e0e0e0");
 	d->telldusBlue = QColor("#1b365d");
 	d->telldusOrange = QColor("#e26901");
 }
