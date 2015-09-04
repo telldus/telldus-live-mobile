@@ -4,7 +4,6 @@ import Tui 0.1
 Item {
 	id: componentRoot
 	property int activePage: 0
-	anchors.leftMargin: Units.dp(16)
 
 	Column {
 		id: buttonRow
@@ -20,11 +19,12 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: Units.dp(24)
-				width: Units.dp(24)
+				height: Units.dp(32)
+				width: Units.dp(32)
 				Image {
 					id: dashboardIconImage
 					anchors.fill: parent
+					anchors.margins: Units.dp(4)
 					source: "../svgs/iconDashboard.svg"
 					asynchronous: true
 					smooth: true
@@ -39,8 +39,8 @@ Item {
 				font.pixelSize: Units.dp(20)
 				text: "Dashboard"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: dashboardIcon.right
-				anchors.leftMargin: Units.dp(16)
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(72)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -56,11 +56,12 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: Units.dp(24)
-				width: Units.dp(24)
+				height: Units.dp(32)
+				width: Units.dp(32)
 				Image {
 					id: deviceIconImage
 					anchors.fill: parent
+					anchors.margins: Units.dp(4)
 					source: "../svgs/iconDevices.svg"
 					asynchronous: true
 					smooth: true
@@ -75,8 +76,8 @@ Item {
 				font.pixelSize: Units.dp(20)
 				text: "Devices"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: deviceIcon.right
-				anchors.leftMargin: Units.dp(16)
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(72)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -92,11 +93,12 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: Units.dp(24)
-				width: Units.dp(24)
+				height: Units.dp(32)
+				width: Units.dp(32)
 				Image {
 					id: sensorIconImage
 					anchors.fill: parent
+					anchors.margins: Units.dp(4)
 					source: "../svgs/iconSensors.svg"
 					asynchronous: true
 					smooth: true
@@ -111,8 +113,8 @@ Item {
 				font.pixelSize: Units.dp(20)
 				text: "Sensors"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: sensorIcon.right
-				anchors.leftMargin: Units.dp(16)
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(72)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -128,11 +130,12 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: Units.dp(24)
-				width: Units.dp(24)
+				height: Units.dp(32)
+				width: Units.dp(32)
 				Image {
 					id: schedulerIconImage
 					anchors.fill: parent
+					anchors.margins: Units.dp(4)
 					source: "../svgs/iconScheduler.svg"
 					asynchronous: true
 					smooth: true
@@ -147,8 +150,8 @@ Item {
 				font.pixelSize: Units.dp(20)
 				text: "Scheduler"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: schedulerIcon.right
-				anchors.leftMargin: Units.dp(16)
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(72)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -164,11 +167,12 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: Units.dp(24)
-				width: Units.dp(24)
+				height: Units.dp(32)
+				width: Units.dp(32)
 				Image {
 					id: settingsIconImage
 					anchors.fill: parent
+					anchors.margins: Units.dp(4)
 					source: "../svgs/iconSettings.svg"
 					asynchronous: true
 					smooth: true
@@ -183,8 +187,8 @@ Item {
 				font.pixelSize: Units.dp(20)
 				text: "Settings"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: settingsIcon.right
-				anchors.leftMargin: Units.dp(16)
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(72)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -201,8 +205,8 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: Units.dp(24)
-				width: Units.dp(24)
+				height: Units.dp(32)
+				width: Units.dp(32)
 			}
 			Text {
 				id: debugButton
@@ -210,8 +214,8 @@ Item {
 				font.pixelSize: Units.dp(20)
 				text: "Debug"
 				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: debugIcon.right
-				anchors.leftMargin: Units.dp(16)
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(72)
 			}
 			MouseArea {
 				anchors.fill: parent

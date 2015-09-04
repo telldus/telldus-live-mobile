@@ -53,7 +53,7 @@ Rectangle {
 
 			}
 			Text {
-				anchors.left: menuUserDetails.left
+				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(72)
 				anchors.verticalCenter: parent.verticalCenter
 				text: user.firstname + " " + user.lastname
