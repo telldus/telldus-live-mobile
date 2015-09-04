@@ -13,8 +13,8 @@ Item {
 		anchors.verticalCenter: parent.verticalCenter
 		source: "../svgs/" + icon + ".svg"
 		asynchronous: true
-		height: Units.dp(24)
-		width: Units.dp(24)
+		height: Units.dp(28)
+		width: Units.dp(28)
 		smooth: true
 		fillMode: Image.PreserveAspectFit
 		sourceSize.width: width * 2
