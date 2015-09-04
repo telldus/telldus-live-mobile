@@ -15,51 +15,59 @@ Rectangle {
 		anchors.topMargin: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
-		width: (screen.showHeaderAtTop ? mainInterface.width : mainInterface.height) * 0.8
+		width: Math.min((screen.showHeaderAtTop ? mainInterface.width : mainInterface.height) * 0.8, Units.dp(288))
 		color: "#404040";
 
 		Item {
 			id: menuUserDetails
 			anchors.left: parent.left
 			anchors.top: parent.top
-			anchors.topMargin: 10 * SCALEFACTOR
 			anchors.right: parent.right
-			height: childrenRect.height
+			height: Units.dp(72)
+			Rectangle {
+				id: menuUserDetailsDivider
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(72)
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: Units.dp(20)
+				height: Units.dp(1)
+				color: "#BDBDBD"
+			}
 			Rectangle {
 				id: menuUserDetailsInitialsBox
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
-				anchors.top: parent.top
+				anchors.leftMargin: Units.dp(16)
+				anchors.verticalCenter: parent.verticalCenter
 				color: properties.theme.colors.telldusOrange
-				width: 28 * SCALEFACTOR
+				width: Units.dp(32)
 				height: width
+				radius: Units.dp(4)
 				Text {
+					id: menuUserDetailsInitials
 					anchors.centerIn: parent
 					text: user.firstname.charAt(0) + user.lastname.charAt(0)
-					font.pixelSize: 16 * SCALEFACTOR
+					font.pixelSize: Units.dp(16)
 					color: "#ffffff"
 				}
 
 			}
 			Text {
-				anchors.left: menuUserDetailsInitialsBox.right
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.left: menuUserDetails.left
+				anchors.leftMargin: Units.dp(72)
 				anchors.verticalCenter: parent.verticalCenter
 				text: user.firstname + " " + user.lastname
 				width: parent.width
 				wrapMode: Text.WordWrap
-				font.pixelSize: 16 * SCALEFACTOR
+				font.pixelSize: Units.dp(16)
 				color: "#ffffff"
 			}
 		}
-
 		MainMenu {
 			id: mainMenu
 			anchors.top: menuUserDetails.bottom
-			anchors.topMargin: 50 * SCALEFACTOR
 			anchors.left: parent.left
 			anchors.right: parent.right
-			anchors.bottom: parent.bottom
 		}
 	}
 
@@ -123,7 +131,7 @@ Rectangle {
 			anchors.left: parent.left
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
-			width: mainInterface.menuViewVisible ? parent.width : 10 * SCALEFACTOR
+			width: mainInterface.menuViewVisible ? parent.width : Units.dp(16)
 			onMove: {
 				console.log("onMove")
 			}

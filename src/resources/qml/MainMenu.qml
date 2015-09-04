@@ -4,7 +4,6 @@ import Tui 0.1
 Item {
 	id: componentRoot
 	property int activePage: 0
-	anchors.fill: parent
 	anchors.leftMargin: Units.dp(16)
 
 	Column {
@@ -12,19 +11,17 @@ Item {
 		anchors.top: parent.top
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: parent.height
-		spacing: 15 * SCALEFACTOR
 		Rectangle {
 			width: parent.width
-			height: 42 * SCALEFACTOR
+			height: Units.dp(56)
 			color: activePage == 0 ? properties.theme.colors.telldusOrange : "transparent"
 			Item {
 				id: dashboardIcon
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: 24 * SCALEFACTOR
-				width: 24 * SCALEFACTOR
+				height: Units.dp(24)
+				width: Units.dp(24)
 				Image {
 					id: dashboardIconImage
 					anchors.fill: parent
@@ -39,11 +36,11 @@ Item {
 			Text {
 				id: dashboardButton
 				color: "#ffffff"
-				font.pixelSize: 22 * SCALEFACTOR
+				font.pixelSize: Units.dp(20)
 				text: "Dashboard"
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: dashboardIcon.right
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -52,15 +49,15 @@ Item {
 		}
 		Rectangle {
 			width: parent.width
-			height: 42 * SCALEFACTOR
+			height: Units.dp(56)
 			color: activePage == 1 ? properties.theme.colors.telldusOrange : "transparent"
 			Item {
 				id: deviceIcon
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: 24 * SCALEFACTOR
-				width: 24 * SCALEFACTOR
+				height: Units.dp(24)
+				width: Units.dp(24)
 				Image {
 					id: deviceIconImage
 					anchors.fill: parent
@@ -75,11 +72,11 @@ Item {
 			Text {
 				id: deviceButton
 				color: "#ffffff"
-				font.pixelSize: 22 * SCALEFACTOR
+				font.pixelSize: Units.dp(20)
 				text: "Devices"
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: deviceIcon.right
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -88,15 +85,15 @@ Item {
 		}
 		Rectangle {
 			width: parent.width
-			height: 42 * SCALEFACTOR
+			height: Units.dp(56)
 			color: activePage == 2 ? properties.theme.colors.telldusOrange : "transparent"
 			Item {
 				id: sensorIcon
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: 24 * SCALEFACTOR
-				width: 24 * SCALEFACTOR
+				height: Units.dp(24)
+				width: Units.dp(24)
 				Image {
 					id: sensorIconImage
 					anchors.fill: parent
@@ -111,11 +108,11 @@ Item {
 			Text {
 				id: sensorButton
 				color: "#ffffff"
-				font.pixelSize: 22 * SCALEFACTOR
+				font.pixelSize: Units.dp(20)
 				text: "Sensors"
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: sensorIcon.right
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -124,15 +121,15 @@ Item {
 		}
 		Rectangle {
 			width: parent.width
-			height: 42 * SCALEFACTOR
+			height: Units.dp(56)
 			color: activePage == 3 ? properties.theme.colors.telldusOrange : "transparent"
 			Item {
 				id: schedulerIcon
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: 24 * SCALEFACTOR
-				width: 24 * SCALEFACTOR
+				height: Units.dp(24)
+				width: Units.dp(24)
 				Image {
 					id: schedulerIconImage
 					anchors.fill: parent
@@ -147,11 +144,11 @@ Item {
 			Text {
 				id: schedulerButton
 				color: "#ffffff"
-				font.pixelSize: 22 * SCALEFACTOR
+				font.pixelSize: Units.dp(20)
 				text: "Scheduler"
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: schedulerIcon.right
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -160,15 +157,15 @@ Item {
 		}
 		Rectangle {
 			width: parent.width
-			height: 42 * SCALEFACTOR
+			height: Units.dp(56)
 			color: activePage == 4 ? properties.theme.colors.telldusOrange : "transparent"
 			Item {
 				id: settingsIcon
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: 24 * SCALEFACTOR
-				width: 24 * SCALEFACTOR
+				height: Units.dp(24)
+				width: Units.dp(24)
 				Image {
 					id: settingsIconImage
 					anchors.fill: parent
@@ -183,11 +180,11 @@ Item {
 			Text {
 				id: settingsButton
 				color: "#ffffff"
-				font.pixelSize: 22 * SCALEFACTOR
+				font.pixelSize: Units.dp(20)
 				text: "Settings"
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: settingsIcon.right
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -197,24 +194,24 @@ Item {
 		Rectangle {
 			visible: false
 			width: parent.width
-			height: 42 * SCALEFACTOR
+			height: Units.dp(56)
 			color: activePage == 5 ? properties.theme.colors.telldusOrange : "transparent"
 			Item {
 				id: debugIcon
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 				anchors.verticalCenter: parent.verticalCenter
-				height: 24 * SCALEFACTOR
-				width: 24 * SCALEFACTOR
+				height: Units.dp(24)
+				width: Units.dp(24)
 			}
 			Text {
 				id: debugButton
 				color: "#ffffff"
-				font.pixelSize: 22 * SCALEFACTOR
+				font.pixelSize: Units.dp(20)
 				text: "Debug"
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: debugIcon.right
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(16)
 			}
 			MouseArea {
 				anchors.fill: parent
