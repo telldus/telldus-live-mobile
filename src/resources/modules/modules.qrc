@@ -1,0 +1,46 @@
+<RCC>
+	<qresource prefix="/qmlmodules">
+
+		<file>Tui/Card.qml</file>
+		<file>Tui/Object.qml</file>
+		<file>Tui/qmldir</file>
+		<file>Tui/Units.qml</file>
+		<file>Tui/View.qml</file>
+
+		<file>QtGraphicalEffects/private/FastGlow.qml</file>
+		<file>QtGraphicalEffects/private/FastInnerShadow.qml</file>
+		<file>QtGraphicalEffects/private/FastMaskedBlur.qml</file>
+		<file>QtGraphicalEffects/private/GaussianDirectionalBlur.qml</file>
+		<file>QtGraphicalEffects/private/GaussianGlow.qml</file>
+		<file>QtGraphicalEffects/private/GaussianInnerShadow.qml</file>
+		<file>QtGraphicalEffects/private/GaussianMaskedBlur.qml</file>
+		<file>QtGraphicalEffects/private/SourceProxy.qml</file>
+		<file>QtGraphicalEffects/Blend.qml</file>
+		<file>QtGraphicalEffects/BrightnessContrast.qml</file>
+		<file>QtGraphicalEffects/Colorize.qml</file>
+		<file>QtGraphicalEffects/ColorOverlay.qml</file>
+		<file>QtGraphicalEffects/ConicalGradient.qml</file>
+		<file>QtGraphicalEffects/Desaturate.qml</file>
+		<file>QtGraphicalEffects/DirectionalBlur.qml</file>
+		<file>QtGraphicalEffects/Displace.qml</file>
+		<file>QtGraphicalEffects/DropShadow.qml</file>
+		<file>QtGraphicalEffects/FastBlur.qml</file>
+		<file>QtGraphicalEffects/GammaAdjust.qml</file>
+		<file>QtGraphicalEffects/GaussianBlur.qml</file>
+		<file>QtGraphicalEffects/Glow.qml</file>
+		<file>QtGraphicalEffects/HueSaturation.qml</file>
+		<file>QtGraphicalEffects/InnerShadow.qml</file>
+		<file>QtGraphicalEffects/LevelAdjust.qml</file>
+		<file>QtGraphicalEffects/LinearGradient.qml</file>
+		<file>QtGraphicalEffects/MaskedBlur.qml</file>
+		<file>QtGraphicalEffects/OpacityMask.qml</file>
+		<file>QtGraphicalEffects/qmldir</file>
+		<file>QtGraphicalEffects/RadialBlur.qml</file>
+		<file>QtGraphicalEffects/RadialGradient.qml</file>
+		<file>QtGraphicalEffects/RectangularGlow.qml</file>
+		<file>QtGraphicalEffects/RecursiveBlur.qml</file>
+		<file>QtGraphicalEffects/ThresholdMask.qml</file>
+		<file>QtGraphicalEffects/ZoomBlur.qml</file>
+
+	</qresource>
+</RCC>

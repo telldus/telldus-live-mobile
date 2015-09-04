@@ -114,6 +114,7 @@ void CommonView::loadAndShow() {
 	d->view.rootContext()->setContextProperty("HEIGHT", size.height());
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
 	d->view.engine()->addImportPath(":/qmllib/common");
+	d->view.engine()->addImportPath(":/qmlmodules");
 	d->view.setSource(QUrl("qrc:/resources/qml/main.qml"));
 }
 

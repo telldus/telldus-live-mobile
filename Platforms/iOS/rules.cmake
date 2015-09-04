@@ -16,6 +16,8 @@ SET(Qt5Core_DIR ${QT_DIR}/lib/cmake/Qt5Core)
 FIND_PACKAGE( Qt5Core REQUIRED )
 SET(CMAKE_AUTOMOC ON)
 QT5_ADD_RESOURCES(QTRESOURCES src/resources.qrc)
+QT5_ADD_RESOURCES(QTRESOURCES src/resources/modules/modules.qrc)
+
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/iOS/Info.plist ${CMAKE_BINARY_DIR}/Info.plist)
 
@@ -109,7 +111,6 @@ LIST(APPEND LIBRARIES
 )
 
 LIST(APPEND RESOURCES
-	src/resources/QtGraphicalEffects
 	src/icons/Assets${SUFFIX}.xcassets
 	platforms/iOS/LaunchImage.png
 	platforms/iOS/LaunchImage@2x.png
