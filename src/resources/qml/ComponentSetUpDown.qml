@@ -72,7 +72,7 @@ Item {
 		anchors.right: tileSeperator.left
 		anchors.left: parent.left
 		color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, 0.1, 0.95, 1) : "#ffffff"
-		radius: tileCardti.radius
+		radius: tileCard.radius
 		Text {
 			id: downButtonText
 			anchors.verticalCenter: parent.verticalCenter
