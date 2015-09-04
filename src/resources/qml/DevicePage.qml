@@ -49,11 +49,11 @@ Item {
 					anchors.left: buttons.right
 					anchors.leftMargin: Units.dp(16)
 					anchors.right: arrow.left
+					anchors.rightMargin: Units.dp(16)
 					Text {
 						color: properties.theme.colors.telldusBlue
 						width: parent.width
 						font.pixelSize: Units.dp(16)
-						font.weight: Font.Bold
 						text: device.name
 						elide: Text.ElideRight
 					}

@@ -33,10 +33,9 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.verticalCenter: parent.verticalCenter
 			color:  sensor.name !== '' ? '#ffffff' : '#80ffffff'
-			font.pixelSize: contentBackground.height / 10
-			font.bold: true
+			font.pixelSize: contentBackground.height / 9
 			text: sensor.name !== '' ? sensor.name : '(no name)'
-			width: parent.width - (10 * SCALEFACTOR)
+			width: parent.width - Units.dp(16)
 			elide: Text.ElideMiddle
 			horizontalAlignment: Text.AlignHCenter
 			verticalAlignment: Text.AlignVCenter

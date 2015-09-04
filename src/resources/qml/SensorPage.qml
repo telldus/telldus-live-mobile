@@ -1,6 +1,7 @@
 import QtGraphicalEffects 1.0
 import QtQuick 2.4
 import Telldus 1.0
+import Tui 0.1
 
 Item {
 	id: sensorPage
@@ -9,32 +10,39 @@ Item {
 	Component {
 		id: sensorDelegate
 		Rectangle {
-			color: "#eeeeee"
-			height: wrapper.height + 1
+			color: "#EEEEEE"
+			height: wrapper.height
 			width: list.width
 			Rectangle {
 				id: wrapper
 				width: list.width
 				z: model.index
-				height: childrenRect.height + (20 * SCALEFACTOR)
+				height: Units.dp(72)
 				color: "#ffffff"
 				state: showEditButtons ? 'showEditButtons' : ''
 				anchors.left: parent.left
 				anchors.leftMargin: 0
 				anchors.top: parent.top
+				Rectangle {
+					id: divider
+					anchors.left: parent.left
+					anchors.right: parent.right
+					anchors.bottom: parent.bottom
+					height: Units.dp(1)
+					color: "#F5F5F5"
+				}
 				Column {
 					id: dataTitleRow
 					anchors.left: parent.left
-					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.leftMargin: Units.dp(16)
 					anchors.verticalCenter: parent.verticalCenter
 					width: (list.width - 30) / 2
 					Text {
 						id: sensorName
 						color: properties.theme.colors.telldusBlue
 						opacity: sensor.name !== '' ? 1 : 0.5
-						font.weight: Font.Bold
 						text: sensor.name !== '' ? sensor.name : '(no name)'
-						font.pixelSize: 16 * SCALEFACTOR
+						font.pixelSize: Units.dp(16)
 						width: parent.width
 						wrapMode: Text.Wrap
 						elide: Text.ElideRight
@@ -43,21 +51,21 @@ Item {
 					Text {
 						id: sensorUpdated
 						color: sensor.minutesAgo < 1440 ? "#999999" : "#80990000"
-						font.pixelSize: 12 * SCALEFACTOR
+						font.pixelSize: Units.dp(14)
 						text: formatLastUpdated(sensor.minutesAgo)
 						wrapMode: Text.Wrap
 						width: parent.width
 					}
 				}
-				Flow {
+				Row {
 					id: dataRow
 					layoutDirection: Qt.RightToLeft
 					anchors.left: dataTitleRow.right
-					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.leftMargin: Units.dp(16)
 					anchors.right: parent.right
-					anchors.rightMargin: 10 * SCALEFACTOR
+					anchors.rightMargin: Units.dp(16)
 					anchors.verticalCenter: parent.verticalCenter
-					spacing: 10 * SCALEFACTOR
+					spacing: Units.dp(16)
 					SensorValue {
 						icon: "sensorIconHumidity"
 						visible: sensor.hasHumidity
@@ -176,8 +184,7 @@ Item {
 			anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
 			model: sensorModel
 			delegate: sensorDelegate
-			maximumFlickVelocity: 1500 * SCALEFACTOR
-			spacing: 1 * SCALEFACTOR
+			maximumFlickVelocity: Units.dp(1500)
 		}
 		Header {
 			id: header
