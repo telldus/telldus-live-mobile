@@ -11,7 +11,7 @@ Rectangle {
 	id: screen
 
 	property bool isPortrait: width <= height
-	property bool showHeaderAtTop: Units.dp(56) < height * 0.1
+	property bool showHeaderAtTop: (width <= height) || (Units.dp(56) < height * 0.1)
 	Component.onCompleted: {
 		Client.setupCache(clientModel, DB.db)
 		Device.setupCache(deviceModelController, DB.db)

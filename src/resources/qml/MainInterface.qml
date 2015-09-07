@@ -37,17 +37,17 @@ Rectangle {
 			Rectangle {
 				id: menuUserDetailsInitialsBox
 				anchors.left: parent.left
-				anchors.leftMargin: Units.dp(16)
+				anchors.leftMargin: Units.dp(12)
 				anchors.verticalCenter: parent.verticalCenter
 				color: properties.theme.colors.telldusOrange
-				width: Units.dp(32)
+				width: Units.dp(40)
 				height: width
 				radius: Units.dp(4)
 				Text {
 					id: menuUserDetailsInitials
 					anchors.centerIn: parent
 					text: user.firstname.charAt(0) + user.lastname.charAt(0)
-					font.pixelSize: Units.dp(16)
+					font.pixelSize: Units.dp(20)
 					color: "#ffffff"
 				}
 
