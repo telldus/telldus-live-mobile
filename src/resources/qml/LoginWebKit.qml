@@ -66,16 +66,14 @@ Rectangle {
 		}*/
 	}
 
-	Image {
+	Text {
 		id: loginButton
-		source: "../" + (SCALEFACTOR > 2 ? "images@2x" : "images") + (buttonArea.pressed ? "/startButtonLoginActive.png" : "/startButtonLogin.png")
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 70 * SCALEFACTOR
 		height: sourceSize.height / 2 * SCALEFACTOR
-
-		fillMode: Image.PreserveAspectFit
-		smooth: true
+		text: "login"
+		color: "#ffffff"
 
 		MouseArea {
 			id: buttonArea
