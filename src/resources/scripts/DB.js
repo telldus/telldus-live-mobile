@@ -1,6 +1,6 @@
 var db = LocalStorage.openDatabaseSync("TelldusLiveMobile", "", "Settings used by Telldus Live! mobile", 1000000);
 
-var latestVersion = "1.4";
+var latestVersion = "1.5";
 
 db.changeVersion(db.version, latestVersion, function(tx) {
 	if (db.version < 1.0) {
@@ -27,4 +27,8 @@ db.changeVersion(db.version, latestVersion, function(tx) {
 	if (db.version < 1.4) {
 		tx.executeSql('CREATE TABLE IF NOT EXISTS Client (id INTEGER PRIMARY KEY, name TEXT, online INTEGER, editable INTEGER, version TEXT, type TEXT)');
 	}
+	if (db.version < 1.5) {
+		tx.executeSql('ALTER TABLE Device ADD clientName TEXT');
+	}
+
 });
