@@ -104,10 +104,8 @@ Item {
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
 			onPressed: {
-//				onButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
-			}
-			onClicked: {
 				device.turnOn()
+//				onButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
 			}
 			onReleased: {
 //				onButton.color = (deviceState == 1 || deviceState == 16) ? "#FFFFFF" : Qt.hsla(tile.hue, 0.1, 0.92, 1)
@@ -181,10 +179,8 @@ Item {
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
 			onPressed: {
-//				offButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
-			}
-			onClicked: {
 				device.turnOff()
+//				offButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
 			}
 			onReleased: {
 //				onButton.color = (deviceState == 1 || deviceState == 16) ? "#FFFFFF" : Qt.hsla(tile.hue, 0.1, 0.92, 1)
