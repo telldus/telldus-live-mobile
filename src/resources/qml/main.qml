@@ -12,31 +12,33 @@ Rectangle {
 
 	property bool isPortrait: width <= height
 	property bool showHeaderAtTop: (width <= height) || (Units.dp(56) < height * 0.1)
+
 	Component.onCompleted: {
 		Client.setupCache(clientModel, DB.db)
 		Device.setupCache(deviceModelController, DB.db)
 		Scheduler.setupCache(schedulerModel, DB.db)
 		Sensor.setupCache(sensorModel, DB.db)
 	}
+
 	Loader {
 		id: loader_mainInterface
+
+		anchors.fill: parent
 		opacity: telldusLive.isAuthorized ? 1 : 0
+		source: opacity > 0  ? "MainInterface" + (Qt.platform.os == "android" ? "Android" : "iOS") + ".qml" : ''
+
 		Behavior on opacity { NumberAnimation { duration: 100 } }
-		source: opacity > 0  ? "MainInterface.qml" : ''
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
 	}
+
 	Loader {
 		id: loader_loginScreen
+
+		anchors.fill: parent
 		opacity: telldusLive.isAuthorized ? 0 : 1
-		Behavior on opacity { NumberAnimation { duration: 100 } }
 		source: opacity > 0  ? "LoginScreen.qml" : ''
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
+
+		Behavior on opacity { NumberAnimation { duration: 100 } }
 	}
+
 }
 

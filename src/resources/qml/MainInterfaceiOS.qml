@@ -165,29 +165,26 @@ Rectangle {
 		mainInterface.menuViewVisible = !mainInterface.menuViewVisible;
 	}
 
-	function closeMenu()
-	{
-		console.log("closeMenu")
-		mainViewTranslate.x = 0;
-		mainInterface.menuViewVisible = false;
-	}
-
 	function setActivePage(pageId) {
 		mainMenu.activePage = pageId;
 		dev.logScreenView(screenNames[pageId]);
 	}
+
 	function swipeLeft() {
 		console.log("swipeLeft");
 		swipeBoth();
 	}
+
 	function swipeRight() {
 		console.log("swipeRight");
 		if (mainInterface.menuViewVisible == false) {
 			onMenu();
 		}
 	}
+
 	function swipeBoth() {
 		mainViewTranslate.x = 0;
 		mainInterface.menuViewVisible = false;
 	}
+
 }
