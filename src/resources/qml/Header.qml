@@ -18,6 +18,13 @@ View {
 	tintColor: properties.theme.colors.telldusBlue
 	elevation: 2
 
+	Connections {
+		target: core
+		onBackPressed: {
+			backClicked();
+		}
+	}
+
 	Item {
 		id: mainHeader
 		anchors.left: parent.left

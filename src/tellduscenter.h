@@ -14,9 +14,11 @@ public:
 	virtual ~TelldusCenter();
 
 signals:
+	void backPressed();
 
 public slots:
 	void openUrl(const QUrl &url);
+	void quit();
 
 private slots:
 	void pushMessageReceived(const QString &message);

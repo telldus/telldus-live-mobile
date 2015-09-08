@@ -18,7 +18,7 @@ public:
 	virtual ~CommonView();
 
 	void loadAndShow();
-	void setContextProperty( const QString &name, QObject *value);
+	void setContextProperty(const QString &name, QObject *value);
 
 #ifdef PLATFORM_IOS
 	void openUrl(const QUrl &url);
@@ -26,12 +26,13 @@ public:
 
 signals:
 	void fullscreen();
+	void backPressed();
 
 protected slots:
 	void workAreaResized(int screen);
 
 protected:
-	bool eventFilter( QObject *obj, QEvent * event );
+	bool eventFilter(QObject *obj, QEvent *event);
 //	void changeEvent( QEvent *event );
 
 private:

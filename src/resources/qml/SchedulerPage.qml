@@ -108,6 +108,9 @@ Item {
 		id: header
 		anchors.topMargin: 0
 		title: "Scheduler"
+		onBackClicked: {
+			mainInterface.setActivePage(0);
+		}
 	}
 
 	function  getSectionHeading(nextRunDate) {

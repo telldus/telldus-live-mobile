@@ -69,6 +69,8 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	connect(Push::instance(), SIGNAL(messageReceived(QString)), this, SLOT(pushMessageReceived(QString)));
 #endif  // IS_FEATURE_PUSH_ENABLED
 
+	connect(d->view, SIGNAL(backPressed()), this, SIGNAL(backPressed()));
+
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Client>("Telldus", 1, 0, "Client");
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
@@ -100,6 +102,13 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 
 TelldusCenter::~TelldusCenter() {
 	delete d;
+}
+
+void TelldusCenter::quit() {
+	qDebug() << "Now I am trying to quit if Android!";
+#ifdef PLATFORM_ANDROID
+	QCoreApplication::quit();
+#endif
 }
 
 void TelldusCenter::openUrl(const QUrl &url) {

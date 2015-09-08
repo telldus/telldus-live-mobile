@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QtQuick>
 #include <QDesktopWidget>
+#include <QKeyEvent>
 #include <QResizeEvent>
 
 #include "config.h"
@@ -127,7 +128,14 @@ void CommonView::workAreaResized(int screen) {
 	d->view.resize(r.width(), r.height());
 }
 
-bool CommonView::eventFilter( QObject *obj, QEvent * event ) {
+bool CommonView::eventFilter(QObject *obj, QEvent * event ) {
+	if (event->type() == QEvent::KeyPress) {
+		QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+		if (keyEvent->key() == Qt::Key_Back) {
+			emit backPressed();
+			return true;
+		}
+	}
 	if (event->type() != QEvent::Resize) {
 		return QObject::eventFilter(obj, event);
 	}

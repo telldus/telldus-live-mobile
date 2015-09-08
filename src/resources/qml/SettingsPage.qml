@@ -6,6 +6,9 @@ Item {
 	Header {
 		id: header
 		title: "Settings"
+		onBackClicked: {
+			mainInterface.setActivePage(0);
+		}
 	}
 	Item {
 		anchors.fill: parent

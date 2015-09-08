@@ -191,6 +191,13 @@ Item {
 			title: "Sensors"
 			editButtonVisible: true
 			onEditClicked: showEditButtons = !showEditButtons;
+			onBackClicked: {
+				if (showEditButtons) {
+					showEditButtons = false;
+				} else {
+					mainInterface.setActivePage(0);
+				}
+			}
 		}
 	}
 

@@ -185,6 +185,17 @@ Item {
 			title: "Devices"
 			editButtonVisible: true
 			onEditClicked: showEditButtons = !showEditButtons;
+			onBackClicked: {
+				if (devicePage.state == 'showDevice') {
+					devicePage.state = ''
+				} else {
+					if (showEditButtons) {
+						showEditButtons = false;
+					} else {
+						mainInterface.setActivePage(0);
+					}
+				}
+			}
 		}
 	}
 	Component {

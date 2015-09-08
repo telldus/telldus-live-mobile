@@ -90,6 +90,9 @@ Rectangle {
 		}
 		Header {
 			id: header
+			onBackClicked: {
+				core.quit();
+			}
 		}
 	}
 
