@@ -6,6 +6,10 @@
 #include "tellduscenter.h"
 #include "tellduslive.h"
 
+#ifdef PLATFORM_DESKTOP
+	#include "utils/errorhandler.h"
+#endif
+
 #ifdef PLATFORM_IOS
 	#include <QtPlugin>
 	Q_IMPORT_PLUGIN(QSvgPlugin)
@@ -16,6 +20,10 @@
 #endif
 
 int init(int argc, char *argv[]) {
+
+#ifdef PLATFORM_DESKTOP
+	qInstallMessageHandler(errorHandler);
+#endif
 
 #ifdef PLATFORM_IOS
 	QtAppDelegateInitialize();

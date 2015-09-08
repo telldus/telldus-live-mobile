@@ -138,6 +138,7 @@ SET( MOC_HEADERS
 	src/objects/DashboardItem.h
 	src/objects/SchedulerJobInstance.h
 	src/utils/dev.h
+	src/utils/errorhandler.h
 	src/properties/Properties.h
 	src/properties/PropertiesTheme.h
 	src/properties/PropertiesThemeColors.h
