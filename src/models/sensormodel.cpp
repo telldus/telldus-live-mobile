@@ -80,7 +80,9 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 void SensorModel::authorizationChanged() {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
-		telldusLive->call("sensors/list", TelldusLiveParams(), this, SLOT(onSensorsList(QVariantMap)));
+		TelldusLiveParams params;
+		params["includeValues"] = 1;
+		telldusLive->call("sensors/list", params, this, SLOT(onSensorsList(QVariantMap)));
 	} else {
 		this->clear();
 	}
