@@ -141,16 +141,16 @@ void Client::wsConnected() {
 void Client::wsDataReceived(const QString &string) {
 	// Disabled for performance reasons
 	// Dev::instance()->logEvent("websocket", "datareceived", "");
-	qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Data received";
 	QJsonParseError ok;
 
 	QJsonDocument jsonDocument = QJsonDocument().fromJson(string.toLatin1(), &ok);
 	QJsonObject jsonObject = jsonDocument.object();
 	QVariantMap msg = jsonObject.toVariantMap();
 	if (ok.error != QJsonParseError::NoError) {
-		qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] Could not parse json response: " << string;
+		qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET:DATA:ERROR] Could not parse json response: " << string;
 		return;
 	}
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET:DATA] " << string.toLatin1();
 	QVariantMap data = msg["data"].toMap();
 	if (msg["module"] == "device" && msg["action"] == "setState") {
 		DeviceModel *m = DeviceModel::instance();

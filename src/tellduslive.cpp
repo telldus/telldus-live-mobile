@@ -188,6 +188,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		qDebug() << "[API] Could not parse json response from: " << call.endpoint << " (" << error.errorString() << ") (" << response << ")";
 		return;
 	}
+	qDebug().noquote().nospace() << "[API:RESPONSE] " << call.endpoint << " -> " << response;
 
 	if (call.receiver) {
 		QByteArray normalizedSignature = QMetaObject::normalizedSignature(call.member.mid(1).constData());
@@ -248,7 +249,7 @@ void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJ
 		}
 
 	}
-	qDebug() << "      Params: " << call.params;
+	qDebug().noquote().nospace() << "[API:REQUEST] " << call.endpoint << " <- " << call.params;
 
 	d->queue.enqueue(call);
 	if (!d->requestPending) {
@@ -268,7 +269,7 @@ void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params,
 	for(QMap<QString, QVariant>::const_iterator it = params.constBegin(); it != params.constEnd(); ++it) {
 		call.params.insert(it.key(), it.value().toString());
 	}
-	qDebug() << "      Params: " << call.params;
+	qDebug().noquote().nospace() << "[API:REQUEST] " << call.endpoint << " <- " << call.params;
 
 	d->queue.enqueue(call);
 	if (!d->requestPending) {
