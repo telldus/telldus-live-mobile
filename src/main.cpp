@@ -21,24 +21,25 @@
 
 int init(int argc, char *argv[]) {
 
-#ifdef PLATFORM_DESKTOP
-	qInstallMessageHandler(errorHandler);
-#endif
-
 #ifdef PLATFORM_IOS
 	QtAppDelegateInitialize();
 	ObjectiveUtils::setGoodStatusBarStyle();
 #endif
-
-	qDebug().noquote() << QString("[FEATURE] Logging: %1").arg(IS_FEATURE_LOGGING_ENABLED ? "Enabled" : "Disabled");
-	qDebug().noquote() << QString("[FEATURE] Websockets: %1").arg(IS_FEATURE_WEBSOCKETS_ENABLED ? "Enabled" : "Disabled");
-	qDebug().noquote() << QString("[FEATURE] GoogleAnalytics: %1").arg(IS_FEATURE_GOOGLEANALYTICS_ENABLED ? "Enabled" : "Disabled");
 
 	QScopedPointer<QApplication> app(new QApplication(argc, argv));
 	QCoreApplication::setOrganizationName("telldus");
 	QCoreApplication::setOrganizationDomain("com.telldus");
 	QCoreApplication::setApplicationName("Telldus Live! Mobile");
 	QCoreApplication::setApplicationVersion(VERSION);
+
+#ifdef PLATFORM_DESKTOP
+	qInstallMessageHandler(errorHandler);
+#endif
+
+	qDebug().noquote() << QString("[ENVIRONMENT] QtVersion: 0x%1").arg(QT_VERSION, 5, 16, QChar('0'));
+	qDebug().noquote() << QString("[FEATURE] Logging: %1").arg(IS_FEATURE_LOGGING_ENABLED ? "Enabled" : "Disabled");
+	qDebug().noquote() << QString("[FEATURE] Websockets: %1").arg(IS_FEATURE_WEBSOCKETS_ENABLED ? "Enabled" : "Disabled");
+	qDebug().noquote() << QString("[FEATURE] GoogleAnalytics: %1").arg(IS_FEATURE_GOOGLEANALYTICS_ENABLED ? "Enabled" : "Disabled");
 
 	CommonView *viewer = new CommonView();
 	TelldusCenter tc(viewer);
