@@ -1,6 +1,9 @@
 #include "schedulermodel.h"
 #include "schedulerjob.h"
 #include "tellduslive.h"
+
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QDebug>
 
 class SchedulerModel::PrivateData {
@@ -17,6 +20,36 @@ SchedulerModel::SchedulerModel() : TListModel("job") {
 
 SchedulerModel::~SchedulerModel() {
 	delete d;
+}
+
+void SchedulerModel::fetchDataFromCache() {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		qDebug() << "[SQL] SELECT id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays FROM Scheduler ORDER BY id";
+		QSqlQuery query("SELECT id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays FROM Scheduler ORDER BY id", db);
+		QVariantList jobs;
+		while (query.next()) {
+			QVariantMap job;
+			job["id"] = query.value(0);
+			job["deviceId"] = query.value(1);
+			job["methods"] = query.value(2);
+			job["methodValue"] = query.value(3);
+			job["nextRunTime"] = query.value(4);
+			job["type"] = query.value(5);
+			job["hour"] = query.value(6);
+			job["minute"] = query.value(7);
+			job["offset"] = query.value(8);
+			job["randomInterval"] = query.value(9);
+			job["retries"] = query.value(10);
+			job["retryInterval"] = query.value(11);
+			job["weekdays"] = query.value(12);
+			job["fromCache"] = true;
+			jobs << job;
+		}
+		if (jobs.size()) {
+			this->addJobs(jobs);
+		}
+	}
 }
 
 void SchedulerModel::addJobs(const QVariantList &jobList) {
@@ -93,6 +126,7 @@ QDateTime SchedulerModel::nextRunTimeForDevice(int deviceId) const {
 SchedulerModel * SchedulerModel::instance() {
 	if (PrivateData::instance == 0) {
 		PrivateData::instance = new SchedulerModel();
+		PrivateData::instance->fetchDataFromCache();
 	}
 	return PrivateData::instance;
 }

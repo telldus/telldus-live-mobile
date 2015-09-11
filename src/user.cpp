@@ -64,7 +64,6 @@ void User::fetchData() const {
 }
 
 void User::onInfoReceived(const QVariantMap &info) {
-	qDebug() << "Info" << info;
 	QSettings s;
 	if (info.contains("firstname")) {
 		d->firstname = info["firstname"].toString();

@@ -124,6 +124,7 @@ signals:
 private slots:
 	void fetchData();
 	void onInfoReceived(const QVariantMap &);
+	void saveToCache();
 
 private:
 	class PrivateData;

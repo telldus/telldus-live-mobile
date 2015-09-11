@@ -15,9 +15,9 @@ public:
 
 signals:
 	void countChanged();
+	void aDeviceChanged();
 
 protected slots:
-	void rowsAdded( const QModelIndex & parent, int start, int end );
 	void deviceChanged();
 
 protected:

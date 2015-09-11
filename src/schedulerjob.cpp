@@ -1,6 +1,10 @@
 #include "schedulerjob.h"
 #include "tellduslive.h"
 
+#include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+
 class SchedulerJob::PrivateData {
 public:
 	int id, deviceId, method, hour, minute, offset, randomInterval;
@@ -37,6 +41,7 @@ int SchedulerJob::deviceId() const {
 void SchedulerJob::setDeviceId(int deviceId) {
 	d->deviceId = deviceId;
 	emit deviceIdChanged();
+	emit saveToCache();
 }
 
 int SchedulerJob::schedulerJobId() const {
@@ -46,6 +51,7 @@ int SchedulerJob::schedulerJobId() const {
 void SchedulerJob::setId(int id) {
 	d->id = id;
 	emit idChanged();
+	emit saveToCache();
 }
 
 int SchedulerJob::method() const {
@@ -55,6 +61,7 @@ int SchedulerJob::method() const {
 void SchedulerJob::setMethod(int method) {
 	d->method = method;
 	emit methodChanged();
+	emit saveToCache();
 }
 
 QString SchedulerJob::methodValue() const {
@@ -64,6 +71,7 @@ QString SchedulerJob::methodValue() const {
 void SchedulerJob::setMethodValue(const QString &methodValue) {
 	d->methodValue = methodValue;
 	emit methodValueChanged();
+	emit saveToCache();
 }
 
 QDateTime SchedulerJob::nextRunTime() const {
@@ -73,6 +81,7 @@ QDateTime SchedulerJob::nextRunTime() const {
 void SchedulerJob::setNextRunTime(const QDateTime &nextRunTime) {
 	d->nextRunTime = nextRunTime;
 	emit nextRunTimeChanged();
+	emit saveToCache();
 }
 
 SchedulerJob::Type SchedulerJob::type() const {
@@ -82,6 +91,7 @@ SchedulerJob::Type SchedulerJob::type() const {
 void SchedulerJob::setType(SchedulerJob::Type type) {
 	d->type = type;
 	emit typeChanged();
+	emit saveToCache();
 }
 
 void SchedulerJob::setType(const QString &type) {
@@ -101,6 +111,7 @@ int SchedulerJob::hour() const {
 void SchedulerJob::setHour(int hour) {
 	d->hour = hour;
 	emit hourChanged();
+	emit saveToCache();
 }
 
 int SchedulerJob::minute() const {
@@ -110,6 +121,7 @@ int SchedulerJob::minute() const {
 void SchedulerJob::setMinute(int minute) {
 	d->minute = minute;
 	emit minuteChanged();
+	emit saveToCache();
 }
 
 int SchedulerJob::offset() const {
@@ -119,6 +131,7 @@ int SchedulerJob::offset() const {
 void SchedulerJob::setOffset(int offset) {
 	d->offset = offset;
 	emit offsetChanged();
+	emit saveToCache();
 }
 
 int SchedulerJob::randomInterval() const {
@@ -128,6 +141,7 @@ int SchedulerJob::randomInterval() const {
 void SchedulerJob::setRandomInterval(int randomInterval) {
 	d->randomInterval = randomInterval;
 	emit randomIntervalChanged();
+	emit saveToCache();
 }
 
 int SchedulerJob::retries() const {
@@ -136,6 +150,8 @@ int SchedulerJob::retries() const {
 
 void SchedulerJob::setRetries(int retries) {
 	d->retries = retries;
+	emit retriesChanged();
+	emit saveToCache();
 }
 
 int SchedulerJob::retryInterval() const {
@@ -145,6 +161,7 @@ int SchedulerJob::retryInterval() const {
 void SchedulerJob::setRetryInterval(int retryInterval) {
 	d->retryInterval = retryInterval;
 	emit retryIntervalChanged();
+	emit saveToCache();
 }
 
 QString SchedulerJob::weekdays() const {
@@ -154,4 +171,27 @@ QString SchedulerJob::weekdays() const {
 void SchedulerJob::setWeekdays(const QString &weekdays) {
 	d->weekdays = weekdays;
 	emit weekdaysChanged();
+	emit saveToCache();
+}
+
+void SchedulerJob::saveToCache() {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		QSqlQuery query(db);
+		query.prepare("REPLACE INTO Scheduler (id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		query.bindValue(0, d->id);
+		query.bindValue(1, d->deviceId);
+		query.bindValue(2, d->method);
+		query.bindValue(3, d->methodValue);
+		query.bindValue(4, d->nextRunTime.toTime_t());
+		query.bindValue(5, d->type);
+		query.bindValue(6, d->hour);
+		query.bindValue(7, d->minute);
+		query.bindValue(8, d->offset);
+		query.bindValue(9, d->randomInterval);
+		query.bindValue(10, d->retries);
+		query.bindValue(11, d->retryInterval);
+		query.bindValue(12, d->weekdays);
+		query.exec();
+	}
 }

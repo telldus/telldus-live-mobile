@@ -84,6 +84,9 @@ signals:
 	void retryIntervalChanged();
 	void weekdaysChanged();
 
+private slots:
+	void saveToCache();
+
 private:
 	class PrivateData;
 	PrivateData *d;

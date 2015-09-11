@@ -12,6 +12,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QWebSocket>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 class Client::PrivateData {
 public:
@@ -31,10 +33,11 @@ Client::Client(QObject *parent) :
 
 	connect(QApplication::instance(), SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(applicationStateChanged(Qt::ApplicationState)));
 	connect(TelldusLive::instance(), SIGNAL(sessionAuthenticated()), this, SLOT(sessionAuthenticated()));
+
 	connect(&d->webSocket, &QWebSocket::connected, this, &Client::wsConnected);
 	connect(&d->webSocket, &QWebSocket::disconnected, this, &Client::wsDisconnected);
 	connect(&d->webSocket, &QWebSocket::textMessageReceived, this, &Client::wsDataReceived);
-
+	connect(&d->webSocket, &QWebSocket::stateChanged, this, &Client::websocketConnectedChanged);
 }
 
 Client::~Client() {
@@ -48,6 +51,7 @@ bool Client::editable() const {
 void Client::setEditable(bool editable) {
 	d->editable = editable;
 	emit editableChanged();
+	emit saveToCache();
 }
 
 int Client::clientId() const {
@@ -58,6 +62,7 @@ void Client::setId(int id) {
 	d->id = id;
 	this->sessionAuthenticated();
 	emit idChanged();
+	emit saveToCache();
 }
 
 QString Client::name() const {
@@ -67,6 +72,7 @@ QString Client::name() const {
 void Client::setName(const QString &name) {
 	d->name = name;
 	emit nameChanged();
+	emit saveToCache();
 }
 
 bool Client::online() const {
@@ -76,6 +82,7 @@ bool Client::online() const {
 void Client::setOnline(bool online) {
 	d->online = online;
 	emit onlineChanged();
+	emit saveToCache();
 }
 
 QString Client::version() const {
@@ -85,6 +92,7 @@ QString Client::version() const {
 void Client::setVersion(const QString &version) {
 	d->version = version;
 	emit versionChanged();
+	emit saveToCache();
 }
 
 QString Client::type() const {
@@ -94,6 +102,26 @@ QString Client::type() const {
 void Client::setType(const QString &type) {
 	d->type = type;
 	emit typeChanged();
+	emit saveToCache();
+}
+
+bool Client::websocketConnected() const {
+	return d->webSocket.state() == QAbstractSocket::ConnectedState ? true : false;
+}
+
+void Client::saveToCache() {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		QSqlQuery query(db);
+		query.prepare("REPLACE INTO Client (id, name, online, editable, version, type) VALUES (:id, :name, :online, :editable, :version, :type)");
+		query.bindValue(":id", d->id);
+		query.bindValue(":name", d->name);
+		query.bindValue(":online", d->online);
+		query.bindValue(":editable", d->editable);
+		query.bindValue(":version", d->version);
+		query.bindValue(":type", d->type);
+		query.exec();
+	}
 }
 
 void Client::sessionAuthenticated() {

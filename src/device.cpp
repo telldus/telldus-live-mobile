@@ -5,7 +5,10 @@
 #include "models/groupdevicemodel.h"
 #include "models/schedulermodel.h"
 
+#include <QDebug>
 #include <QStringList>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 class Device::PrivateData {
 public:
@@ -57,6 +60,7 @@ QString Device::clientName() const {
 void Device::setClientName(const QString &clientName) {
 	d->clientName = clientName;
 	emit clientNameChanged();
+	emit saveToCache();
 }
 
 GroupDeviceModel * Device::devices() const {
@@ -95,6 +99,7 @@ void Device::setId(int id) {
 	d->id = id;
 	d->groupModel->setId(d->id);
 	emit idChanged();
+	emit saveToCache();
 }
 
 bool Device::isFavorite() const {
@@ -102,11 +107,9 @@ bool Device::isFavorite() const {
 }
 
 void Device::setIsFavorite(bool isFavorite) {
-	if (isFavorite == d->isFavorite) {
-		return;
-	}
 	d->isFavorite = isFavorite;
 	emit isFavoriteChanged();
+	emit saveToCache();
 }
 
 int Device::methods() const {
@@ -119,6 +122,7 @@ void Device::setMethods(int methods) {
 	}
 	d->methods = methods;
 	emit methodsChanged();
+	emit saveToCache();
 }
 
 QString Device::name() const {
@@ -128,6 +132,7 @@ QString Device::name() const {
 void Device::setName(const QString &name) {
 	d->name = name;
 	emit nameChanged();
+	emit saveToCache();
 }
 
 QDateTime Device::nextRunTime() const {
@@ -196,6 +201,7 @@ void Device::setState(int state) {
 	d->state = state;
 	emit stateChanged();
 	emit stateValueChanged(this->stateValue());
+	emit saveToCache();
 }
 
 QString Device::stateValue() const {
@@ -212,6 +218,7 @@ QString Device::stateValue() const {
 void Device::setStateValue(const QString &stateValue) {
 	d->stateValue = stateValue;
 	emit stateValueChanged(stateValue);
+	emit saveToCache();
 }
 
 void Device::turnOff() {
@@ -236,6 +243,7 @@ void Device::setType(Device::Type type) {
 	}
 	d->type = type;
 	emit typeChanged();
+	emit saveToCache();
 }
 
 void Device::setType(const QString &type) {
@@ -257,5 +265,22 @@ void Device::schedulerJobsChanged(const QModelIndex &, int start, int end) {
 			emit nextRunTimeChanged();
 			return;
 		}
+	}
+}
+
+void Device::saveToCache() {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		QSqlQuery query(db);
+		query.prepare("REPLACE INTO Device (id, name, methods, type, favorite, state, statevalue, clientName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		query.bindValue(0, d->id);
+		query.bindValue(1, d->name);
+		query.bindValue(2, d->methods);
+		query.bindValue(3, d->type);
+		query.bindValue(4, d->isFavorite);
+		query.bindValue(5, d->state);
+		query.bindValue(6, d->stateValue);
+		query.bindValue(7, d->clientName);
+		query.exec();
 	}
 }

@@ -110,6 +110,7 @@ protected slots:
 	void onDeviceInfo(const QVariantMap &result, const QVariantMap &data);
 	void schedulerJobsChanged( const QModelIndex & parent, int start, int end );
 	void groupContentChanged();
+	void saveToCache();
 
 private:
 	class PrivateData;

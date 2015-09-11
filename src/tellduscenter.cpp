@@ -1,6 +1,8 @@
 #include "tellduscenter.h"
 
 #include <QtQuick>
+#include <QSqlDatabase>
+#include <QStandardPaths>
 
 #include "client.h"
 #include "commonview.h"
@@ -48,6 +50,10 @@ public:
 TelldusCenter *TelldusCenter::PrivateData::instance = 0;
 
 TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(parent) {
+	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+	db.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data.sqlite");
+	bool ok = db.open();
+
 	TelldusLive *tdLive = TelldusLive::instance();
 
 	tdLive->setupManager();
@@ -57,6 +63,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
 	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
+	d->clientModel = ClientModel::instance();
 	d->dashboardModel = new DashboardModel(
 		new FavoriteDeviceModel(DeviceModel::instance(), this),
 		new FavoriteSensorModel(SensorModel::instance(), this),
@@ -64,7 +71,6 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	);
 	d->schedulerDayModel = new SchedulerDayModel(SchedulerModel::instance(), this);
 	d->schedulerDaySortFilterModel = new SchedulerDaySortFilterModel(d->schedulerDayModel, this);
-	d->clientModel = new ClientModel(this);
 	d->user = new User(this);
 #if IS_FEATURE_PUSH_ENABLED
 	connect(Push::instance(), SIGNAL(messageReceived(QString)), this, SLOT(pushMessageReceived(QString)));

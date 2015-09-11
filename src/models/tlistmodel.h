@@ -25,6 +25,7 @@ public:
 
 signals:
 	void countChanged();
+	void childItemChanged();
 
 private:
 	class PrivateData;

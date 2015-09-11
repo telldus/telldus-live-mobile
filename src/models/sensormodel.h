@@ -21,6 +21,7 @@ signals:
 private slots:
 	void authorizationChanged();
 	void onSensorsList(const QVariantMap &result);
+	void fetchDataFromCache();
 
 private:
 	explicit SensorModel(QObject *parent = 0);

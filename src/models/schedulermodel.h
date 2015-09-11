@@ -23,6 +23,7 @@ signals:
 private slots:
 	void authorizationChanged();
 	void onJobList(const QVariantMap &result);
+	void fetchDataFromCache();
 
 private:
 	explicit SchedulerModel();

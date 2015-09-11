@@ -1,7 +1,11 @@
 #include "sensor.h"
 #include <math.h>
 #include "tellduslive.h"
+
 #include <QTimer>
+#include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 class Sensor::PrivateData {
 public:
@@ -57,6 +61,7 @@ void Sensor::setHumidity(const QString &humidity) {
 	d->hasHumidity = true;
 	emit humidityChanged(humidity);
 	emit hasHumidityChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasHumidity() const {
@@ -72,6 +77,7 @@ void Sensor::setRainRate(const QString &rainRate) {
 	d->hasRainRate = true;
 	emit rainRateChanged(rainRate);
 	emit hasRainRateChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasRainRate() const {
@@ -87,6 +93,7 @@ void Sensor::setRainTotal(const QString &rainTotal) {
 	d->hasRainTotal = true;
 	emit rainTotalChanged(rainTotal);
 	emit hasRainTotalChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasRainTotal() const {
@@ -100,6 +107,7 @@ int Sensor::sensorId() const {
 void Sensor::setId(int id) {
 	d->id = id;
 	emit idChanged();
+	emit saveToCache();
 }
 
 bool Sensor::isFavorite() const {
@@ -112,6 +120,7 @@ void Sensor::setIsFavorite(bool isFavorite) {
 	}
 	d->isFavorite = isFavorite;
 	emit isFavoriteChanged(isFavorite);
+	emit saveToCache();
 }
 
 QDateTime Sensor::lastUpdated() const {
@@ -121,6 +130,7 @@ QDateTime Sensor::lastUpdated() const {
 void Sensor::setLastUpdated(const QDateTime &lastUpdated) {
 	d->lastUpdated = lastUpdated;
 	emit lastUpdatedChanged(lastUpdated);
+	emit saveToCache();
 }
 
 int Sensor::minutesAgo() const {
@@ -134,6 +144,7 @@ QString Sensor::name() const {
 void Sensor::setName(const QString &name) {
 	d->name = name;
 	emit nameChanged(name);
+	emit saveToCache();
 }
 
 void Sensor::onInfoReceived(const QVariantMap &info) {
@@ -177,6 +188,7 @@ void Sensor::setTemperature(const QString &temperature) {
 	d->hasTemperature = true;
 	emit temperatureChanged(temperature);
 	emit hasTemperatureChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasTemperature() const {
@@ -221,6 +233,7 @@ void Sensor::setWindAvg(const QString &windAvg) {
 	d->hasWindAvg = true;
 	emit windAvgChanged(windAvg);
 	emit hasWindAvgChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasWindAvg() const {
@@ -236,6 +249,7 @@ void Sensor::setWindGust(const QString &windGust) {
 	d->hasWindGust = true;
 	emit windGustChanged(windGust);
 	emit hasWindGustChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasWindGust() const {
@@ -251,6 +265,7 @@ void Sensor::setWindDir(const QString &windDir) {
 	d->hasWindDir = true;
 	emit windDirChanged(windDir);
 	emit hasWindDirChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasWindDir() const {
@@ -267,6 +282,7 @@ void Sensor::setUv(const QString &uv) {
 	d->hasUv = true;
 	emit uvChanged(uv);
 	emit hasUvChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasUv() const {
@@ -283,6 +299,7 @@ void Sensor::setWatt(const QString &watt) {
 	d->hasWatt = true;
 	emit wattChanged(watt);
 	emit hasWattChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasWatt() const {
@@ -299,8 +316,32 @@ void Sensor::setLuminance(const QString &luminance) {
 	d->hasLuminance = true;
 	emit luminanceChanged(luminance);
 	emit hasLuminanceChanged();
+	emit saveToCache();
 }
 
 bool Sensor::hasLuminance() const {
 	return d->hasLuminance;
+}
+
+void Sensor::saveToCache() {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		QSqlQuery query(db);
+		query.prepare("REPLACE INTO Sensor (id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		query.bindValue(0, d->id);
+		query.bindValue(1, d->name);
+		query.bindValue(2, d->lastUpdated.toTime_t());
+		query.bindValue(3, d->temperature);
+		query.bindValue(4, d->humidity);
+		query.bindValue(5, d->rainRate);
+		query.bindValue(6, d->rainTotal);
+		query.bindValue(7, d->uv);
+		query.bindValue(8, d->watt);
+		query.bindValue(9, d->windAvg);
+		query.bindValue(10, d->windGust);
+		query.bindValue(11, d->windDir);
+		query.bindValue(12, d->luminance);
+		query.bindValue(13, d->isFavorite);
+		query.exec();
+	}
 }

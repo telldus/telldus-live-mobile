@@ -23,9 +23,9 @@ DashboardModel::DashboardModel(FavoriteDeviceModel *favoriteDeviceModel, Favorit
 
 	d->favoriteDeviceModel = favoriteDeviceModel;
 	connect(d->favoriteDeviceModel, SIGNAL(countChanged()), this, SLOT(addDashboardItems()));
-
 	d->filteredSensorModel = filteredSensorModel;
 	connect(d->filteredSensorModel, SIGNAL(countChanged()), this, SLOT(addDashboardItems()));
+	this->addDashboardItems();
 }
 
 DashboardModel::~DashboardModel() {
@@ -35,7 +35,7 @@ DashboardModel::~DashboardModel() {
 void DashboardModel::addDashboardItems() {
 	this->clear();
 	QList<QObject *> list;
-	qDebug() << "Favorited Device RowCount: " << d->favoriteDeviceModel->rowCount();
+	qDebug() << "[DASHBOARD] Favorited Device RowCount: " << d->favoriteDeviceModel->rowCount();
 	for(int a = 0; a < d->favoriteDeviceModel->rowCount(); a = a + 1) {
 		Device *device = qvariant_cast<Device*>(d->favoriteDeviceModel->index(a, 0).data());
 		DashboardItem *dashboardItem = new DashboardItem(this);
@@ -43,11 +43,11 @@ void DashboardModel::addDashboardItems() {
 		dashboardItem->setChildObject(QVariant::fromValue(device));
 		list << dashboardItem;
 	}
-	qDebug() << "Favorited Sensor RowCount: " << d->filteredSensorModel->rowCount();
+	qDebug() << "[DASHBOARD] Favorited Sensor RowCount: " << d->filteredSensorModel->rowCount();
 	for(int a = 0; a < d->filteredSensorModel->rowCount(); a = a + 1) {
 		Sensor *sensor = qvariant_cast<Sensor*>(d->filteredSensorModel->index(a, 0).data());
 		DashboardItem *dashboardItem = new DashboardItem(this);
-		dashboardItem->setId(10000 + sensor->sensorId());
+		dashboardItem->setId(100000 + sensor->sensorId());
 		dashboardItem->setChildObject(QVariant::fromValue(sensor));
 		list << dashboardItem;
 	}

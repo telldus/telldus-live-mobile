@@ -25,6 +25,7 @@ private slots:
 	void onDeviceRemove(const QVariantMap &result, const QVariantMap &params);
 	void onDevicesList(const QVariantMap &result);
 	void onGroupAdd(const QVariantMap &result);
+	void fetchDataFromCache();
 
 private:
 	explicit DeviceModel(QObject *parent = 0);

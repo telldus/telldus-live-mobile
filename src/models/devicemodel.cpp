@@ -2,6 +2,10 @@
 #include "device.h"
 #include "tellduslive.h"
 
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QDebug>
+
 class DeviceModel::PrivateData {
 public:
 	static DeviceModel *instance;
@@ -15,11 +19,35 @@ DeviceModel::DeviceModel(QObject *parent) :
 	this->authorizationChanged();
 }
 
+void DeviceModel::fetchDataFromCache() {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		qDebug() << "[SQL] SELECT id, name, methods, type, favorite, state, statevalue, clientName FROM Device ORDER BY name";
+		QSqlQuery query("SELECT id, name, methods, type, favorite, state, statevalue, clientName FROM Device ORDER BY name", db);
+		QVariantList devices;
+		while (query.next()) {
+			QVariantMap device;
+			device["id"] = query.value(0);
+			device["name"] = query.value(1);
+			device["methods"] = query.value(2);
+			device["type"] = query.value(3);
+			device["isfavorite"] = query.value(4).toBool();
+			device["state"] = query.value(5);
+			device["statevalue"] = query.value(6);
+			device["clientName"] = query.value(7);
+			device["fromCache"] = true;
+			devices << device;
+		}
+		if (devices.size()) {
+			this->addDevices(devices);
+		}
+	}
+}
+
 void DeviceModel::addDevices(const QVariantList &deviceList) {
 	QList<QObject *> list;
 	foreach(QVariant v, deviceList) {
 		QVariantMap dev = v.toMap();
-
 		Device *device = this->findDevice(dev["id"].toInt());
 		if (!device) {
 			device = new Device(this);
@@ -89,6 +117,7 @@ Device *DeviceModel::findDevice(int id) const {
 DeviceModel * DeviceModel::instance() {
 	if (PrivateData::instance == 0) {
 		PrivateData::instance = new DeviceModel;
+		PrivateData::instance->fetchDataFromCache();
 	}
 	return PrivateData::instance;
 }

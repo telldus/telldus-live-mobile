@@ -17,6 +17,7 @@ class Client : public QObject
 	Q_PROPERTY(QString type READ type NOTIFY typeChanged)
 	Q_PROPERTY(QString sessionId READ name NOTIFY nameChanged)
 	Q_PROPERTY(QString clientId READ name NOTIFY nameChanged)
+	Q_PROPERTY(bool websocketConnected READ websocketConnected NOTIFY websocketConnectedChanged)
 public:
 	explicit Client(QObject *parent = 0);
 	~Client();
@@ -39,6 +40,8 @@ public:
 	QString type() const;
 	void setType(const QString &type);
 
+	bool websocketConnected() const;
+
 signals:
 	void editableChanged();
 	void idChanged();
@@ -46,6 +49,7 @@ signals:
 	void onlineChanged();
 	void versionChanged();
 	void typeChanged();
+	void websocketConnectedChanged();
 
 private slots:
 	void sessionAuthenticated();
@@ -54,6 +58,7 @@ private slots:
 	void wsDataReceived(const QString &string);
 	void wsDisconnected();
 	void applicationStateChanged(Qt::ApplicationState state);
+	void saveToCache();
 
 private:
 	class PrivateData;

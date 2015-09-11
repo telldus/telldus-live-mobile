@@ -2,6 +2,10 @@
 #include "sensor.h"
 #include "tellduslive.h"
 #include <math.h>
+
+#include <QSqlDatabase>
+#include <QSqlRecord>
+#include <QSqlQuery>
 #include <QDebug>
 
 class SensorModel::PrivateData {
@@ -20,8 +24,61 @@ SensorModel::SensorModel(QObject *parent) :
 SensorModel *SensorModel::instance() {
 	if (PrivateData::instance == 0) {
 		PrivateData::instance = new SensorModel;
+		PrivateData::instance->fetchDataFromCache();
 	}
 	return PrivateData::instance;
+}
+
+void SensorModel::fetchDataFromCache() {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		qDebug() << "[SQL] SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite FROM Sensor ORDER BY name";
+		QSqlQuery query("SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite FROM Sensor ORDER BY name", db);
+		QVariantList sensors;
+		while (query.next()) {
+			QSqlRecord record = query.record();
+			QVariantMap sensor;
+			sensor["id"] = record.value("id");
+			sensor["name"] = record.value("name");
+			sensor["lastUpdated"] = record.value("lastUpdated");
+			if (record.isNull("temperature") == false) {
+				sensor["temperature"] = record.value("temperature");
+			}
+			if (record.isNull("humidity") == false) {
+				sensor["humidity"] = record.value("humidity");
+			}
+			if (record.isNull("rainRate") == false) {
+				sensor["rainRate"] = record.value("rainRate");
+			}
+			if (record.isNull("rainTotal") == false) {
+				sensor["rainTotal"] = record.value("rainTotal");
+			}
+			if (record.isNull("uv") == false) {
+				sensor["uv"] = record.value("uv");
+			}
+			if (record.isNull("watt") == false) {
+				sensor["watt"] = record.value("watt");
+			}
+			if (record.isNull("windAvg") == false) {
+				sensor["windAvg"] = record.value("windAvg");
+			}
+			if (record.isNull("windGust") == false) {
+				sensor["windGust"] = record.value("windGust");
+			}
+			if (record.isNull("windDir") == false) {
+				sensor["windDir"] = record.value("windDir");
+			}
+			if (record.isNull("luminance") == false) {
+				sensor["luminance"] = record.value("luminance");
+			}
+			sensor["isfavorite"] = record.value("isfavorite").toBool();
+			sensor["fromCache"] = true;
+			sensors << sensor;
+		}
+		if (sensors.size()) {
+			this->addSensors(sensors);
+		}
+	}
 }
 
 void SensorModel::addSensors(const QVariantList &sensorsList) {
