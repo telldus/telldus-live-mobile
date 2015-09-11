@@ -87,12 +87,12 @@ View {
 			}
 			MouseArea {
 				id: drawerMouseArea
-				enabled: !backButton.visible
+				enabled: drawerButton.visible && properties.ui.supportsTouch
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
 				anchors.left: parent.left
 				anchors.right: parent.right
-				onClicked: mainInterface.onMenu();
+				onClicked: mainInterface.openMenu();
 			}
 		}
 		Item {

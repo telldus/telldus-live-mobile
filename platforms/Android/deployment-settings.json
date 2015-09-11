@@ -4,7 +4,7 @@
 	"sdk": "/Users/mark/Desktop/adt/sdk",
 	"sdkBuildToolsRevision": "21.1.2",
 	"ndk": "/Users/mark/Downloads/android-ndk-r10e",
-	"toolchain-prefix": "${ANDROID_TOOLCHAIN_MACHINE_NAME}",
+	"toolchain-prefix": "${ANDROID_TOOLCHAIN_PREFIX}",
 	"tool-prefix": "${ANDROID_TOOLCHAIN_MACHINE_NAME}",
 	"toolchain-version": "4.9",
 	"ndk-host": "darwin-x86_64",

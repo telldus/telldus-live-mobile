@@ -1,8 +1,10 @@
 import QtQuick 2.0
 import Telldus 1.0
 
-Item {
+Rectangle {
 	id: settingsPage
+	color: "#ffffff"
+
 	Header {
 		id: header
 		title: "Settings"

@@ -18,6 +18,49 @@ Rectangle {
 		Device.setupCache(deviceModelController, DB.db)
 		Scheduler.setupCache(schedulerModel, DB.db)
 		Sensor.setupCache(sensorModel, DB.db)
+		console.log("UI supportsTouch: " + properties.ui.supportsTouch);
+		console.log("UI supportsKeys: " + properties.ui.supportsKeys);
+	ListModel {
+		id: pageModel
+
+		property var selectedIndex: 0
+
+		ListElement {
+			title: "Dashboard"
+			page: "DashboardPage.qml"
+			inDrawer: false
+			inTabBar: true
+		}
+		ListElement {
+			title: "Devices"
+			page: "DevicePage.qml"
+			inDrawer: false
+			inTabBar: true
+		}
+		ListElement {
+			title: "Sensors"
+			page: "SensorPage.qml"
+			inDrawer: false
+			inTabBar: true
+		}
+		ListElement {
+			title: "Scheduler"
+			page: "SchedulerPage.qml"
+			inDrawer: false
+			inTabBar: true
+		}
+		ListElement {
+			title: "Settings"
+			page: "SettingsPage.qml"
+			inDrawer: true
+			inTabBar: false
+		}
+		ListElement {
+			title: "Debug"
+			page: "DebugPage.qml"
+			inDrawer: true
+			inTabBar: false
+		}
 	}
 
 	Loader {

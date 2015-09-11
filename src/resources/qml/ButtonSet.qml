@@ -31,6 +31,7 @@ Item {
 			radius: height / 6
 			Loader {
 				id: tileContent
+				focus: true
 				source: {
 					if (set == 0) {
 						return 'ComponentSetOnOffTile.qml';

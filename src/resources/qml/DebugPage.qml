@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Window 2.2
 import Telldus 1.0
+import Tui 0.1
 
 Rectangle {
 	id: dashboardPage
@@ -23,11 +24,9 @@ Rectangle {
 			debugView.text += "Screen desktop available height: " + Screen.desktopAvailableHeight + "\n";
 		}
 		id: debugView
-		anchors.left: parent.left
-		anchors.top: header.bottom
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		anchors.margins: 10 * SCALEFACTOR
+		anchors.fill: parent
+		anchors.topMargin: screen.showHeaderAtTop ? header.height + Units.dp(16): Units.dp(16)
+		anchors.leftMargin: screen.showHeaderAtTop ? Units.dp(16) : header.width + Units.dp(16)
 		text: ""
 		font.pointSize: 12
 	}

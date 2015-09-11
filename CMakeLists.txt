@@ -22,6 +22,11 @@ OPTION(ENABLE_FEATURE_PUSH "Should support for push be built in?" FALSE)
 
 # Environment settings
 SET(TARGET_PLATFORM "" CACHE STRING "Sets the target platform. Valid values are 'iOS', 'Android', 'Desktop', or 'BB10'")
+
+SET(UI_TYPES "Mobile;TV")
+SET(UI_TYPE "Mobile" CACHE STRING "The type of UI, currently mobile or TV")
+SET_PROPERTY(CACHE UI_TYPE PROPERTY STRINGS ${UI_TYPES})
+
 SET(TELLDUS_LIVE_API_ENDPOINT	"https://api.telldus.com"	CACHE STRING "Telldus Live! api endpoint")
 SET(TELLDUS_LIVE_PUBLIC_KEY	""	CACHE STRING "Telldus Live! public key")
 SET(TELLDUS_LIVE_PRIVATE_KEY	""	CACHE STRING "Telldus Live! private key")
@@ -103,6 +108,7 @@ SET( SOURCES
 	src/properties/PropertiesTheme.cpp
 	src/properties/PropertiesThemeColors.cpp
 	src/properties/PropertiesThemeCore.cpp
+	src/properties/PropertiesUi.cpp
 )
 
 SET( HEADERS
@@ -143,6 +149,7 @@ SET( MOC_HEADERS
 	src/properties/PropertiesTheme.h
 	src/properties/PropertiesThemeColors.h
 	src/properties/PropertiesThemeCore.h
+	src/properties/PropertiesUi.h
 )
 
 SET(RESOURCES

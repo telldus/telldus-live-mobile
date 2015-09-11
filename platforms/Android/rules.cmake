@@ -17,6 +17,20 @@ LIST(APPEND MOC_HEADERS
 	platforms/Android/Push.h
 )
 
+IF (${UI_TYPE} MATCHES "Mobile")
+	LIST(APPEND LIBRARIES
+		${OPENSSL_DIR}/lib/libssl.so
+		${OPENSSL_DIR}/lib/libcrypto.so
+	)
+	SET(ANDROID_TOOLCHAIN_PREFIX ${ANDROID_TOOLCHAIN_MACHINE_NAME})
+ELSE()
+	LIST(APPEND LIBRARIES
+		${OPENSSL_DIR}/lib/libssl.a
+		${OPENSSL_DIR}/lib/libcrypto.a
+	)
+	SET(ANDROID_TOOLCHAIN_PREFIX ${ANDROID_NDK_ABI_NAME})
+ENDIF()
+
 SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
 FIND_PACKAGE( Qt5AndroidExtras REQUIRED )
 LIST(APPEND LIBRARIES Qt5::AndroidExtras)
@@ -34,11 +48,6 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/src/com/telldus/live/mobile
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/Android/src/com/telldus/live/mobile/RegistrationIntentService.java ${CMAKE_BINARY_DIR}/apk/src/com/telldus/live/mobile/RegistrationIntentService.java)
 
 INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
-
-LIST(APPEND LIBRARIES
-	${OPENSSL_DIR}/lib/libssl.so
-	${OPENSSL_DIR}/lib/libcrypto.so
-)
 
 SET(ANDROID_FILES
 	../../src/icons/icon-36${SUFFIX}.png

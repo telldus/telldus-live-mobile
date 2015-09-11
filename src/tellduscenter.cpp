@@ -23,6 +23,7 @@
 #include "properties/PropertiesTheme.h"
 #include "properties/PropertiesThemeColors.h"
 #include "properties/PropertiesThemeCore.h"
+#include "properties/PropertiesUi.h"
 #include "sensor.h"
 #include "tellduslive.h"
 #include "user.h"
@@ -80,6 +81,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	qmlRegisterType<PropertiesTheme>("Telldus", 1, 0, "PropertiesTheme");
 	qmlRegisterType<PropertiesThemeColors>("Telldus", 1, 0, "PropertiesThemeColors");
 	qmlRegisterType<PropertiesThemeCore>("Telldus", 1, 0, "PropertiesThemeCore");
+	qmlRegisterType<PropertiesUi>("Telldus", 1, 0, "PropertiesUi");
 
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 

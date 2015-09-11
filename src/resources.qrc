@@ -34,6 +34,8 @@
 		<file>resources/qml/tiles/WeatherTile.qml</file>
 		<file>resources/qml/tiles/UnknownTile.qml</file>
 
+		<file>resources/qml/main.tv.qml</file>
+
 		<file>resources/images/rowArrow.png</file>
 		<file>resources/images/buttonBg.png</file>
 		<file>resources/images/buttonActionOff.png</file>

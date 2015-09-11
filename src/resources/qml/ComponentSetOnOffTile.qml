@@ -6,9 +6,25 @@ import Tui 0.1
 Item {
 	property var deviceState: device.state
 	anchors.fill: parent
+	focus: true
+
 	Component.onCompleted: {
 		tile.showBorder = true;
 	}
+
+	Keys.onPressed: {
+		if (properties.ui.supportsKeys) {
+			if (event.key == Qt.Key_Enter) {
+				if (deviceState == 1 || deviceState == 16) {
+					device.turnOff();
+				} else {
+					device.turnOn();
+				}
+				event.accepted = true;
+			}
+		}
+	}
+
 	onDeviceStateChanged: {
 		if (deviceState == 1 || deviceState == 16) {
 			tile.hue = 0.08

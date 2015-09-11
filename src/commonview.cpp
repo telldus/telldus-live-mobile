@@ -116,7 +116,11 @@ void CommonView::loadAndShow() {
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
 	d->view.engine()->addImportPath(":/qmllib/common");
 	d->view.engine()->addImportPath(":/qmlmodules");
-	d->view.setSource(QUrl("qrc:/resources/qml/main.qml"));
+	if (UI_TYPE == "TV") {
+		d->view.setSource(QUrl("qrc:/resources/qml/main.tv.qml"));
+	} else {
+		d->view.setSource(QUrl("qrc:/resources/qml/main.qml"));
+	}
 }
 
 void CommonView::setContextProperty(const QString &name, QObject *value) {
@@ -129,11 +133,14 @@ void CommonView::workAreaResized(int screen) {
 }
 
 bool CommonView::eventFilter(QObject *obj, QEvent * event ) {
-	if (event->type() == QEvent::KeyPress) {
-		QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-		if (keyEvent->key() == Qt::Key_Back) {
-			emit backPressed();
-			return true;
+	if (UI_TYPE != "TV") {
+		if (event->type() == QEvent::KeyPress) {
+			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+			qDebug() << "Keypress: " << event;
+			if (keyEvent->key() == Qt::Key_Back) {
+				emit backPressed();
+				return true;
+			}
 		}
 	}
 	if (event->type() != QEvent::Resize) {

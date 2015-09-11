@@ -6,6 +6,8 @@ MouseArea {
 	signal move(int x, int y)
 	signal swipe(string direction)
 
+	enabled: properties.ui.supportsTouch
+
 	onPressed: {
 		drag.axis = Drag.XAndYAxis
 		origin = Qt.point(mouse.x, mouse.y)

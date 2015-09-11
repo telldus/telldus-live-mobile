@@ -1,11 +1,25 @@
 import QtQuick 2.0
 import Telldus 1.0
 
-Item {
+Rectangle {
 	id: showDevice
 	property Device selected
 	signal backClicked()
 
+	color: "#ffffff"
+	focus: true;
+	Keys.onPressed: {
+		if (properties.ui.supportsKeys) {
+			if (event.key == Qt.Key_Left) {
+				showDevice.backClicked()
+				event.accepted = true;
+			}
+			if (event.key == Qt.Key_Enter) {
+				showDevice.selected.isFavorite = !showDevice.selected.isFavorite;
+				event.accepted = true;
+			}
+		}
+	}
 	Header {
 		id: deviceH
 		title: showDevice.selected.name
@@ -110,7 +124,7 @@ Item {
 					sourceSize.height: height * 2
 					opacity: showDevice.selected.isFavorite ? 1 : 0.2
 				}
-/*				Item {
+				Item {
 					height: iconFavorite.height
 					anchors.left: iconFavorite.right
 					anchors.leftMargin: 10 * SCALEFACTOR
@@ -142,7 +156,7 @@ Item {
 							Behavior on opacity { NumberAnimation { duration: 200 } }
 						}
 					}
-				}*/
+				}
 				MouseArea {
 					anchors.fill: parent
 					onClicked: showDevice.selected.isFavorite = !showDevice.selected.isFavorite

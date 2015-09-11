@@ -4,9 +4,8 @@ import QtQuick.Window 2.2
 import Telldus 1.0
 import Tui 0.1
 
-Rectangle {
+Item {
 	id: dashboardPage
-	color: properties.theme.colors.dashboardBackground
 	readonly property real tilePadding: Units.dp(properties.theme.core.tilePadding)
 
 	Component {
@@ -91,7 +90,7 @@ Rectangle {
 		Header {
 			id: header
 			onBackClicked: {
-				core.quit();
+				mainInterface.onMenu();
 			}
 		}
 	}
