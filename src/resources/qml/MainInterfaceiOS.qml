@@ -36,7 +36,7 @@ Rectangle {
 						id: dashboardIconImage
 						anchors.fill: parent
 						anchors.margins: Units.dp(4)
-						source: "../svgs/icon" + title + ".svg"
+						source: "image://icons/" + title.toLowerCase() + "/#ffffff"
 						asynchronous: true
 						smooth: true
 						fillMode: Image.PreserveAspectFit
@@ -53,13 +53,13 @@ Rectangle {
 					anchors.left: parent.left
 					anchors.leftMargin: Units.dp(72)
 				}
-				//MouseArea {
-				//	anchors.fill: parent
-				//	onClicked: {
-				//		mainInterface.onMenu();
-				//		pageModel.selectedIndex = index;
-				//	}
-				//}
+				MouseArea {
+					anchors.fill: parent
+					onClicked: {
+						pageModel.selectedIndex = index;
+						mainInterface.closeMenu();
+					}
+				}
 			}
 		}
 		Component {
@@ -247,7 +247,7 @@ Rectangle {
 						id: dashboardIconImage
 						anchors.fill: parent
 						anchors.margins: Units.dp(4)
-						source: "../svgs/icon" + title + ".svg"
+						source: "image://icons/" + title.toLowerCase() + "/" + (index ==  pageModel.selectedIndex ? "#ffffff" : properties.theme.colors.telldusOrange)
 						asynchronous: true
 						smooth: true
 						fillMode: Image.PreserveAspectFit

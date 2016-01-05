@@ -99,5 +99,14 @@
 		<file>resources/svgs/sensorIconWatt.svg</file>
 		<file>resources/svgs/sensorIconWind.svg</file>
 
+		<file>resources/svgts/dashboard.svgt</file>
+		<file>resources/svgts/devices.svgt</file>
+		<file>resources/svgts/favourite.svgt</file>
+		<file>resources/svgts/hamburger.svgt</file>
+		<file>resources/svgts/logout.svgt</file>
+		<file>resources/svgts/scheduler.svgt</file>
+		<file>resources/svgts/sensors.svgt</file>
+		<file>resources/svgts/settings.svgt</file>
+
 	</qresource>
 </RCC>
