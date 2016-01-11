@@ -6,9 +6,7 @@
 #include "tellduscenter.h"
 #include "tellduslive.h"
 
-#ifdef PLATFORM_DESKTOP
-	#include "utils/errorhandler.h"
-#endif
+#include "utils/Logger.h"
 
 #ifdef PLATFORM_IOS
 	#include <QtPlugin>
@@ -32,9 +30,9 @@ int init(int argc, char *argv[]) {
 	QCoreApplication::setApplicationName("Telldus Live! Mobile");
 	QCoreApplication::setApplicationVersion(VERSION);
 
-#ifdef PLATFORM_DESKTOP
-	qInstallMessageHandler(errorHandler);
-#endif
+	Logger::instance();
+
+	qDebug() << "[APP] Logger is active!";
 
 	qDebug().noquote() << QString("[ENVIRONMENT] QtVersion: 0x%1").arg(QT_VERSION, 5, 16, QChar('0'));
 	qDebug().noquote() << QString("[FEATURE] Logging: %1").arg(IS_FEATURE_LOGGING_ENABLED ? "Enabled" : "Disabled");

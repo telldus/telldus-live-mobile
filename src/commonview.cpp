@@ -98,6 +98,8 @@ void CommonView::loadAndShow() {
 	d->view.show();
 #endif
 
+	qDebug() << "[APP] Display is now visible!";
+
 	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << size;
 	qDebug().nospace().noquote() << "[DEVICE] Screen logicalDotsPerInch: " << QApplication::primaryScreen()->logicalDotsPerInch();
 	qDebug().nospace().noquote() << "[DEVICE] Screen physicalDotsPerInch: " << QApplication::primaryScreen()->physicalDotsPerInch();
