@@ -104,6 +104,7 @@ SET( SOURCES
 	src/objects/DashboardItem.cpp
 	src/objects/SchedulerJobInstance.cpp
 	src/utils/dev.cpp
+	src/utils/Logger.cpp
 	src/properties/Properties.cpp
 	src/properties/PropertiesTheme.cpp
 	src/properties/PropertiesThemeColors.cpp
@@ -144,7 +145,7 @@ SET( MOC_HEADERS
 	src/objects/DashboardItem.h
 	src/objects/SchedulerJobInstance.h
 	src/utils/dev.h
-	src/utils/errorhandler.h
+	src/utils/Logger.h
 	src/properties/Properties.h
 	src/properties/PropertiesTheme.h
 	src/properties/PropertiesThemeColors.h
