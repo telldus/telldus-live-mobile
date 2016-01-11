@@ -14,6 +14,11 @@ SchedulerModel *SchedulerModel::PrivateData::instance = 0;
 
 SchedulerModel::SchedulerModel() : TListModel("job") {
 	d = new PrivateData();
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		qDebug() << "[SQL] CREATE TABLE IF NOT EXISTS Scheduler (id INTEGER PRIMARY KEY, deviceId INTEGER, method INTEGER, methodValue TEXT, nextRunTime INTEGER, type INTEGER, hour INTEGER, minute INTEGER, offset INTEGER, randomInterval INTEGER, retries INTEGER, retryInterval INTEGER, weekdays TEXT)";
+		QSqlQuery query("CREATE TABLE IF NOT EXISTS Scheduler (id INTEGER PRIMARY KEY, deviceId INTEGER, method INTEGER, methodValue TEXT, nextRunTime INTEGER, type INTEGER, hour INTEGER, minute INTEGER, offset INTEGER, randomInterval INTEGER, retries INTEGER, retryInterval INTEGER, weekdays TEXT)", db);
+	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
 }
@@ -23,6 +28,7 @@ SchedulerModel::~SchedulerModel() {
 }
 
 void SchedulerModel::fetchDataFromCache() {
+	qDebug() << "[METHOD] SchedulerModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
 		qDebug() << "[SQL] SELECT id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays FROM Scheduler ORDER BY id";
@@ -32,7 +38,7 @@ void SchedulerModel::fetchDataFromCache() {
 			QVariantMap job;
 			job["id"] = query.value(0);
 			job["deviceId"] = query.value(1);
-			job["methods"] = query.value(2);
+			job["method"] = query.value(2);
 			job["methodValue"] = query.value(3);
 			job["nextRunTime"] = query.value(4);
 			job["type"] = query.value(5);
@@ -60,21 +66,10 @@ void SchedulerModel::addJobs(const QVariantList &jobList) {
 		SchedulerJob *job = this->findJob(dev["id"].toInt());
 		if (!job) {
 			job = new SchedulerJob(this);
-			job->setId(dev["id"].toInt());
+			job->setFromVariantMap(dev);
 			list << job;
 		}
-		job->setDeviceId(dev["deviceId"].toInt());
-		job->setMethod(dev["method"].toInt());
-		job->setMethodValue(dev["methodValue"].toString());
-		job->setNextRunTime(QDateTime::fromMSecsSinceEpoch(((qint64)dev["nextRunTime"].toInt())*1000));
-		job->setType(dev["type"].toString());
-		job->setHour(dev["hour"].toInt());
-		job->setMinute(dev["minute"].toInt());
-		job->setOffset(dev["offset"].toInt());
-		job->setRandomInterval(dev["randomInterval"].toInt());
-		job->setRetries(dev["retries"].toInt());
-		job->setRetryInterval(dev["retryInterval"].toInt());
-		job->setWeekdays(dev["weekdays"].toString());
+		job->setFromVariantMap(dev);
 	}
 	if (list.size()) {
 		//Appends all in one go

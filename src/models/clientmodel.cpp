@@ -16,6 +16,11 @@ ClientModel *ClientModel::PrivateData::instance = 0;
 ClientModel::ClientModel(QObject *parent) :
 	TListModel("client", parent)
 {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		qDebug() << "[SQL] CREATE TABLE IF NOT EXISTS Client (id INTEGER PRIMARY KEY, name TEXT, online INTEGER, editable INTEGER, version TEXT, type TEXT)";
+		QSqlQuery query("CREATE TABLE IF NOT EXISTS Client (id INTEGER PRIMARY KEY, name TEXT, online INTEGER, editable INTEGER, version TEXT, type TEXT)", db);
+	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 
 	this->authorizationChanged();
@@ -30,6 +35,7 @@ ClientModel *ClientModel::instance() {
 }
 
 void ClientModel::fetchDataFromCache() {
+	qDebug() << "[METHOD] ClientModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
 		qDebug() << "[SQL] SELECT id, name, online, editable, version, type FROM Client ORDER BY id";
@@ -59,14 +65,11 @@ void ClientModel::addClients(const QVariantList &clientList) {
 		Client *client = this->findClient(dev["id"].toInt());
 		if (!client) {
 			client = new Client(this);
-			client->setId(dev["id"].toInt());
+			client->setFromVariantMap(dev);
 			list << client;
+		} else {
+			client->setFromVariantMap(dev);
 		}
-		client->setName(dev["name"].toString());
-		client->setOnline(dev["online"].toBool());
-		client->setEditable(dev["editable"].toBool());
-		client->setVersion(dev["version"].toString());
-		client->setType(dev["type"].toString());
 	}
 	if (list.size()) {
 		//Appends all in one go

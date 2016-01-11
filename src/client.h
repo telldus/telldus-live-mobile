@@ -40,6 +40,8 @@ public:
 	QString type() const;
 	void setType(const QString &type);
 
+	void setFromVariantMap(const QVariantMap &dev);
+
 	bool websocketConnected() const;
 
 signals:

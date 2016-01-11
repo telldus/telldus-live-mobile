@@ -17,6 +17,11 @@ SensorModel *SensorModel::PrivateData::instance = 0;
 SensorModel::SensorModel(QObject *parent) :
 	TListModel("sensor", parent)
 {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		qDebug() << "[SQL] CREATE TABLE IF NOT EXISTS Sensor (id INTEGER PRIMARY KEY, name TEXT, lastUpdated INTEGER, temperature REAL, humidity REAL, rainRate REAL, rainTotal REAL, uv REAL, watt REAL, windAvg REAL, windGust REAL, windDir REAL, luminance REAL, favorite INTEGER)";
+		QSqlQuery query("CREATE TABLE IF NOT EXISTS Sensor (id INTEGER PRIMARY KEY, name TEXT, lastUpdated INTEGER, temperature REAL, humidity REAL, rainRate REAL, rainTotal REAL, uv REAL, watt REAL, windAvg REAL, windGust REAL, windDir REAL, luminance REAL, favorite INTEGER)", db);
+	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
 }
@@ -30,6 +35,7 @@ SensorModel *SensorModel::instance() {
 }
 
 void SensorModel::fetchDataFromCache() {
+	qDebug() << "[METHOD] SensorModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
 		qDebug() << "[SQL] SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite FROM Sensor ORDER BY name";
@@ -85,47 +91,13 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 	QList<QObject *> list;
 	foreach(QVariant v, sensorsList) {
 		QVariantMap dev = v.toMap();
-
 		Sensor *sensor = this->findSensor(dev["id"].toInt());
 		if (!sensor) {
 			sensor = new Sensor(this);
-			sensor->setId(dev["id"].toInt());
+			sensor->setFromVariantMap(dev);
 			list << sensor;
-		}
-		sensor->setName(dev["name"].toString());
-		sensor->setLastUpdated(QDateTime::fromMSecsSinceEpoch(((qint64)dev["lastUpdated"].toInt())*1000));
-		if (dev.contains("temperature") && !isnan(dev["temperature"].toDouble())) {
-			sensor->setTemperature(dev["temperature"].toString());
-		}
-		if (dev.contains("humidity") && !isnan(dev["humidity"].toDouble())) {
-			sensor->setHumidity(dev["humidity"].toString());
-		}
-		if (dev.contains("rainRate") && !isnan(dev["rainRate"].toDouble())) {
-			sensor->setRainRate(dev["rainRate"].toString());
-		}
-		if (dev.contains("rainTotal") && !isnan(dev["rainTotal"].toDouble())) {
-			sensor->setRainTotal(dev["rainTotal"].toString());
-		}
-		if (dev.contains("uv") && !isnan(dev["uv"].toDouble())) {
-			sensor->setUv(dev["uv"].toString());
-		}
-		if (dev.contains("watt") && !isnan(dev["watt"].toDouble())) {
-			sensor->setWatt(dev["watt"].toString());
-		}
-		if (dev.contains("luminance") && !isnan(dev["luminance"].toDouble())) {
-			sensor->setLuminance(dev["luminance"].toString());
-		}
-		if (dev.contains("windAvg") && !isnan(dev["windAvg"].toDouble())) {
-			sensor->setWindAvg(dev["windAvg"].toString());
-		}
-		if (dev.contains("windGust") && !isnan(dev["windGust"].toDouble())) {
-			sensor->setWindGust(dev["windGust"].toString());
-		}
-		if (dev.contains("windDir") && !isnan(dev["windDir"].toDouble())) {
-			sensor->setWindDir(dev["windDir"].toString());
-		}
-		if (dev.contains("isfavorite")) {
-			sensor->setIsFavorite(dev["isfavorite"].toBool());
+		} else {
+			sensor->setFromVariantMap(dev);
 		}
 	}
 	if (list.size()) {

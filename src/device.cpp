@@ -12,6 +12,7 @@
 
 class Device::PrivateData {
 public:
+	bool hasChanged;
 	bool isFavorite, online;
 	int id, methods, state;
 	QString name, stateValue, clientName;
@@ -58,8 +59,12 @@ QString Device::clientName() const {
 }
 
 void Device::setClientName(const QString &clientName) {
+	if (clientName == d->clientName) {
+		return;
+	}
 	d->clientName = clientName;
 	emit clientNameChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -96,9 +101,13 @@ int Device::deviceId() const {
 }
 
 void Device::setId(int id) {
+	if (id == d->id) {
+		return;
+	}
 	d->id = id;
 	d->groupModel->setId(d->id);
 	emit idChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -107,8 +116,12 @@ bool Device::isFavorite() const {
 }
 
 void Device::setIsFavorite(bool isFavorite) {
+	if (isFavorite == d->isFavorite) {
+		return;
+	}
 	d->isFavorite = isFavorite;
 	emit isFavoriteChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -122,6 +135,7 @@ void Device::setMethods(int methods) {
 	}
 	d->methods = methods;
 	emit methodsChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -130,8 +144,12 @@ QString Device::name() const {
 }
 
 void Device::setName(const QString &name) {
+	if (name == d->name) {
+		return;
+	}
 	d->name = name;
 	emit nameChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -180,8 +198,13 @@ void Device::removeDevice(int deviceId) {
 }
 
 void Device::setOnline(bool online) {
+	if (online == d->online) {
+		return;
+	}
 	d->online = online;
 	emit onlineChanged();
+	d->hasChanged = true;
+	emit saveToCache();
 }
 
 void Device::sendMethod(int method, const QString &value) {
@@ -198,9 +221,13 @@ int Device::state() const {
 }
 
 void Device::setState(int state) {
+	if (state == d->state) {
+		return;
+	}
 	d->state = state;
 	emit stateChanged();
 	emit stateValueChanged(this->stateValue());
+	d->hasChanged = false;
 	emit saveToCache();
 }
 
@@ -216,8 +243,12 @@ QString Device::stateValue() const {
 }
 
 void Device::setStateValue(const QString &stateValue) {
+	if (stateValue == d->stateValue) {
+		return;
+	}
 	d->stateValue = stateValue;
 	emit stateValueChanged(stateValue);
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -243,6 +274,7 @@ void Device::setType(Device::Type type) {
 	}
 	d->type = type;
 	emit typeChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -251,6 +283,14 @@ void Device::setType(const QString &type) {
 		setType(GroupType);
 	} else {
 		setType(DeviceType);
+	}
+}
+
+Device::Type Device::getTypeFromString(const QString &type) {
+	if (type == "group") {
+		return GroupType;
+	} else {
+		return DeviceType;
 	}
 }
 
@@ -268,19 +308,83 @@ void Device::schedulerJobsChanged(const QModelIndex &, int start, int end) {
 	}
 }
 
+void Device::setFromVariantMap(const QVariantMap &dev) {
+	if (d->id != dev["id"].toInt()) {
+		d->id = dev["id"].toInt();
+		emit idChanged();
+		d->hasChanged = true;
+	}
+	if (d->name != dev["name"].toString()) {
+		d->name = dev["name"].toString();
+		emit nameChanged();
+		d->hasChanged = true;
+	}
+	if (d->methods != dev["methods"].toInt()) {
+		d->methods = dev["methods"].toInt();
+		emit methodsChanged();
+		d->hasChanged = true;
+	}
+	if (d->clientName != dev["clientName"].toString()) {
+		d->clientName = dev["clientName"].toString();
+		emit clientNameChanged();
+		d->hasChanged = true;
+	}
+	if (d->online != dev["online"].toBool()) {
+		d->online = dev["online"].toBool();
+		emit onlineChanged();
+		d->hasChanged = true;
+	}
+	if (d->state != dev["state"].toInt()) {
+		d->state = dev["state"].toInt();
+		emit stateChanged();
+		d->hasChanged = true;
+	}
+	if (dev["type"].type() == QVariant::String) {
+		if (Device::Type(d->type) != getTypeFromString(dev["type"].toString())) {
+			d->type = getTypeFromString(dev["type"].toString());
+			emit typeChanged();
+			d->hasChanged = true;
+		}
+	} else {
+		if (d->type != Device::Type(dev["type"].toInt())) {
+			d->type = Device::Type(dev["type"].toInt());
+			emit typeChanged();
+			d->hasChanged = true;
+		}
+	}
+	if (dev.contains("isfavorite") && d->isFavorite != dev["isfavorite"].toBool()) {
+		d->isFavorite = dev["isfavorite"].toBool();
+		emit isFavoriteChanged();
+		d->hasChanged = true;
+	}
+	if (dev.contains("devices")) {
+		addDevices(dev["devices"].toString(), false);
+	}
+	if (dev["fromCache"].toBool() == false) {
+		emit saveToCache();
+	} else {
+		d->hasChanged = false;
+	}
+}
+
 void Device::saveToCache() {
-	QSqlDatabase db = QSqlDatabase::database();
-	if (db.isOpen()) {
-		QSqlQuery query(db);
-		query.prepare("REPLACE INTO Device (id, name, methods, type, favorite, state, statevalue, clientName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-		query.bindValue(0, d->id);
-		query.bindValue(1, d->name);
-		query.bindValue(2, d->methods);
-		query.bindValue(3, d->type);
-		query.bindValue(4, d->isFavorite);
-		query.bindValue(5, d->state);
-		query.bindValue(6, d->stateValue);
-		query.bindValue(7, d->clientName);
-		query.exec();
+	qDebug().noquote().nospace() << "[DEVICE:" << d->id << "] Saving to cache (hasChanged = " << d->hasChanged << ")";
+	if (d->hasChanged) {
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			QSqlQuery query(db);
+			query.prepare("REPLACE INTO Device (id, name, methods, type, favorite, state, statevalue, clientName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			query.bindValue(0, d->id);
+			query.bindValue(1, d->name);
+			query.bindValue(2, d->methods);
+			query.bindValue(3, d->type);
+			query.bindValue(4, d->isFavorite);
+			query.bindValue(5, d->state);
+			query.bindValue(6, d->stateValue);
+			query.bindValue(7, d->clientName);
+			query.exec();
+			qDebug().noquote().nospace() << "[DEVICE:" << d->id << "] Saved to cache";
+			d->hasChanged = false;
+		}
 	}
 }

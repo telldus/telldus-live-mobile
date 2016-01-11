@@ -15,11 +15,17 @@ DeviceModel *DeviceModel::PrivateData::instance = 0;
 DeviceModel::DeviceModel(QObject *parent) :
 	TListModel("device", parent)
 {
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen()) {
+		qDebug() << "[SQL] CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT, clientName TEXT)";
+		QSqlQuery query("CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT, clientName TEXT)", db);
+	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
 }
 
 void DeviceModel::fetchDataFromCache() {
+	qDebug() << "[METHOD] DeviceModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
 		qDebug() << "[SQL] SELECT id, name, methods, type, favorite, state, statevalue, clientName FROM Device ORDER BY name";
@@ -51,25 +57,10 @@ void DeviceModel::addDevices(const QVariantList &deviceList) {
 		Device *device = this->findDevice(dev["id"].toInt());
 		if (!device) {
 			device = new Device(this);
-			device->setId(dev["id"].toInt());
+			device->setFromVariantMap(dev);
 			list << device;
-		}
-		if (dev.contains("isfavorite")) {
-			device->setIsFavorite(dev["isfavorite"].toBool());
-		}
-		device->setMethods(dev["methods"].toInt());
-		device->setName(dev["name"].toString());
-		device->setClientName(dev["clientName"].toString());
-		device->setOnline(dev["online"].toBool());
-		device->setState(dev["state"].toInt());
-		device->setStateValue(dev["statevalue"].toString());
-		if (dev["type"].type() == QVariant::String) {
-			device->setType(dev["type"].toString());
 		} else {
-			device->setType(Device::Type(dev["type"].toInt()));
-		}
-		if (dev.contains("devices")) {
-			device->addDevices(dev["devices"].toString(), false);
+			device->setFromVariantMap(dev);
 		}
 	}
 	if (list.size()) {

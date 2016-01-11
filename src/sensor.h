@@ -95,6 +95,8 @@ public:
 	void setLuminance(const QString &luminance);
 	bool hasLuminance() const;
 
+	void setFromVariantMap(const QVariantMap &dev);
+
 signals:
 	void idChanged();
 	void hasHumidityChanged();

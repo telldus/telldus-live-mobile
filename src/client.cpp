@@ -17,7 +17,7 @@
 
 class Client::PrivateData {
 public:
-	bool online, editable;
+	bool hasChanged, online, editable;
 	int id;
 	QString name, version, type, sessionId;
 	QWebSocket webSocket;
@@ -49,9 +49,14 @@ bool Client::editable() const {
 }
 
 void Client::setEditable(bool editable) {
+	if (editable == d->editable) {
+		return;
+	}
 	d->editable = editable;
 	emit editableChanged();
+	d->hasChanged = true;
 	emit saveToCache();
+
 }
 
 int Client::clientId() const {
@@ -59,10 +64,13 @@ int Client::clientId() const {
 }
 
 void Client::setId(int id) {
-	d->id = id;
+	if (d->id != id) {
+		d->id = id;
+		emit idChanged();
+		d->hasChanged = true;
+		emit saveToCache();
+	}
 	this->sessionAuthenticated();
-	emit idChanged();
-	emit saveToCache();
 }
 
 QString Client::name() const {
@@ -70,8 +78,12 @@ QString Client::name() const {
 }
 
 void Client::setName(const QString &name) {
+	if (name == d->name) {
+		return;
+	}
 	d->name = name;
 	emit nameChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -80,8 +92,12 @@ bool Client::online() const {
 }
 
 void Client::setOnline(bool online) {
+	if (online == d->online) {
+		return;
+	}
 	d->online = online;
 	emit onlineChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -90,8 +106,12 @@ QString Client::version() const {
 }
 
 void Client::setVersion(const QString &version) {
+	if (version == d->version) {
+		return;
+	}
 	d->version = version;
 	emit versionChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -100,9 +120,51 @@ QString Client::type() const {
 }
 
 void Client::setType(const QString &type) {
+	if (type == d->type) {
+		return;
+	}
 	d->type = type;
 	emit typeChanged();
+	d->hasChanged = true;
 	emit saveToCache();
+}
+
+void Client::setFromVariantMap(const QVariantMap &dev) {
+	if (d->id != dev["id"].toInt()) {
+		d->id = dev["id"].toInt();
+		emit idChanged();
+		d->hasChanged = true;
+	}
+	if (d->name != dev["name"].toString()) {
+		d->name = dev["name"].toString();
+		emit nameChanged();
+		d->hasChanged = true;
+	}
+	if (d->online != dev["online"].toBool()) {
+		d->online = dev["online"].toBool();
+		emit onlineChanged();
+		d->hasChanged = true;
+	}
+	if (d->editable != dev["editable"].toBool()) {
+		d->editable = dev["editable"].toBool();
+		emit editableChanged();
+		d->hasChanged = true;
+	}
+	if (d->version != dev["version"].toString()) {
+		d->version = dev["version"].toString();
+		emit versionChanged();
+		d->hasChanged = true;
+	}
+	if (d->type != dev["type"].toString()) {
+		d->type = dev["type"].toString();
+		emit typeChanged();
+		d->hasChanged = true;
+	}
+	if (dev["fromCache"].toBool() == false) {
+		emit saveToCache();
+	} else {
+		d->hasChanged = false;
+	}
 }
 
 bool Client::websocketConnected() const {
@@ -110,17 +172,22 @@ bool Client::websocketConnected() const {
 }
 
 void Client::saveToCache() {
-	QSqlDatabase db = QSqlDatabase::database();
-	if (db.isOpen()) {
-		QSqlQuery query(db);
-		query.prepare("REPLACE INTO Client (id, name, online, editable, version, type) VALUES (:id, :name, :online, :editable, :version, :type)");
-		query.bindValue(":id", d->id);
-		query.bindValue(":name", d->name);
-		query.bindValue(":online", d->online);
-		query.bindValue(":editable", d->editable);
-		query.bindValue(":version", d->version);
-		query.bindValue(":type", d->type);
-		query.exec();
+	qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Saving to cache (hasChanged = " << d->hasChanged << ")";
+	if (d->hasChanged) {
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			QSqlQuery query(db);
+			query.prepare("REPLACE INTO Client (id, name, online, editable, version, type) VALUES (:id, :name, :online, :editable, :version, :type)");
+			query.bindValue(":id", d->id);
+			query.bindValue(":name", d->name);
+			query.bindValue(":online", d->online);
+			query.bindValue(":editable", d->editable);
+			query.bindValue(":version", d->version);
+			query.bindValue(":type", d->type);
+			query.exec();
+			qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Saved to cache";
+			d->hasChanged = false;
+		}
 	}
 }
 
@@ -146,7 +213,7 @@ void Client::addressReceived(const QVariantMap &data) {
 	TelldusLiveParams params;
 	qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Websocket address received";
 	if (data["address"].toString() == "") {
-		qDebug() << "[CLIENT:" << d->id << ":WEBSOCKET] No server to connect to, client offline? Retry in 5 minutes";
+		qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET] No server to connect to, client offline? Retry in 5 minutes";
 		QTimer::singleShot(300000, this, SLOT(sessionAuthenticated()));
 		return;
 	}

@@ -47,6 +47,7 @@ public:
 	Type type() const;
 	void setType(Type type);
 	void setType(const QString &type );
+	Type getTypeFromString(const QString &type );
 
 	int hour() const;
 	void setHour(int hour);
@@ -68,6 +69,8 @@ public:
 
 	QString weekdays() const;
 	void setWeekdays(const QString &weekdays);
+
+	void setFromVariantMap(const QVariantMap &dev);
 
 signals:
 	void deviceIdChanged();

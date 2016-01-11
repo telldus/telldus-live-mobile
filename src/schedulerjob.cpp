@@ -7,6 +7,7 @@
 
 class SchedulerJob::PrivateData {
 public:
+	bool hasChanged;
 	int id, deviceId, method, hour, minute, offset, randomInterval;
 	int retries, retryInterval;
 	QString methodValue, weekdays;
@@ -39,8 +40,12 @@ int SchedulerJob::deviceId() const {
 }
 
 void SchedulerJob::setDeviceId(int deviceId) {
+	if (deviceId == d->deviceId) {
+		return;
+	}
 	d->deviceId = deviceId;
 	emit deviceIdChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -49,8 +54,12 @@ int SchedulerJob::schedulerJobId() const {
 }
 
 void SchedulerJob::setId(int id) {
+	if (id == d->id) {
+		return;
+	}
 	d->id = id;
 	emit idChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -59,8 +68,12 @@ int SchedulerJob::method() const {
 }
 
 void SchedulerJob::setMethod(int method) {
+	if (method == d->method) {
+		return;
+	}
 	d->method = method;
 	emit methodChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -69,8 +82,12 @@ QString SchedulerJob::methodValue() const {
 }
 
 void SchedulerJob::setMethodValue(const QString &methodValue) {
+	if (methodValue == d->methodValue) {
+		return;
+	}
 	d->methodValue = methodValue;
 	emit methodValueChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -79,8 +96,12 @@ QDateTime SchedulerJob::nextRunTime() const {
 }
 
 void SchedulerJob::setNextRunTime(const QDateTime &nextRunTime) {
+	if (nextRunTime == d->nextRunTime) {
+		return;
+	}
 	d->nextRunTime = nextRunTime;
 	emit nextRunTimeChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -89,8 +110,12 @@ SchedulerJob::Type SchedulerJob::type() const {
 }
 
 void SchedulerJob::setType(SchedulerJob::Type type) {
+	if (type == d->type) {
+		return;
+	}
 	d->type = type;
 	emit typeChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -104,13 +129,27 @@ void SchedulerJob::setType(const QString &type) {
 	}
 }
 
+SchedulerJob::Type SchedulerJob::getTypeFromString(const QString &type) {
+	if (type == "sunrise") {
+		return Sunrise;
+	} else if (type == "sunset") {
+		return Sunset;
+	} else {
+		return Time;
+	}
+}
+
 int SchedulerJob::hour() const {
 	return d->hour;
 }
 
 void SchedulerJob::setHour(int hour) {
+	if (hour == d->hour) {
+		return;
+	}
 	d->hour = hour;
 	emit hourChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -119,8 +158,12 @@ int SchedulerJob::minute() const {
 }
 
 void SchedulerJob::setMinute(int minute) {
+	if (minute == d->minute) {
+		return;
+	}
 	d->minute = minute;
 	emit minuteChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -129,8 +172,12 @@ int SchedulerJob::offset() const {
 }
 
 void SchedulerJob::setOffset(int offset) {
+	if (offset == d->offset) {
+		return;
+	}
 	d->offset = offset;
 	emit offsetChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -139,8 +186,12 @@ int SchedulerJob::randomInterval() const {
 }
 
 void SchedulerJob::setRandomInterval(int randomInterval) {
+	if (randomInterval == d->randomInterval) {
+		return;
+	}
 	d->randomInterval = randomInterval;
 	emit randomIntervalChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -149,8 +200,12 @@ int SchedulerJob::retries() const {
 }
 
 void SchedulerJob::setRetries(int retries) {
+	if (retries == d->retries) {
+		return;
+	}
 	d->retries = retries;
 	emit retriesChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -159,8 +214,12 @@ int SchedulerJob::retryInterval() const {
 }
 
 void SchedulerJob::setRetryInterval(int retryInterval) {
+	if (retryInterval == d->retryInterval) {
+		return;
+	}
 	d->retryInterval = retryInterval;
 	emit retryIntervalChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
@@ -169,29 +228,111 @@ QString SchedulerJob::weekdays() const {
 }
 
 void SchedulerJob::setWeekdays(const QString &weekdays) {
+	if (weekdays == d->weekdays) {
+		return;
+	}
 	d->weekdays = weekdays;
 	emit weekdaysChanged();
+	d->hasChanged = true;
 	emit saveToCache();
 }
 
+void SchedulerJob::setFromVariantMap(const QVariantMap &dev) {
+	if (d->id != dev["id"].toInt()) {
+		d->id = dev["id"].toInt();
+		emit idChanged();
+		d->hasChanged = true;
+	}
+	if (d->deviceId != dev["deviceId"].toInt()) {
+		d->deviceId = dev["deviceId"].toInt();
+		emit deviceIdChanged();
+		d->hasChanged = true;
+	}
+	if (d->method != dev["method"].toInt()) {
+		d->method = dev["method"].toInt();
+		emit methodChanged();
+		d->hasChanged = true;
+	}
+	if (d->methodValue != dev["methodValue"].toString()) {
+		d->methodValue = dev["methodValue"].toString();
+		emit methodValueChanged();
+		d->hasChanged = true;
+	}
+	if (d->nextRunTime != QDateTime::fromMSecsSinceEpoch(((qint64)dev["nextRunTime"].toInt()) * 1000)) {
+		d->nextRunTime = QDateTime::fromMSecsSinceEpoch(((qint64)dev["nextRunTime"].toInt()) * 1000);
+		emit nextRunTimeChanged();
+		d->hasChanged = true;
+	}
+	if (d->type != getTypeFromString(dev["type"].toString())) {
+		d->type = getTypeFromString(dev["type"].toString());
+		emit typeChanged();
+		d->hasChanged = true;
+	}
+	if (d->hour != dev["hour"].toInt()) {
+		d->hour = dev["hour"].toInt();
+		emit hourChanged();
+		d->hasChanged = true;
+	}
+	if (d->minute != dev["minute"].toInt()) {
+		d->minute = dev["minute"].toInt();
+		emit minuteChanged();
+		d->hasChanged = true;
+	}
+	if (d->offset != dev["offset"].toInt()) {
+		d->offset = dev["offset"].toInt();
+		emit offsetChanged();
+		d->hasChanged = true;
+	}
+	if (d->randomInterval != dev["randomInterval"].toInt()) {
+		d->randomInterval = dev["randomInterval"].toInt();
+		emit randomIntervalChanged();
+		d->hasChanged = true;
+	}
+	if (d->retries != dev["retries"].toInt()) {
+		d->retries = dev["retries"].toInt();
+		emit retriesChanged();
+		d->hasChanged = true;
+	}
+	if (d->retryInterval != dev["retryInterval"].toInt()) {
+		d->retryInterval = dev["retryInterval"].toInt();
+		emit retryIntervalChanged();
+		d->hasChanged = true;
+	}
+	if (d->weekdays != dev["weekdays"].toString()) {
+		d->weekdays = dev["weekdays"].toString();
+		emit weekdaysChanged();
+		d->hasChanged = true;
+	}
+	if (dev["fromCache"].toBool() == false) {
+		emit saveToCache();
+	} else {
+		d->hasChanged = false;
+	}
+}
+
 void SchedulerJob::saveToCache() {
-	QSqlDatabase db = QSqlDatabase::database();
-	if (db.isOpen()) {
-		QSqlQuery query(db);
-		query.prepare("REPLACE INTO Scheduler (id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		query.bindValue(0, d->id);
-		query.bindValue(1, d->deviceId);
-		query.bindValue(2, d->method);
-		query.bindValue(3, d->methodValue);
-		query.bindValue(4, d->nextRunTime.toTime_t());
-		query.bindValue(5, d->type);
-		query.bindValue(6, d->hour);
-		query.bindValue(7, d->minute);
-		query.bindValue(8, d->offset);
-		query.bindValue(9, d->randomInterval);
-		query.bindValue(10, d->retries);
-		query.bindValue(11, d->retryInterval);
-		query.bindValue(12, d->weekdays);
-		query.exec();
+	qDebug().noquote().nospace() << "[SCHEDULDERJOB:" << d->id << "] Saving to cache (hasChanged = " << d->hasChanged << ")";
+	if (d->hasChanged) {
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			QSqlQuery query(db);
+			query.prepare("REPLACE INTO Scheduler (id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			query.bindValue(0, d->id);
+			query.bindValue(1, d->deviceId);
+			query.bindValue(2, d->method);
+			query.bindValue(3, d->methodValue);
+			query.bindValue(4, d->nextRunTime.toTime_t());
+			query.bindValue(5, d->type);
+			query.bindValue(6, d->hour);
+			query.bindValue(7, d->minute);
+			query.bindValue(8, d->offset);
+			query.bindValue(9, d->randomInterval);
+			query.bindValue(10, d->retries);
+			query.bindValue(11, d->retryInterval);
+			query.bindValue(12, d->weekdays);
+			query.exec();
+			qDebug().noquote().nospace() << "[SCHEDULDERJOB:" << d->id << "] Saved to cache";
+			d->hasChanged = false;
+		}
 	}
 }

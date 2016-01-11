@@ -79,6 +79,9 @@ public:
 	Type type() const;
 	void setType(Type type);
 	void setType(const QString &type);
+	Type getTypeFromString(const QString &type );
+
+	void setFromVariantMap(const QVariantMap &dev);
 
 signals:
 	void clientNameChanged();
