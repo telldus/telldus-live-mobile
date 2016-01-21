@@ -46,6 +46,10 @@ void Logger::errorHandler(QtMsgType type, const QMessageLogContext &context, con
 
 	QByteArray localMsg = msg.toLocal8Bit();
 
+	if (localMsg.startsWith("QSslSocket")) {
+		return;
+	}
+
 	QStringList args = QCoreApplication::arguments();
 	QString logFilter;
 	QByteArray localLogFilter = logFilter.toLocal8Bit();

@@ -44,7 +44,7 @@ void Dev::deinit() {
 
 void Dev::logScreenView(const QString &screenName) {
 #if IS_FEATURE_LOGGING_ENABLED
-	qDebug() << "logScreenView: " + screenName;
+	qDebug() << "[GOOGLEANALYTICS] logScreenView: " + screenName;
 #endif
 #if IS_FEATURE_GOOGLEANALYTICS_ENABLED
 	QNetworkRequest req(QUrl("http://www.google-analytics.com/collect"));
@@ -70,14 +70,14 @@ void Dev::logScreenView(const QString &screenName) {
 
 	QByteArray data;
 	data.append(query.query());
-	qDebug() << data;
+	qDebug() << "[GOOGLEANALYTICS] " << data;
 	nam->post(req, data);
 #endif
 }
 
 void Dev::logEvent(const QString &category, const QString &action, const QString &label) {
 #if IS_FEATURE_LOGGING_ENABLED
-	qDebug() << "logEvent: " + category + ", " + action + ", " + label;
+	qDebug() << "[GOOGLEANALYTICS] logEvent: " + category + ", " + action + ", " + label;
 #endif
 #if IS_FEATURE_GOOGLEANALYTICS_ENABLED
 	QNetworkRequest req(QUrl("http://www.google-analytics.com/collect"));
@@ -105,7 +105,7 @@ void Dev::logEvent(const QString &category, const QString &action, const QString
 
 	QByteArray data;
 	data.append(query.query());
-	qDebug() << data;
+	qDebug() << "[GOOGLEANALYTICS] " << data;
 	nam->post(req, data);
 #endif
 }
