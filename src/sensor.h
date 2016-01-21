@@ -34,6 +34,7 @@ class Sensor : public QObject
 	Q_PROPERTY(int id READ sensorId WRITE setId NOTIFY idChanged)
 	Q_PROPERTY(QDateTime lastUpdated READ lastUpdated WRITE setLastUpdated NOTIFY lastUpdatedChanged)
 	Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+	Q_PROPERTY(QString clientName READ clientName WRITE setClientName NOTIFY clientNameChanged)
 	Q_PROPERTY(int minutesAgo READ minutesAgo NOTIFY lastUpdatedChanged)
 public:
 	explicit Sensor(QObject *parent = 0);
@@ -64,6 +65,9 @@ public:
 
 	QString name() const;
 	void setName(const QString &name);
+
+	QString clientName() const;
+	void setClientName(const QString &name);
 
 	QString temperature() const;
 	void setTemperature(const QString &temperature);
@@ -113,7 +117,8 @@ signals:
 	void rainRateChanged(const QString &);
 	void rainTotalChanged(const QString &);
 	void lastUpdatedChanged(const QDateTime &lastUpdated);
-	void nameChanged(const QString &);
+	void nameChanged();
+	void clientNameChanged();
 	void temperatureChanged(const QString &temperature);
 	void windAvgChanged(const QString &);
 	void windGustChanged(const QString &);
@@ -121,7 +126,7 @@ signals:
 	void uvChanged(const QString &);
 	void wattChanged(const QString &);
 	void luminanceChanged(const QString &);
-	void isFavoriteChanged(const bool &);
+	void isFavoriteChanged();
 
 private slots:
 	void fetchData();

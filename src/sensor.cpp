@@ -14,7 +14,7 @@ public:
 	bool hasTemperature, hasWindAvg, hasWindGust, hasWindDir;
 	bool hasUv, hasWatt, hasLuminance, isFavorite;
 	int id;
-	QString name;
+	QString name, clientName;
 	QString humidity, rainRate, rainTotal;
 	QString temperature, windAvg, windGust, windDir;
 	QString uv, watt, luminance;
@@ -136,7 +136,7 @@ void Sensor::setIsFavorite(bool isFavorite) {
 		return;
 	}
 	d->isFavorite = isFavorite;
-	emit isFavoriteChanged(isFavorite);
+	emit isFavoriteChanged();
 	d->hasChanged = true;
 	emit saveToCache();
 }
@@ -168,7 +168,21 @@ void Sensor::setName(const QString &name) {
 		return;
 	}
 	d->name = name;
-	emit nameChanged(name);
+	emit nameChanged();
+	d->hasChanged = true;
+	emit saveToCache();
+}
+
+QString Sensor::clientName() const {
+	return d->clientName;
+}
+
+void Sensor::setClientName(const QString &clientName) {
+	if (clientName == d->clientName) {
+		return;
+	}
+	d->clientName = clientName;
+	emit clientNameChanged();
 	d->hasChanged = true;
 	emit saveToCache();
 }
@@ -385,7 +399,12 @@ void Sensor::setFromVariantMap(const QVariantMap &dev) {
 	}
 	if (d->name != dev["name"].toString()) {
 		d->name = dev["name"].toString();
-		emit nameChanged(dev["name"].toString());
+		emit nameChanged();
+		d->hasChanged = true;
+	}
+	if (d->clientName != dev["clientName"].toString()) {
+		d->clientName = dev["clientName"].toString();
+		emit clientNameChanged();
 		d->hasChanged = true;
 	}
 	if (d->lastUpdated != QDateTime::fromMSecsSinceEpoch(((qint64)dev["lastUpdated"].toInt()) * 1000)) {
@@ -465,7 +484,7 @@ void Sensor::setFromVariantMap(const QVariantMap &dev) {
 	}
 	if (dev.contains("isfavorite") && d->isFavorite != dev["isfavorite"].toBool()) {
 		d->isFavorite = dev["isfavorite"].toBool();
-		emit isFavoriteChanged(dev["isfavorite"].toBool());
+		emit isFavoriteChanged();
 		d->hasChanged = true;
 	}
 	if (dev["fromCache"].toBool() == false) {
@@ -481,7 +500,7 @@ void Sensor::saveToCache() {
 		QSqlDatabase db = QSqlDatabase::database();
 		if (db.isOpen()) {
 			QSqlQuery query(db);
-			query.prepare("REPLACE INTO Sensor (id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			query.prepare("REPLACE INTO Sensor (id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite, clientName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			query.bindValue(0, d->id);
 			query.bindValue(1, d->name);
 			query.bindValue(2, d->lastUpdated.toTime_t());
@@ -496,6 +515,7 @@ void Sensor::saveToCache() {
 			query.bindValue(11, d->windDir);
 			query.bindValue(12, d->luminance);
 			query.bindValue(13, d->isFavorite);
+			query.bindValue(14, d->clientName);
 			query.exec();
 			qDebug().noquote().nospace() << "[SENSOR:" << d->id << "] Saved to cache";
 			d->hasChanged = false;
