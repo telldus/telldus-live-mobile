@@ -51,7 +51,7 @@ Rectangle {
 					text: title
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(72)
+					anchors.leftMargin: Units.dp(56)
 				}
 				MouseArea {
 					anchors.fill: parent
@@ -66,40 +66,79 @@ Rectangle {
 			id: clientListItem
 			Rectangle {
 				width: parent.width
-				height: Units.dp(56)
+				height: Units.dp(40)
 				color: index ==  clientList.selectedIndex && properties.ui.supportsKeys ? properties.theme.colors.telldusOrange : "transparent"
 				Item {
 					id: clientStatusIcon
 					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(16)
+					anchors.leftMargin: Units.dp(20)
 					anchors.verticalCenter: parent.verticalCenter
-					height: Units.dp(32)
-					width: Units.dp(32)
-					Rectangle {
-						id: clientStatusIconCircle
+					height: Units.dp(24)
+					width: Units.dp(24)
+					Image {
+						id: clientStatusIconImage
 						anchors.fill: parent
 						anchors.margins: Units.dp(4)
-						radius: width / 2
-						color: client.online ? (client.websocketConnected ? "#43A047" : "#FDD835") : "#E53935"
+						source: "image://icons/devices/" + (client.online ? (client.websocketConnected ? "#43A047" : "#FDD835") : "#E53935")
+						asynchronous: true
+						smooth: true
+						fillMode: Image.PreserveAspectFit
+						sourceSize.width: width * 2
+						sourceSize.height: height * 2
 					}
 				}
 				Text {
 					id: clientName
 					color: "#ffffff"
-					font.pixelSize: Units.dp(20)
+					font.pixelSize: Units.dp(14)
 					text: client.name
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(72)
+					anchors.leftMargin: Units.dp(56)
 				}
+			}
+		}
+		Item {
+			id: clientListTitle
+			anchors.top: menuUserDetails.bottom
+			anchors.left: parent.left
+			anchors.right: parent.right
+			height: Units.dp(40)
+			Item {
+				id: clientListTitleIcon
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(16)
+				anchors.verticalCenter: parent.verticalCenter
+				height: Units.dp(32)
+				width: Units.dp(32)
+				Image {
+					id: clientListTitleImage
+					anchors.fill: parent
+					anchors.margins: Units.dp(4)
+					source: "image://icons/house/#ffffff"
+					asynchronous: true
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+			}
+			Text {
+				id: clientListTitleText
+				color: "#ffffff"
+				font.pixelSize: Units.dp(20)
+				text: "Connected locations"
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.leftMargin: Units.dp(56)
 			}
 		}
 		ListView {
 			id: clientList
-			anchors.top: menuUserDetails.bottom
+			anchors.top: clientListTitle.bottom
 			anchors.left: parent.left
 			anchors.right: parent.right
-			height: clientModel.count * Units.dp(56)
+			height: clientModel.count * Units.dp(40)
 			model: clientModel
 			delegate: clientListItem
 			maximumFlickVelocity: Units.dp(1500)
@@ -233,27 +272,37 @@ Rectangle {
 		}
 		Component {
 			id: tabBarItem
-			Rectangle {
+			Item {
 				visible: inTabBar
 				width: inTabBar ? tabBar.width / 4 : 0
 				height: parent.height
-				color: index ==  pageModel.selectedIndex ? properties.theme.colors.telldusOrange : "transparent"
 				Item {
 					id: dashboardIcon
-					anchors.centerIn: parent
+					anchors.top: parent.top
+					anchors.topMargin: Units.dp(2)
+					anchors.horizontalCenter: parent.horizontalCenter
 					height: Units.dp(32)
 					width: Units.dp(32)
 					Image {
 						id: dashboardIconImage
 						anchors.fill: parent
-						anchors.margins: Units.dp(4)
-						source: "image://icons/" + title.toLowerCase() + "/" + (index ==  pageModel.selectedIndex ? "#ffffff" : properties.theme.colors.telldusOrange)
+						anchors.margins: Units.dp(6)
+						source: "image://icons/" + title.toLowerCase() + "/" + (index ==  pageModel.selectedIndex ? properties.theme.colors.telldusOrange : "#616161")
 						asynchronous: true
 						smooth: true
 						fillMode: Image.PreserveAspectFit
 						sourceSize.width: width * 2
 						sourceSize.height: height * 2
 					}
+				}
+				Text {
+					anchors.bottom: parent.bottom
+					anchors.bottomMargin: Units.dp(4)
+					horizontalAlignment: Text.AlignHCenter
+					text: title
+					width: parent.width
+					font.pixelSize: Units.dp(8)
+					color: (index ==  pageModel.selectedIndex ? properties.theme.colors.telldusOrange : "#616161")
 				}
 				MouseArea {
 					anchors.fill: parent
@@ -267,18 +316,24 @@ Rectangle {
 			id: tabBarBackground
 			anchors.left: parent.left
 			anchors.right: parent.right
-			anchors.bottom: parent.bottom
-			height: Units.dp(56)
-			tintColor: "#f5f5f5"
-			elevation: 2
-			ListView {
-				id: tabBar
+			anchors.bottom: (Qt.platform.os == "osx" ? undefined : parent.bottom)
+			anchors.top: (Qt.platform.os == "osx" ? mainViewOffset.bottom + Units.dp(56) : undefined)
+			height: Units.dp(49)
+			tintColor: "#E0E0E0"
+			elevation: 0
+			Rectangle {
 				anchors.fill: parent
-				model: pageModel
-				delegate: tabBarItem
-				orientation: Qt.Horizontal
-				maximumFlickVelocity: Units.dp(1500)
-				spacing: 0
+				anchors.topMargin: Units.dp(1)
+				color: "#f5f5f5"
+				ListView {
+					id: tabBar
+					anchors.fill: parent
+					model: pageModel
+					delegate: tabBarItem
+					orientation: Qt.Horizontal
+					maximumFlickVelocity: Units.dp(1500)
+					spacing: 0
+				}
 			}
 		}
 		SwipeArea {

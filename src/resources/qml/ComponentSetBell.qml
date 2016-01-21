@@ -27,11 +27,11 @@ Item {
 		anchors.fill: parent
 		onPressed: {
 			bellIcon.opacity = 0.85
-			tileWhite.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
+			tileCard.tintColor = "#EAEAEA"
 		}
 		onReleased: {
 			bellIcon.opacity = 1
-			tileWhite.color = "#ffffff"
+			tileCard.tintColor = "#FAFAFA"
 		}
 		onClicked: {
 			device.bell()

@@ -1,27 +1,19 @@
 import QtQuick 2.0
 import Telldus 1.0
+import Tui 0.1
 
 Rectangle {
 	id: settingsPage
 	color: "#ffffff"
 
-	Header {
-		id: header
-		title: "Settings"
-		onBackClicked: {
-			mainInterface.setActivePage(0);
-		}
-	}
 	Item {
 		anchors.fill: parent
-		anchors.topMargin: screen.showHeaderAtTop ? header.height : 0
-		anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
 		Item {
 			anchors.top: parent.top
 			anchors.left: parent.left
-			anchors.leftMargin: 30
+			anchors.leftMargin: Units.dp(30)
 			anchors.right: parent.right
-			anchors.rightMargin: 30
+			anchors.rightMargin: Units.dp(30)
 			anchors.bottom: button.top
 			Text {
 				anchors.verticalCenter: parent.verticalCenter
@@ -31,7 +23,7 @@ Rectangle {
 				text: "You are currently logged in as<br>" + user.firstname + "&nbsp;" + user.lastname
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
-				font.pixelSize: 15*SCALEFACTOR
+				font.pixelSize: Units.dp(15)
 				font.bold: true
 				color: "#093266"
 			}
@@ -40,9 +32,19 @@ Rectangle {
 			id: button
 			title: "Logout"
 			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 30*SCALEFACTOR
+			anchors.bottomMargin: Units.dp(30)
 			anchors.horizontalCenter: parent.horizontalCenter
-			onClicked: telldusLive.logout()
+			onClicked: {
+				mainInterface.setActivePage(0);
+				telldusLive.logout()
+			}
+		}
+	}
+
+	function updateHeader() {
+		header.title = "Settings";
+		header.backClickedMethod = function() {
+			mainInterface.setActivePage(0);
 		}
 	}
 }

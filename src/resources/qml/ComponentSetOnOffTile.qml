@@ -25,43 +25,7 @@ Item {
 		}
 	}
 
-	onDeviceStateChanged: {
-		if (deviceState == 1 || deviceState == 16) {
-			tile.hue = 0.08
-			tile.saturation = 0.99
-			tile.lightness = 0.45
-			onButtonText.color = "#43A047"
-			offButtonText.color = "#757575"
-		} else if (deviceState == 2) {
-			tile.hue = 0.0
-			tile.saturation = 0.0
-			tile.lightness = 0.74
-			onButtonText.color = "#757575"
-			offButtonText.color = "#E53935"
-		} else {
-			tile.hue = tile.hueDefault
-			tile.saturation = tile.saturationDefault
-			tile.lightness = tile.lightnessDefault
-		}
-	}
-
-	MouseArea {
-		id: buttonsMouseArea
-		preventStealing: true
-		anchors.fill: parent
-		onReleased: {
-			var maxY = dimArea.height - dimHandle.height;
-			var value = Math.round(dimHandle.y / maxY * 255);
-			console.log("Sending new dim value: " + value);
-			device.dim(value);
-		}
-		drag.target: dimHandle
-		drag.axis: Drag.XandYAxis
-		drag.minimumX: 0
-		drag.maximumX: 0
-		drag.minimumY: 0
-		drag.maximumY: dimArea.height - dimHandle.height
-	}
+	onDeviceStateChanged: updateButtonColors()
 
 	Rectangle {
 		id: onButtonBackgroundSquarer1
@@ -119,14 +83,8 @@ Item {
 			drag.maximumX: 0
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
-			onPressed: {
-				device.turnOn()
-//				onButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
-			}
-			onReleased: {
-//				onButton.color = (deviceState == 1 || deviceState == 16) ? "#FFFFFF" : Qt.hsla(tile.hue, 0.1, 0.92, 1)
-//				offButton.color = deviceState == 2 ? "#FFFFFF" : Qt.hsla(tile.hue, 0.1, 0.92, 1)
-			}
+			onPressed: updateButtonColors()
+			onReleased: buttonReleased("onMouseArea")
 		}
 	}
 	Rectangle {
@@ -194,14 +152,8 @@ Item {
 			drag.maximumX: 0
 			drag.minimumY: 0
 			drag.maximumY: dimArea.height - dimHandle.height
-			onPressed: {
-				device.turnOff()
-//				offButton.color = Qt.hsla(tile.hue, 0.2, 0.9, 1)
-			}
-			onReleased: {
-//				onButton.color = (deviceState == 1 || deviceState == 16) ? "#FFFFFF" : Qt.hsla(tile.hue, 0.1, 0.92, 1)
-//				offButton.color = deviceState == 2 ? "#FFFFFF" : Qt.hsla(tile.hue, 0.1, 0.92, 1)
-			}
+			onPressed: updateButtonColors()
+			onReleased: buttonReleased("offMouseArea")
 		}
 	}
 	Item {
@@ -215,20 +167,7 @@ Item {
 			radius: height / 2
 			anchors.horizontalCenter: parent.horizontalCenter
 			y: dimValue()
-			onYChanged: {
-				// Code below would enable live updating of dimmers
-				//	var maxY = dimArea.height - dimHandle.height;
-				//	var value = Math.round(dimHandle.y / maxY * 255);
-				//	console.log("Sending new dim value: " + value);
-				//	device.dim(value);
-			}
 			color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
-			Connections {
-				target: device
-				onStateValueChanged: {
-					dimHandle.y = dimValue()
-				}
-			}
 			Image {
 				id: dimHandleArrows
 				width: parent.width
@@ -242,14 +181,54 @@ Item {
 			}
 		}
 	}
+	function buttonReleased(sender) {
+		updateButtonColors()
+		var maxY = dimArea.height - dimHandle.height;
+		var value = 255 - Math.round(dimHandle.y / maxY * 255);
+		if (value == device.stateValue) {
+			if (sender == "offMouseArea") {
+				device.turnOff()
+			} else if (sender == "onMouseArea") {
+				device.turnOn()
+			}
+		} else {
+			if (value == 0) {
+				device.turnOff();
+			} else if (value == 255) {
+				device.turnOn();
+			} else {
+				device.dim(value);
+			}
+		}
+	}
 	function dimValue() {
 		var maxY = dimArea.height - dimHandle.height;
 		var dimValue = maxY - ((device.stateValue / 255) * maxY);
 		return dimValue;
 	}
-	function pressedAndHeld() {
-		if ((methods & 16) == 0) {
-			return;
+	function updateButtonColors() {
+		if (deviceState == 1 || deviceState == 16) {
+			tile.hue = 0.08
+			tile.saturation = 0.99
+			tile.lightness = 0.45
+			offButton.color = offMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
+			onButton.color = onMouseArea.pressed ? "#EAEAEA" : "#FAFAFA"
+			onButtonText.color = "#43A047"
+			offButtonText.color = "#757575"
+		} else if (deviceState == 2) {
+			tile.hue = 0.0
+			tile.saturation = 0.0
+			tile.lightness = 0.74
+			offButton.color = offMouseArea.pressed ? "#EAEAEA" : "#FAFAFA"
+			onButton.color = onMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
+			onButtonText.color = "#757575"
+			offButtonText.color = "#E53935"
+		} else {
+			offButton.color = offMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
+			onButton.color = onMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
+			tile.hue = tile.hueDefault
+			tile.saturation = tile.saturationDefault
+			tile.lightness = tile.lightnessDefault
 		}
 	}
 }

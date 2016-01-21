@@ -18,6 +18,7 @@
 		<file>resources/qml/LoginNonWebKit.qml</file>
 		<file>resources/qml/Button.qml</file>
 		<file>resources/qml/ComponentSetLearn.qml</file>
+		<file>resources/qml/TabBar.qml</file>
 		<file>resources/qml/TabPage.qml</file>
 		<file>resources/qml/ComponentSetBell.qml</file>
 		<file>resources/qml/BusyIndicator.qml</file>

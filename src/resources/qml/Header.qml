@@ -8,20 +8,21 @@ View {
 	property alias title: titleText.text
 	property alias backVisible: backButton.visible
 	property alias editButtonVisible: editButton.visible
+	property var backClickedMethod
 	property var headerHeight: 56
-	signal backClicked()
 	signal editClicked()
 	anchors.left: parent.left
 	anchors.top: parent.top
-	height: screen.showHeaderAtTop ? headerHeight * SCALEFACTOR : mainView.height
-	width: screen.showHeaderAtTop ? mainView.width : headerHeight * SCALEFACTOR
+	height: screen.showHeaderAtTop ? Units.dp(headerHeight) : mainView.height
+	width: screen.showHeaderAtTop ? mainView.width :Units.dp(headerHeight)
 	tintColor: properties.theme.colors.telldusBlue
-	elevation: 2
+	elevation: (Qt.platform.os == "android" ? 0 : 1)
 
 	Connections {
 		target: core
 		onBackPressed: {
-			backClicked();
+			console.log("received core.onBackPressed")
+			backClickedMethod();
 		}
 	}
 
@@ -33,8 +34,8 @@ View {
 		anchors.bottom: parent.bottom
 		Item {
 			id: leftButton
-			width: headerHeight * SCALEFACTOR
-			height: headerHeight * SCALEFACTOR
+			width: Units.dp(headerHeight)
+			height: Units.dp(headerHeight)
 			anchors.top: parent.top
 			anchors.left: parent.left
 			clip: true
@@ -42,12 +43,12 @@ View {
 				id: backButton
 				visible: false
 				anchors.centerIn: parent
-				height: (leftButton.height - 10) * SCALEFACTOR
+				height: (leftButton.height - 32) * SCALEFACTOR
 				width: height
 				Image {
 					id: backButtonImage
 					anchors.centerIn: parent
-					height: parent.height * (0.5 / SCALEFACTOR)
+					height: parent.height / SCALEFACTOR
 					width: height
 					source: "../svgs/iconArrowLeft.svg"
 					asynchronous: true
@@ -64,18 +65,18 @@ View {
 				anchors.bottom: parent.bottom
 				anchors.left: backButton.left
 				anchors.right: backButton.right
-				onClicked: backClicked()
+				onClicked: backClickedMethod()
 			}
 			Item {
 				id: drawerButton
 				visible: !backButton.visible
 				anchors.centerIn: parent
-				height: (leftButton.height - 10) * SCALEFACTOR
+				height: (leftButton.height - 32) * SCALEFACTOR
 				width: height
 				Image {
 					id: drawerButtonImage
 					anchors.centerIn: parent
-					height: parent.height * (0.5 / SCALEFACTOR)
+					height: (parent.height * 0.8 / SCALEFACTOR) * 0.8
 					width: height
 					source: "../svgs/iconHamburger.svg"
 					asynchronous: true
@@ -106,12 +107,12 @@ View {
 				id: editButton
 				visible: false
 				anchors.centerIn: parent
-				height: (rightButton.height - 10) * SCALEFACTOR
+				height: (rightButton.height - 32) * SCALEFACTOR
 				width: height
 				Image {
 					id: editButtonImage
 					anchors.centerIn: parent
-					height: parent.height * 0.6 / SCALEFACTOR
+					height: parent.height / SCALEFACTOR
 					width: height
 					source: "image://icons/favourite/#ffffff"
 					asynchronous: true
@@ -158,14 +159,13 @@ View {
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
 				width: screen.showHeaderAtTop ? parent.width : parent.height
-				font.pixelSize: 18 * SCALEFACTOR
-				font.weight: Font.Bold
+				font.pixelSize: 20 * SCALEFACTOR
 				color: "white"
 				style: Text.Raised;
 				styleColor: "#003959"
 				elide: Text.ElideRight
 				rotation: screen.showHeaderAtTop ? 0 : 270
-				horizontalAlignment: Text.AlignHCenter
+				horizontalAlignment: (Qt.platform.os == "android" ? undefined : Text.AlignHCenter)
 			}
 		}
 	}
