@@ -143,6 +143,12 @@ bool CommonView::eventFilter(QObject *obj, QEvent * event ) {
 				emit backPressed();
 				return true;
 			}
+#ifdef PLATFORM_DESKTOP
+			if (keyEvent->key() == Qt::Key_Backspace) {
+				emit backPressed();
+				return true;
+			}
+#endif
 		}
 	}
 	if (event->type() != QEvent::Resize) {
