@@ -18,7 +18,9 @@ DeviceModel::DeviceModel(QObject *parent) :
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
 		qDebug() << "[SQL] CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT, clientName TEXT)";
-		QSqlQuery query("CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT, clientName TEXT)", db);
+		QSqlQuery query1("CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT, clientName TEXT)", db);
+		qDebug() << "[SQL] ALTER TABLE Device ADD COLUMN deactive INTEGER";
+		QSqlQuery query2("ALTER TABLE Device ADD COLUMN deactive INTEGER", db);
 	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
@@ -28,8 +30,8 @@ void DeviceModel::fetchDataFromCache() {
 	qDebug() << "[METHOD] DeviceModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
-		qDebug() << "[SQL] SELECT id, name, methods, type, favorite, state, statevalue, clientName FROM Device ORDER BY name";
-		QSqlQuery query("SELECT id, name, methods, type, favorite, state, statevalue, clientName FROM Device ORDER BY name", db);
+		qDebug() << "[SQL] SELECT id, name, methods, type, favorite, state, statevalue, clientName, deactive FROM Device ORDER BY name";
+		QSqlQuery query("SELECT id, name, methods, type, favorite, state, statevalue, clientName, deactive FROM Device ORDER BY name", db);
 		QVariantList devices;
 		while (query.next()) {
 			QVariantMap device;
@@ -41,6 +43,7 @@ void DeviceModel::fetchDataFromCache() {
 			device["state"] = query.value(5);
 			device["statevalue"] = query.value(6);
 			device["clientName"] = query.value(7);
+			device["deactive"] = query.value(8);
 			device["fromCache"] = true;
 			devices << device;
 		}
@@ -51,18 +54,25 @@ void DeviceModel::fetchDataFromCache() {
 }
 
 void DeviceModel::addDevices(const QVariantList &deviceList) {
+	QList<int> activeDeviceIds;
 	QList<QObject *> list;
 	foreach(QVariant v, deviceList) {
 		QVariantMap dev = v.toMap();
-		Device *device = this->findDevice(dev["id"].toInt());
-		if (!device) {
-			device = new Device(this);
-			device->setFromVariantMap(dev);
-			list << device;
-		} else {
-			device->setFromVariantMap(dev);
+		if (dev["deactive"].toBool() == false) {
+			if (dev["fromCache"].toBool() == false) {
+				activeDeviceIds << dev["id"].toInt();
+			}
+			Device *device = this->findDevice(dev["id"].toInt());
+			if (!device) {
+				device = new Device(this);
+				device->setFromVariantMap(dev);
+				list << device;
+			} else {
+				device->setFromVariantMap(dev);
+			}
 		}
 	}
+	this->deactivateDevices(activeDeviceIds);
 	if (list.size()) {
 		//Appends all in one go
 		this->append(list);
@@ -77,6 +87,12 @@ void DeviceModel::authorizationChanged() {
 		telldusLive->call("devices/list", params, this, SLOT(onDevicesList(QVariantMap)));
 	} else {
 		this->clear();
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			qDebug() << "[SQL] DELETE FROM Device";
+			QSqlQuery query("DELETE FROM Device", db);
+		}
+		qDebug().nospace().noquote() << "[DEVICEMODEL] Cleared";
 	}
 }
 
@@ -92,6 +108,15 @@ void DeviceModel::createGroup(int clientId, const QString &name, Device *dev) {
 	telldusLive->call("group/add", params, this, SLOT(onGroupAdd(QVariantMap)));
 }
 
+QList<int> DeviceModel::getIds() const {
+	QList<int> deviceIds;
+	for(int i = 0; i < this->rowCount(); ++i) {
+		Device *device = qobject_cast<Device *>(this->get(i).value<QObject *>());
+		deviceIds << device->deviceId();
+	}
+	return deviceIds;
+}
+
 Device *DeviceModel::findDevice(int id) const {
 	for(int i = 0; i < this->rowCount(); ++i) {
 		Device *device = qobject_cast<Device *>(this->get(i).value<QObject *>());
@@ -103,6 +128,26 @@ Device *DeviceModel::findDevice(int id) const {
 		}
 	}
 	return 0;
+}
+
+void DeviceModel::deactivateDevices(QList<int> activeIds) {
+	QSqlDatabase db = QSqlDatabase::database();
+	for(int j=0; j < activeIds.count(); ++j) {
+		for(int i = 0; i < this->rowCount(); ++i) {
+			Device *device = qobject_cast<Device *>(this->get(i).value<QObject *>());
+			if (activeIds.indexOf(device->deviceId()) == -1) {
+				qDebug() << "[DEVICEMODEL] Device Not Found, will deactivate!! Id: " << device->deviceId();
+				if (db.isOpen()) {
+					QSqlQuery query(db);
+					query.prepare("UPDATE Device SET deactive = ? WHERE id = ?");
+					query.bindValue(0, true);
+					query.bindValue(1, device->deviceId());
+					query.exec();
+				}
+				this->splice(i, 1);
+			}
+		}
+	}
 }
 
 DeviceModel * DeviceModel::instance() {
@@ -136,7 +181,20 @@ void DeviceModel::onDeviceRemove(const QVariantMap &result, const QVariantMap &p
 }
 
 void DeviceModel::onDevicesList(const QVariantMap &result) {
-	this->addDevices(result["device"].toList());
+	qDebug() << "[MISC] device count: " << result["device"].toList().size();
+	if (result["device"].toList().size() == 0) {
+		qDebug() << "[DEVICEMODEL] No devices  ound, will deactivate all!!";
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			QSqlQuery query(db);
+			query.prepare("UPDATE Device SET deactive = ?");
+			query.bindValue(0, true);
+			query.exec();
+		}
+		this->clear();
+	} else {
+		this->addDevices(result["device"].toList());
+	}
 	emit devicesLoaded(result["device"].toList());
 }
 

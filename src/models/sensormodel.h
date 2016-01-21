@@ -12,14 +12,17 @@ public:
 
 	Q_INVOKABLE void addSensors(const QVariantList &sensors);
 	Q_INVOKABLE Sensor *findSensor(int id) const;
+	Q_INVOKABLE void deactivateSensors(QList<int> activeIds);
 
 	static SensorModel *instance();
 
 signals:
 	void sensorsLoaded(const QVariantList &sensors);
 
-private slots:
+public slots:
 	void authorizationChanged();
+
+private slots:
 	void onSensorsList(const QVariantMap &result);
 	void fetchDataFromCache();
 

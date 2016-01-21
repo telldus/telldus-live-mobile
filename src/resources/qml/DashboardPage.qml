@@ -67,16 +67,104 @@ Item {
 			running: true
 			repeat: true
 		}
+		Component {
+			id: dashboardListHeader
+			Item {
+				height: Units.dp(60)
+				width: parent.width
+				y: -list.contentY - height
+
+				property bool refresh: state == "pulled" ? true : false
+
+				Item {
+					id: arrow
+					anchors.fill: parent
+					Image {
+						id: arrowImage
+						visible: !refreshTimer.running
+						anchors.centerIn: parent
+						height: parent.height * 0.5
+						width: height
+						source: "image://icons/refreshArrow/#999999"
+						asynchronous: true
+						smooth: true
+						fillMode: Image.PreserveAspectFit
+						sourceSize.width: width * 2
+						sourceSize.height: height * 2
+					}
+					Image {
+						id: arrowImageRunning
+						visible: closeTimer.running
+						anchors.centerIn: parent
+						height: parent.height * 0.5
+						width: height
+						source: "image://icons/refresh/#999999"
+						asynchronous: true
+						smooth: true
+						fillMode: Image.PreserveAspectFit
+						sourceSize.width: width * 2
+						sourceSize.height: height * 2
+						transformOrigin: Item.Center
+						RotationAnimation on rotation {
+							loops: Animation.Infinite
+							from: 0
+							to: 360
+							duration: 1000
+							running: closeTimer.running
+						}
+					}
+					transformOrigin: Item.Center
+					Behavior on rotation { NumberAnimation { duration: 200 } }
+				}
+				Text {
+					anchors.centerIn: parent
+					visible: refreshTimer.running && !closeTimer.running
+					color: properties.theme.colors.telldusBlue
+					font.pixelSize: Units.dp(12)
+					text: "You can refresh once every 10 seconds."
+					elide: Text.ElideRight
+				}
+				states: [
+					State {
+						name: "base"; when: list.contentY >= -Units.dp(140)
+						PropertyChanges { target: arrow; rotation: 180 }
+					},
+					State {
+						name: "pulled"; when: list.contentY < -Units.dp(140)
+						PropertyChanges { target: arrow; rotation: 0 }
+					}
+				]
+			}
+		}
+		Item {
+			id: listEmptyView
+			anchors.fill: parent
+			visible : dashboardModel.count == 0
+
+			Text {
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.leftMargin: Units.dp(20)
+				anchors.rightMargin:Units.dp(20)
+				color: properties.theme.colors.telldusBlue
+				font.pixelSize: Units.dp(16)
+				wrapMode: Text.Wrap
+				horizontalAlignment: Text.AlignHCenter
+				text: "You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right."
+			}
+		}
 		GridView {
 			id: list
 			property int tileSize: 0
 			property int tileLabelHeight: 0
 			onWidthChanged: calculateTileSize()
 
+			visible : dashboardModel.count > 0
 			anchors.top: parent.top
 			anchors.left: parent.left
-			anchors.topMargin: screen.showHeaderAtTop ? header.height + tilePadding : tilePadding
-			anchors.leftMargin: screen.showHeaderAtTop ? tilePadding : header.width + tilePadding
+			anchors.topMargin: closeTimer.running ? 0 : -headerItem.height + tilePadding
+			anchors.leftMargin: tilePadding
 			anchors.bottomMargin: tilePadding
 			anchors.rightMargin: tilePadding
 			width: parent.width - list.anchors.leftMargin
@@ -86,11 +174,28 @@ Item {
 			cellWidth: this.tileSize
 			cellHeight: this.tileSize
 			maximumFlickVelocity: Units.dp(1500)
-		}
-		Header {
-			id: header
-			onBackClicked: {
-				mainInterface.onMenu();
+			header: dashboardListHeader
+			onDragEnded: {
+				if (headerItem.refresh && !refreshTimer.running) {
+					console.log("Refreshing DeviceModel")
+					deviceModelController.authorizationChanged()
+					console.log("Refreshing SensorModel")
+					sensorModel.authorizationChanged()
+					refreshTimer.start()
+					closeTimer.start()
+				}
+			}
+			Timer {
+				id: closeTimer
+				interval: 1000
+				running: false
+				repeat: false
+			}
+			Timer {
+				id: refreshTimer
+				interval: 10000
+				running: false
+				repeat: false
 			}
 		}
 	}
@@ -98,16 +203,24 @@ Item {
 	function calculateTileSize() {
 		var listWidth = list.width
 		if (listWidth > 0) {
-//			console.log("List width: " + listWidth);
 			var numberOfTiles = Math.floor(listWidth / Units.dp(100));
-//			console.log("Number of tiles: " + numberOfTiles);
 			var tileSize = listWidth / numberOfTiles;
 			if (numberOfTiles == 0) {
 				tileSize = Units.dp(100)
 			}
-//			console.log("Tile Size:" + tileSize);
 			list.tileSize = Math.floor(tileSize);
 			list.tileLabelHeight = Math.floor(tileSize * 0.25);
+		}
+	}
+
+	function updateHeader() {
+		header.title = "";
+		header.backClickedMethod = function() {
+			if (mainInterface.menuViewVisible) {
+				mainInterface.closeMenu();
+			}
+			// I should close the app here for Android I think!
+			//mainInterface.onMenu();
 		}
 	}
 

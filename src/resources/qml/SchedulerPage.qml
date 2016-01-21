@@ -1,8 +1,10 @@
 import QtQuick 2.0
 import Telldus 1.0
+import Tui 0.1
 
 Item {
 	id: schedulerPage
+
 	Component {
 		id: schedulerDelegate
 		Rectangle {
@@ -24,8 +26,7 @@ Item {
 					anchors.leftMargin: 10 * SCALEFACTOR
 					anchors.verticalCenter: parent.verticalCenter
 					color: properties.theme.colors.telldusOrange
-					font.pixelSize: 20 * SCALEFACTOR
-					font.weight: Font.Bold
+					font.pixelSize: Units.dp(16)
 					text: Qt.formatTime(job.nextRunTime, "HH:mm")
 					width: 60 * SCALEFACTOR
 				}
@@ -37,7 +38,6 @@ Item {
 					anchors.right: stateBox.left
 					anchors.rightMargin: 10 * SCALEFACTOR
 					color: properties.theme.colors.telldusBlue
-					font.weight: Font.Bold
 					text: job.device.name
 					font.pixelSize: 16 * SCALEFACTOR
 					width: parent.width
@@ -50,51 +50,137 @@ Item {
 					anchors.right: parent.right
 					width: 70 * SCALEFACTOR
 					height: 50 * SCALEFACTOR
-					Rectangle {
+					Item {
 						anchors.fill: parent
 						anchors.margins: 10 * SCALEFACTOR
-						radius: width * 0.1
-						color: properties.theme.colors.telldusBlue
-//						Rectangle {
-//							anchors.fill: parent
-//							anchors.margins: 1 * SCALEFACTOR
-//							radius: width * 0.1
-//							color: "#ffffff"
-							Text {
-								anchors.centerIn: parent
-								text: getMethodText(job.method, job.value)
-								font.pixelSize: 10 * SCALEFACTOR
-								font.weight: Font.Bold
-								color: "#ffffff"
-							}
-//						}
+						Text {
+							anchors.centerIn: parent
+							text: getMethodText(job.method, job.value)
+							font.pixelSize: Units.dp(16)
+							color: properties.theme.colors.telldusBlue
+						}
 					}
 				}
 			}
 		}
 	}
 	Component {
-		id: sectionHeading
-		Rectangle {
+		id: schedulerListHeader
+		Item {
+			height: Units.dp(60)
 			width: parent.width
-			height: childrenRect.height + (10 * SCALEFACTOR)
-			color: properties.theme.colors.telldusOrange
+			y: -list.contentY - height
+
+			property bool refresh: state == "pulled" ? true : false
+
+			Item {
+				id: arrow
+				anchors.fill: parent
+				Image {
+					id: arrowImage
+					visible: !refreshTimer.running
+					anchors.centerIn: parent
+					height: (parent.height / SCALEFACTOR) * 0.5
+					width: height
+					source: "image://icons/refreshArrow/#999999"
+					asynchronous: true
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+				Image {
+					id: arrowImageRunning
+					visible: closeTimer.running
+					anchors.centerIn: parent
+					height: (parent.height / SCALEFACTOR) * 0.5
+					width: height
+					source: "image://icons/refresh/#999999"
+					asynchronous: true
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+					transformOrigin: Item.Center
+					RotationAnimation on rotation {
+						loops: Animation.Infinite
+						from: 0
+						to: 360
+						duration: 1000
+						running: closeTimer.running
+					}
+				}
+				transformOrigin: Item.Center
+				Behavior on rotation { NumberAnimation { duration: 200 } }
+			}
+			Text {
+				anchors.centerIn: parent
+				visible: refreshTimer.running && !closeTimer.running
+				color: properties.theme.colors.telldusBlue
+				font.pixelSize: Units.dp(12)
+				text: "You can refresh once every 10 seconds."
+				elide: Text.ElideRight
+			}
+			states: [
+				State {
+					name: "base"; when: list.contentY >= -Units.dp(140)
+					PropertyChanges { target: arrow; rotation: 180 }
+				},
+				State {
+					name: "pulled"; when: list.contentY < -Units.dp(140)
+					PropertyChanges { target: arrow; rotation: 0 }
+				}
+			]
+		}
+	}
+	Component {
+		id: sectionHeading
+		Item {
+			width: parent.width
+			height: Units.dp(26)
 
 			Text {
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: parent.left
-				anchors.leftMargin: 10 * SCALEFACTOR
+				anchors.leftMargin: Units.dp(10)
 				text: getSectionHeading(section)
 				font.bold: true
-				font.pixelSize: 20 * SCALEFACTOR
-				color: "#ffffff"
+				font.pixelSize: Units.dp(14)
+				color: "#999999"
+			}
+		}
+	}
+	Item {
+		id: listEmptyView
+		anchors.fill: parent
+		visible : schedulerDaySortFilterModel.count == 0
+
+		Text {
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.verticalCenter: parent.verticalCenter
+			anchors.leftMargin: Units.dp(20)
+			anchors.rightMargin:Units.dp(20)
+			color: properties.theme.colors.telldusBlue
+			font.pixelSize: Units.dp(16)
+			wrapMode: Text.Wrap
+			horizontalAlignment: Text.AlignHCenter
+			text: refreshTimer.running ? "Refreshing...\n\nyou can only refresh once every 10 seconds!" : "No schedules have been added yet, please go to http://live.telldus.com to add them. Then tap here to refresh!"
+		}
+		MouseArea {
+			anchors.fill: parent
+			enabled: listEmptyView.visible && !refreshTimer.running
+			onReleased: {
+				refreshTimer.start();
+				schedulerModel.authorizationChanged();
 			}
 		}
 	}
 	ListView {
 		id: list
+		visible : schedulerDaySortFilterModel.count > 0
 		anchors.fill: parent
-		anchors.topMargin: screen.showHeaderAtTop ? header.height : 0
+		anchors.topMargin: closeTimer.running ? Units.dp(4) : -headerItem.height +  Units.dp(4)
 		anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
 		model: schedulerDaySortFilterModel
 		delegate: schedulerDelegate
@@ -103,14 +189,27 @@ Item {
 		section.delegate: sectionHeading
 		maximumFlickVelocity: 1500 * SCALEFACTOR
 		spacing: 1 * SCALEFACTOR
-	}
-	Header {
-		id: header
-		anchors.topMargin: 0
-		title: "Scheduler"
-		onBackClicked: {
-			mainInterface.setActivePage(0);
+		header: schedulerListHeader
+		onDragEnded: {
+			if (headerItem.refresh && !refreshTimer.running) {
+				console.log("Refreshing SchedulerModel")
+				schedulerModel.authorizationChanged()
+				refreshTimer.start()
+				closeTimer.start()
+			}
 		}
+	}
+	Timer {
+		id: closeTimer
+		interval: 1000
+		running: false
+		repeat: false
+	}
+	Timer {
+		id: refreshTimer
+		interval: 10000
+		running: false
+		repeat: false
 	}
 
 	function  getSectionHeading(nextRunDate) {
@@ -172,5 +271,12 @@ Item {
 		}
 
 		return 0;
+	}
+
+	function updateHeader() {
+		header.title = "Upcoming schedule";
+		header.backClickedMethod = function() {
+			mainInterface.setActivePage(0);
+		}
 	}
 }

@@ -9,6 +9,7 @@
 #include "config.h"
 #include "device.h"
 #include "models/clientmodel.h"
+#include "models/DeviceListSortFilterModel.h"
 #include "models/devicemodel.h"
 #include "models/dashboardmodel.h"
 #include "models/favoritedevicemodel.h"
@@ -43,6 +44,7 @@ public:
 	DashboardModel *dashboardModel;
 	SchedulerDayModel *schedulerDayModel;
 	SchedulerDaySortFilterModel *schedulerDaySortFilterModel;
+	DeviceListSortFilterModel *deviceListSortFilterModel;
 	User *user;
 	static TelldusCenter *instance;
 };
@@ -63,6 +65,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
 	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
+	d->deviceListSortFilterModel = new DeviceListSortFilterModel(d->rawDeviceModel, this);
 	d->clientModel = ClientModel::instance();
 	d->dashboardModel = new DashboardModel(
 		new FavoriteDeviceModel(DeviceModel::instance(), this),
@@ -95,6 +98,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("dev", Dev::instance());
 	d->view->setContextProperty("core", this);
 	d->view->setContextProperty("deviceModelController", DeviceModel::instance());
+	d->view->setContextProperty("deviceListSortFilterModel", d->deviceListSortFilterModel);
 	d->view->setContextProperty("rawDeviceModel", d->rawDeviceModel);
 	d->view->setContextProperty("schedulerDayModel", d->schedulerDayModel);
 	d->view->setContextProperty("schedulerDaySortFilterModel", d->schedulerDaySortFilterModel);

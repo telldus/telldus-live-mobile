@@ -21,6 +21,10 @@ SensorModel::SensorModel(QObject *parent) :
 	if (db.isOpen()) {
 		qDebug() << "[SQL] CREATE TABLE IF NOT EXISTS Sensor (id INTEGER PRIMARY KEY, name TEXT, lastUpdated INTEGER, temperature REAL, humidity REAL, rainRate REAL, rainTotal REAL, uv REAL, watt REAL, windAvg REAL, windGust REAL, windDir REAL, luminance REAL, favorite INTEGER)";
 		QSqlQuery query("CREATE TABLE IF NOT EXISTS Sensor (id INTEGER PRIMARY KEY, name TEXT, lastUpdated INTEGER, temperature REAL, humidity REAL, rainRate REAL, rainTotal REAL, uv REAL, watt REAL, windAvg REAL, windGust REAL, windDir REAL, luminance REAL, favorite INTEGER)", db);
+		qDebug() << "[SQL] ALTER TABLE Sensor ADD COLUMN deactive INTEGER";
+		QSqlQuery query2("ALTER TABLE Sensor ADD COLUMN deactive INTEGER", db);
+		qDebug() << "[SQL] ALTER TABLE Sensor ADD COLUMN clientName TEXT";
+		QSqlQuery query3("ALTER TABLE Sensor ADD COLUMN clientName TEXT", db);
 	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
@@ -38,14 +42,15 @@ void SensorModel::fetchDataFromCache() {
 	qDebug() << "[METHOD] SensorModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
-		qDebug() << "[SQL] SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite FROM Sensor ORDER BY name";
-		QSqlQuery query("SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite FROM Sensor ORDER BY name", db);
+		qDebug() << "[SQL] SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite, deactive, clientName FROM Sensor ORDER BY name";
+		QSqlQuery query("SELECT id, name, lastUpdated, temperature, humidity, rainRate, rainTotal, uv, watt, windAvg, windGust, windDir, luminance, favorite, deactive, clientName FROM Sensor ORDER BY name", db);
 		QVariantList sensors;
 		while (query.next()) {
 			QSqlRecord record = query.record();
 			QVariantMap sensor;
 			sensor["id"] = record.value("id");
 			sensor["name"] = record.value("name");
+			sensor["clientName"] = record.value("clientName");
 			sensor["lastUpdated"] = record.value("lastUpdated");
 			if (record.isNull("temperature") == false) {
 				sensor["temperature"] = record.value("temperature");
@@ -77,7 +82,8 @@ void SensorModel::fetchDataFromCache() {
 			if (record.isNull("luminance") == false) {
 				sensor["luminance"] = record.value("luminance");
 			}
-			sensor["isfavorite"] = record.value("isfavorite").toBool();
+			sensor["isfavorite"] = record.value("favorite").toBool();
+			sensor["deactive"] = record.value("deactive");
 			sensor["fromCache"] = true;
 			sensors << sensor;
 		}
@@ -88,18 +94,25 @@ void SensorModel::fetchDataFromCache() {
 }
 
 void SensorModel::addSensors(const QVariantList &sensorsList) {
+	QList<int> activeSensorIds;
 	QList<QObject *> list;
 	foreach(QVariant v, sensorsList) {
 		QVariantMap dev = v.toMap();
-		Sensor *sensor = this->findSensor(dev["id"].toInt());
-		if (!sensor) {
-			sensor = new Sensor(this);
-			sensor->setFromVariantMap(dev);
-			list << sensor;
-		} else {
-			sensor->setFromVariantMap(dev);
+		if (dev["deactive"].toBool() == false) {
+			if (dev["fromCache"].toBool() == false) {
+				activeSensorIds << dev["id"].toInt();
+			}
+			Sensor *sensor = this->findSensor(dev["id"].toInt());
+			if (!sensor) {
+				sensor = new Sensor(this);
+				sensor->setFromVariantMap(dev);
+				list << sensor;
+			} else {
+				sensor->setFromVariantMap(dev);
+			}
 		}
 	}
+	this->deactivateSensors(activeSensorIds);
 	if (list.size()) {
 		//Appends all in one go
 		this->append(list);
@@ -114,6 +127,12 @@ void SensorModel::authorizationChanged() {
 		telldusLive->call("sensors/list", params, this, SLOT(onSensorsList(QVariantMap)));
 	} else {
 		this->clear();
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			qDebug() << "[SQL] DELETE FROM Sensor";
+			QSqlQuery query("DELETE FROM Sensor", db);
+		}
+		qDebug().nospace().noquote() << "[SENSORMODEL] Cleared";
 	}
 }
 
@@ -130,7 +149,39 @@ Sensor *SensorModel::findSensor(int id) const {
 	return 0;
 }
 
+void SensorModel::deactivateSensors(QList<int> activeIds) {
+	QSqlDatabase db = QSqlDatabase::database();
+	for(int j=0; j < activeIds.count(); ++j) {
+		for(int i = 0; i < this->rowCount(); ++i) {
+			Sensor *sensor = qobject_cast<Sensor *>(this->get(i).value<QObject *>());
+			if (activeIds.indexOf(sensor->sensorId()) == -1) {
+				qDebug() << "[SENSORMODEL] Sensor Not Found, will deactivate!! Id: " << sensor->sensorId();
+				if (db.isOpen()) {
+					QSqlQuery query(db);
+					query.prepare("UPDATE Sensor SET deactive = ? WHERE id = ?");
+					query.bindValue(0, true);
+					query.bindValue(1, sensor->sensorId());
+					query.exec();
+				}
+				this->splice(i, 1);
+			}
+		}
+	}
+}
+
 void SensorModel::onSensorsList(const QVariantMap &result) {
-	this->addSensors(result["sensor"].toList());
+	if (result["sensor"].toList().size() == 0) {
+		qDebug() << "[SENSORMODEl] No Sensors found, will deactivate all!!";
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			QSqlQuery query(db);
+			query.prepare("UPDATE Sensor SET deactive = ?");
+			query.bindValue(0, true);
+			query.exec();
+		}
+		this->clear();
+	} else {
+		this->addSensors(result["sensor"].toList());
+	}
 	emit sensorsLoaded(result["sensor"].toList());
 }

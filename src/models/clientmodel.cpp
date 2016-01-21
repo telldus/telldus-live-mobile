@@ -20,6 +20,8 @@ ClientModel::ClientModel(QObject *parent) :
 	if (db.isOpen()) {
 		qDebug() << "[SQL] CREATE TABLE IF NOT EXISTS Client (id INTEGER PRIMARY KEY, name TEXT, online INTEGER, editable INTEGER, version TEXT, type TEXT)";
 		QSqlQuery query("CREATE TABLE IF NOT EXISTS Client (id INTEGER PRIMARY KEY, name TEXT, online INTEGER, editable INTEGER, version TEXT, type TEXT)", db);
+		qDebug() << "[SQL] ALTER TABLE Client ADD COLUMN deactive INTEGER";
+		QSqlQuery query2("ALTER TABLE Client ADD COLUMN deactive INTEGER", db);
 	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 
@@ -38,8 +40,8 @@ void ClientModel::fetchDataFromCache() {
 	qDebug() << "[METHOD] ClientModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
-		qDebug() << "[SQL] SELECT id, name, online, editable, version, type FROM Client ORDER BY id";
-		QSqlQuery query("SELECT id, name, online, editable, version, type FROM Client ORDER BY id", db);
+		qDebug() << "[SQL] SELECT id, name, online, editable, version, type, deactive FROM Client ORDER BY id";
+		QSqlQuery query("SELECT id, name, online, editable, version, type, deactive FROM Client ORDER BY id", db);
 		QVariantList clients;
 		while (query.next()) {
 			QVariantMap client;
@@ -49,6 +51,7 @@ void ClientModel::fetchDataFromCache() {
 			client["editable"] = query.value(3);
 			client["version"] = query.value(4);
 			client["type"] = query.value(5);
+			client["deactive"] = query.value(6);
 			client["fromCache"] = true;
 			clients << client;
 		}
@@ -59,18 +62,25 @@ void ClientModel::fetchDataFromCache() {
 }
 
 void ClientModel::addClients(const QVariantList &clientList) {
+	QList<int> activeClientIds;
 	QList<QObject *> list;
 	foreach(QVariant v, clientList) {
 		QVariantMap dev = v.toMap();
-		Client *client = this->findClient(dev["id"].toInt());
-		if (!client) {
-			client = new Client(this);
-			client->setFromVariantMap(dev);
-			list << client;
-		} else {
-			client->setFromVariantMap(dev);
+		if (dev["deactive"].toBool() == false) {
+			if (dev["fromCache"].toBool() == false) {
+				activeClientIds << dev["id"].toInt();
+			}
+			Client *client = this->findClient(dev["id"].toInt());
+			if (!client) {
+				client = new Client(this);
+				client->setFromVariantMap(dev);
+				list << client;
+			} else {
+				client->setFromVariantMap(dev);
+			}
 		}
 	}
+	this->deactivateClients(activeClientIds);
 	if (list.size()) {
 		//Appends all in one go
 		this->append(list);
@@ -83,6 +93,12 @@ void ClientModel::authorizationChanged() {
 		telldusLive->call("clients/list", TelldusLiveParams(), this, SLOT(onClientsList(QVariantMap)));
 	} else {
 		this->clear();
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			qDebug() << "[SQL] DELETE FROM Client";
+			QSqlQuery query("DELETE FROM Client", db);
+		}
+		qDebug().nospace().noquote() << "[CLIENTMODEL] Cleared";
 	}
 }
 
@@ -99,8 +115,40 @@ Client *ClientModel::findClient(int id) const {
 	return 0;
 }
 
+void ClientModel::deactivateClients(QList<int> activeIds) {
+	QSqlDatabase db = QSqlDatabase::database();
+	for(int j=0; j < activeIds.count(); ++j) {
+		for(int i = 0; i < this->rowCount(); ++i) {
+			Client *client = qobject_cast<Client *>(this->get(i).value<QObject *>());
+			if (activeIds.indexOf(client->clientId()) == -1) {
+				qDebug() << "[CLIENTMODEL] Client Not Found, will deactivate!! Id: " << client->clientId();
+				if (db.isOpen()) {
+					QSqlQuery query(db);
+					query.prepare("UPDATE Client SET deactive = ? WHERE id = ?");
+					query.bindValue(0, true);
+					query.bindValue(1, client->clientId());
+					query.exec();
+				}
+				this->splice(i, 1);
+			}
+		}
+	}
+}
+
 void ClientModel::onClientsList(const QVariantMap &result) {
-	this->addClients(result["client"].toList());
+	if (result["client"].toList().size() == 0) {
+		qDebug() << "[CLIENTMODEL] No Clients found, will deactivate all!!";
+		QSqlDatabase db = QSqlDatabase::database();
+		if (db.isOpen()) {
+			QSqlQuery query(db);
+			query.prepare("UPDATE Client SET deactive = ?");
+			query.bindValue(0, true);
+			query.exec();
+		}
+		this->clear();
+	} else {
+		this->addClients(result["client"].toList());
+	}
 	emit clientsLoaded(result["client"].toList());
 }
 

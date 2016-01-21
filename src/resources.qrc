@@ -109,6 +109,8 @@
 		<file>resources/svgts/hamburger.svgt</file>
 		<file>resources/svgts/house.svgt</file>
 		<file>resources/svgts/logout.svgt</file>
+		<file>resources/svgts/refresh.svgt</file>
+		<file>resources/svgts/refreshArrow.svgt</file>
 		<file>resources/svgts/scheduler.svgt</file>
 		<file>resources/svgts/sensors.svgt</file>
 		<file>resources/svgts/settings.svgt</file>

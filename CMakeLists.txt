@@ -92,6 +92,7 @@ SET( SOURCES
 	src/models/clientmodel.cpp
 	src/models/dashboardmodel.cpp
 	src/models/devicemodel.cpp
+	src/models/DeviceListSortFilterModel.cpp
 	src/models/favoritedevicemodel.cpp
 	src/models/favoritesensormodel.cpp
 	src/models/filtereddevicemodel.cpp
@@ -133,6 +134,7 @@ SET( MOC_HEADERS
 	src/models/clientmodel.h
 	src/models/dashboardmodel.h
 	src/models/devicemodel.h
+	src/models/DeviceListSortFilterModel.h
 	src/models/favoritedevicemodel.h
 	src/models/favoritesensormodel.h
 	src/models/filtereddevicemodel.h

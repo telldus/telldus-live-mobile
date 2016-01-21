@@ -34,6 +34,10 @@ QVariant TListModel::get(int row) const {
 	return this->data(this->index(row), Qt::DisplayRole);
 }
 
+void TListModel::removeItem(int row) {
+	d->list.removeAt(row);
+}
+
 void TListModel::append(QObject *v) {
 	QList<QObject *> list;
 	list << v;

@@ -11,14 +11,16 @@ class ClientModel : public TListModel
 public:
 	Q_INVOKABLE void addClients(const QVariantList &devices);
 	Q_INVOKABLE Client *findClient(int id) const;
+	Q_INVOKABLE void deactivateClients(QList<int> activeIds);
 
 	static ClientModel *instance();
 
 signals:
 	void clientsLoaded(const QVariantList &devices);
 
-private slots:
+public slots:
 	void authorizationChanged();
+private slots:
 	void fetchDataFromCache();
 	void onClientsList(const QVariantMap &result);
 

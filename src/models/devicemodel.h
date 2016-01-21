@@ -11,6 +11,8 @@ class DeviceModel : public TListModel
 public:
 	Q_INVOKABLE void addDevices(const QVariantList &devices);
 	Q_INVOKABLE void createGroup(int clientId, const QString &name, Device *device);
+	Q_INVOKABLE QList<int> getIds() const;
+	Q_INVOKABLE void deactivateDevices(QList<int> activeIds);
 	Q_INVOKABLE Device *findDevice(int id) const;
 	Q_INVOKABLE void removeDevice(int id);
 
@@ -19,8 +21,10 @@ public:
 signals:
 	void devicesLoaded(const QVariantList &devices);
 
-private slots:
+public slots:
 	void authorizationChanged();
+
+private slots:
 	void onDeviceInfo(const QVariantMap &result);
 	void onDeviceRemove(const QVariantMap &result, const QVariantMap &params);
 	void onDevicesList(const QVariantMap &result);

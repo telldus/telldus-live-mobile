@@ -1,11 +1,12 @@
 import QtGraphicalEffects 1.0
-import QtQuick 2.0
+import QtQuick 2.5
 import Telldus 1.0
 import Tui 0.1
 
 Item {
 	id: devicePage
 	property bool showEditButtons: false
+	property var pageTitle: "Devices"
 
 	Component {
 		id: deviceDelegate
@@ -74,13 +75,6 @@ Item {
 							text: device.name
 							elide: Text.ElideRight
 						}
-						Text {
-							color: "#999999"
-							width: parent.width
-							font.pixelSize: Units.dp(14)
-							text: device.clientName
-							elide: Text.ElideRight
-						}
 					}
 					MouseArea {
 						id: mouseArea
@@ -91,6 +85,7 @@ Item {
 						onClicked: {
 							devicePage.state = 'showDevice'
 							showDevice.selected = device
+							showDevice.item.updateHeader()
 						}
 					}
 					Item {
@@ -180,50 +175,188 @@ Item {
 			}
 		}
 	}
+	Component {
+		id: deviceListHeader
+		Item {
+			height: Units.dp(60)
+			width: parent.width
+			y: -list.contentY - height
+
+			property bool refresh: state == "pulled" ? true : false
+
+			Item {
+				id: arrow
+				anchors.fill: parent
+				Image {
+					id: arrowImage
+					visible: !refreshTimer.running
+					anchors.centerIn: parent
+					height: (parent.height / SCALEFACTOR) * 0.5
+					width: height
+					source: "image://icons/refreshArrow/#999999"
+					asynchronous: true
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+				}
+				Image {
+					id: arrowImageRunning
+					visible: closeTimer.running
+					anchors.centerIn: parent
+					height: (parent.height / SCALEFACTOR) * 0.5
+					width: height
+					source: "image://icons/refresh/#999999"
+					asynchronous: true
+					smooth: true
+					fillMode: Image.PreserveAspectFit
+					sourceSize.width: width * 2
+					sourceSize.height: height * 2
+					transformOrigin: Item.Center
+					RotationAnimation on rotation {
+						loops: Animation.Infinite
+						from: 0
+						to: 360
+						duration: 1000
+						running: closeTimer.running
+					}
+				}
+				transformOrigin: Item.Center
+				Behavior on rotation { NumberAnimation { duration: 200 } }
+			}
+			Text {
+				anchors.centerIn: parent
+				visible: refreshTimer.running && !closeTimer.running
+				color: properties.theme.colors.telldusBlue
+				font.pixelSize: Units.dp(12)
+				text: "You can refresh once every 10 seconds."
+				elide: Text.ElideRight
+			}
+			states: [
+				State {
+					name: "base"; when: list.contentY >= -Units.dp(140)
+					PropertyChanges { target: arrow; rotation: 180 }
+				},
+				State {
+					name: "pulled"; when: list.contentY < -Units.dp(140)
+					PropertyChanges { target: arrow; rotation: 0 }
+				}
+			]
+		}
+	}
+	Component {
+		id: deviceListSectionHeader
+		Rectangle {
+			width: parent.width
+			height: Units.dp(28)
+			color: "#dddddd"
+
+			Rectangle {
+				anchors.fill: parent
+				anchors.topMargin: Units.dp(1)
+				anchors.bottomMargin: Units.dp(1)
+				color: "#f5f5f5"
+
+				Text {
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.left
+					anchors.leftMargin: Units.dp(20)
+					//anchors.left: parent.left
+					//anchors.leftMargin: Units.dp(10)
+					text: section
+					font.bold: true
+					font.pixelSize: Units.dp(14)
+					color: "#999999"
+				}
+
+			}
+		}
+	}
+	Item {
+		id: listEmptyView
+		anchors.fill: parent
+		visible : deviceListSortFilterModel.count == 0
+		onVisibleChanged: {
+			if (deviceListSortFilterModel.count == 0) {
+				refreshTimer.stop()
+				closeTimer.stop()
+			}
+		}
+
+		Text {
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.verticalCenter: parent.verticalCenter
+			anchors.leftMargin: Units.dp(20)
+			anchors.rightMargin:Units.dp(20)
+			color: properties.theme.colors.telldusBlue
+			font.pixelSize: Units.dp(16)
+			wrapMode: Text.Wrap
+			horizontalAlignment: Text.AlignHCenter
+			text: refreshTimer.running ? "Refreshing...\n\nyou can only refresh once every 10 seconds!" : "No devices have been added yet, please go to http://live.telldus.com to add them.\n\nThen tap here to refresh!"
+		}
+		MouseArea {
+			anchors.fill: parent
+			enabled: listEmptyView.visible && !refreshTimer.running
+			onReleased: {
+				refreshTimer.start();
+				deviceModelController.authorizationChanged();
+			}
+		}
+	}
 	Rectangle {
 		id: listPage
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
-		color: "#F5F5F5"
+		color: "#ffffff"
+		visible : deviceListSortFilterModel.count > 0
 		ListView {
 			id: list
-			anchors.left: screen.showHeaderAtTop ? parent.left : header.right
-			anchors.top: screen.showHeaderAtTop ? header.bottom : parent.top
+			anchors.left: parent.left
+			anchors.top: parent.top
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			model: deviceModel
+			anchors.topMargin: closeTimer.running ? Units.dp(4) : -headerItem.height
+			model: deviceListSortFilterModel
 			delegate: deviceDelegate
 			maximumFlickVelocity: Units.dp(1500)
 			spacing: Units.dp(0)
 			focus: true
-		}
-		Header {
-			id: header
-			title: "Devices"
-			editButtonVisible: true
-			onEditClicked: showEditButtons = !showEditButtons;
-/*			onBackClicked: {
-				if (devicePage.state == 'showDevice') {
-					devicePage.state = '';
-					list.focus = true;
-				} else {
-					if (showEditButtons) {
-						showEditButtons = false;
-					} else {
-						mainInterface.setActivePage(0);
-					}
+			header: deviceListHeader
+			section.property: "device.clientName"
+			section.criteria: ViewSection.FullString
+			section.delegate: deviceListSectionHeader
+			onDragEnded: {
+				if (headerItem.refresh && !refreshTimer.running) {
+					console.log("Refreshing DeviceModel")
+					deviceModelController.authorizationChanged()
+					refreshTimer.start()
+					closeTimer.start()
 				}
-			}*/
+			}
+		}
+		Timer {
+			id: closeTimer
+			interval: 1000
+			running: false
+			repeat: false
+		}
+		Timer {
+			id: refreshTimer
+			interval: 10000
+			running: false
+			repeat: false
 		}
 	}
 	Component {
 		id: componentShowDevice
 		DeviceDetails {
 			onBackClicked: {
-				devicePage.state = ''
+				devicePage.state = '';
 				list.focus = true;
+				devicePage.updateHeader();
 			}
 			selected: showDevice.selected
 		}
@@ -250,4 +383,25 @@ Item {
 			AnchorAnimation { duration: 500; easing.type: Easing.InOutQuad }
 		}
 	]
+	function updateHeader() {
+		header.title = "Devices";
+		header.editButtonVisible = true;
+		header.backVisible = false;
+		header.onEditClicked.connect(function() {
+			devicePage.showEditButtons = !devicePage.showEditButtons;
+		})
+		header.backClickedMethod = function() {
+			if (devicePage.state == 'showDevice') {
+					devicePage.state = '';
+					list.focus = true;
+				} else {
+					if (devicePage.showEditButtons) {
+						devicePage.showEditButtons = false;
+					} else {
+						mainInterface.setActivePage(0);
+					}
+				}
+		}
+	}
+
 }

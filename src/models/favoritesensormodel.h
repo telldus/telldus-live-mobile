@@ -17,7 +17,6 @@ signals:
 	void countChanged();
 
 protected slots:
-	void rowsAdded( const QModelIndex & parent, int start, int end );
 	void sensorChanged();
 
 protected:

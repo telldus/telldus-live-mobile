@@ -10,7 +10,6 @@ FavoriteSensorModel::FavoriteSensorModel(SensorModel *model, QObject *parent) : 
 	this->setSourceModel(model);
 	this->setDynamicSortFilter(true);
 	this->sort(0);
-	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(rowsAdded(QModelIndex,int,int)));
 	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
 }
@@ -25,6 +24,8 @@ bool FavoriteSensorModel::filterAcceptsRow(int sourceRow, const QModelIndex &) c
 		return false;
 	}
 	Sensor *sensor = qobject_cast<Sensor *>(model->get(sourceRow).value<QObject *>());
+	connect(sensor, SIGNAL(isFavoriteChanged()), this, SLOT(sensorChanged()), Qt::UniqueConnection);
+	connect(sensor, SIGNAL(nameChanged()), this, SLOT(invalidate()), Qt::UniqueConnection);
 	return sensor->isFavorite();
 }
 
@@ -33,18 +34,6 @@ bool FavoriteSensorModel::lessThan(const QModelIndex &left, const QModelIndex &r
 	Sensor *rightSensor = qobject_cast<Sensor *>(this->sourceModel()->data(right).value<QObject *>());
 
 	return QString::localeAwareCompare(leftSensor->name(), rightSensor->name()) < 0;
-}
-
-void FavoriteSensorModel::rowsAdded(const QModelIndex &, int start, int end) {
-	SensorModel *model = qobject_cast<SensorModel *>(this->sourceModel());
-	if (!model) {
-		return;
-	}
-	for (int i = start; i <= end; ++i ) {
-		Sensor *sensor = qobject_cast<Sensor *>(model->get(i).value<QObject *>());
-		connect(sensor, SIGNAL(isFavoriteChanged(const bool &)), this, SLOT(sensorChanged()));
-		connect(sensor, SIGNAL(nameChanged(const QString &)), this, SLOT(invalidate()));
-	}
 }
 
 void FavoriteSensorModel::sensorChanged() {
