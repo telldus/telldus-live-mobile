@@ -100,6 +100,8 @@
 		<file>resources/svgs/sensorIconWatt.svg</file>
 		<file>resources/svgs/sensorIconWind.svg</file>
 
+		<file>resources/svgts/arrowDown.svgt</file>
+		<file>resources/svgts/arrowUp.svgt</file>
 		<file>resources/svgts/dashboard.svgt</file>
 		<file>resources/svgts/debug.svgt</file>
 		<file>resources/svgts/devices.svgt</file>
@@ -110,6 +112,7 @@
 		<file>resources/svgts/scheduler.svgt</file>
 		<file>resources/svgts/sensors.svgt</file>
 		<file>resources/svgts/settings.svgt</file>
+		<file>resources/svgts/stop.svgt</file>
 
 	</qresource>
 </RCC>
