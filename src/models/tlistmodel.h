@@ -21,7 +21,6 @@ public:
 	void clear();
 
 	Q_INVOKABLE QVariant get(int row) const;
-	Q_INVOKABLE void removeItem(int row);
 	Q_INVOKABLE void splice(int row, int count);
 
 signals:
