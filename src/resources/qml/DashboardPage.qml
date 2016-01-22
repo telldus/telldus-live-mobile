@@ -202,7 +202,7 @@ Item {
 
 	function calculateTileSize() {
 		var listWidth = list.width
-		var baseTileSize = listWidth > (isPortrait ? 600 : 800) ? 150 : 100;
+		var baseTileSize = listWidth > (isPortrait ? Units.dp(600) : Units.dp(800)) ? 150 : 100;
 		if (listWidth > 0) {
 			var numberOfTiles = Math.floor(listWidth / Units.dp(baseTileSize));
 			var tileSize = listWidth / numberOfTiles;
