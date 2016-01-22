@@ -10,8 +10,6 @@
 		<file>resources/qml/SensorValueTile.qml</file>
 		<file>resources/qml/SettingsPage.qml</file>
 		<file>resources/qml/Header.qml</file>
-		<file>resources/qml/MainInterfaceAndroid.qml</file>
-		<file>resources/qml/MainInterfaceiOS.qml</file>
 		<file>resources/qml/LoginScreen.qml</file>
 		<file>resources/qml/LoginWebKit.qml</file>
 		<file>resources/qml/LoginWebKitWebView.qml</file>

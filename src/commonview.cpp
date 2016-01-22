@@ -20,11 +20,13 @@ class CommonView::PrivateData {
 public:
 	QQuickView view;
 	double scalefactor;
+	QString platform;
 };
 
 CommonView::CommonView(QObject *parent):AbstractView(parent) {
 	d = new PrivateData;
 	d->scalefactor = 0;
+	d->platform = "Desktop";
 
 	// For platform specific tasks
 	this->init();
@@ -77,7 +79,12 @@ void CommonView::loadAndShow() {
 			continue;
 		} else if (args.at(i) == "--scalefactor") {
 			d->scalefactor = args.at(i+1).toDouble();
-			qDebug() << "--scalefactor" << args.at(i+1).toDouble();
+			qDebug().nospace().noquote() << "[ARGS] --scalefactor " << args.at(i+1).toDouble();
+			++i;
+			continue;
+		} else if (args.at(i) == "--platform-override") {
+			d->platform = args.at(i+1);
+			qDebug().nospace().noquote() << "[ARGS] --platform-override " << args.at(i+1);
 			++i;
 			continue;
 		}
@@ -116,6 +123,7 @@ void CommonView::loadAndShow() {
 
 	d->view.rootContext()->setContextProperty("HEIGHT", size.height());
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
+	d->view.rootContext()->setContextProperty("UI_PLATFORM", d->platform);
 	d->view.engine()->addImportPath(":/qmllib/common");
 	d->view.engine()->addImportPath(":/qmlmodules");
 	if (UI_TYPE == "TV") {

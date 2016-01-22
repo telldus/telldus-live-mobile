@@ -16,7 +16,7 @@ View {
 	height: screen.showHeaderAtTop ? Units.dp(headerHeight) : mainView.height
 	width: screen.showHeaderAtTop ? mainView.width :Units.dp(headerHeight)
 	tintColor: properties.theme.colors.telldusBlue
-	elevation: (Qt.platform.os == "android" ? 0 : 1)
+	elevation: (UI_PLATFORM == "android" ? 0 : 1)
 
 	Connections {
 		target: core

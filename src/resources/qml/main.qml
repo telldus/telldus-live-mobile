@@ -10,8 +10,9 @@ Rectangle {
 	property bool showHeaderAtTop: (width <= height) || (Units.dp(56) < height * 0.1)
 
 	Component.onCompleted: {
-		console.log("UI supportsTouch: " + properties.ui.supportsTouch);
-		console.log("UI supportsKeys: " + properties.ui.supportsKeys);
+		console.log("[UI] Platform: " + UI_PLATFORM);
+		console.log("[UI] Supports touch: " + properties.ui.supportsTouch);
+		console.log("[UI] Supports keys: " + properties.ui.supportsKeys);
 	}
 
 	ListModel {
@@ -63,14 +64,41 @@ Rectangle {
 		opacity: telldusLive.isAuthorized ? 1 : 0
 		color: "#404040";
 		anchors.fill: parent
-			Rectangle {
+
+		Rectangle {
+			id: menuViewUnderlay
+			visible: mainInterface.menuViewVisible
+			anchors.fill: parent
+			color: "#000000"
+			opacity: (menuViewTranslate.x / menuView.width) * 0.5
+			z: UI_PLATFORM == 'android' ? mainView.z + 1 : mainView.z - 2
+
+			MouseArea {
+				anchors.fill: parent
+				onClicked: {
+					mainInterface.closeMenu();
+				}
+			}
+		}
+
+		View {
 			id: menuView
 			anchors.top: parent.top
-			anchors.topMargin: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
+			anchors.topMargin: UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 			anchors.bottom: parent.bottom
-			anchors.left: parent.left
+			anchors.left: UI_PLATFORM == "android" ? undefined : parent.left
 			width: Math.min((screen.showHeaderAtTop ? mainInterface.width : mainInterface.height) * 0.8, Units.dp(288))
-			color: "#404040";
+			tintColor:  UI_PLATFORM == "android" ? "#ffffff" : "#212121";
+			x: -width - Units.dp(50)
+			z: UI_PLATFORM == 'android' ? mainView.z + 2 : mainView.z - 1
+			transform: UI_PLATFORM == "android" ? menuViewTranslate : undefined
+			elevation: UI_PLATFORM == "android" ? 4 : 0
+
+			Translate {
+				id: menuViewTranslate
+				x: 0
+				Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
+			}
 
 			Component {
 				id: mainMenuItem
@@ -90,7 +118,7 @@ Rectangle {
 							id: dashboardIconImage
 							anchors.fill: parent
 							anchors.margins: Units.dp(4)
-							source: "image://icons/" + title.toLowerCase() + "/#ffffff"
+							source: "image://icons/" + title.toLowerCase() + "/" + (UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff");
 							asynchronous: true
 							smooth: true
 							fillMode: Image.PreserveAspectFit
@@ -100,7 +128,7 @@ Rectangle {
 					}
 					Text {
 						id: dashboardButton
-						color: "#ffffff"
+						color: UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff"
 						font.pixelSize: Units.dp(20)
 						text: title
 						anchors.verticalCenter: parent.verticalCenter
@@ -125,15 +153,15 @@ Rectangle {
 					Item {
 						id: clientStatusIcon
 						anchors.left: parent.left
-						anchors.leftMargin: Units.dp(20)
+						anchors.leftMargin: Units.dp(16)
 						anchors.verticalCenter: parent.verticalCenter
-						height: Units.dp(24)
-						width: Units.dp(24)
+						height: Units.dp(32)
+						width: height
 						Image {
 							id: clientStatusIconImage
 							anchors.fill: parent
-							anchors.margins: Units.dp(4)
-							source: "image://icons/devices/" + (client.online ? (client.websocketConnected ? "#43A047" : "#FDD835") : "#E53935")
+							anchors.margins: Units.dp(8)
+							source: "image://icons/devices/" + (client.online ? (client.websocketConnected ? (UI_PLATFORM == "android" ? "#2E7D32" : "#00C853") : (UI_PLATFORM == "android" ? "#F57F17" : "#FFD600")) : (UI_PLATFORM == "android" ? "#B71C1C" : "#D50000"))
 							asynchronous: true
 							smooth: true
 							fillMode: Image.PreserveAspectFit
@@ -143,7 +171,7 @@ Rectangle {
 					}
 					Text {
 						id: clientName
-						color: "#ffffff"
+						color: UI_PLATFORM == "android" ? "#616161" : "#ffffff";
 						font.pixelSize: Units.dp(14)
 						text: client.name
 						anchors.verticalCenter: parent.verticalCenter
@@ -154,10 +182,11 @@ Rectangle {
 			}
 			Item {
 				id: clientListTitle
-				anchors.top: menuUserDetails.bottom
+				anchors.top:  UI_PLATFORM == "android" ? menuUserDetailsAndroid.bottom : menuUserDetails.bottom
+				anchors.topMargin: UI_PLATFORM == "android" ? Units.dp(16) : undefined
 				anchors.left: parent.left
 				anchors.right: parent.right
-				height: Units.dp(40)
+				height: Units.dp(56)
 				Item {
 					id: clientListTitleIcon
 					anchors.left: parent.left
@@ -169,7 +198,7 @@ Rectangle {
 						id: clientListTitleImage
 						anchors.fill: parent
 						anchors.margins: Units.dp(4)
-						source: "image://icons/house/#ffffff"
+						source: "image://icons/house/" + (UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff")
 						asynchronous: true
 						smooth: true
 						fillMode: Image.PreserveAspectFit
@@ -179,7 +208,7 @@ Rectangle {
 				}
 				Text {
 					id: clientListTitleText
-					color: "#ffffff"
+					color: UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff"
 					font.pixelSize: Units.dp(20)
 					text: "Connected locations"
 					anchors.verticalCenter: parent.verticalCenter
@@ -261,7 +290,7 @@ Rectangle {
 				anchors.top: clientListTitle.bottom
 				anchors.left: parent.left
 				anchors.right: parent.right
-				height: (clientModel.count * Units.dp(40))
+				height: UI_PLATFORM == "android" ? (clientModel.count * Units.dp(48)) - Units.dp(8) : clientModel.count * Units.dp(40)
 				clip: true
 				ListView {
 					id: clientList
@@ -270,7 +299,7 @@ Rectangle {
 					model: clientModel
 					delegate: clientListItem
 					maximumFlickVelocity: Units.dp(1500)
-					spacing: Units.dp(0)
+					spacing: UI_PLATFORM == "android" ? Units.dp(8) : Units.dp(0)
 					header: clientListHeader
 					onDragEnded: {
 						if (headerItem.refresh && !clientListRefreshTimer.running) {
@@ -332,13 +361,13 @@ Rectangle {
 					}
 				}
 			}
-			Rectangle {
+			Item {
 				id: menuUserDetails
+				visible: !(UI_PLATFORM == "android")
 				anchors.left: parent.left
 				anchors.top: parent.top
 				anchors.right: parent.right
 				height: Units.dp(72)
-				color: "#404040";
 				Rectangle {
 					id: menuUserDetailsDivider
 					anchors.left: parent.left
@@ -378,23 +407,63 @@ Rectangle {
 					color: "#ffffff"
 				}
 			}
+			Rectangle {
+				id: menuUserDetailsAndroid
+				visible: UI_PLATFORM == "android"
+				anchors.left: parent.left
+				anchors.top: parent.top
+				anchors.right: parent.right
+				height: Units.dp(108)
+				color: properties.theme.colors.telldusBlue
+				Rectangle {
+					id: menuUserDetailsAndroidInitialsBox
+					anchors.top: parent.top
+					anchors.topMargin: Units.dp(20)
+					anchors.horizontalCenter: parent.horizontalCenter
+					color: properties.theme.colors.telldusOrange
+					width: Units.dp(40)
+					height: width
+					radius: Units.dp(4)
+					Text {
+						id: menuUserDetailsAndroidInitials
+						anchors.centerIn: parent
+						text: user.firstname.charAt(0) + user.lastname.charAt(0)
+						font.pixelSize: Units.dp(20)
+						color: "#ffffff"
+					}
+
+				}
+				Text {
+					anchors.top: menuUserDetailsAndroidInitialsBox.bottom
+					anchors.topMargin: Units.dp(12)
+					anchors.horizontalCenter: parent.horizontalCenter
+					text: user.firstname + " " + user.lastname
+					wrapMode: Text.WordWrap
+					font.pixelSize: Units.dp(16)
+					color: "#ffffff"
+				}
+			}
 		}
 		View {
 			id: mainView
 			anchors.fill: parent
-			elevation: 4
+			elevation: UI_PLATFORM == "android" ? 0 : 4
 			tintColor: properties.theme.colors.dashboardBackground
-			transform: Translate {
+			transform: UI_PLATFORM == "android" ? undefined : mainViewTranslate
+			z: 100
+
+			Translate {
 				id: mainViewTranslate
 				x: 0
 				Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 			}
+
 			Loader {
 				id: tabPage
-				anchors.left: screen.showHeaderAtTop ? parent.left : (Qt.platform.os == "android" ? tabBar.right : header.right)
-				anchors.right: screen.showHeaderAtTop ? parent.right : (Qt.platform.os == "android" ? parent.right : tabBar.left)
-				anchors.bottom: screen.showHeaderAtTop ? (Qt.platform.os == "android" ? parent.bottom : tabBar.top) : parent.bottom
-				anchors.top: screen.showHeaderAtTop ? (Qt.platform.os == "android" ? tabBar.bottom : header.bottom) : mainViewOffset.bottom
+				anchors.left: screen.showHeaderAtTop ? parent.left : (UI_PLATFORM == "android" ? tabBar.right : header.right)
+				anchors.right: screen.showHeaderAtTop ? parent.right : (UI_PLATFORM == "android" ? parent.right : tabBar.left)
+				anchors.bottom: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : tabBar.top) : parent.bottom
+				anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBar.bottom : header.bottom) : parent.top
 				source: Qt.resolvedUrl(pageModel.get(pageModel.selectedIndex).page)
 				focus: true
 				Keys.onPressed: {
@@ -419,10 +488,10 @@ Rectangle {
 			}
 			TabBar {
 				id: tabBar
-				anchors.left: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? parent.left : header.right) : (screen.showHeaderAtTop ? parent.left : undefined)
-				anchors.right: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? parent.right : undefined) : parent.right
-				anchors.bottom: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? undefined : parent.bottom) : parent.bottom
-				anchors.top: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? header.bottom : parent.top) : (screen.showHeaderAtTop ? undefined : parent.top)
+				anchors.left: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? parent.left : header.right) : (screen.showHeaderAtTop ? parent.left : undefined)
+				anchors.right: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? parent.right : undefined) : parent.right
+				anchors.bottom: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? undefined : parent.bottom) : parent.bottom
+				anchors.top: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? header.bottom : parent.top) : (screen.showHeaderAtTop ? undefined : parent.top)
 
 			}
 			Header {
@@ -437,7 +506,7 @@ Rectangle {
 				anchors.top: parent.top
 				anchors.right: parent.right
 				color: properties.theme.colors.telldusBlue
-				height: Qt.platform.os == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
+				height: UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 				z: 999999999999
 			}
 			SwipeArea {
@@ -474,14 +543,22 @@ Rectangle {
 		function openMenu()
 		{
 			console.log("openMenu");
-			mainViewTranslate.x = menuView.width;
+			if (UI_PLATFORM == "android") {
+				menuViewTranslate.x = menuView.width + Units.dp(50);
+			} else {
+				mainViewTranslate.x = menuView.width;
+			}
 			mainInterface.menuViewVisible = true;
 			mainMenu.focus = true;
 		}
 		function closeMenu()
 		{
 			console.log("closeMenu");
-			mainViewTranslate.x = 0;
+			if (UI_PLATFORM == "android") {
+				menuViewTranslate.x = 0;
+			} else {
+				mainViewTranslate.x = 0;
+			}
 			mainInterface.menuViewVisible = false;
 			tabPage.focus = true;
 		}
@@ -500,16 +577,6 @@ Rectangle {
 			openMenu();
 		}
 	}
-//		id: loader_mainInterface
-//
-//		anchors.fill: parent
-//		opacity: telldusLive.isAuthorized ? 1 : 0
-//		source: opacity > 0  ? "MainInterface" + (Qt.platform.os == "android" ? "Android" : "iOS") + ".qml" : ''
-//
-//		Behavior on opacity { NumberAnimation { duration: 100 } }
-//	}
-
-
 
 	Loader {
 		id: loader_loginScreen
@@ -522,4 +589,3 @@ Rectangle {
 	}
 
 }
-
