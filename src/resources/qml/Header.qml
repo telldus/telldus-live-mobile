@@ -43,12 +43,12 @@ View {
 				id: backButton
 				visible: false
 				anchors.centerIn: parent
-				height: (leftButton.height - 32) * SCALEFACTOR
+				height: leftButton.height * 0.4
 				width: height
 				Image {
 					id: backButtonImage
 					anchors.centerIn: parent
-					height: parent.height / SCALEFACTOR
+					height: parent.height
 					width: height
 					source: "../svgs/iconArrowLeft.svg"
 					asynchronous: true
@@ -71,12 +71,12 @@ View {
 				id: drawerButton
 				visible: !backButton.visible
 				anchors.centerIn: parent
-				height: (leftButton.height - 32) * SCALEFACTOR
+				height: leftButton.height * 0.4
 				width: height
 				Image {
 					id: drawerButtonImage
 					anchors.centerIn: parent
-					height: (parent.height * 0.8 / SCALEFACTOR) * 0.8
+					height: parent.height
 					width: height
 					source: "../svgs/iconHamburger.svg"
 					asynchronous: true
@@ -98,8 +98,8 @@ View {
 		}
 		Item {
 			id: rightButton
-			width: headerHeight * SCALEFACTOR
-			height: headerHeight * SCALEFACTOR
+			width: Units.dp(headerHeight)
+			height: Units.dp(headerHeight)
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
 			clip: true
@@ -107,12 +107,12 @@ View {
 				id: editButton
 				visible: false
 				anchors.centerIn: parent
-				height: (rightButton.height - 32) * SCALEFACTOR
+				height: rightButton.height * 0.4
 				width: height
 				Image {
 					id: editButtonImage
 					anchors.centerIn: parent
-					height: parent.height / SCALEFACTOR
+					height: parent.height
 					width: height
 					source: "image://icons/favourite/#ffffff"
 					asynchronous: true
@@ -138,7 +138,8 @@ View {
 			clip: true
 			Item {
 				visible: title == '' && backVisible == false
-				anchors.centerIn: parent
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
 				width: screen.showHeaderAtTop ? parent.width : parent.height
 				height: (screen.showHeaderAtTop ? parent.height : parent.width) - (10 * SCALEFACTOR)
 				rotation: screen.showHeaderAtTop ? 0 : 270
@@ -159,13 +160,13 @@ View {
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
 				width: screen.showHeaderAtTop ? parent.width : parent.height
-				font.pixelSize: 20 * SCALEFACTOR
+				font.pixelSize: Units.dp(20)
 				color: "white"
 				style: Text.Raised;
 				styleColor: "#003959"
 				elide: Text.ElideRight
 				rotation: screen.showHeaderAtTop ? 0 : 270
-				horizontalAlignment: (Qt.platform.os == "android" ? undefined : Text.AlignHCenter)
+				horizontalAlignment: Text.AlignHCenter
 			}
 		}
 	}

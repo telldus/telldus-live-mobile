@@ -202,7 +202,7 @@ Item {
 					id: arrowImage
 					visible: !refreshTimer.running
 					anchors.centerIn: parent
-					height: (parent.height / SCALEFACTOR) * 0.5
+					height: parent.height * 0.5
 					width: height
 					source: "image://icons/refreshArrow/#999999"
 					asynchronous: true
@@ -215,7 +215,7 @@ Item {
 					id: arrowImageRunning
 					visible: closeTimer.running
 					anchors.centerIn: parent
-					height: (parent.height / SCALEFACTOR) * 0.5
+					height: parent.height * 0.5
 					width: height
 					source: "image://icons/refresh/#999999"
 					asynchronous: true

@@ -24,7 +24,6 @@ Rectangle {
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
 				font.pixelSize: Units.dp(15)
-				font.bold: true
 				color: "#093266"
 			}
 		}

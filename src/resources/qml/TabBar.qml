@@ -22,11 +22,12 @@ View {
 				height: inTabBar ? (screen.showHeaderAtTop ? parent.height : (Qt.platform.os == "android" ? tabBarItemText.width + Units.dp(24) + (index == 0 ? Units.dp(32) : Units.dp(0)) : tabBar.height / 4)) : 0
 				Item {
 					id: tabBarItemInner
-					anchors.right: (Qt.platform.os == "android" ? parent.right : undefined)
-					anchors.horizontalCenter: (Qt.platform.os == "android" ? undefined : parent.horizontalCenter)
-					anchors.verticalCenter: parent.verticalCenter
-					height: Units.dp(48)
-					width: Qt.platform.os == "android" ? tabBarItemText.width + Units.dp(24) : parent.width
+					anchors.right: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? parent.right : undefined) : undefined
+					anchors.bottom: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? undefined : parent.bottom) : undefined
+					anchors.horizontalCenter: Qt.platform.os == "android" ? undefined : parent.horizontalCenter
+					anchors.verticalCenter: Qt.platform.os == "android" ? undefined : parent.verticalCenter
+					height: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? Units.dp(48) : tabBarItemText.width + Units.dp(24) ) : Units.dp(48)
+					width: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? tabBarItemText.width + Units.dp(24) : parent.width) : parent.width
 					Item {
 						id: dashboardIcon
 						visible: Qt.platform.os != "android"
@@ -50,25 +51,28 @@ View {
 					Rectangle {
 						id: tabBarItemIndicator
 						visible: (Qt.platform.os == "android") && (index ==  pageModel.selectedIndex)
-						height: Units.dp(2)
-						anchors.left: parent.left
+						height: screen.showHeaderAtTop ? Units.dp(2) : undefined
+						width: screen.showHeaderAtTop ? undefined : Units.dp(2)
+						anchors.top: screen.showHeaderAtTop ? undefined : parent.top
+						anchors.left: screen.showHeaderAtTop ? parent.left : undefined
 						anchors.right: parent.right
 						anchors.bottom: parent.bottom
 						color: "#ffffff"
 					}
 					Text {
 						id: tabBarItemText
-						anchors.bottom: (Qt.platform.os == "android" ? undefined : parent.bottom)
-						anchors.bottomMargin: (Qt.platform.os == "android" ? undefined : Units.dp(4))
-						anchors.left: parent.left
-						anchors.right: parent.right
-						horizontalAlignment: Text.AlignHCenter
+						anchors.bottom: Qt.platform.os == "android" ? undefined : parent.bottom
+						anchors.bottomMargin: Qt.platform.os == "android" ? undefined : Units.dp(4)
+						anchors.left: Qt.platform.os == "android" ? undefined : parent.left
+						anchors.right: Qt.platform.os == "android" ? undefined : parent.right
+						horizontalAlignment: Qt.platform.os == "android" ? undefined : Text.AlignHCenter
 						anchors.horizontalCenter: Qt.platform.os == "android" ? parent.horizontalCenter : undefined
-						anchors.verticalCenter: (Qt.platform.os == "android" ? parent.verticalCenter : undefined)
-						font.bold: (Qt.platform.os == "android" ? true : false)
-						text: (Qt.platform.os == "android" ? title.toUpperCase() : title)
-						font.pixelSize: (Qt.platform.os == "android" ? Units.dp(14) : Units.dp(8))
+						anchors.verticalCenter: Qt.platform.os == "android" ? parent.verticalCenter : undefined
+						font.bold: Qt.platform.os == "android" ? true : false
+						text: Qt.platform.os == "android" ? title.toUpperCase() : title
+						font.pixelSize: Qt.platform.os == "android" ? Units.dp(14) : Units.dp(8)
 						color: (index ==  pageModel.selectedIndex ? (Qt.platform.os == "android" ? "#ffffff" : properties.theme.colors.telldusOrange) : (Qt.platform.os == "android" ? "#b2ffffff" : "#616161"))
+						rotation: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? 0 : 270) : undefined
 					}
 				}
 				MouseArea {

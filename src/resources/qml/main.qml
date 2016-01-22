@@ -52,7 +52,7 @@ Rectangle {
 		ListElement {
 			title: "Debug"
 			page: "DebugPage.qml"
-			inDrawer: true
+			inDrawer: false
 			inTabBar: false
 		}
 	}
@@ -203,7 +203,7 @@ Rectangle {
 							id: arrowImage
 							visible: !clientListRefreshTimer.running
 							anchors.centerIn: parent
-							height: (parent.height / SCALEFACTOR) * 0.8
+							height: parent.height * 0.8
 							width: height
 							source: "image://icons/refreshArrow/#999999"
 							asynchronous: true
@@ -216,7 +216,7 @@ Rectangle {
 							id: arrowImageRunning
 							visible: clientListCloseTimer.running
 							anchors.centerIn: parent
-							height: (parent.height / SCALEFACTOR) * 0.8
+							height: parent.height * 0.8
 							width: height
 							source: "image://icons/refresh/#999999"
 							asynchronous: true
@@ -391,8 +391,8 @@ Rectangle {
 			}
 			Loader {
 				id: tabPage
-				anchors.left: screen.showHeaderAtTop ? parent.left : header.right
-				anchors.right: screen.showHeaderAtTop ? parent.right : tabBar.left
+				anchors.left: screen.showHeaderAtTop ? parent.left : (Qt.platform.os == "android" ? tabBar.right : header.right)
+				anchors.right: screen.showHeaderAtTop ? parent.right : (Qt.platform.os == "android" ? parent.right : tabBar.left)
 				anchors.bottom: screen.showHeaderAtTop ? (Qt.platform.os == "android" ? parent.bottom : tabBar.top) : parent.bottom
 				anchors.top: screen.showHeaderAtTop ? (Qt.platform.os == "android" ? tabBar.bottom : header.bottom) : mainViewOffset.bottom
 				source: Qt.resolvedUrl(pageModel.get(pageModel.selectedIndex).page)
@@ -419,10 +419,10 @@ Rectangle {
 			}
 			TabBar {
 				id: tabBar
-				anchors.left: screen.showHeaderAtTop ? parent.left : undefined
-				anchors.right: parent.right
-				anchors.bottom: (Qt.platform.os == "android" ? undefined : parent.bottom)
-				anchors.top: screen.showHeaderAtTop ? (Qt.platform.os == "android" ? header.bottom : undefined) : parent.top
+				anchors.left: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? parent.left : header.right) : (screen.showHeaderAtTop ? parent.left : undefined)
+				anchors.right: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? parent.right : undefined) : parent.right
+				anchors.bottom: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? undefined : parent.bottom) : parent.bottom
+				anchors.top: Qt.platform.os == "android" ? (screen.showHeaderAtTop ? header.bottom : parent.top) : (screen.showHeaderAtTop ? undefined : parent.top)
 
 			}
 			Header {
