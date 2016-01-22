@@ -159,6 +159,7 @@ Item {
 			property int tileSize: 0
 			property int tileLabelHeight: 0
 			onWidthChanged: calculateTileSize()
+			onHeightChanged: calculateTileSize()
 
 			visible : dashboardModel.count > 0
 			anchors.top: parent.top
