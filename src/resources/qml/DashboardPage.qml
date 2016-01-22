@@ -202,11 +202,12 @@ Item {
 
 	function calculateTileSize() {
 		var listWidth = list.width
+		var baseTileSize = listWidth > (isPortrait ? 600 : 800) ? 150 : 100;
 		if (listWidth > 0) {
-			var numberOfTiles = Math.floor(listWidth / Units.dp(100));
+			var numberOfTiles = Math.floor(listWidth / Units.dp(baseTileSize));
 			var tileSize = listWidth / numberOfTiles;
 			if (numberOfTiles == 0) {
-				tileSize = Units.dp(100)
+				tileSize = Units.dp(baseTileSize)
 			}
 			list.tileSize = Math.floor(tileSize);
 			list.tileLabelHeight = Math.floor(tileSize * 0.25);
