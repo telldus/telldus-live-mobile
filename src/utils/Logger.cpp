@@ -40,6 +40,8 @@ Logger::~Logger() {
 void Logger::errorHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
 #if RELEASE_BUILD
+
+#else
 	QJsonObject logData;
 	QString logSection = "MISC";
 	QString logDataDirection;
