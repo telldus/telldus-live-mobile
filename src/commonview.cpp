@@ -64,7 +64,9 @@ void CommonView::init() {
 #endif  // PLATFORM_IOS
 
 void CommonView::loadAndShow() {
+d->platform = QGuiApplication::platformName().toLower();
 #if defined(PLATFORM_DESKTOP)
+	d->platform = "desktop";
 	d->view.show();
 	int w = 0, h = 0;
 	QStringList args = QCoreApplication::arguments();
@@ -83,7 +85,7 @@ void CommonView::loadAndShow() {
 			++i;
 			continue;
 		} else if (args.at(i) == "--platform-override") {
-			d->platform = args.at(i+1);
+			d->platform = args.at(i+1).toLower();
 			qDebug().nospace().noquote() << "[ARGS] --platform-override " << args.at(i+1);
 			++i;
 			continue;
@@ -94,9 +96,11 @@ void CommonView::loadAndShow() {
 		d->view.resize(size);
 	}
 #elif defined(PLATFORM_IOS)
+	d->platform = "ios";
 	QSize size(this->windowSize());
 	d->view.showFullScreen();
 #elif defined(PLATFORM_ANDROID)
+	d->platform = "android";
 	QSize size = QApplication::desktop()->size();
 	d->view.show();
 #else
@@ -120,6 +124,7 @@ void CommonView::loadAndShow() {
 	qDebug().nospace().noquote() << "[DEVICE] Screen availableVirtualGeometry: " << QApplication::primaryScreen()->availableVirtualGeometry();
 	qDebug().nospace().noquote() << "[DEVICE] Screen availableSize: " << QApplication::primaryScreen()->availableSize();
 	qDebug().nospace().noquote() << "[DEVICE] Screen availableGeometry : " << QApplication::primaryScreen()->availableGeometry();
+	qDebug().nospace().noquote() << "[QML] Context property: UI_PLATFORM = " << d->platform;
 
 	d->view.rootContext()->setContextProperty("HEIGHT", size.height());
 	d->view.rootContext()->setContextProperty("WIDTH", size.width());
