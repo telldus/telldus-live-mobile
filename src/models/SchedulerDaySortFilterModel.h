@@ -16,12 +16,7 @@ public:
 signals:
 	void countChanged();
 
-protected slots:
-	void rowsAdded( const QModelIndex & parent, int start, int end );
-//	void sensorChanged();
-
 protected:
-//	bool filterAcceptsRow ( int sourceRow, const QModelIndex & ) const;
 	bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 
 private:

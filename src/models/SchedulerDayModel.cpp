@@ -11,11 +11,11 @@ public:
 };
 
 SchedulerDayModel::SchedulerDayModel(SchedulerModel *model, QObject *parent) : QAbstractListModel(parent) {
+	connect(model, SIGNAL(jobsLoaded()), this, SIGNAL(modelReset()));
+	connect(this, SIGNAL(rowsAdded(QModelIndex,int,int)), this, SIGNAL(modelReset()));
+	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(modelReset()));
 	d = new PrivateData;
 	d->model = model;
-	connect(d->model, SIGNAL(countChanged()), this, SIGNAL(modelReset()));
-	connect(d->model, SIGNAL(countChanged()), this, SIGNAL(modelReset()));
-
 }
 
 QVariant SchedulerDayModel::data(const QModelIndex &index, int role) const {

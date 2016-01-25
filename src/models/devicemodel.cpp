@@ -21,6 +21,8 @@ DeviceModel::DeviceModel(QObject *parent) :
 		QSqlQuery query1("CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY, name TEXT, methods INTEGER, type INTEGER, favorite INTEGER, state INTEGER, statevalue TEXT, clientName TEXT)", db);
 		qDebug() << "[SQL] ALTER TABLE Device ADD COLUMN deactive INTEGER";
 		QSqlQuery query2("ALTER TABLE Device ADD COLUMN deactive INTEGER", db);
+		qDebug() << "[SQL] ALTER TABLE Device ADD COLUMN ignored INTEGER";
+		QSqlQuery query3("ALTER TABLE Device ADD COLUMN ignored INTEGER", db);
 	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
@@ -30,8 +32,8 @@ void DeviceModel::fetchDataFromCache() {
 	qDebug() << "[METHOD] DeviceModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
-		qDebug() << "[SQL] SELECT id, name, methods, type, favorite, state, statevalue, clientName, deactive FROM Device ORDER BY name";
-		QSqlQuery query("SELECT id, name, methods, type, favorite, state, statevalue, clientName, deactive FROM Device ORDER BY name", db);
+		qDebug() << "[SQL] SELECT id, name, methods, type, favorite, state, statevalue, clientName, deactive, ignored FROM Device ORDER BY name";
+		QSqlQuery query("SELECT id, name, methods, type, favorite, state, statevalue, clientName, deactive, ignored FROM Device ORDER BY name", db);
 		QVariantList devices;
 		while (query.next()) {
 			QVariantMap device;
@@ -44,6 +46,7 @@ void DeviceModel::fetchDataFromCache() {
 			device["statevalue"] = query.value(6);
 			device["clientName"] = query.value(7);
 			device["deactive"] = query.value(8);
+			device["ignored"] = query.value(9);
 			device["fromCache"] = true;
 			devices << device;
 		}
@@ -83,6 +86,7 @@ void DeviceModel::authorizationChanged() {
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
 		TelldusLiveParams params;
+		params["includeIgnored"] = 1;
 		params["supportedMethods"] = Device::TURNON | Device::TURNOFF | Device::BELL | Device::DIM | Device::LEARN | Device::UP | Device::DOWN | Device::STOP;
 		telldusLive->call("devices/list", params, this, SLOT(onDevicesList(QVariantMap)));
 	} else {

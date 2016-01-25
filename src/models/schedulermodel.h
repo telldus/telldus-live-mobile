@@ -19,7 +19,7 @@ public:
 	static SchedulerModel *instance();
 
 signals:
-	void jobsLoaded(const QVariantList &jobs);
+	void jobsLoaded();
 
 public slots:
 	void authorizationChanged();

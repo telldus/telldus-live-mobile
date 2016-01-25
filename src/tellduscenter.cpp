@@ -20,6 +20,7 @@
 #include "models/SchedulerDaySortFilterModel.h"
 #include "models/schedulermodel.h"
 #include "models/sensormodel.h"
+#include "models/SensorListSortFilterModel.h"
 #include "Notification.h"
 #include "objects/DashboardItem.h"
 #include "properties/Properties.h"
@@ -45,6 +46,7 @@ public:
 	SchedulerDayModel *schedulerDayModel;
 	SchedulerDaySortFilterModel *schedulerDaySortFilterModel;
 	DeviceListSortFilterModel *deviceListSortFilterModel;
+	SensorListSortFilterModel *sensorListSortFilterModel;
 	User *user;
 	static TelldusCenter *instance;
 };
@@ -65,7 +67,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
 	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
-	d->deviceListSortFilterModel = new DeviceListSortFilterModel(d->rawDeviceModel, this);
+	d->deviceListSortFilterModel = new DeviceListSortFilterModel(DeviceModel::instance(), this);
 	d->clientModel = ClientModel::instance();
 	d->dashboardModel = new DashboardModel(
 		new FavoriteDeviceModel(DeviceModel::instance(), this),
@@ -74,6 +76,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	);
 	d->schedulerDayModel = new SchedulerDayModel(SchedulerModel::instance(), this);
 	d->schedulerDaySortFilterModel = new SchedulerDaySortFilterModel(d->schedulerDayModel, this);
+	d->sensorListSortFilterModel = new SensorListSortFilterModel(SensorModel::instance(), this);
 	d->user = new User(this);
 #if IS_FEATURE_PUSH_ENABLED
 	connect(Push::instance(), SIGNAL(messageReceived(QString)), this, SLOT(pushMessageReceived(QString)));
@@ -108,6 +111,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("dashboardModel", d->dashboardModel);
 	d->view->setContextProperty("clientModel", d->clientModel);
 	d->view->setContextProperty("sensorModel", SensorModel::instance());
+	d->view->setContextProperty("sensorListSortFilterModel", d->sensorListSortFilterModel);
 	d->view->setContextProperty("user", d->user);
 	d->view->setContextProperty("properties", Properties::instance());
 }

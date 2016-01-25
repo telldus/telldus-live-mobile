@@ -320,7 +320,7 @@ Item {
 			id: list
 			anchors.fill: parent
 			anchors.topMargin: closeTimer.running ? 0 : -headerItem.height
-			model: sensorModel
+			model: sensorListSortFilterModel
 			delegate: sensorDelegate
 			maximumFlickVelocity: Units.dp(1500)
 			focus: true

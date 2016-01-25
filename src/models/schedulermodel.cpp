@@ -87,6 +87,7 @@ void SchedulerModel::addJobs(const QVariantList &jobList) {
 }
 
 void SchedulerModel::authorizationChanged() {
+	qDebug() << "[SCHEDULERMODEL] authorizationChanged";
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
 		telldusLive->call("scheduler/jobList", TelldusLiveParams(), this, SLOT(onJobList(QVariantMap)));
@@ -175,5 +176,6 @@ void SchedulerModel::onJobList(const QVariantMap &result) {
 	} else {
 		this->addJobs(result["job"].toList());
 	}
-	emit jobsLoaded(result["job"].toList());
+	qDebug() << "[SCHEDULERMODEL] << will emit jobsLoaded()";
+	emit jobsLoaded();
 }

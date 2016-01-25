@@ -3,19 +3,26 @@
 #include <QDebug>
 
 #include "device.h"
-#include "FilteredDeviceModel.h"
+#include "DeviceModel.h"
 
-DeviceListSortFilterModel::DeviceListSortFilterModel(FilteredDeviceModel *model, QObject *parent) : QSortFilterProxyModel(parent)
+DeviceListSortFilterModel::DeviceListSortFilterModel(DeviceModel *model, QObject *parent) : QSortFilterProxyModel(parent)
 {
+	connect(model, SIGNAL(devicesLoaded(QVariantList)), this, SLOT(invalidate()));
+	connect(this, SIGNAL(rowsAdded(QModelIndex,int,int)), this, SLOT(invalidate()));
+	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(invalidate()));
+
 	this->setSourceModel(model);
 	this->setDynamicSortFilter(true);
-	this->sort(0);
-	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(rowsAdded(QModelIndex,int,int)));
-	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(countChanged()));
-	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(countChanged()));
 }
 
 DeviceListSortFilterModel::~DeviceListSortFilterModel() {
+}
+
+bool DeviceListSortFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+	QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	Device *object = qobject_cast<Device *>(this->sourceModel()->data(index).value<QObject *>());
+	return !object->ignored();
 }
 
 bool DeviceListSortFilterModel::lessThan(const QModelIndex &left, const QModelIndex &right) const {
@@ -23,7 +30,4 @@ bool DeviceListSortFilterModel::lessThan(const QModelIndex &left, const QModelIn
 	Device *rightObject = qobject_cast<Device *>(this->sourceModel()->data(right).value<QObject *>());
 
 	return leftObject->clientName() < rightObject->clientName();
-}
-
-void DeviceListSortFilterModel::rowsAdded(const QModelIndex &, int start, int end) {
 }
