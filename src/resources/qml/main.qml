@@ -62,7 +62,7 @@ Rectangle {
 		id: mainInterface
 		property bool menuViewVisible: false
 		opacity: telldusLive.isAuthorized ? 1 : 0
-		color: "#404040";
+		color: "#212121";
 		anchors.fill: parent
 
 		Rectangle {
