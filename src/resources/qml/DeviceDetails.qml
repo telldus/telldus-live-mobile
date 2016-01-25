@@ -121,7 +121,7 @@ Rectangle {
 				height: Units.dp(32)
 				Image {
 					id: iconFavorite
-					height: parent.height * 0.6 / SCALEFACTOR
+					height: parent.height * 0.6
 					width: height
 					source: "image://icons/favourite/" + properties.theme.colors.telldusOrange
 					smooth: true
