@@ -13,7 +13,7 @@
 class Device::PrivateData {
 public:
 	bool hasChanged;
-	bool isFavorite, online;
+	bool isFavorite, online, ignored;
 	int id, methods, state;
 	QString name, stateValue, clientName;
 	Type type;
@@ -30,6 +30,7 @@ Device::Device(QObject *parent) :
 	d->methods = 0;
 	d->state = 2;
 	d->type = DeviceType;
+	d->ignored = false;
 	d->groupModel = new GroupDeviceModel(this);
 	connect(d->groupModel, SIGNAL(changed()), this, SLOT(groupContentChanged()));
 
@@ -294,6 +295,20 @@ Device::Type Device::getTypeFromString(const QString &type) {
 	}
 }
 
+bool Device::ignored() const {
+	return d->ignored;
+}
+
+void Device::setIgnored(bool ignored) {
+	if (ignored == d->ignored) {
+		return;
+	}
+	d->ignored = ignored;
+	emit ignoredChanged();
+	d->hasChanged = true;
+	emit saveToCache();
+}
+
 void Device::schedulerJobsChanged(const QModelIndex &, int start, int end) {
 	SchedulerModel *model = SchedulerModel::instance();
 	for (int i = start; i <= end; ++i ) {
@@ -352,6 +367,11 @@ void Device::setFromVariantMap(const QVariantMap &dev) {
 			d->hasChanged = true;
 		}
 	}
+	if (d->ignored != dev["ignored"].toBool()) {
+		d->ignored = dev["ignored"].toBool();
+		emit ignoredChanged();
+		d->hasChanged = true;
+	}
 	if (dev.contains("isfavorite") && d->isFavorite != dev["isfavorite"].toBool()) {
 		d->isFavorite = dev["isfavorite"].toBool();
 		emit isFavoriteChanged();
@@ -373,7 +393,7 @@ void Device::saveToCache() {
 		QSqlDatabase db = QSqlDatabase::database();
 		if (db.isOpen()) {
 			QSqlQuery query(db);
-			query.prepare("REPLACE INTO Device (id, name, methods, type, favorite, state, statevalue, clientName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			query.prepare("REPLACE INTO Device (id, name, methods, type, favorite, state, statevalue, clientName, ignored) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			query.bindValue(0, d->id);
 			query.bindValue(1, d->name);
 			query.bindValue(2, d->methods);
@@ -382,6 +402,7 @@ void Device::saveToCache() {
 			query.bindValue(5, d->state);
 			query.bindValue(6, d->stateValue);
 			query.bindValue(7, d->clientName);
+			query.bindValue(8, d->ignored);
 			query.exec();
 			qDebug().noquote().nospace() << "[DEVICE:" << d->id << "] Saved to cache";
 			d->hasChanged = false;

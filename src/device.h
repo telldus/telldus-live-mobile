@@ -23,6 +23,7 @@ class Device : public QObject
 	Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
 	Q_PROPERTY(QString stateValue READ stateValue WRITE setStateValue NOTIFY stateValueChanged)
 	Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
+	Q_PROPERTY(bool ignored READ ignored WRITE setIgnored NOTIFY ignoredChanged)
 public:
 	explicit Device(QObject *parent = 0);
 	~Device();
@@ -81,6 +82,9 @@ public:
 	void setType(const QString &type);
 	Type getTypeFromString(const QString &type );
 
+	bool ignored() const;
+	void setIgnored(bool online);
+
 	void setFromVariantMap(const QVariantMap &dev);
 
 signals:
@@ -94,6 +98,7 @@ signals:
 	void stateChanged();
 	void stateValueChanged(const QString &stateValue);
 	void typeChanged();
+	void ignoredChanged();
 
 public slots:
 	void bell();

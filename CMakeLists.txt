@@ -101,6 +101,7 @@ SET( SOURCES
 	src/models/SchedulerDaySortFilterModel.cpp
 	src/models/schedulermodel.cpp
 	src/models/sensormodel.cpp
+	src/models/SensorListSortFilterModel.cpp
 	src/models/tlistmodel.cpp
 	src/objects/DashboardItem.cpp
 	src/objects/SchedulerJobInstance.cpp
@@ -143,6 +144,7 @@ SET( MOC_HEADERS
 	src/models/SchedulerDaySortFilterModel.h
 	src/models/schedulermodel.h
 	src/models/sensormodel.h
+	src/models/SensorListSortFilterModel.h
 	src/models/tlistmodel.h
 	src/objects/DashboardItem.h
 	src/objects/SchedulerJobInstance.h
