@@ -39,6 +39,7 @@ Logger::~Logger() {
 
 void Logger::errorHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+#if RELEASE_BUILD
 	QJsonObject logData;
 	QString logSection = "MISC";
 	QString logDataDirection;
@@ -122,7 +123,6 @@ void Logger::errorHandler(QtMsgType type, const QMessageLogContext &context, con
 				abort();
 		}
 #endif
-
 	}
-
+#endif // if RELEASE_BUILD
 }
