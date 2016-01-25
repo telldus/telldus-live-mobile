@@ -5,6 +5,8 @@ LIST(APPEND LIBRARIES
 	-lssl
 )
 
+INCLUDE_DIRECTORIES( ${OPENSSL_DIR}/include )
+
 LIST(APPEND SOURCES
 	platforms/Desktop/Notification.cpp
 	platforms/Desktop/Push.cpp
