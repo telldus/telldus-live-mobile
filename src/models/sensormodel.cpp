@@ -98,6 +98,11 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 	QList<QObject *> list;
 	foreach(QVariant v, sensorsList) {
 		QVariantMap dev = v.toMap();
+		// API returns temp instead of temperature
+		if(dev.contains("temp")) {
+			dev.insert("temperature", dev["temp"]);
+			dev.remove("temp");
+		}
 		if (dev["deactive"].toBool() == false) {
 			if (dev["fromCache"].toBool() == false) {
 				activeSensorIds << dev["id"].toInt();
