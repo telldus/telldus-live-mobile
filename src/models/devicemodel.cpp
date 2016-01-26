@@ -185,9 +185,8 @@ void DeviceModel::onDeviceRemove(const QVariantMap &result, const QVariantMap &p
 }
 
 void DeviceModel::onDevicesList(const QVariantMap &result) {
-	qDebug() << "[MISC] device count: " << result["device"].toList().size();
 	if (result["device"].toList().size() == 0) {
-		qDebug() << "[DEVICEMODEL] No devices  ound, will deactivate all!!";
+		qDebug() << "[DEVICEMODEL] No devices found, will deactivate all!!";
 		QSqlDatabase db = QSqlDatabase::database();
 		if (db.isOpen()) {
 			QSqlQuery query(db);
