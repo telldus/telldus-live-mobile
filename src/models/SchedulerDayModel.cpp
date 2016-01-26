@@ -12,7 +12,7 @@ public:
 
 SchedulerDayModel::SchedulerDayModel(SchedulerModel *model, QObject *parent) : QAbstractListModel(parent) {
 	connect(model, SIGNAL(jobsLoaded()), this, SIGNAL(modelReset()));
-	connect(this, SIGNAL(rowsAdded(QModelIndex,int,int)), this, SIGNAL(modelReset()));
+	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(modelReset()));
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(modelReset()));
 	d = new PrivateData;
 	d->model = model;

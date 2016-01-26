@@ -8,7 +8,7 @@
 SensorListSortFilterModel::SensorListSortFilterModel(SensorModel *model, QObject *parent) : QSortFilterProxyModel(parent)
 {
 	connect(model, SIGNAL(sensorsLoaded(QVariantList)), this, SLOT(invalidate()));
-	connect(this, SIGNAL(rowsAdded(QModelIndex,int,int)), this, SLOT(invalidate()));
+	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(invalidate()));
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(invalidate()));
 
 	this->setSourceModel(model);
