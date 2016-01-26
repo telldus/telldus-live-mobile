@@ -3,6 +3,8 @@ import QtQuick.Window 2.2
 import QtQuick.LocalStorage 2.0
 import Tui 0.1
 
+import "../scripts/progressindicator.js" as Indicator
+
 Rectangle {
 	id: screen
 
@@ -464,6 +466,7 @@ Rectangle {
 				anchors.right: screen.showHeaderAtTop ? parent.right : (UI_PLATFORM == "android" ? parent.right : tabBar.left)
 				anchors.bottom: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : tabBar.top) : parent.bottom
 				anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBar.bottom : header.bottom) : parent.top
+				//anchors.topMargin: (progressBarComponent.visible ? progressBarComponent.height : 0) + (highQueueWarning.visible ? highQueueWarning.height : 0)
 				source: Qt.resolvedUrl(pageModel.get(pageModel.selectedIndex).page)
 				focus: true
 				Keys.onPressed: {
@@ -499,6 +502,72 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.right: screen.showHeaderAtTop ? parent.right : undefined
 				anchors.top: mainViewOffset.bottom
+			}
+
+			View {
+				id: highQueueWarning
+				visible: telldusLive.queueLength >= 20
+				anchors.left: tabPage.anchors.left
+				anchors.right: tabPage.anchors.right
+				anchors.top: tabPage.anchors.top
+				height: Units.dp(32)
+				z: header.z + 1
+				tintColor: "#E53935"
+				elevation: 2
+
+				Text {
+					id: highQueueWarningText
+					color: "#ffffff"
+					font.pixelSize: Units.dp(12)
+					text: "Internet connection problems detected"
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.horizontalCenter: parent.horizontalCenter
+				}
+			}
+
+			Item {
+				id: progressBarComponent
+				visible: telldusLive.queueLength > 0 && !highQueueWarning.visible
+				anchors.left: tabPage.anchors.left
+				anchors.right: tabPage.anchors.right
+				anchors.top: tabPage.anchors.top
+				height: Units.dp(4)
+				z: header.z + 1
+
+				property bool running: false;
+				property int numberOfElements: 0;
+
+				function start() {
+					console.log("Animation started.");
+					indicatorCreationTimer.restart();
+					progressBarComponent.running = true;
+				}
+
+				function stop() {
+					console.log("Animation stopped.");
+					progressBarComponent.running = false;
+					Indicator.stopIndicators();
+				}
+
+				Rectangle {
+					anchors.fill: parent
+					color: "#212121"
+					opacity: 0.2
+				}
+
+				Timer {
+					id: indicatorCreationTimer;
+					running: telldusLive.queueLength > 0
+					repeat: true;
+					interval: 100;
+					onTriggered: {
+						if (!Indicator.allStarted) {
+							Indicator.startNextIndicator();
+						} else {
+							indicatorCreationTimer.stop();
+						}
+					}
+				}
 			}
 			Rectangle {
 				id: mainViewOffset

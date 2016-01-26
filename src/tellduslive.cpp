@@ -169,6 +169,7 @@ void TelldusLive::onRequestReady(const QByteArray &response, QNetworkReply *repl
 
 	qDebug().nospace().noquote() << "[API] Removing from queue (" << reply->url().path() << ")";
 	TelldusLiveCall call(d->queue.dequeue());
+	emit queueLengthChanged();
 
 	//Start next call before parse
 	if (d->queue.count()) {
@@ -218,6 +219,10 @@ void TelldusLive::onSessionAuthenticated(const QVariantMap &data) {
 	emit sessionAuthenticated();
 }
 
+int TelldusLive::queueLength() {
+	return d->queue.size();
+}
+
 bool TelldusLive::isAuthorized() {
 	return d->state == PrivateData::Authorized;
 }
@@ -253,6 +258,7 @@ void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJ
 	qDebug().noquote().nospace() << "[API:REQUEST] " << call.endpoint << " <- " << call.params;
 
 	d->queue.enqueue(call);
+	emit queueLengthChanged();
 	if (!d->requestPending) {
 		this->doCall();
 	}
@@ -273,6 +279,7 @@ void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params,
 	qDebug().noquote().nospace() << "[API:REQUEST] " << call.endpoint << " <- " << call.params;
 
 	d->queue.enqueue(call);
+	emit queueLengthChanged();
 	if (!d->requestPending) {
 		this->doCall();
 	}
@@ -316,6 +323,7 @@ void TelldusLive::doCall() {
 	d->requestPending = true;
 	emit workingChanged();
 	TelldusLiveCall call(d->queue.head());
+	emit queueLengthChanged();
 	qDebug().nospace().noquote() << "[API] Calling " << call.endpoint;
 
 	QSettings s;

@@ -13,11 +13,13 @@ typedef QMap<QString, QVariant> TelldusLiveParams;
 class TelldusLive : public QObject
 {
 	Q_OBJECT
+	Q_PROPERTY(int queueLength READ queueLength NOTIFY queueLengthChanged)
 	Q_PROPERTY(bool isAuthorized READ isAuthorized NOTIFY authorizedChanged)
 	Q_PROPERTY(bool working READ working NOTIFY workingChanged)
 public:
 	~TelldusLive();
 
+	int queueLength();
 	bool isAuthorized();
 	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap());
 	QString session() const;
@@ -27,6 +29,7 @@ public:
 	static TelldusLive *instance();
 
 signals:
+	void queueLengthChanged();
 	void authorizedChanged();
 	void sessionAuthenticated();
 	void authorizationNeeded(const QUrl &url);

@@ -32,6 +32,7 @@
 		<file>resources/qml/tiles/SensorTile.qml</file>
 		<file>resources/qml/tiles/WeatherTile.qml</file>
 		<file>resources/qml/tiles/UnknownTile.qml</file>
+		<file>resources/qml/ProgressIndicatorRectangle.qml</file>
 
 		<file>resources/qml/main.tv.qml</file>
 
@@ -74,6 +75,8 @@
 		<file>resources/images/throbber/throbber_10.svg</file>
 		<file>resources/images/throbber/throbber_11.svg</file>
 		<file>resources/images/throbber/throbber_12.svg</file>
+
+		<file>resources/scripts/progressindicator.js</file>
 
 		<file>resources/svgs/deviceIconBell.svg</file>
 		<file>resources/svgs/deviceIconDim.svg</file>
