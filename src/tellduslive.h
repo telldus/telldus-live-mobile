@@ -6,6 +6,7 @@
 #include <QJSValue>
 #include <QMap>
 #include <QVariant>
+#include <QNetworkReply>
 
 typedef QMap<QString, QVariant> TelldusLiveParams;
 
@@ -43,7 +44,7 @@ private slots:
 	void onTemporaryTokenReceived(const QString &token, const QString &tokenSecret);
 	void onAuthorizationReceived(const QString &token, const QString &verifier);
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);
-	void onRequestReady(const QByteArray &response);
+	void onRequestReady(const QByteArray &response, QNetworkReply *reply);
 	void onSessionAuthenticated(const QVariantMap &data);
 
 private:

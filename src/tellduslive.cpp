@@ -149,7 +149,8 @@ void TelldusLive::onAccessTokenReceived(const QString &token, const QString &tok
 	emit workingChanged();
 }
 
-void TelldusLive::onRequestReady(const QByteArray &response) {
+void TelldusLive::onRequestReady(const QByteArray &response, QNetworkReply *reply) {
+	qDebug().nospace().noquote() << "[API] Response received (" << reply->url().path() << ") " << response;
 	if (d->state == PrivateData::AuthorizationPending) {
 		d->state = PrivateData::Authorized;
 		this->authenticateSession();
@@ -166,6 +167,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		return;
 	}
 
+	qDebug().nospace().noquote() << "[API] Removing from queue (" << reply->url().path() << ")";
 	TelldusLiveCall call(d->queue.dequeue());
 
 	//Start next call before parse
@@ -176,7 +178,7 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		emit workingChanged();
 	}
 
-	if (!call.callback.isUndefined() && !call.receiver) {
+	if ((!call.callback.isUndefined() && !call.receiver) || response == "") {
 		// Callback not valid, no need to parse response
 		return;
 	}
@@ -188,7 +190,6 @@ void TelldusLive::onRequestReady(const QByteArray &response) {
 		qDebug() << "[API] Could not parse json response from: " << call.endpoint << " (" << error.errorString() << ") (" << response << ")";
 		return;
 	}
-	qDebug().noquote().nospace() << "[API:RESPONSE] " << call.endpoint << " -> " << response;
 
 	if (call.receiver) {
 		QByteArray normalizedSignature = QMetaObject::normalizedSignature(call.member.mid(1).constData());
@@ -222,7 +223,7 @@ bool TelldusLive::isAuthorized() {
 }
 
 void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJSValue &expression) {
-	qDebug() << "[API] Queue call to" << endpoint;
+	qDebug().nospace().noquote() << "[API] Adding call to queue: " << endpoint;
 
 	TelldusLiveCall call;
 	call.receiver = 0;
@@ -258,7 +259,7 @@ void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJ
 }
 
 void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra) {
-	qDebug() << "[API] Queue call to" << endpoint;
+	qDebug().nospace().noquote() << "[API] Adding call to queue: " << endpoint;
 
 	TelldusLiveCall call;
 	call.endpoint = endpoint;
@@ -315,7 +316,7 @@ void TelldusLive::doCall() {
 	d->requestPending = true;
 	emit workingChanged();
 	TelldusLiveCall call(d->queue.head());
-	qDebug().noquote() << "[API] Calling" << call.endpoint;
+	qDebug().nospace().noquote() << "[API] Calling " << call.endpoint;
 
 	QSettings s;
 	QString token = s.value("oauthToken", "").toString();
@@ -355,7 +356,7 @@ void TelldusLive::setupManager() {
 	connect(d->manager, SIGNAL(temporaryTokenReceived(QString,QString)), this, SLOT(onTemporaryTokenReceived(QString, QString)));
 	connect(d->manager, SIGNAL(authorizationReceived(QString,QString)), this, SLOT( onAuthorizationReceived(QString, QString)));
 	connect(d->manager, SIGNAL(accessTokenReceived(QString,QString)), this, SLOT(onAccessTokenReceived(QString,QString)));
-	connect(d->manager, SIGNAL(requestReady(QByteArray)), this, SLOT(onRequestReady(QByteArray)));
+	connect(d->manager, SIGNAL(requestReady(QByteArray, QNetworkReply *)), this, SLOT(onRequestReady(QByteArray, QNetworkReply *)));
 
 	d->request = new KQOAuthRequest(this);
 

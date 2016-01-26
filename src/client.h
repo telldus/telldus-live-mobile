@@ -5,6 +5,7 @@
 #include <QMetaType>
 #include <QVariantMap>
 #include <QDateTime>
+#include <QAbstractSocket>
 
 class Client : public QObject
 {
@@ -59,6 +60,7 @@ private slots:
 	void wsConnected();
 	void wsDataReceived(const QString &string);
 	void wsDisconnected();
+	void wsStateChanged(QAbstractSocket::SocketState);
 	void applicationStateChanged(Qt::ApplicationState state);
 	void saveToCache();
 
