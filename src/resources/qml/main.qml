@@ -466,7 +466,6 @@ Rectangle {
 				anchors.right: screen.showHeaderAtTop ? parent.right : (UI_PLATFORM == "android" ? parent.right : tabBar.left)
 				anchors.bottom: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : tabBar.top) : parent.bottom
 				anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBar.bottom : header.bottom) : parent.top
-				//anchors.topMargin: (progressBarComponent.visible ? progressBarComponent.height : 0) + (highQueueWarning.visible ? highQueueWarning.height : 0)
 				source: Qt.resolvedUrl(pageModel.get(pageModel.selectedIndex).page)
 				focus: true
 				Keys.onPressed: {
@@ -507,9 +506,9 @@ Rectangle {
 			View {
 				id: highQueueWarning
 				visible: telldusLive.queueLength >= 20
-				anchors.left: tabPage.anchors.left
-				anchors.right: tabPage.anchors.right
-				anchors.top: tabPage.anchors.top
+				anchors.left: tabPage.left
+				anchors.right: tabPage.right
+				anchors.top: tabPage.top
 				height: Units.dp(32)
 				z: header.z + 1
 				tintColor: "#E53935"
@@ -528,9 +527,9 @@ Rectangle {
 			Item {
 				id: progressBarComponent
 				visible: telldusLive.queueLength > 0 && !highQueueWarning.visible
-				anchors.left: tabPage.anchors.left
-				anchors.right: tabPage.anchors.right
-				anchors.top: tabPage.anchors.top
+				anchors.left: tabPage.left
+				anchors.right: tabPage.right
+				anchors.top: tabPage.top
 				height: Units.dp(4)
 				z: header.z + 1
 
