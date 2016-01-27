@@ -40,11 +40,12 @@ Rectangle {
 			}
 
 			Item {
-				width: (parent.width - dimHandle.width * SCALEFACTOR) / SCALEFACTOR
-				height: 50*SCALEFACTOR
-				scale: SCALEFACTOR
+				width: parent.width
+				height: Units.dp(56)
+				scale: Units.dp(1)
 				visible: selected.methods & 16
 				anchors.horizontalCenter: parent.horizontalCenter
+
 				MouseArea {
 					anchors.fill: parent
 					onClicked: {
@@ -52,22 +53,45 @@ Rectangle {
 					}
 				}
 
-				BorderImage {
+				Card {
 					id: dimArea
 					anchors.verticalCenter: parent.verticalCenter
-					source: "../images/dimSliderBg.png"
-					height: 12
-					width: parent.width
-					border { left: 6; top: 6; right: 6; bottom: 5 }
+					anchors.left: parent.left
+					anchors.right: parent.right
+					anchors.margins: Units.dp(4)
+					height: Units.dp(8)
+					tintColor: "#616161"
 
+					Rectangle {
+						color: "#BDBDBD"
+						anchors.fill: parent
+						anchors.margins: Units.dp(1)
+						radius: dimArea.radius
+					}
+
+					Rectangle {
+						color: "#FFCA28"
+						anchors.fill: parent
+						anchors.margins: Units.dp(1)
+						radius: dimArea.radius
+						opacity: dimHandle.x / dimWidth.width
+					}
+				}
+				Item {
+					id: dimWidth
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.left
+					anchors.right: parent.right
+					anchors.leftMargin: dimHandle.width / 2
+					anchors.rightMargin: dimHandle.width / 2
 					Rectangle {
 						id: dimHandle
 						width: Units.dp(32)
 						height: width
 						radius: height / 2
-						anchors.horizontalCenter: parent.horizontalCenter
-						x: (selected.stateValue / 255) * dimArea.width - (dimHandle.width/2)
-						color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+						anchors.verticalCenter: parent.verticalCenter
+						x: (selected.stateValue / 255) * dimWidth.width - (dimHandle.width/2)
+						color: properties.theme.colors.telldusBlue
 						Image {
 							id: dimHandleImage
 							anchors.fill: parent
@@ -80,7 +104,7 @@ Rectangle {
 							Connections {
 								target: selected
 								onStateValueChanged: {
-									dimHandle.x = (stateValue / 255) * dimArea.width - (dimHandle.width/2)
+									dimHandle.x = (stateValue / 255) * dimWidth.width - (dimHandle.width/2)
 								}
 							}
 						}
@@ -91,9 +115,9 @@ Rectangle {
 						drag.target: dimHandle
 						drag.axis: Drag.XAxis
 						drag.minimumX: -dimHandle.width/2
-						drag.maximumX: dimArea.width - (dimHandle.width/2)
+						drag.maximumX: dimWidth.width - (dimHandle.width/2)
 						onReleased: {
-							var value = Math.round((dimHandle.x + dimHandle.width/2) / dimArea.width * 255);
+							var value = Math.round((dimHandle.x + dimHandle.width/2) / dimWidth.width * 255);
 							selected.dim(value)
 						}
 					}
