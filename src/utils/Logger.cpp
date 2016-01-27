@@ -7,6 +7,8 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonDocument>
+#include <QStringList>
+#include <stdio.h>
 
 class Logger::PrivateData {
 public:
