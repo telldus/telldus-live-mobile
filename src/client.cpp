@@ -17,9 +17,9 @@
 
 class Client::PrivateData {
 public:
-	bool hasChanged, online, editable;
-	int id;
-	QString name, version, type, sessionId;
+	bool hasChanged, online, editable, timezoneAutodetected;
+	int id, sunrise, sunset, timezoneOffset;
+	QString name, version, type, sessionId, ip, longitude, latitude, timezone, transports;
 	QWebSocket webSocket;
 };
 
@@ -129,6 +129,42 @@ void Client::setType(const QString &type) {
 	emit saveToCache();
 }
 
+QString Client::ip() const {
+	return d->ip;
+}
+
+QString Client::longitude() const {
+	return d->longitude;
+}
+
+QString Client::latitude() const {
+	return d->latitude;
+}
+
+int Client::sunrise() const {
+	return d->sunrise;
+}
+
+int Client::sunset() const {
+	return d->sunset;
+}
+
+QString Client::timezone() const {
+	return d->timezone;
+}
+
+bool Client::timezoneAutodetected() const {
+	return d->timezoneAutodetected;
+}
+
+int Client::timezoneOffset() const {
+	return d->timezoneOffset;
+}
+
+QString Client::transports() const {
+	return d->transports;
+}
+
 void Client::setFromVariantMap(const QVariantMap &dev) {
 	if (d->id != dev["id"].toInt()) {
 		d->id = dev["id"].toInt();
@@ -160,6 +196,51 @@ void Client::setFromVariantMap(const QVariantMap &dev) {
 		emit typeChanged();
 		d->hasChanged = true;
 	}
+	if (d->ip != dev["ip"].toString()) {
+		d->ip = dev["ip"].toString();
+		emit ipChanged();
+		d->hasChanged = true;
+	}
+	if (d->longitude != dev["longitude"].toString()) {
+		d->longitude = dev["longitude"].toString();
+		emit longitudeChanged();
+		d->hasChanged = true;
+	}
+	if (d->latitude != dev["latitude"].toString()) {
+		d->latitude = dev["latitude"].toString();
+		emit latitudeChanged();
+		d->hasChanged = true;
+	}
+	if (d->sunrise != dev["sunrise"].toInt()) {
+		d->sunrise = dev["sunrise"].toInt();
+		emit sunriseChanged();
+		d->hasChanged = true;
+	}
+	if (d->sunset != dev["sunset"].toInt()) {
+		d->sunset = dev["sunset"].toInt();
+		emit sunsetChanged();
+		d->hasChanged = true;
+	}
+	if (d->timezone != dev["timezone"].toString()) {
+		d->timezone = dev["timezone"].toString();
+		emit timezoneChanged();
+		d->hasChanged = true;
+	}
+	if (d->timezoneAutodetected != dev["timezoneAutodetected"].toBool()) {
+		d->timezoneAutodetected = dev["timezoneAutodetected"].toBool();
+		emit timezoneAutodetectedChanged();
+		d->hasChanged = true;
+	}
+	if (d->timezoneOffset != dev["timezoneOffset"].toInt()) {
+		d->timezoneOffset = dev["timezoneOffset"].toInt();
+		emit timezoneOffsetChanged();
+		d->hasChanged = true;
+	}
+	if (d->transports != dev["transports"].toString()) {
+		d->transports = dev["transports"].toString();
+		emit transportsChanged();
+		d->hasChanged = true;
+	}
 	if (dev["fromCache"].toBool() == false) {
 		emit saveToCache();
 	} else {
@@ -177,13 +258,22 @@ void Client::saveToCache() {
 		QSqlDatabase db = QSqlDatabase::database();
 		if (db.isOpen()) {
 			QSqlQuery query(db);
-			query.prepare("REPLACE INTO Client (id, name, online, editable, version, type) VALUES (:id, :name, :online, :editable, :version, :type)");
+			query.prepare("REPLACE INTO Client (id, name, online, editable, version, type, ip, longitude, latitude, sunrise, sunset, timezone, timezoneAutodetected, timezoneOffset, transports) VALUES (:id, :name, :online, :editable, :version, :type, :ip, :longitude, :latitude, :sunrise, :sunset, :timezone, :timezoneAutodetected, :timezoneOffset, :transports)");
 			query.bindValue(":id", d->id);
 			query.bindValue(":name", d->name);
 			query.bindValue(":online", d->online);
 			query.bindValue(":editable", d->editable);
 			query.bindValue(":version", d->version);
 			query.bindValue(":type", d->type);
+			query.bindValue(":ip", d->ip);
+			query.bindValue(":longitude", d->longitude);
+			query.bindValue(":latitude", d->latitude);
+			query.bindValue(":sunrise", d->sunrise);
+			query.bindValue(":sunset", d->sunset);
+			query.bindValue(":timezone", d->timezone);
+			query.bindValue(":timezoneAutodetected", d->timezoneAutodetected);
+			query.bindValue(":timezoneOffset", d->timezoneOffset);
+			query.bindValue(":transports", d->transports);
 			query.exec();
 			qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Saved to cache";
 			d->hasChanged = false;

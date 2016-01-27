@@ -1,5 +1,9 @@
 #include "schedulerjob.h"
 #include "tellduslive.h"
+#include "models/devicemodel.h"
+#include "models/clientmodel.h"
+#include "device.h"
+#include "client.h"
 
 #include <QDebug>
 #include <QSqlDatabase>
@@ -95,6 +99,28 @@ QDateTime SchedulerJob::nextRunTime() const {
 	return d->nextRunTime;
 }
 
+QTime SchedulerJob::runTimeToday() const {
+	int timezoneOffset = 0;
+	int sunrise = 0;
+	int sunset = 0;
+	Device *device = DeviceModel::instance()->findDevice(d->deviceId);
+	if (device) {
+		Client *client = ClientModel::instance()->findClientByName(device->clientName());
+		if (client) {
+			timezoneOffset = client->timezoneOffset();
+			sunrise = client->sunrise();
+			sunset = client->sunset();
+		}
+	}
+	if (d->type == Sunrise) {
+		return QDateTime::fromTime_t(sunrise, Qt::OffsetFromUTC, 0).time().addSecs((d->offset * 60) + timezoneOffset);
+	} else if (d->type == Sunset) {
+		return QDateTime::fromTime_t(sunset, Qt::OffsetFromUTC, 0).time().addSecs((d->offset * 60) + timezoneOffset);
+	} else {
+		return QTime(d->hour, d->minute, 0);
+	}
+}
+
 void SchedulerJob::setNextRunTime(const QDateTime &nextRunTime) {
 	if (nextRunTime == d->nextRunTime) {
 		return;
@@ -115,6 +141,7 @@ void SchedulerJob::setType(SchedulerJob::Type type) {
 	}
 	d->type = type;
 	emit typeChanged();
+	emit runTimeTodayChanged();
 	d->hasChanged = true;
 	emit saveToCache();
 }
@@ -149,6 +176,7 @@ void SchedulerJob::setHour(int hour) {
 	}
 	d->hour = hour;
 	emit hourChanged();
+	emit runTimeTodayChanged();
 	d->hasChanged = true;
 	emit saveToCache();
 }
@@ -163,6 +191,7 @@ void SchedulerJob::setMinute(int minute) {
 	}
 	d->minute = minute;
 	emit minuteChanged();
+	emit runTimeTodayChanged();
 	d->hasChanged = true;
 	emit saveToCache();
 }
@@ -177,6 +206,7 @@ void SchedulerJob::setOffset(int offset) {
 	}
 	d->offset = offset;
 	emit offsetChanged();
+	emit runTimeTodayChanged();
 	d->hasChanged = true;
 	emit saveToCache();
 }
@@ -191,6 +221,7 @@ void SchedulerJob::setRandomInterval(int randomInterval) {
 	}
 	d->randomInterval = randomInterval;
 	emit randomIntervalChanged();
+	emit runTimeTodayChanged();
 	d->hasChanged = true;
 	emit saveToCache();
 }
@@ -263,8 +294,8 @@ void SchedulerJob::setFromVariantMap(const QVariantMap &dev) {
 		emit nextRunTimeChanged();
 		d->hasChanged = true;
 	}
-	if (d->type != getTypeFromString(dev["type"].toString())) {
-		d->type = getTypeFromString(dev["type"].toString());
+	if (d->type != (dev["type"].type() == QVariant::String ? getTypeFromString(dev["type"].toString()) : static_cast<SchedulerJob::Type>(dev["type"].toInt()))) {
+		d->type = (dev["type"].type() == QVariant::String ? getTypeFromString(dev["type"].toString()) : static_cast<SchedulerJob::Type>(dev["type"].toInt()));
 		emit typeChanged();
 		d->hasChanged = true;
 	}

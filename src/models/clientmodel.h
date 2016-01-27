@@ -11,6 +11,7 @@ class ClientModel : public TListModel
 public:
 	Q_INVOKABLE void addClients(const QVariantList &devices);
 	Q_INVOKABLE Client *findClient(int id) const;
+	Q_INVOKABLE Client *findClientByName(QString name) const;
 	Q_INVOKABLE void deactivateClients(QList<int> activeIds);
 
 	static ClientModel *instance();

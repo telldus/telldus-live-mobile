@@ -27,7 +27,7 @@ Item {
 					anchors.verticalCenter: parent.verticalCenter
 					color: properties.theme.colors.telldusOrange
 					font.pixelSize: Units.dp(16)
-					text: Qt.formatTime(job.nextRunTime, "HH:mm")
+					text: Qt.formatTime(job.runTimeToday, "HH:mm")
 					width: 60 * SCALEFACTOR
 				}
 				Text {

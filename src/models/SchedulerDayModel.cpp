@@ -40,6 +40,7 @@ QVariant SchedulerDayModel::data(const QModelIndex &index, int role) const {
 				schedulerJobInstance->setRetries(schedulerJob->retries());
 				schedulerJobInstance->setRetryInterval(schedulerJob->retryInterval());
 				schedulerJobInstance->setType(schedulerJob->type());
+				schedulerJobInstance->setRunTimeToday(schedulerJob->runTimeToday());
 				schedulerJobInstance->setWeekday(b);
 				return QVariant::fromValue(schedulerJobInstance);
 			}
