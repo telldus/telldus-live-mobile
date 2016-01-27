@@ -34,7 +34,10 @@ public:
 	State state;
 	KQOAuthManager *manager;
 	KQOAuthRequest *request;
-	QString base, session, pushToken;
+	QString base, session;
+#if IS_FEATURE_PUSH_ENABLED
+	QString pushToken;
+#endif
 	QQueue<TelldusLiveCall> queue;
 	bool requestPending, sessionIsAuthenticated;
 	QDateTime ttl;

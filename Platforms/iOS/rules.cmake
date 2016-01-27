@@ -61,10 +61,14 @@ LIST(APPEND SOURCES
 	platforms/iOS/src/ObjectiveUtils.mm
 	platforms/iOS/src/Dev.mm
 	platforms/iOS/src/CommonView.mm
-	platforms/iOS/src/Notification.cpp
-	platforms/iOS/src/Push.cpp
-	platforms/iOS/src/Push.mm
 )
+IF(ENABLE_FEATURE_PUSH)
+	LIST(APPEND SOURCES
+		platforms/iOS/src/Notification.cpp
+		platforms/iOS/src/Push.cpp
+		platforms/iOS/src/Push.mm
+	)
+ENDIF()
 
 LIST(APPEND LIBRARIES
 	"-framework Foundation"

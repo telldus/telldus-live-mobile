@@ -75,8 +75,6 @@ ENDIF(COMMAND CMAKE_POLICY)
 SET(PRODUCT_NAME TelldusCenter-light )
 
 SET( SOURCES
-	src/AbstractNotification.cpp
-	src/AbstractPush.cpp
 	src/abstractview.cpp
 	src/client.cpp
 	src/commonview.cpp
@@ -114,13 +112,22 @@ SET( SOURCES
 	src/properties/PropertiesUi.cpp
 )
 
+IF(ENABLE_FEATURE_PUSH)
+	SET( SOURCES
+		src/AbstractNotification.cpp
+		src/AbstractPush.cpp
+	)
+	SET( MOC_HEADERS
+		src/AbstractNotification.h
+		src/AbstractPush.h
+	)
+ENDIF()
+
 SET( HEADERS
 	${CMAKE_CURRENT_BINARY_DIR}/parsed/config.h
 	src/config.h.in
 )
 SET( MOC_HEADERS
-	src/AbstractNotification.h
-	src/AbstractPush.h
 	src/abstractview.h
 	src/client.h
 	src/commonview.h

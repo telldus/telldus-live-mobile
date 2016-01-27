@@ -3,8 +3,10 @@
 
 #import "QtAppDelegate.h"
 #include "TelldusLive.h"
-#include "Push.h"
 
+#if IS_FEATURE_LOGGING_ENABLED
+#include "Push.h"
+#endif
 
 @implementation QtAppDelegate
 static QtAppDelegate *sharedAppDelegate = nil;
@@ -65,19 +67,19 @@ void QtAppDelegateInitialize ()
 
 	qDebug() << "[APP] AppDelegate Initialized";
 }
-
+#if IS_FEATURE_PUSH_ENABLED
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    TelldusLive *telldusLive = TelldusLive::instance();
-    if (!telldusLive->isAuthorized()) {
-        return;
-    }
-    Push::instance()->didRegisterForRemoteNotificationsWithDeviceToken(deviceToken);
+	TelldusLive *telldusLive = TelldusLive::instance();
+	if (!telldusLive->isAuthorized()) {
+		return;
+	}
+	Push::instance()->didRegisterForRemoteNotificationsWithDeviceToken(deviceToken);
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-    qDebug().noquote() << QString("[PUSH] Failed to get token, error: %1").arg(QString::fromNSString(error.description));
+	qDebug().noquote() << QString("[PUSH] Failed to get token, error: %1").arg(QString::fromNSString(error.description));
 }
-
+#endif
 @end

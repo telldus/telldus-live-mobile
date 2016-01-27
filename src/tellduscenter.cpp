@@ -21,7 +21,6 @@
 #include "models/schedulermodel.h"
 #include "models/sensormodel.h"
 #include "models/SensorListSortFilterModel.h"
-#include "Notification.h"
 #include "objects/DashboardItem.h"
 #include "properties/Properties.h"
 #include "properties/PropertiesTheme.h"
@@ -35,6 +34,7 @@
 
 #if IS_FEATURE_PUSH_ENABLED
 #include "Push.h"
+#include "Notification.h"
 #endif  // IS_FEATURE_PUSH_ENABLED
 
 class TelldusCenter::PrivateData {
@@ -135,7 +135,9 @@ void TelldusCenter::openUrl(const QUrl &url) {
 #endif  // PLATFORM_IOS
 }
 
+#if IS_FEATURE_PUSH_ENABLED
 void TelldusCenter::pushMessageReceived(const QString &message) {
 	Notification notification(message);
 	notification.notify();
 }
+#endif

@@ -20,8 +20,10 @@ public slots:
 	void openUrl(const QUrl &url);
 	void quit();
 
+#if IS_FEATURE_PUSH_ENABLED
 private slots:
 	void pushMessageReceived(const QString &message);
+#endif
 
 private:
 	class PrivateData;

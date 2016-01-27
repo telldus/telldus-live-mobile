@@ -34,7 +34,9 @@ signals:
 	void sessionAuthenticated();
 	void authorizationNeeded(const QUrl &url);
 	void workingChanged();
+#if IS_FEATURE_PUSH_ENABLED
 	void pushTokenChanged(QString token);
+#endif
 
 public slots:
 	void authorize();
@@ -53,7 +55,9 @@ private slots:
 private:
 	explicit TelldusLive(QObject *parent = 0);
 	void doCall();
+#if IS_FEATURE_PUSH_ENABLED
 	void registerForPush();
+#endif
 	class PrivateData;
 	PrivateData *d;
 };
