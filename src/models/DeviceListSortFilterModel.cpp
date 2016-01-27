@@ -13,6 +13,7 @@ DeviceListSortFilterModel::DeviceListSortFilterModel(DeviceModel *model, QObject
 
 	this->setSourceModel(model);
 	this->setDynamicSortFilter(true);
+	this->sort(0);
 }
 
 DeviceListSortFilterModel::~DeviceListSortFilterModel() {
