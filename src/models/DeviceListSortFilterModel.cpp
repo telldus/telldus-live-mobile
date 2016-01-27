@@ -3,7 +3,7 @@
 #include <QDebug>
 
 #include "device.h"
-#include "DeviceModel.h"
+#include "devicemodel.h"
 
 DeviceListSortFilterModel::DeviceListSortFilterModel(DeviceModel *model, QObject *parent) : QSortFilterProxyModel(parent)
 {

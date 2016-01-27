@@ -3,7 +3,7 @@
 #include <QDebug>
 
 #include "sensor.h"
-#include "SensorModel.h"
+#include "sensormodel.h"
 
 SensorListSortFilterModel::SensorListSortFilterModel(SensorModel *model, QObject *parent) : QSortFilterProxyModel(parent)
 {
