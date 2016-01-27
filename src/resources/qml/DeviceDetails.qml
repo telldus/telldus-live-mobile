@@ -40,9 +40,9 @@ Rectangle {
 			}
 
 			Item {
+				id: dimmer
 				width: parent.width
 				height: Units.dp(56)
-				scale: Units.dp(1)
 				visible: selected.methods & 16
 				anchors.horizontalCenter: parent.horizontalCenter
 
@@ -157,7 +157,7 @@ Rectangle {
 				Item {
 					height: iconFavorite.height
 					anchors.left: iconFavorite.right
-					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.leftMargin: Units.dp(10)
 					anchors.right: parent.right
 					Item {
 						anchors.verticalCenter: parent.verticalCenter
@@ -172,13 +172,13 @@ Rectangle {
 							wrapMode: Text.WordWrap
 							text: showDevice.selected.isFavorite ? "Device is shown on the dashboard" : "Tap to show device on dashboard"
 							color: properties.theme.colors.telldusBlue
-							font.pixelSize: 14 * SCALEFACTOR
+							font.pixelSize: Units.dp(14)
 						}
 						Text {
 							anchors.top: favText.bottom
 							text: "Tap to remove"
 							color: properties.theme.colors.telldusBlue
-							font.pixelSize: 10 * SCALEFACTOR
+							font.pixelSize: Units.dp(10)
 							height: showDevice.selected.isFavorite ? undefined : 0
 							opacity: showDevice.selected.isFavorite ? 1 : 0
 							Behavior on opacity { NumberAnimation { duration: 200 } }
