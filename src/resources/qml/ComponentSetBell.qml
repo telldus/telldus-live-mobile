@@ -23,7 +23,6 @@ Item {
 	}
 	MouseArea {
 		id: bellMouseArea
-		preventStealing: true
 		anchors.fill: parent
 		onPressed: {
 			bellIcon.opacity = 0.85

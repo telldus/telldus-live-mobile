@@ -328,6 +328,7 @@ Item {
 			section.property: "device.clientName"
 			section.criteria: ViewSection.FullString
 			section.delegate: deviceListSectionHeader
+			pressDelay: 100
 			onDragEnded: {
 				if (headerItem.refresh && !refreshTimer.running) {
 					console.log("Refreshing DeviceModel")

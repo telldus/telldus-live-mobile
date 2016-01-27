@@ -328,6 +328,7 @@ Item {
 			section.property: "sensor.clientName"
 			section.criteria: ViewSection.FullString
 			section.delegate: sensorListSectionHeader
+			pressDelay: 100
 			onDragEnded: {
 				if (headerItem.refresh && !refreshTimer.running) {
 					console.log("Refreshing SensorModel")

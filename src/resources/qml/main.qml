@@ -303,6 +303,7 @@ Rectangle {
 					maximumFlickVelocity: Units.dp(1500)
 					spacing: UI_PLATFORM == "android" ? Units.dp(8) : Units.dp(0)
 					header: clientListHeader
+					pressDelay: 100
 					onDragEnded: {
 						if (headerItem.refresh && !clientListRefreshTimer.running) {
 							console.log("Refreshing ClientModel")
@@ -335,7 +336,7 @@ Rectangle {
 				delegate: mainMenuItem
 				maximumFlickVelocity: Units.dp(1500)
 				spacing: Units.dp(0)
-
+				pressDelay: 100
 				Keys.onPressed: {
 					if (properties.ui.supportsKeys) {
 						if (event.key == Qt.Key_Up) {

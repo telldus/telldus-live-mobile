@@ -75,7 +75,6 @@ Item {
 		}
 		MouseArea {
 			id: onMouseArea
-			preventStealing: true
 			anchors.fill: parent
 			drag.target: dimHandle
 			drag.axis: Drag.XandYAxis
@@ -144,7 +143,6 @@ Item {
 		}
 		MouseArea {
 			id: offMouseArea
-			preventStealing: true
 			anchors.fill: parent
 			drag.target: dimHandle
 			drag.axis: Drag.XandYAxis

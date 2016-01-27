@@ -61,7 +61,6 @@ Item {
 				}
 				MouseArea {
 					id: upMouseArea
-					preventStealing: true
 					anchors.fill: parent
 					onPressed: {
 						upButton.color = "#EAEAEA"
@@ -100,7 +99,6 @@ Item {
 				}
 				MouseArea {
 					id: downMouseArea
-					preventStealing: true
 					anchors.fill: parent
 					onPressed: {
 						downButton.color = "#EAEAEA"
@@ -156,7 +154,6 @@ Item {
 				}
 				MouseArea {
 					id: stopMouseArea
-					preventStealing: true
 					anchors.fill: parent
 					onPressed: {
 						stopButton.color = "#EAEAEA"

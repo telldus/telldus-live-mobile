@@ -21,7 +21,6 @@ Item {
 	}
 	MouseArea {
 		id: buttonMouseArea
-		preventStealing: true
 		anchors.fill: parent
 		onPressed: {
 			bellIcon.opacity = 0.85

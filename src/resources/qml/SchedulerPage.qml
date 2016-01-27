@@ -201,6 +201,7 @@ Item {
 		maximumFlickVelocity: 1500 * SCALEFACTOR
 		spacing: 1 * SCALEFACTOR
 		header: schedulerListHeader
+		pressDelay: 100
 		onDragEnded: {
 			if (headerItem.refresh && !refreshTimer.running) {
 				console.log("Refreshing SchedulerModel")

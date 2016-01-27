@@ -176,6 +176,7 @@ Item {
 			cellHeight: this.tileSize
 			maximumFlickVelocity: Units.dp(1500)
 			header: dashboardListHeader
+			pressDelay: 100
 			onDragEnded: {
 				if (headerItem.refresh && !refreshTimer.running) {
 					console.log("Refreshing DeviceModel")
