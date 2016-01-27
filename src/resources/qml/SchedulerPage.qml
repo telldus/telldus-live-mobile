@@ -134,19 +134,30 @@ Item {
 		}
 	}
 	Component {
-		id: sectionHeading
-		Item {
+		id: schedulerListSectionHeader
+		Rectangle {
 			width: parent.width
-			height: Units.dp(26)
+			height: Units.dp(28)
+			color: "#dddddd"
 
-			Text {
-				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
-				anchors.leftMargin: Units.dp(10)
-				text: getSectionHeading(section)
-				font.bold: true
-				font.pixelSize: Units.dp(14)
-				color: "#999999"
+			Rectangle {
+				anchors.fill: parent
+				anchors.topMargin: Units.dp(1)
+				anchors.bottomMargin: Units.dp(1)
+				color: "#f5f5f5"
+
+				Text {
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.left
+					anchors.leftMargin: Units.dp(20)
+					//anchors.left: parent.left
+					//anchors.leftMargin: Units.dp(10)
+					text: getSectionHeading(section)
+					font.bold: true
+					font.pixelSize: Units.dp(14)
+					color: "#999999"
+				}
+
 			}
 		}
 	}
@@ -186,7 +197,7 @@ Item {
 		delegate: schedulerDelegate
 		section.property: "job.nextRunDate"
 		section.criteria: ViewSection.FullString
-		section.delegate: sectionHeading
+		section.delegate: schedulerListSectionHeader
 		maximumFlickVelocity: 1500 * SCALEFACTOR
 		spacing: 1 * SCALEFACTOR
 		header: schedulerListHeader
