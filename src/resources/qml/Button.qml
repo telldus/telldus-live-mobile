@@ -1,53 +1,38 @@
 import QtQuick 2.0
+import Tui 0.1
 
-Item {
+Card {
 	id: button
 	property alias title: text.text
 	signal clicked()
-	width: text.width + (40 * SCALEFACTOR)
-	height: text.height + (20 * SCALEFACTOR)
+	width: text.width + Units.dp(56)
+	height: text.height + Units.dp(16)
+	tintColor: "#BDBDBD"
 
-	BorderImage {
-		source: "../images/buttonBg.png"
-		border {left: 15; top: 49; right: 15; bottom: 49 }
-		scale: SCALEFACTOR/2
-		transformOrigin: Item.TopLeft
-		width: ((text.width + (40 * SCALEFACTOR))*2) / SCALEFACTOR
-		height: ((text.height + (20 * SCALEFACTOR))*2) / SCALEFACTOR
-		smooth: true
-		BorderImage {
-			anchors.left: parent.left
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
-			anchors.right: parent.horizontalCenter
-			border {left: 10; top: 10; right: 0; bottom: 10 }
-			source: "../images/buttonBgClickLeft.png"
-			opacity: buttonArea.pressed ? 1 : 0
-		}
-		BorderImage {
-			anchors.left: parent.horizontalCenter
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
-			anchors.right: parent.right
-			border {left: 0; top: 10; right: 10; bottom: 10 }
-			source: "../images/buttonBgClickRight.png"
-			opacity: buttonArea.pressed ? 1 : 0
-		}
-	}
-	Text {
-		id: text
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.verticalCenter: parent.verticalCenter
-		smooth: true
-		color: "#00659F"
-		font.pixelSize: 20*SCALEFACTOR
-		font.weight: Font.Bold
-		style: Text.Raised
-		styleColor: "white"
-	}
-	MouseArea {
-		id: buttonArea
+	Rectangle {
+		id: buttonFill
 		anchors.fill: parent
-		onClicked: button.clicked()
+		anchors.margins: Units.dp(1)
+		color: properties.theme.colors.telldusBlue
+		radius: button.radius
+		Text {
+			id: text
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.verticalCenter: parent.verticalCenter
+			smooth: true
+			color: "#ffffff"
+			font.pixelSize: Units.dp(16)
+		}
+		MouseArea {
+			id: buttonArea
+			anchors.fill: parent
+			onReleased: {
+				button.clicked()
+				buttonFill.opacity = 1
+			}
+			onPressed: {
+				buttonFill.opacity = 0.6
+			}
+		}
 	}
 }
