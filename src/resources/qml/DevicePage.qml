@@ -1,5 +1,5 @@
 import QtGraphicalEffects 1.0
-import QtQuick 2.5
+import QtQuick 2.4
 import Telldus 1.0
 import Tui 0.1
 
