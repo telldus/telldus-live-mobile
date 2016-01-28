@@ -136,10 +136,17 @@ Item {
 				]
 			}
 		}
-		Item {
+		Rectangle {
 			id: listEmptyView
 			anchors.fill: parent
 			visible : dashboardModel.count == 0
+			color: "#F5F5F5"
+			onVisibleChanged: {
+				if (dashboardModel.count == 0) {
+					refreshTimer.stop()
+					closeTimer.stop()
+				}
+			}
 
 			Text {
 				anchors.left: parent.left

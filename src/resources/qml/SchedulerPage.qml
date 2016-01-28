@@ -161,10 +161,17 @@ Item {
 			}
 		}
 	}
-	Item {
+	Rectangle {
 		id: listEmptyView
 		anchors.fill: parent
 		visible : schedulerDaySortFilterModel.count == 0
+		color: "#F5F5F5"
+		onVisibleChanged: {
+			if (schedulerDaySortFilterModel.count == 0) {
+				refreshTimer.stop()
+				closeTimer.stop()
+			}
+		}
 
 		Text {
 			anchors.left: parent.left

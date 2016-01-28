@@ -272,10 +272,11 @@ Item {
 			}
 		}
 	}
-	Item {
+	Rectangle {
 		id: listEmptyView
 		anchors.fill: parent
 		visible : deviceListSortFilterModel.count == 0
+		color: "#F5F5F5"
 		onVisibleChanged: {
 			if (deviceListSortFilterModel.count == 0) {
 				refreshTimer.stop()
