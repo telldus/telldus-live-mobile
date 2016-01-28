@@ -309,6 +309,10 @@ void TelldusLive::logout() {
 	QSettings s;
 	s.setValue("oauthToken", "");
 	s.setValue("oauthTokenSecret", "");
+	s.setValue("firstname", "");
+	s.setValue("lastname", "");
+	s.setValue("email", "");
+	s.setValue("credits", 0);
 	d->state = PrivateData::Unauthorized;
 	d->sessionIsAuthenticated = false;
 	this->setupManager();

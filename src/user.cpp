@@ -20,6 +20,8 @@ User::User(QObject *parent) :
 	d->lastname = s.value("lastname", "").toString();
 	d->email = s.value("email", "").toString();
 	d->credits = s.value("credits", 0).toDouble();
+	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(fetchData()));
+	fetchData();
 }
 
 User::~User() {

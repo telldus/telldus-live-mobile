@@ -69,6 +69,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 
 	d = new PrivateData;
 	d->view = view;
+	d->user = new User(this);
 	d->rawDeviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::AnyType, this);
 	d->deviceModel = new FilteredDeviceModel(DeviceModel::instance(), Device::DeviceType, this);
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
@@ -82,7 +83,6 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->schedulerDayModel = new SchedulerDayModel(SchedulerModel::instance(), this);
 	d->schedulerDaySortFilterModel = new SchedulerDaySortFilterModel(d->schedulerDayModel, this);
 	d->sensorListSortFilterModel = new SensorListSortFilterModel(SensorModel::instance(), this);
-	d->user = new User(this);
 #if IS_FEATURE_PUSH_ENABLED
 	connect(Push::instance(), SIGNAL(messageReceived(QString)), this, SLOT(pushMessageReceived(QString)));
 #endif  // IS_FEATURE_PUSH_ENABLED
