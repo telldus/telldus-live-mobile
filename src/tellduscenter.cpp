@@ -54,9 +54,14 @@ public:
 TelldusCenter *TelldusCenter::PrivateData::instance = 0;
 
 TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(parent) {
+	QString dataPath(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last());
+	if(!QDir(dataPath).exists()) {
+		QDir().mkpath(dataPath);
+	}
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/data.sqlite");
+	db.setDatabaseName(dataPath + "/data.sqlite");
 	bool ok = db.open();
+	qDebug().nospace().noquote() << "[DB] db.open result: " << ok << "(" << db.databaseName() << ")";
 
 	TelldusLive *tdLive = TelldusLive::instance();
 
