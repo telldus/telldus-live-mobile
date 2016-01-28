@@ -191,7 +191,7 @@ Item {
 		id: list
 		visible : schedulerDaySortFilterModel.count > 0
 		anchors.fill: parent
-		anchors.topMargin: closeTimer.running ? Units.dp(4) : -headerItem.height +  Units.dp(4)
+		anchors.topMargin: closeTimer.running ? 0 : -headerItem.height
 		anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
 		model: schedulerDaySortFilterModel
 		delegate: schedulerDelegate
