@@ -538,7 +538,7 @@ Rectangle {
 				anchors.left: tabPage.left
 				anchors.right: tabPage.right
 				anchors.top: tabPage.top
-				height: Units.dp(4)
+				height: Units.dp(6)
 				z: header.z + 1
 
 				property bool running: false;
@@ -558,8 +558,13 @@ Rectangle {
 
 				Rectangle {
 					anchors.fill: parent
-					color: "#212121"
-					opacity: 0.2
+					color:"#DDDDDD"
+				}
+
+				Rectangle {
+					anchors.fill: parent
+					anchors.bottomMargin: Units.dp(1)
+					color:"#F5F5F5"
 				}
 
 				Timer {
