@@ -1,110 +1,107 @@
-import QtQuick 2.0
+import QtQuick 2.4
+import QtQuick.Window 2.2
 import QtWebView 1.0
+import Tui 0.1
 
 Rectangle {
-	color: "#006199"
-
+	id: loginView
+	color: properties.theme.colors.telldusBlue
 	Connections{
 		target: telldusLive
 		onAuthorizationNeeded: {
 			webviewLoader.source = "LoginWebKitWebView.qml"
 			webviewLoader.item.url = url
 		}
-	}
-
-	Image {
-		id: logo
-		height: sourceSize.height / 2 * SCALEFACTOR
-		fillMode: Image.PreserveAspectFit
-		smooth: true
-		source: "../" + (SCALEFACTOR > 2 ? "images@2x" : "images") + "/startLogo.png"
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.top: parent.top
-		anchors.topMargin: 35 * SCALEFACTOR
-	}
-
-	Item {
-		anchors.top: logo.bottom
-		anchors.bottom: loginButton.top
-		anchors.left: parent.left
-		anchors.leftMargin: 50 * SCALEFACTOR
-		anchors.right: parent.right
-		anchors.rightMargin: 50 * SCALEFACTOR
-/*		Image {
-			id: topDivider
-			source: "../images/startDivider.png"
-			fillMode: Image.TileHorizontally
-			anchors.top: parent.top
-			anchors.topMargin: 70*SCALEFACTOR
-			anchors.left: parent.left
-			anchors.right: parent.right
-		}*/
-
-		Text {
-			anchors.verticalCenter: parent.verticalCenter
-			anchors.left: parent.left
-			anchors.right: parent.right
-			horizontalAlignment: Text.AlignHCenter
-			text: "To start using Telldus&nbsp;Live!&nbsp;mobile you need to log in to your Telldus&nbsp;Live! account."
-			wrapMode: Text.WordWrap
-			textFormat: Text.RichText
-			font.pixelSize: 15 * SCALEFACTOR
-			font.bold: true
-			color: "#d5ebff"
-			style: Text.Raised
-			styleColor: "#0b4366"
+		onAuthorizationAborted: {
+			webviewLoader.source = ""
 		}
+		onAuthorizationGranted: {
+			webviewLoader.source = "PleaseWait.qml"
+		}
+	}
+	Rectangle {
+		id: mainViewOffset
+		anchors.left: parent.left
+		anchors.top: parent.top
+		anchors.right: parent.right
+		color: properties.theme.colors.telldusBlue
+		height: UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
+		z: 999999999999
+	}
+	Item {
+		id: loginIntro
+		anchors.fill: parent
+		visible: webviewLoader.source == ""
+		Item {
+			id: header
+			anchors.left: parent.left
+			anchors.top: mainViewOffset.bottom
+			anchors.right: parent.right
+			height: parent.height / 3
+			Image {
+				id: logo
+				anchors.centerIn: parent
+				width: parent.width
+				height: Units.dp(42)
+				source: "../svgs/logoTelldusLive.svg"
+				asynchronous: true
+				smooth: true
+				fillMode: Image.PreserveAspectFit
+				sourceSize.width: width * 2
+				sourceSize.height: height * 2
+			}
+		}
+		Item {
+			anchors.top: header.bottom
+			anchors.bottom: footer.top
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.leftMargin: Units.dp(56)
+			anchors.rightMargin: Units.dp(56)
 
-/*		Image {
-			id: bottomDivider
-			source: "../images/startDivider.png"
-			fillMode: Image.TileHorizontally
+			Text {
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
+				anchors.right: parent.right
+				horizontalAlignment: Text.AlignHCenter
+				text: "To start using Telldus&nbsp;Live!&nbsp;mobile you need to log in to your Telldus&nbsp;Live! account."
+				wrapMode: Text.WordWrap
+				textFormat: Text.RichText
+				font.pixelSize: Units.dp(16)
+				color: "#ffffff"
+			}
+		}
+		Item {
+			id: footer
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 70 * SCALEFACTOR
-		}*/
-	}
-
-	Text {
-		id: loginButton
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 70 * SCALEFACTOR
-		height: sourceSize.height / 2 * SCALEFACTOR
-		text: "login"
-		color: "#ffffff"
-
-		MouseArea {
-			id: buttonArea
-			anchors.fill: parent
-			onClicked: {
-				// If we are not logged in start the process so we can initiate the WebView
-				telldusLive.authorize()
+			height: parent.height / 3
+			Button {
+				id: loginButton
+				title: "Login"
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: Units.dp(56)
+				anchors.horizontalCenter: parent.horizontalCenter
+				onClicked: {
+					telldusLive.authorize()
+				}
+			}
+			BusyIndicator {
+				id: busyIndicator
+				anchors.top: loginButton.bottom
+				anchors.topMargin: Units.dp(10)
+				anchors.horizontalCenter: parent.horizontalCenter
+				visible: telldusLive.working
 			}
 		}
 	}
-	BusyIndicator {
-		id: busyIndicator
-		anchors.top: loginButton.bottom
-		anchors.topMargin: 10 * SCALEFACTOR
-		anchors.horizontalCenter: parent.horizontalCenter
-		visible: telldusLive.working
-	}
-
 	Loader {
 		id: webviewLoader
-		anchors.fill: parent
+		visible: webviewLoader.source != ""
+		anchors.left: parent.left
+		anchors.top: mainViewOffset.bottom
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
 	}
-
-/*	states: [
-		State {
-			when: screen.height < 800  // BlackBerry Q10
-			PropertyChanges { target: busyIndicator; anchors.topMargin: 10 }
-			PropertyChanges { target: logo; anchors.topMargin: 30 }
-//			PropertyChanges { target: topDivider; anchors.topMargin: 10 }
-//			PropertyChanges { target: bottomDivider; anchors.bottomMargin: 10 }
-			PropertyChanges { target: loginButton; anchors.bottomMargin: 120 }
-		}
-	]*/
 }

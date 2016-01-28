@@ -33,6 +33,8 @@ signals:
 	void authorizedChanged();
 	void sessionAuthenticated();
 	void authorizationNeeded(const QUrl &url);
+	void authorizationAborted();
+	void authorizationGranted();
 	void workingChanged();
 #if IS_FEATURE_PUSH_ENABLED
 	void pushTokenChanged(QString token);

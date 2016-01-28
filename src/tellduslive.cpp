@@ -133,10 +133,14 @@ void TelldusLive::onTemporaryTokenReceived(const QString &token, const QString &
 void TelldusLive::onAuthorizationReceived(const QString &token, const QString &verifier) {
 	Q_UNUSED(token);
 	Q_UNUSED(verifier);
+	d->requestPending = false;
+	emit workingChanged();
 	if (!d->manager->isVerified()) {
 		qDebug() << "The user did not authorized this application, abort";
+		emit authorizationAborted();
 		return;
 	}
+	emit authorizationGranted();
 	d->manager->getUserAccessTokens(QUrl(d->base + "/oauth/accessToken"));
 }
 

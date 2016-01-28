@@ -33,6 +33,7 @@
 		<file>resources/qml/tiles/WeatherTile.qml</file>
 		<file>resources/qml/tiles/UnknownTile.qml</file>
 		<file>resources/qml/ProgressIndicatorRectangle.qml</file>
+		<file>resources/qml/PleaseWait.qml</file>
 
 		<file>resources/qml/main.tv.qml</file>
 

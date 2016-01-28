@@ -1,10 +1,11 @@
-import QtQuick 2.0
+import QtQuick 2.4
+import Tui 0.1
 
 Item {
 	id: root
 	property bool running: true
-	width: 45 * SCALEFACTOR
-	height: 45 * SCALEFACTOR
+	width: Units.dp(32)
+	height: width
 	Image {
 		id: spinner
 		property int index: 1
