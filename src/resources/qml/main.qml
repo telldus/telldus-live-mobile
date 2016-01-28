@@ -139,6 +139,7 @@ Rectangle {
 					}
 					MouseArea {
 						anchors.fill: parent
+						enabled: mainInterface.menuViewVisible;
 						onClicked: {
 							pageModel.selectedIndex = index;
 							mainInterface.closeMenu();
@@ -454,6 +455,12 @@ Rectangle {
 			tintColor: properties.theme.colors.dashboardBackground
 			transform: UI_PLATFORM == "android" ? undefined : mainViewTranslate
 			z: 100
+
+			MouseArea {
+				id: captureAllClicks
+				anchors.fill: parent
+				preventStealing: false
+			}
 
 			Translate {
 				id: mainViewTranslate
