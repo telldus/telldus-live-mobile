@@ -8,14 +8,16 @@ ELSE()
 	SET(SUFFIX ".dev")
 ENDIF()
 
-LIST(APPEND SOURCES
-	platforms/Android/Notification.cpp
-	platforms/Android/Push.cpp
-)
-LIST(APPEND MOC_HEADERS
-	platforms/Android/Notification.h
-	platforms/Android/Push.h
-)
+IF(ENABLE_FEATURE_PUSH)
+	LIST(APPEND SOURCES
+		platforms/Android/Notification.cpp
+		platforms/Android/Push.cpp
+	)
+	LIST(APPEND MOC_HEADERS
+		platforms/Android/Notification.h
+		platforms/Android/Push.h
+	)
+ENDIF()
 
 IF (${UI_TYPE} MATCHES "Mobile")
 	LIST(APPEND LIBRARIES

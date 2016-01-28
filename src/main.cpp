@@ -30,9 +30,10 @@ int init(int argc, char *argv[]) {
 	QCoreApplication::setApplicationName("Telldus Live! Mobile");
 	QCoreApplication::setApplicationVersion(VERSION);
 
+#ifndef PLATFORM_ANDROID
 	Logger::instance();
-
 	qDebug() << "[APP] Logger is active!";
+#endif
 
 	qDebug().noquote() << QString("[ENVIRONMENT] QtVersion: 0x%1").arg(QT_VERSION, 5, 16, QChar('0'));
 	qDebug().noquote() << QString("[FEATURE] Logging: %1").arg(IS_FEATURE_LOGGING_ENABLED ? "Enabled" : "Disabled");
