@@ -1,43 +1,57 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import Tui 0.1
 
 Item {
 	id: loadingIndicator
 	anchors.fill: parent
-
-	function startAnimation() {
-		loadingAnimation.start();
-	}
-
-	function stopAnimation() {
+	function restart() {
+		animation01.to = width / 3;
+		animation02.to = (width / 3) * 2;
+		animation03.to = width;
 		loadingAnimation.restart();
-		loadingAnimation.stop();
-		effectRect.x = 0;
 	}
-
 	Rectangle {
 		id: effectRect
-		width: height * 6
-		height: Units.dp(3)
+		width: (parent.width * 0.4) * Math.min(1, x / loadingIndicator.width)
+		height: Units.dp(4)
 		color: properties.theme.colors.telldusOrange
-		anchors.top: parent.top
-		anchors.topMargin: Units.dp(1)
+		anchors.verticalCenter: parent.verticalCenter
 		x: 0
 		opacity: x < (loadingIndicator.width / 2) ? x / (loadingIndicator.width / 2) : 1 - ((x - (loadingIndicator.width / 2)) / (loadingIndicator.width / 2))
 	}
-
 	SequentialAnimation {
 		id: loadingAnimation
-		alwaysRunToEnd: true
+		running: true
 		loops: Animation.Infinite
-
-		PropertyAction { target: effectRect; property: "visible"; value: true }
-		PropertyAction { target: effectRect; property: "x"; value: 0 }
-		PropertyAnimation { target: effectRect; property: "x"; to: loadingIndicator.width / 3; duration: 400; }
-		PropertyAnimation { target: effectRect; property: "x"; to: (loadingIndicator.width / 3)*2; duration: 1000; }
-		PropertyAnimation { target: effectRect; property: "x"; to: loadingIndicator.width; duration: 400; }
-		PropertyAction { target: effectRect; property: "visible"; value: false }
-		PauseAnimation { duration: 700 }
+		PropertyAction {
+			target: effectRect
+			property: "x"
+			value: 0
+		}
+		PropertyAnimation {
+			id: animation01
+			target: effectRect
+			property: "x"
+			duration: 400
+			to: loadingIndicator.width / 3
+		}
+		PropertyAnimation {
+			id: animation02
+			target: effectRect
+			property: "x"
+			duration: 1000
+			to: (loadingIndicator.width / 3) * 2
+		}
+		PropertyAnimation {
+			id: animation03
+			target: effectRect
+			property: "x"
+			duration: 400
+			to: loadingIndicator.width
+		}
+		PauseAnimation {
+			duration: 200
+		}
 	}
 
 }

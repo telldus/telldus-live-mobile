@@ -3,8 +3,6 @@ import QtQuick.Window 2.2
 import QtQuick.LocalStorage 2.0
 import Tui 0.1
 
-import "../scripts/progressindicator.js" as Indicator
-
 Rectangle {
 	id: screen
 
@@ -540,46 +538,18 @@ Rectangle {
 				anchors.top: tabPage.top
 				height: Units.dp(6)
 				z: header.z + 1
-
-				property bool running: false;
-				property int numberOfElements: 0;
-
-				function start() {
-					console.log("Animation started.");
-					indicatorCreationTimer.restart();
-					progressBarComponent.running = true;
+				onWidthChanged: {
+					progressIndicatorRectangle.restart();
+				}
+				onVisibleChanged: {
+					progressIndicatorRectangle.restart();
 				}
 
-				function stop() {
-					console.log("Animation stopped.");
-					progressBarComponent.running = false;
-					Indicator.stopIndicators();
-				}
-
-				Rectangle {
+				ProgressIndicatorRectangle {
+					id: progressIndicatorRectangle
 					anchors.fill: parent
-					color:"#DDDDDD"
 				}
 
-				Rectangle {
-					anchors.fill: parent
-					anchors.bottomMargin: Units.dp(1)
-					color:"#F5F5F5"
-				}
-
-				Timer {
-					id: indicatorCreationTimer;
-					running: telldusLive.queueLength > 0
-					repeat: true;
-					interval: 100;
-					onTriggered: {
-						if (!Indicator.allStarted) {
-							Indicator.startNextIndicator();
-						} else {
-							indicatorCreationTimer.stop();
-						}
-					}
-				}
 			}
 			Rectangle {
 				id: mainViewOffset

@@ -77,8 +77,6 @@
 		<file>resources/images/throbber/throbber_11.svg</file>
 		<file>resources/images/throbber/throbber_12.svg</file>
 
-		<file>resources/scripts/progressindicator.js</file>
-
 		<file>resources/svgs/deviceIconBell.svg</file>
 		<file>resources/svgs/deviceIconDim.svg</file>
 		<file>resources/svgs/deviceIconDown.svg</file>
