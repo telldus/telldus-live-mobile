@@ -38,6 +38,10 @@ Client::Client(QObject *parent) :
 	connect(&d->webSocket, &QWebSocket::disconnected, this, &Client::wsDisconnected);
 	connect(&d->webSocket, &QWebSocket::textMessageReceived, this, &Client::wsDataReceived);
 	connect(&d->webSocket, &QWebSocket::stateChanged, this, &Client::wsStateChanged);
+
+	if (TelldusLive::instance()->isAuthorized()) {
+		sessionAuthenticated();
+	}
 }
 
 Client::~Client() {
@@ -286,6 +290,8 @@ void Client::sessionAuthenticated() {
 	if (QApplication::applicationState() == Qt::ApplicationActive) {
 		TelldusLive *telldusLive = TelldusLive::instance();
 		if (telldusLive->session() == "" || d->id == 0) {
+			qDebug().noquote().nospace() << "[CLIENT:" << d->id << "] Session doesn't seem to be authenticated, retry in 5 seconds";
+			QTimer::singleShot(5000, this, SLOT(sessionAuthenticated()));
 			return;
 		}
 		// Check to see if we are already connected
