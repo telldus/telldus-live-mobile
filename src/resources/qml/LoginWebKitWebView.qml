@@ -34,11 +34,15 @@ Item {
 		anchors.bottom: progressBar.top
 		anchors.margins: Units.dp(16)
 		anchors.topMargin: Units.dp(40)
-		WebView {
-			id: webView
+		Item {
+			id: webViewMargins // Added because android didn't do the margins correctly with a webview.
 			anchors.fill: parent
 			anchors.margins: Units.dp(8)
-			url: webViewContainer.url
+			WebView {
+				id: webView
+				anchors.fill: parent
+				url: webViewContainer.url
+			}
 		}
 	}
 }
