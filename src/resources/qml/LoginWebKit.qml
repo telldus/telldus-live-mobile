@@ -30,12 +30,15 @@ Rectangle {
 	}
 	Item {
 		id: loginIntro
-		anchors.fill: parent
+		anchors.left: parent.left
+		anchors.top: mainViewOffset.top
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
 		visible: webviewLoader.source == ""
 		Item {
 			id: header
 			anchors.left: parent.left
-			anchors.top: mainViewOffset.bottom
+			anchors.top: parent.top
 			anchors.right: parent.right
 			height: parent.height / 3
 			Image {
