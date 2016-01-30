@@ -21,7 +21,7 @@ public:
 
 	int queueLength();
 	bool isAuthorized();
-	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap());
+	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap(), const int priority = 100);
 	QString session() const;
 	bool working() const;
 	void setupManager();

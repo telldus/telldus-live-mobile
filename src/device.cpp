@@ -214,7 +214,7 @@ void Device::sendMethod(int method, const QString &value) {
 	params["id"] = this->deviceId();
 	params["method"] = method;
 	params["value"] = value;
-	telldusLive->call("device/command", params, this, SLOT(onActionResponse(QVariantMap,QVariantMap)), params);
+	telldusLive->call("device/command", params, this, SLOT(onActionResponse(QVariantMap,QVariantMap)), params, 1);
 }
 
 int Device::state() const {

@@ -1,7 +1,6 @@
 #include <QtKOAuth>
 #include <QSettings>
 #include <QJSEngine>
-#include <QQueue>
 #include <QMetaMethod>
 #include <QApplication>
 #include <QDesktopServices>
@@ -13,6 +12,7 @@
 #include <QDateTime>
 
 #include "config.h"
+#include "TdQueue.h"
 #include "tellduslive.h"
 #include "tellduscenter.h"
 #include "utils/dev.h"
@@ -38,7 +38,7 @@ public:
 #if IS_FEATURE_PUSH_ENABLED
 	QString pushToken;
 #endif
-	QQueue<TelldusLiveCall> queue;
+	TdQueue<TelldusLiveCall> queue;
 	bool requestPending, sessionIsAuthenticated;
 	QDateTime ttl;
 	static TelldusLive *instance;
@@ -169,7 +169,7 @@ void TelldusLive::onRequestReady(const QByteArray &response, QNetworkReply *repl
 		return;
 	}
 
-	if (d->queue.length() == 0) {
+	if (d->queue.count() == 0) {
 		qWarning() << "[API] No pending call, should not happen!";
 		return;
 	}
@@ -227,7 +227,7 @@ void TelldusLive::onSessionAuthenticated(const QVariantMap &data) {
 }
 
 int TelldusLive::queueLength() {
-	return d->queue.size();
+	return d->queue.count();
 }
 
 bool TelldusLive::isAuthorized() {
@@ -271,7 +271,7 @@ void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJ
 	}
 }
 
-void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra) {
+void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra, const int priority) {
 	qDebug().nospace().noquote() << "[API] Adding call to queue: " << endpoint;
 
 	TelldusLiveCall call;
@@ -283,9 +283,9 @@ void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params,
 	for(QMap<QString, QVariant>::const_iterator it = params.constBegin(); it != params.constEnd(); ++it) {
 		call.params.insert(it.key(), it.value().toString());
 	}
-	qDebug().noquote().nospace() << "[API:REQUEST] " << call.endpoint << " <- " << call.params;
+	qDebug().noquote().nospace() << "[API:REQUEST] " << call.endpoint << " <- " << call.params << " priority(" << priority << ")";
 
-	d->queue.enqueue(call);
+	d->queue.enqueue(call, priority);
 	emit queueLengthChanged();
 	if (!d->requestPending) {
 		this->doCall();

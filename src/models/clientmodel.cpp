@@ -124,7 +124,7 @@ void ClientModel::authorizationChanged() {
 	if (telldusLive->isAuthorized()) {
 		TelldusLiveParams params;
 		params["extras"] = "coordinate,suntime,timezone,transports,tzoffset";
-		telldusLive->call("clients/list", params, this, SLOT(onClientsList(QVariantMap)));
+		telldusLive->call("clients/list", params, this, SLOT(onClientsList(QVariantMap)), TelldusLiveParams(), 10);
 	} else {
 		this->clear();
 		QSqlDatabase db = QSqlDatabase::database();

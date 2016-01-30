@@ -135,6 +135,7 @@ SET( MOC_HEADERS
 	src/device.h
 	src/schedulerjob.h
 	src/sensor.h
+	src/TdQueue.h
 	src/tellduscenter.h
 	src/tellduslive.h
 	src/user.h

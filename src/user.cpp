@@ -61,7 +61,7 @@ void User::fetchData() const {
 	if (!telldusLive->isAuthorized()) {
 		return;
 	}
-	telldusLive->call("user/profile", TelldusLiveParams(), const_cast<User*>(this), SLOT(onInfoReceived(QVariantMap)));
+	telldusLive->call("user/profile", TelldusLiveParams(), const_cast<User*>(this), SLOT(onInfoReceived(QVariantMap)), TelldusLiveParams(), 10);
 	d->fetched = true;
 }
 
