@@ -4,7 +4,7 @@
 #include <QQueue>
 #include <QDebug>
 
-template<class T>
+template<typename T>
 class TdQueue
 {
 public:
@@ -46,7 +46,7 @@ public:
 	}
 
 private:
-	template<class C>
+	template<typename C>
 	struct Item {
 		int _priority;
 		C _value;
