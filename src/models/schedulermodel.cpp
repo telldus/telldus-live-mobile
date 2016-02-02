@@ -1,6 +1,7 @@
 #include "schedulermodel.h"
 #include "schedulerjob.h"
 #include "tellduslive.h"
+#include "models/devicemodel.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -20,6 +21,8 @@ SchedulerModel::SchedulerModel() : TListModel("job") {
 		QSqlQuery query("CREATE TABLE IF NOT EXISTS Scheduler (id INTEGER PRIMARY KEY, deviceId INTEGER, method INTEGER, methodValue TEXT, nextRunTime INTEGER, type INTEGER, hour INTEGER, minute INTEGER, offset INTEGER, randomInterval INTEGER, retries INTEGER, retryInterval INTEGER, weekdays TEXT)", db);
 		qDebug() << "[SQL] ALTER TABLE Scheduler ADD COLUMN deactive INTEGER";
 		QSqlQuery query2("ALTER TABLE Scheduler ADD COLUMN deactive INTEGER", db);
+		qDebug() << "[SQL] ALTER TABLE Scheduler ADD COLUMN active INTEGER";
+		QSqlQuery query3("ALTER TABLE Scheduler ADD COLUMN active INTEGER", db);
 	}
 	connect(TelldusLive::instance(), SIGNAL(authorizedChanged()), this, SLOT(authorizationChanged()));
 	this->authorizationChanged();
@@ -33,8 +36,8 @@ void SchedulerModel::fetchDataFromCache() {
 	qDebug() << "[METHOD] SchedulerModel::fetchDataFromCache";
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen()) {
-		qDebug() << "[SQL] SELECT id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays, deactive FROM Scheduler ORDER BY id";
-		QSqlQuery query("SELECT id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays, deactive FROM Scheduler ORDER BY id", db);
+		qDebug() << "[SQL] SELECT id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays, deactive, active FROM Scheduler ORDER BY id";
+		QSqlQuery query("SELECT id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays, deactive, active FROM Scheduler ORDER BY id", db);
 		QVariantList jobs;
 		while (query.next()) {
 			QVariantMap job;
@@ -52,6 +55,7 @@ void SchedulerModel::fetchDataFromCache() {
 			job["retryInterval"] = query.value(11);
 			job["weekdays"] = query.value(12);
 			job["deactive"] = query.value(13);
+			job["active"] = query.value(14);
 			job["fromCache"] = true;
 			jobs << job;
 		}
@@ -90,6 +94,7 @@ void SchedulerModel::authorizationChanged() {
 	qDebug() << "[SCHEDULERMODEL] authorizationChanged";
 	TelldusLive *telldusLive = TelldusLive::instance();
 	if (telldusLive->isAuthorized()) {
+		DeviceModel::instance()->authorizationChanged();
 		telldusLive->call("scheduler/jobList", TelldusLiveParams(), this, SLOT(onJobList(QVariantMap)));
 	} else {
 		this->clear();

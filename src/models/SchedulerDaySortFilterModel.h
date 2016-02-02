@@ -18,6 +18,7 @@ signals:
 
 protected:
 	bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
 
 private:
 

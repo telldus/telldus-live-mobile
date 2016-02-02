@@ -17,6 +17,7 @@ class SchedulerJob : public QObject
 	Q_PROPERTY(QDateTime nextRunTime READ nextRunTime WRITE setNextRunTime NOTIFY nextRunTimeChanged)
 	Q_PROPERTY(QTime runTimeToday READ runTimeToday NOTIFY runTimeTodayChanged)
 	Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
+	Q_PROPERTY(bool active READ active WRITE setActive NOTIFY activeChanged)
 	Q_PROPERTY(int hour READ hour WRITE setHour NOTIFY hourChanged)
 	Q_PROPERTY(int minute READ minute WRITE setMinute NOTIFY minuteChanged)
 	Q_PROPERTY(int offset READ offset WRITE setOffset NOTIFY offsetChanged)
@@ -52,6 +53,9 @@ public:
 	void setType(const QString &type );
 	Type getTypeFromString(const QString &type );
 
+	bool active() const;
+	void setActive(bool active);
+
 	int hour() const;
 	void setHour(int hour);
 
@@ -83,6 +87,7 @@ signals:
 	void nextRunTimeChanged();
 	void runTimeTodayChanged();
 	void typeChanged();
+	void activeChanged();
 	void hourChanged();
 	void minuteChanged();
 	void offsetChanged();

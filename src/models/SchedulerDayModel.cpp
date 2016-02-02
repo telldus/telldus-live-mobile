@@ -42,6 +42,7 @@ QVariant SchedulerDayModel::data(const QModelIndex &index, int role) const {
 				schedulerJobInstance->setType(schedulerJob->type());
 				schedulerJobInstance->setRunTimeToday(schedulerJob->runTimeToday());
 				schedulerJobInstance->setWeekday(b);
+				schedulerJobInstance->setActive(schedulerJob->active());
 				return QVariant::fromValue(schedulerJobInstance);
 			}
 			newRowCount++;

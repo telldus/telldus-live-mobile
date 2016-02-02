@@ -202,7 +202,7 @@ Item {
 		anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
 		model: schedulerDaySortFilterModel
 		delegate: schedulerDelegate
-		section.property: "job.nextRunTime"
+		section.property: "job.nextRunDate"
 		section.criteria: ViewSection.FullString
 		section.delegate: schedulerListSectionHeader
 		maximumFlickVelocity: 1500 * SCALEFACTOR

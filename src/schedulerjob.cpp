@@ -11,7 +11,7 @@
 
 class SchedulerJob::PrivateData {
 public:
-	bool hasChanged;
+	bool hasChanged, active;
 	int id, deviceId, method, hour, minute, offset, randomInterval;
 	int retries, retryInterval;
 	QString methodValue, weekdays;
@@ -32,6 +32,7 @@ SchedulerJob::SchedulerJob(QObject *parent) :
 	d->randomInterval = 0;
 	d->retries = 0;
 	d->retryInterval = 0;
+	d->active = false;
 	d->type = Time;
 }
 
@@ -164,6 +165,20 @@ SchedulerJob::Type SchedulerJob::getTypeFromString(const QString &type) {
 	} else {
 		return Time;
 	}
+}
+
+bool SchedulerJob::active() const {
+	return d->active;
+}
+
+void SchedulerJob::setActive(bool active) {
+	if (active == d->active) {
+		return;
+	}
+	d->active = active;
+	emit activeChanged();
+	d->hasChanged = true;
+	emit saveToCache();
 }
 
 int SchedulerJob::hour() const {
@@ -299,6 +314,11 @@ void SchedulerJob::setFromVariantMap(const QVariantMap &dev) {
 		emit typeChanged();
 		d->hasChanged = true;
 	}
+	if (d->active != dev["active"].toBool()) {
+		d->active = dev["active"].toBool();
+		emit activeChanged();
+		d->hasChanged = true;
+	}
 	if (d->hour != dev["hour"].toInt()) {
 		d->hour = dev["hour"].toInt();
 		emit hourChanged();
@@ -347,7 +367,7 @@ void SchedulerJob::saveToCache() {
 		QSqlDatabase db = QSqlDatabase::database();
 		if (db.isOpen()) {
 			QSqlQuery query(db);
-			query.prepare("REPLACE INTO Scheduler (id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			query.prepare("REPLACE INTO Scheduler (id, deviceId, method, methodValue, nextRunTime, type, hour, minute, offset, randomInterval, retries, retryInterval, weekdays, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			query.bindValue(0, d->id);
 			query.bindValue(1, d->deviceId);
 			query.bindValue(2, d->method);
@@ -361,6 +381,7 @@ void SchedulerJob::saveToCache() {
 			query.bindValue(10, d->retries);
 			query.bindValue(11, d->retryInterval);
 			query.bindValue(12, d->weekdays);
+			query.bindValue(13, d->active);
 			query.exec();
 			qDebug().noquote().nospace() << "[SCHEDULDERJOB:" << d->id << "] Saved to cache";
 			d->hasChanged = false;

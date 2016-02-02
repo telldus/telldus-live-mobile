@@ -14,6 +14,7 @@ public:
 	QDate nextRunDate;
 	QTime runTimeToday;
 	SchedulerJob::Type type;
+	bool active;
 };
 
 SchedulerJobInstance::SchedulerJobInstance(QObject *parent) :
@@ -30,6 +31,7 @@ SchedulerJobInstance::SchedulerJobInstance(QObject *parent) :
 	d->retries = 0;
 	d->retryInterval = 0;
 	d->type = SchedulerJob::Time;
+	d->active = false;
 }
 
 SchedulerJobInstance::~SchedulerJobInstance() {
@@ -82,7 +84,6 @@ QDateTime SchedulerJobInstance::nextRunTime() const {
 	nextRun.setTime(nextRunTime);
 
 	nextRun.setDate(QDate::currentDate().addDays( (weekday() + 1) - QDate::currentDate().dayOfWeek() ));
-
 	if (nextRun < QDateTime::currentDateTime()) {
 		nextRun = nextRun.addDays(7);
 	}
@@ -96,17 +97,7 @@ void SchedulerJobInstance::setNextRunTime(const QDateTime &nextRunTime) {
 }
 
 QDate SchedulerJobInstance::nextRunDate() const {
-	QDateTime nextRun;
-	QTime nextRunTime = QTime(hour(), minute(), 0);
-	nextRun.setTime(nextRunTime);
-
-	nextRun.setDate(QDate::currentDate().addDays( (weekday() + 1) - QDate::currentDate().dayOfWeek() ));
-
-	if (nextRun < QDateTime::currentDateTime()) {
-		nextRun = nextRun.addDays(7);
-	}
-
-	return nextRun.date();
+	return nextRunTime().date();
 }
 
 void SchedulerJobInstance::setRunTimeToday(const QTime &runTimeToday) {
@@ -140,6 +131,15 @@ void SchedulerJobInstance::setType(const QString &type) {
 	} else {
 		setType(SchedulerJob::Time);
 	}
+}
+
+bool SchedulerJobInstance::active() const {
+	return d->active;
+}
+
+void SchedulerJobInstance::setActive(bool active) {
+	d->active = active;
+	emit activeChanged();
 }
 
 int SchedulerJobInstance::hour() const {

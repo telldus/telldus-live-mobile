@@ -4,6 +4,7 @@
 
 #include "objects/SchedulerJobInstance.h"
 #include "SchedulerDayModel.h"
+#include "models/devicemodel.h"
 
 SchedulerDaySortFilterModel::SchedulerDaySortFilterModel(SchedulerDayModel *model, QObject *parent) : QSortFilterProxyModel(parent)
 {
@@ -17,6 +18,18 @@ SchedulerDaySortFilterModel::SchedulerDaySortFilterModel(SchedulerDayModel *mode
 }
 
 SchedulerDaySortFilterModel::~SchedulerDaySortFilterModel() {
+}
+
+
+bool SchedulerDaySortFilterModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+	QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	SchedulerJobInstance *object = qobject_cast<SchedulerJobInstance *>(this->sourceModel()->data(index).value<QObject *>());
+	Device *device = DeviceModel::instance()->findDevice(object->deviceId());
+	if (device) {
+		return object->active();
+	}
+	return false;
 }
 
 bool SchedulerDaySortFilterModel::lessThan(const QModelIndex &left, const QModelIndex &right) const {
