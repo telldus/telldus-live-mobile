@@ -26,7 +26,7 @@ void SchedulerDayModel::reloadData() {
 		}
 		QStringList weekdays = schedulerJob->weekdays().split(",");
 		for(int b = 0; b < weekdays.size(); ++b) {
-			SchedulerJobInstance *schedulerJobInstance = new SchedulerJobInstance();
+			SchedulerJobInstance *schedulerJobInstance = new SchedulerJobInstance(this);
 			schedulerJobInstance->setSchedulerJobId(schedulerJob->schedulerJobId());
 			schedulerJobInstance->setDeviceId(schedulerJob->deviceId());
 			schedulerJobInstance->setMethod(schedulerJob->method());
