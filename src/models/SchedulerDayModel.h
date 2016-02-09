@@ -2,20 +2,21 @@
 #define SCHEDULERDAYMODEL_H
 
 #include "schedulerjob.h"
-#include <QAbstractListModel>
+#include "tlistmodel.h"
 
 class SchedulerModel;
 
-class SchedulerDayModel : public QAbstractListModel
+class SchedulerDayModel : public TListModel
 {
 	Q_OBJECT
 public:
 	SchedulerDayModel(SchedulerModel *model, QObject *parent = 0);
-	virtual QVariant data(const QModelIndex &index, int role) const;
-	virtual int rowCount(const QModelIndex &parent) const;
 	virtual QHash<int, QByteArray> roleNames() const;
 
 protected:
+
+private slots:
+	void reloadData();
 
 private:
 	class PrivateData;

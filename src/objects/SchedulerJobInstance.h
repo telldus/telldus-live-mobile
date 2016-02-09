@@ -50,6 +50,7 @@ public:
 	void setMethodValue(const QString &methodValue );
 
 	QDateTime nextRunTime() const;
+	void calculateNextRunTime() const;
 	void setNextRunTime(const QDateTime &nextRunTime );
 
 	QDate nextRunDate() const;
