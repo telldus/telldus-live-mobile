@@ -8,14 +8,12 @@
 class SchedulerDayModel::PrivateData {
 public:
 	SchedulerModel *model;
-	int counter;
 };
 
 SchedulerDayModel::SchedulerDayModel(SchedulerModel *model, QObject *parent) : TListModel("SchedulerJobInstance", parent) {
 	connect(model, SIGNAL(jobsLoaded()), this, SLOT(reloadData()));
 	d = new PrivateData;
 	d->model = model;
-	d->counter = 0;
 	this->reloadData();
 }
 
@@ -27,7 +25,6 @@ void SchedulerDayModel::reloadData() {
 			continue;
 		}
 		QStringList weekdays = schedulerJob->weekdays().split(",");
-		++d->counter;
 		for(int b = 0; b < weekdays.size(); ++b) {
 			SchedulerJobInstance *schedulerJobInstance = new SchedulerJobInstance();
 			schedulerJobInstance->setSchedulerJobId(schedulerJob->schedulerJobId());
