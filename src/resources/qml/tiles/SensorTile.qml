@@ -54,11 +54,11 @@ Item {
 		property int currentTileScreen: 0
 
 		Component.onCompleted: {
-			if (sensor.hasHumidity) {
-				tileScreens.push('sensorIconHumidity');
-			}
 			if (sensor.hasTemperature) {
 				tileScreens.push('sensorIconTemperature');
+			}
+			if (sensor.hasHumidity) {
+				tileScreens.push('sensorIconHumidity');
 			}
 			if (sensor.hasRainRate) {
 				tileScreens.push('sensorIconRain');
@@ -174,6 +174,14 @@ Item {
 			Behavior on opacity {
 				enabled: sensorScreens.allowFade
 				NumberAnimation { easing.type: Easing.InOutQuad; duration: 500 }
+			}
+		}
+		MouseArea {
+			id: sensorTileMouseArea
+			anchors.fill: parent
+			onReleased: {
+				tileTimer.triggered()
+				tileTimer.restart()
 			}
 		}
 	}
