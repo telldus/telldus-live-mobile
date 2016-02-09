@@ -41,7 +41,7 @@ QVariant SchedulerDayModel::data(const QModelIndex &index, int role) const {
 				schedulerJobInstance->setRetryInterval(schedulerJob->retryInterval());
 				schedulerJobInstance->setType(schedulerJob->type());
 				schedulerJobInstance->setRunTimeToday(schedulerJob->runTimeToday());
-				schedulerJobInstance->setWeekday(b);
+				schedulerJobInstance->setWeekday(weekdays[b].toInt() - 1);
 				schedulerJobInstance->setActive(schedulerJob->active());
 				return QVariant::fromValue(schedulerJobInstance);
 			}
