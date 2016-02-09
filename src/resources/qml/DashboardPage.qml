@@ -228,9 +228,9 @@ Item {
 		header.backClickedMethod = function() {
 			if (mainInterface.menuViewVisible) {
 				mainInterface.closeMenu();
+			} else {
+				core.quit();
 			}
-			// I should close the app here for Android I think!
-			//mainInterface.onMenu();
 		}
 	}
 

@@ -126,8 +126,7 @@ TelldusCenter::~TelldusCenter() {
 }
 
 void TelldusCenter::quit() {
-	qDebug() << "Now I am trying to quit if Android!";
-#ifdef PLATFORM_ANDROID
+#if defined(PLATFORM_ANDROID) || defined(PLATFORM_DESKTOP)
 	QCoreApplication::quit();
 #endif
 }
