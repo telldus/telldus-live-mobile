@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include <QKeyEvent>
 #include <QResizeEvent>
+#include <QTouchEvent>
 
 #include "config.h"
 #include "ColorImageProvider.h"
@@ -148,6 +149,17 @@ void CommonView::workAreaResized(int screen) {
 }
 
 bool CommonView::eventFilter(QObject *obj, QEvent * event ) {
+	if (event->type() == QEvent::TouchEnd) {
+		QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
+		if (!touchEvent->touchPoints().isEmpty()) {
+			if ((touchEvent->touchPoints().first().lastPos().x() - touchEvent->touchPoints().first().startPos().x()) > (50 * d->scalefactor)) {
+				emit swipedRight();
+			}
+			if ((touchEvent->touchPoints().first().startPos().x() - touchEvent->touchPoints().first().lastPos().x()) > (50 * d->scalefactor)) {
+				emit swipedLeft();
+			}
+		}
+	}
 	if (UI_TYPE != "TV") {
 		if (event->type() == QEvent::KeyPress) {
 			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);

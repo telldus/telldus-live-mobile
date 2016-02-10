@@ -88,6 +88,8 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 #endif  // IS_FEATURE_PUSH_ENABLED
 
 	connect(d->view, SIGNAL(backPressed()), this, SIGNAL(backPressed()));
+	connect(d->view, SIGNAL(swipedLeft()), this, SIGNAL(swipedLeft()));
+	connect(d->view, SIGNAL(swipedRight()), this, SIGNAL(swipedRight()));
 
 	qmlRegisterType<TListModel>("Telldus", 1, 0, "TListModel");
 	qmlRegisterType<Client>("Telldus", 1, 0, "Client");

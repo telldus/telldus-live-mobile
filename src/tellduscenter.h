@@ -15,6 +15,8 @@ public:
 
 signals:
 	void backPressed();
+	void swipedLeft();
+	void swipedRight();
 
 public slots:
 	void openUrl(const QUrl &url);

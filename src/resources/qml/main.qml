@@ -15,6 +15,22 @@ Rectangle {
 		console.log("[UI] Supports keys: " + properties.ui.supportsKeys);
 	}
 
+	Connections {
+		target: core
+		onSwipedLeft: {
+			console.log("received core.onSwipedLeft")
+			if (pageModel.selectedIndex + 1 < pageModel.count) {
+				pageModel.selectedIndex++;
+			}
+		}
+		onSwipedRight: {
+			console.log("received core.onSwipedLeft")
+			if (pageModel.selectedIndex > 0) {
+				pageModel.selectedIndex--;
+			}
+		}
+	}
+
 	ListModel {
 		id: pageModel
 
