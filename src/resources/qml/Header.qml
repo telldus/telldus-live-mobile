@@ -8,9 +8,10 @@ View {
 	property alias title: titleText.text
 	property alias backVisible: backButton.visible
 	property alias editButtonVisible: editButton.visible
-	property var backClickedMethod
 	property var headerHeight: 56
 	signal editClicked()
+	signal backClicked()
+
 	anchors.left: parent.left
 	anchors.top: parent.top
 	height: screen.showHeaderAtTop ? Units.dp(headerHeight) : mainView.height
@@ -18,11 +19,11 @@ View {
 	tintColor: properties.theme.colors.telldusBlue
 	elevation: (UI_PLATFORM == "android" ? 0 : 1)
 
+
 	Connections {
 		target: core
 		onBackPressed: {
-			console.log("received core.onBackPressed")
-			backClickedMethod();
+			backClicked();
 		}
 	}
 
@@ -65,7 +66,7 @@ View {
 				anchors.bottom: parent.bottom
 				anchors.left: backButton.left
 				anchors.right: backButton.right
-				onClicked: backClickedMethod()
+				onClicked: backClicked()
 			}
 			Item {
 				id: drawerButton

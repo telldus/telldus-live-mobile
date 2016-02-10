@@ -15,62 +15,32 @@ Rectangle {
 		console.log("[UI] Supports keys: " + properties.ui.supportsKeys);
 	}
 
-	Connections {
-		target: core
-		onSwipedLeft: {
-			console.log("received core.onSwipedLeft")
-			if (pageModel.selectedIndex + 1 < pageModel.count) {
-				pageModel.selectedIndex++;
-			}
-		}
-		onSwipedRight: {
-			console.log("received core.onSwipedLeft")
-			if (pageModel.selectedIndex > 0) {
-				pageModel.selectedIndex--;
-			}
-		}
-	}
-
 	ListModel {
 		id: pageModel
-
-		property var selectedIndex: 0
 
 		ListElement {
 			title: "Dashboard"
 			page: "DashboardPage.qml"
-			inDrawer: false
-			inTabBar: true
 		}
 		ListElement {
 			title: "Devices"
 			page: "DevicePage.qml"
-			inDrawer: false
-			inTabBar: true
 		}
 		ListElement {
 			title: "Sensors"
 			page: "SensorPage.qml"
-			inDrawer: false
-			inTabBar: true
 		}
 		ListElement {
 			title: "Scheduler"
 			page: "SchedulerPage.qml"
-			inDrawer: false
-			inTabBar: true
 		}
+	}
+	ListModel {
+		id: drawerMenuModel
+
 		ListElement {
 			title: "Settings"
 			page: "SettingsPage.qml"
-			inDrawer: true
-			inTabBar: false
-		}
-		ListElement {
-			title: "Debug"
-			page: "DebugPage.qml"
-			inDrawer: false
-			inTabBar: false
 		}
 	}
 
@@ -78,7 +48,7 @@ Rectangle {
 		id: mainInterface
 		property bool menuViewVisible: false
 		opacity: telldusLive.isAuthorized ? 1 : 0
-		color: "#212121";
+		color: "#F5F5F5";
 		anchors.fill: parent
 
 		Rectangle {
@@ -100,7 +70,6 @@ Rectangle {
 		View {
 			id: menuView
 			anchors.top: parent.top
-			anchors.topMargin: UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 			anchors.bottom: parent.bottom
 			anchors.left: UI_PLATFORM == "android" ? undefined : parent.left
 			width: Math.min((screen.showHeaderAtTop ? mainInterface.width : mainInterface.height) * 0.8, Units.dp(288))
@@ -119,9 +88,8 @@ Rectangle {
 			Component {
 				id: mainMenuItem
 				Rectangle {
-					visible: inDrawer
 					width: parent.width
-					height: inDrawer ? Units.dp(56) : 0
+					height: Units.dp(56)
 					color: index ==  pageModel.selectedIndex && properties.ui.supportsKeys ? properties.theme.colors.telldusOrange : "transparent"
 					Item {
 						id: dashboardIcon
@@ -155,8 +123,9 @@ Rectangle {
 						anchors.fill: parent
 						enabled: mainInterface.menuViewVisible;
 						onClicked: {
-							pageModel.selectedIndex = index;
-							mainInterface.closeMenu();
+							overlayPage.title = title;
+							overlayPage.icon = title.toLowerCase();
+							overlayPage.source = Qt.resolvedUrl(page);
 						}
 					}
 				}
@@ -321,7 +290,6 @@ Rectangle {
 					pressDelay: 100
 					onDragEnded: {
 						if (headerItem.refresh && !clientListRefreshTimer.running) {
-							console.log("Refreshing ClientModel")
 							clientModel.authorizationChanged()
 							clientListRefreshTimer.start()
 							clientListCloseTimer.start()
@@ -347,12 +315,12 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.bottom: parent.bottom
-				model: pageModel
+				model: drawerMenuModel
 				delegate: mainMenuItem
 				maximumFlickVelocity: Units.dp(1500)
 				spacing: Units.dp(0)
 				pressDelay: 100
-				Keys.onPressed: {
+				/*Keys.onPressed: {
 					if (properties.ui.supportsKeys) {
 						if (event.key == Qt.Key_Up) {
 							console.log("Key up");
@@ -377,13 +345,14 @@ Rectangle {
 							event.accepted = true;
 						}
 					}
-				}
+				}*/
 			}
 			Item {
 				id: menuUserDetails
 				visible: !(UI_PLATFORM == "android")
 				anchors.left: parent.left
 				anchors.top: parent.top
+				anchors.topMargin: UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
 				anchors.right: parent.right
 				height: Units.dp(72)
 				Rectangle {
@@ -481,33 +450,118 @@ Rectangle {
 				x: 0
 				Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 			}
-
-			Loader {
-				id: tabPage
-				anchors.left: screen.showHeaderAtTop ? parent.left : (UI_PLATFORM == "android" ? tabBar.right : header.right)
-				anchors.right: screen.showHeaderAtTop ? parent.right : (UI_PLATFORM == "android" ? parent.right : tabBar.left)
-				anchors.bottom: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : tabBar.top) : parent.bottom
-				anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBar.bottom : header.bottom) : parent.top
-				source: Qt.resolvedUrl(pageModel.get(pageModel.selectedIndex).page)
-				focus: true
-				Keys.onPressed: {
-					if (properties.ui.supportsKeys) {
-						if (event.key == Qt.Key_Left) {
-							mainInterface.openMenu();
-							event.accepted = true;
+			Component {
+				id: pagesDelegate
+				Loader {
+					id: tabPageLoader
+					width: tabPageContainer.width
+					height: tabPageContainer.height
+					source: Qt.resolvedUrl(page)
+					focus: true
+					asynchronous: true
+					clip: true
+					Keys.onPressed: {
+						if (properties.ui.supportsKeys) {
+							if (event.key == Qt.Key_Left) {
+								mainInterface.openMenu();
+								event.accepted = true;
+							}
+						}
+					}
+					function setAsCurrentIndex() {
+						if (tabPageLoader.status == Loader.Ready) {
+							header.title = "";
+							header.editButtonVisible = false;
+							header.backVisible = false;
+							tabPageLoader.item.updateHeader();
+						}
+						dev.logScreenView('/' + title.toLowerCase());
+					}
+					function onBackClicked() {
+						if (tabPageLoader.item.onBackClicked) {
+							tabPageLoader.item.onBackClicked();
+						}
+					}
+					function onEditClicked() {
+						if (tabPageLoader.item.onEditClicked) {
+							tabPageLoader.item.onEditClicked();
 						}
 					}
 				}
-				onLoaded: {
-					header.title = "";
-					header.editButtonVisible = false;
-					header.backVisible = false;
-					header.onEditClicked.connect(function() {});
-					header.backClickedMethod = function() {};
-					tabPage.item.updateHeader();
+			}
+			Item {
+				id: tabPageContainer
+				anchors.left: screen.showHeaderAtTop ? parent.left : (UI_PLATFORM == "android" ? tabBar.right : header.right)
+				anchors.right: screen.showHeaderAtTop ? parent.right : (UI_PLATFORM == "android" ? parent.right : tabBar.left)
+				anchors.bottom: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : tabBar.top) : parent.bottom
+				anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : header.bottom) : parent.top
+				ListView {
+					id: tabPage
+					anchors.fill: parent
+					model: pageModel
+					delegate: pagesDelegate
+					maximumFlickVelocity: Units.dp(1500)
+					spacing: Units.dp(0)
+					focus: true
+					orientation: ListView.Horizontal
+					layoutDirection: Qt.LeftToRight
+					snapMode: ListView.SnapOneItem
+					highlightRangeMode: ListView.StrictlyEnforceRange
+					highlightMoveVelocity: tabPage.width * pageModel.size
+					boundsBehavior: Flickable.StopAtBounds
+					onCurrentIndexChanged: {
+						tabPage.currentItem.setAsCurrentIndex();
+					}
 				}
-				onSourceChanged: {
-					dev.logScreenView('/' + pageModel.get(pageModel.selectedIndex).title.toLowerCase());
+				Connections {
+					target: header
+					onBackClicked: {
+						tabPage.currentItem.onBackClicked();
+					}
+					onEditClicked: {
+						tabPage.currentItem.onEditClicked();
+					}
+				}
+				View {
+					id: highQueueWarning
+					visible: telldusLive.queueLength >= 20
+					anchors.left: tabPage.left
+					anchors.right: tabPage.right
+					anchors.top: tabPage.top
+					height: Units.dp(32)
+					z: header.z + 1
+					tintColor: "#E53935"
+					elevation: 2
+
+					Text {
+						id: highQueueWarningText
+						color: "#ffffff"
+						font.pixelSize: Units.dp(12)
+						text: "Internet connection problems detected"
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.horizontalCenter: parent.horizontalCenter
+					}
+				}
+				Item {
+					id: progressBarComponent
+					visible: telldusLive.queueLength > 0 && !highQueueWarning.visible
+					anchors.left: tabPage.left
+					anchors.right: tabPage.right
+					anchors.top: tabPage.top
+					height: Units.dp(6)
+					z: header.z + 1
+					onWidthChanged: {
+						progressIndicatorRectangle.restart();
+					}
+					onVisibleChanged: {
+						progressIndicatorRectangle.restart();
+					}
+
+					ProgressIndicatorRectangle {
+						id: progressIndicatorRectangle
+						anchors.fill: parent
+					}
+
 				}
 			}
 			TabBar {
@@ -524,49 +578,6 @@ Rectangle {
 				anchors.right: screen.showHeaderAtTop ? parent.right : undefined
 				anchors.top: mainViewOffset.bottom
 			}
-
-			View {
-				id: highQueueWarning
-				visible: telldusLive.queueLength >= 20
-				anchors.left: tabPage.left
-				anchors.right: tabPage.right
-				anchors.top: tabPage.top
-				height: Units.dp(32)
-				z: header.z + 1
-				tintColor: "#E53935"
-				elevation: 2
-
-				Text {
-					id: highQueueWarningText
-					color: "#ffffff"
-					font.pixelSize: Units.dp(12)
-					text: "Internet connection problems detected"
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.horizontalCenter: parent.horizontalCenter
-				}
-			}
-
-			Item {
-				id: progressBarComponent
-				visible: telldusLive.queueLength > 0 && !highQueueWarning.visible
-				anchors.left: tabPage.left
-				anchors.right: tabPage.right
-				anchors.top: tabPage.top
-				height: Units.dp(6)
-				z: header.z + 1
-				onWidthChanged: {
-					progressIndicatorRectangle.restart();
-				}
-				onVisibleChanged: {
-					progressIndicatorRectangle.restart();
-				}
-
-				ProgressIndicatorRectangle {
-					id: progressIndicatorRectangle
-					anchors.fill: parent
-				}
-
-			}
 			Rectangle {
 				id: mainViewOffset
 				anchors.left: parent.left
@@ -580,36 +591,27 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
-				width: mainInterface.menuViewVisible ? parent.width : Units.dp(16)
-				onMove: {
-					console.log("onMove")
-				}
+				width: mainInterface.menuViewVisible ? parent.width : Units.dp(10)
 				onSwipe: {
 					switch (direction) {
 					case "left":
-						mainInterface.swipeLeft()
+						mainInterface.closeMenu()
 						break
 					case "right":
-						mainInterface.swipeRight()
+						mainInterface.openMenu()
 						break
 					}
 				}
-				onCanceled: {
-					console.log("onCanceled")
-				}
 				onClicked: {
 					if (mainInterface.menuViewVisible) {
-						console.log("onClicked")
 						mainInterface.closeMenu()
 					}
 				}
 			}
 		}
 
-		/* this functions toggles the menu and starts the animation */
 		function openMenu()
 		{
-			console.log("openMenu");
 			if (UI_PLATFORM == "android") {
 				menuViewTranslate.x = menuView.width + Units.dp(50);
 			} else {
@@ -618,9 +620,9 @@ Rectangle {
 			mainInterface.menuViewVisible = true;
 			mainMenu.focus = true;
 		}
+
 		function closeMenu()
 		{
-			console.log("closeMenu");
 			if (UI_PLATFORM == "android") {
 				menuViewTranslate.x = 0;
 			} else {
@@ -631,17 +633,122 @@ Rectangle {
 		}
 
 		function setActivePage(pageId) {
-			pageModel.selectedIndex = pageId;
+			tabPage.currentIndex = pageId;
 		}
 
-		function swipeLeft() {
-			console.log("swipeLeft");
-			closeMenu();
+	}
+
+	Item {
+		id: overlayPage
+		visible: overlayLoader.source == '' ? false : true
+		anchors.fill: parent
+
+		property alias source: overlayLoader.source
+		property alias title: overlayHeaderText.text
+		property var icon: ''
+		property var childObject: ''
+
+		Rectangle {
+			id: overlayBackground
+			anchors.fill: parent
+			color: "#000000"
+			opacity: 0.6
 		}
 
-		function swipeRight() {
-			console.log("swipeRight");
-			openMenu();
+		MouseArea {
+			id: overlayBackgroundMouseArea
+			anchors.fill: parent
+			onClicked: {
+				overlayLoader.source = ''
+			}
+		}
+
+		Card {
+			id: overlayCard
+			anchors.fill: parent
+			anchors.leftMargin: Units.dp(16)
+			anchors.rightMargin: Units.dp(16)
+			anchors.bottomMargin: Units.dp(16)
+			anchors.topMargin: mainViewOffset.height + Units.dp(16)
+			MouseArea {
+				id: overlayCardMouseArea
+				anchors.fill: parent
+				preventStealing: false
+			}
+			Rectangle {
+				id: overlayHeader
+				anchors.left: parent.left
+				anchors.right: parent.right
+				height: Units.dp(56)
+				color: properties.theme.colors.telldusBlue
+				Item {
+					id: overlayHeaderIcon
+					anchors.left: parent.left
+					anchors.leftMargin: Units.dp(8)
+					anchors.verticalCenter: parent.verticalCenter
+					height: Units.dp(32)
+					width: Units.dp(32)
+					Image {
+						id: overlayHeaderIconImage
+						anchors.fill: parent
+						anchors.margins: Units.dp(4)
+						source: "image://icons/" + overlayPage.icon + "/#ffffff";
+						asynchronous: true
+						smooth: true
+						fillMode: Image.PreserveAspectFit
+						sourceSize.width: width * 2
+						sourceSize.height: height * 2
+					}
+				}
+				Text {
+					id: overlayHeaderText
+					color: "#ffffff"
+					font.pixelSize: Units.dp(20)
+					text: ''
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.left: parent.left
+					anchors.leftMargin: Units.dp(48)
+				}
+				Item {
+					id: overlayRightButton
+					height: overlayHeader.height
+					width: height
+					anchors.bottom: parent.bottom
+					anchors.right: parent.right
+					clip: true
+					Item {
+						id: overlayCloseButton
+						anchors.centerIn: parent
+						height: parent.height * 0.3
+						width: height
+						Image {
+							id: overlayCloseButtonImage
+							anchors.centerIn: parent
+							height: parent.height
+							width: height
+							source: "image://icons/close/#ffffff"
+							asynchronous: true
+							smooth: true
+							fillMode: Image.PreserveAspectFit
+							sourceSize.width: width * 2
+							sourceSize.height: height * 2
+						}
+					}
+					MouseArea {
+						id: overlayCloseButtonMouseArea
+						anchors.fill: parent
+						onClicked: overlayLoader.source = ''
+					}
+				}
+			}
+			Loader {
+				id: overlayLoader
+				anchors.left: parent.left
+				anchors.top: overlayHeader.bottom
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				source: ''
+			}
 		}
 	}
 

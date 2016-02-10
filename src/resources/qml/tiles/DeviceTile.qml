@@ -38,6 +38,15 @@ Item {
 			horizontalAlignment: Text.AlignHCenter
 			verticalAlignment: Text.AlignVCenter
 		}
+		MouseArea {
+			anchors.fill: parent
+			onPressAndHold: {
+				overlayPage.title = dashboardItem.childObject.name
+				overlayPage.icon = 'devices'
+				overlayPage.source = Qt.resolvedUrl("../DeviceDetails.qml");
+				overlayPage.childObject = dashboardItem.childObject
+			}
+		}
 	}
 	Item {
 		anchors.left: parent.left

@@ -292,10 +292,11 @@ Item {
 		return 0;
 	}
 
+	function onBackClicked() {
+		mainInterface.setActivePage(0);
+	}
+
 	function updateHeader() {
 		header.title = "Upcoming schedule";
-		header.backClickedMethod = function() {
-			mainInterface.setActivePage(0);
-		}
 	}
 }

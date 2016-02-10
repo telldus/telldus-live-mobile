@@ -5,7 +5,7 @@ import Tui 0.1
 
 Rectangle {
 	id: showDevice
-	property Device selected
+	property Device childObject: overlayPage.childObject
 	signal backClicked()
 
 	color: "#ffffff"
@@ -18,7 +18,7 @@ Rectangle {
 				event.accepted = true;
 			}
 			if (event.key == Qt.Key_Enter) {
-				showDevice.selected.isFavorite = !showDevice.selected.isFavorite;
+				childObject.isFavorite = !childObject.isFavorite;
 				event.accepted = true;
 			}
 		}
@@ -32,7 +32,7 @@ Rectangle {
 			anchors.margins: Units.dp(10)
 			spacing: Units.dp(20)
 			Text {
-				text: "Location: " + showDevice.selected.clientName
+				text: "Location: " + childObject.clientName
 				color: properties.theme.colors.telldusBlue
 				width: parent.width
 				font.pixelSize: Units.dp(16)
@@ -43,13 +43,13 @@ Rectangle {
 				id: dimmer
 				width: parent.width
 				height: Units.dp(56)
-				visible: selected.methods & 16
+				visible: childObject.methods & 16
 				anchors.horizontalCenter: parent.horizontalCenter
 
 				MouseArea {
 					anchors.fill: parent
 					onClicked: {
-						selected.dim(Math.round(mouse.x / width * 255));
+						childObject.dim(Math.round(mouse.x / width * 255));
 					}
 				}
 
@@ -90,7 +90,7 @@ Rectangle {
 						height: width
 						radius: height / 2
 						anchors.verticalCenter: parent.verticalCenter
-						x: (selected.stateValue / 255) * dimWidth.width - (dimHandle.width/2)
+						x: (childObject.stateValue / 255) * dimWidth.width - (dimHandle.width/2)
 						color: properties.theme.colors.telldusBlue
 						Image {
 							id: dimHandleImage
@@ -102,7 +102,7 @@ Rectangle {
 							sourceSize.height: height * 2
 							anchors.verticalCenter: parent.verticalCenter
 							Connections {
-								target: selected
+								target: childObject
 								onStateValueChanged: {
 									dimHandle.x = (stateValue / 255) * dimWidth.width - (dimHandle.width/2)
 								}
@@ -118,7 +118,7 @@ Rectangle {
 						drag.maximumX: dimWidth.width - (dimHandle.width/2)
 						onReleased: {
 							var value = Math.round((dimHandle.x + dimHandle.width/2) / dimWidth.width * 255);
-							selected.dim(value)
+							childObject.dim(value)
 						}
 					}
 				}
@@ -133,9 +133,9 @@ Rectangle {
 				}
 				delegate: ButtonSet {
 					set: model.set
-					device: selected
-					methods: selected.methods & ~16  // Clear the dim method
-					visible: selected.methods & model.req
+					device: childObject
+					methods: childObject.methods & ~16  // Clear the dim method
+					visible: childObject.methods & model.req
 					width: parent.width
 				}
 			}
@@ -152,7 +152,7 @@ Rectangle {
 					fillMode: Image.PreserveAspectFit
 					sourceSize.width: width * 2
 					sourceSize.height: height * 2
-					opacity: showDevice.selected.isFavorite ? 1 : 0.2
+					opacity: childObject.isFavorite ? 1 : 0.2
 				}
 				Item {
 					height: iconFavorite.height
@@ -170,7 +170,7 @@ Rectangle {
 							anchors.left: parent.left
 							anchors.right: parent.right
 							wrapMode: Text.WordWrap
-							text: showDevice.selected.isFavorite ? "Device is shown on the dashboard" : "Tap to show device on dashboard"
+							text: childObject.isFavorite ? "Device is shown on the dashboard" : "Tap to show device on dashboard"
 							color: properties.theme.colors.telldusBlue
 							font.pixelSize: Units.dp(14)
 						}
@@ -179,26 +179,17 @@ Rectangle {
 							text: "Tap to remove"
 							color: properties.theme.colors.telldusBlue
 							font.pixelSize: Units.dp(10)
-							height: showDevice.selected.isFavorite ? undefined : 0
-							opacity: showDevice.selected.isFavorite ? 1 : 0
+							height: childObject.isFavorite ? undefined : 0
+							opacity: childObject.isFavorite ? 1 : 0
 							Behavior on opacity { NumberAnimation { duration: 200 } }
 						}
 					}
 				}
 				MouseArea {
 					anchors.fill: parent
-					onClicked: showDevice.selected.isFavorite = !showDevice.selected.isFavorite
+					onClicked: childObject.isFavorite = !childObject.isFavorite
 				}
 			}
-		}
-	}
-
-	function updateHeader() {
-		header.title = showDevice.selected.name;
-		header.editButtonVisible = false;
-		header.backVisible = true
-		header.backClickedMethod = function() {
-			showDevice.backClicked()
 		}
 	}
 }

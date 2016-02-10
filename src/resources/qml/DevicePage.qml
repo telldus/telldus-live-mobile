@@ -13,7 +13,7 @@ Item {
 		FocusScope {
 			height: wrapper.height
 			width: list.width
-			Keys.onPressed: {
+			/*Keys.onPressed: {
 				if (properties.ui.supportsKeys) {
 					if (event.key == Qt.Key_Right) {
 						devicePage.state = 'showDevice';
@@ -26,7 +26,7 @@ Item {
 						event.accepted = true;
 					}
 				}
-			}
+			}*/
 			Rectangle {
 				color: "#EEEEEE"
 				height: parent.height
@@ -83,9 +83,10 @@ Item {
 						anchors.right: parent.right
 						anchors.bottom: parent.bottom
 						onClicked: {
-							devicePage.state = 'showDevice'
-							showDevice.selected = device
-							showDevice.item.updateHeader()
+							overlayPage.title = device.name
+							overlayPage.icon = 'devices'
+							overlayPage.source = Qt.resolvedUrl("DeviceDetails.qml");
+							overlayPage.childObject = device
 						}
 					}
 					Item {
@@ -116,7 +117,7 @@ Item {
 					states: [
 						State {
 							name: 'showEditButtons'
-							PropertyChanges { target: wrapper; anchors.leftMargin: Units.dp(72) * (underMenu.children.length - 1) }
+							PropertyChanges { target: wrapper; anchors.leftMargin: Units.dp(48) * (underMenu.children.length - 1) }
 						}
 					]
 					transitions: [
@@ -352,58 +353,24 @@ Item {
 			repeat: false
 		}
 	}
-	Component {
-		id: componentShowDevice
-		DeviceDetails {
-			onBackClicked: {
-				devicePage.state = '';
-				list.focus = true;
-				devicePage.updateHeader();
-			}
-			selected: showDevice.selected
+
+	function onBackClicked() {
+		if (devicePage.showEditButtons) {
+			devicePage.showEditButtons = false;
+		} else {
+			mainInterface.setActivePage(0);
 		}
 	}
-	Loader {
-		id: showDevice
-		property Device selected
-		anchors.top: parent.top
-		anchors.left: listPage.right
-		anchors.bottom: parent.bottom
-		width: parent.width
-		sourceComponent: selected ? componentShowDevice : undefined
+
+	function onEditClicked() {
+		devicePage.showEditButtons = !devicePage.showEditButtons;
 	}
-	states: [
-		State {
-			name: 'showDevice'
-			AnchorChanges { target: listPage; anchors.right: devicePage.left }
-		}
-	]
-	transitions: [
-		Transition {
-			to: 'showDevice'
-			reversible: true
-			AnchorAnimation { duration: 500; easing.type: Easing.InOutQuad }
-		}
-	]
+
 	function updateHeader() {
 		header.title = "Devices";
 		header.editButtonVisible = true;
 		header.backVisible = false;
-		header.onEditClicked.connect(function() {
-			devicePage.showEditButtons = !devicePage.showEditButtons;
-		})
-		header.backClickedMethod = function() {
-			if (devicePage.state == 'showDevice') {
-					devicePage.state = '';
-					list.focus = true;
-				} else {
-					if (devicePage.showEditButtons) {
-						devicePage.showEditButtons = false;
-					} else {
-						mainInterface.setActivePage(0);
-					}
-				}
-		}
 	}
+
 
 }

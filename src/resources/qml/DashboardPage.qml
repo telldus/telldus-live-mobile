@@ -223,15 +223,17 @@ Item {
 		}
 	}
 
-	function updateHeader() {
-		header.title = "";
-		header.backClickedMethod = function() {
-			if (mainInterface.menuViewVisible) {
-				mainInterface.closeMenu();
-			} else {
-				core.quit();
-			}
+	function onBackClicked() {
+		if (mainInterface.menuViewVisible) {
+			mainInterface.closeMenu();
+		} else {
+			core.quit();
 		}
 	}
+
+	function updateHeader() {
+		header.title = "";
+	}
+
 
 }

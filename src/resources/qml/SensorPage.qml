@@ -127,7 +127,7 @@ Item {
 					states: [
 						State {
 							name: 'showEditButtons'
-							PropertyChanges { target: wrapper; anchors.leftMargin: (50 * SCALEFACTOR) * (underMenu.children.length-1) }
+							PropertyChanges { target: wrapper; anchors.leftMargin: Units.dp(48) * (underMenu.children.length-1) }
 						}
 					]
 					transitions: [
@@ -386,18 +386,20 @@ Item {
 		return lastUpdated.toLocaleString(Qt.locale(), "yyyy-MM-dd");
 	}
 
+	function onBackClicked() {
+		if (sensorPage.showEditButtons) {
+			sensorPage.showEditButtons = false;
+		} else {
+			mainInterface.setActivePage(0);
+		}
+	}
+
+	function onEditClicked() {
+		sensorPage.showEditButtons = !sensorPage.showEditButtons;
+	}
+
 	function updateHeader() {
 		header.title = "Sensors"
 		header.editButtonVisible = true
-		header.onEditClicked.connect(function() {
-			sensorPage.showEditButtons = !sensorPage.showEditButtons;
-		})
-		header.backClickedMethod = function() {
-			if (sensorPage.showEditButtons) {
-				sensorPage.showEditButtons = false;
-			} else {
-				mainInterface.setActivePage(0);
-			}
-		}
 	}
 }

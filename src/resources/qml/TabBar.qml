@@ -17,9 +17,8 @@ View {
 		Component {
 			id: tabBarItem
 			Item {
-				visible: inTabBar
-				width: inTabBar ? (screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBarItemText.width + Units.dp(24) + (index == 0 ? Units.dp(32) : Units.dp(0)) : tabBar.width / 4) : parent.width) : 0
-				height: inTabBar ? (screen.showHeaderAtTop ? parent.height : (UI_PLATFORM == "android" ? tabBarItemText.width + Units.dp(24) + (index == 0 ? Units.dp(32) : Units.dp(0)) : tabBar.height / 4)) : 0
+				width: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBarItemText.width + Units.dp(24) + (index == 0 ? Units.dp(32) : Units.dp(0)) : tabBar.width / 4) : parent.width
+				height: screen.showHeaderAtTop ? parent.height : (UI_PLATFORM == "android" ? tabBarItemText.width + Units.dp(24) + (index == 0 ? Units.dp(32) : Units.dp(0)) : tabBar.height / 4)
 				Item {
 					id: tabBarItemInner
 					anchors.right: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? parent.right : undefined) : undefined
@@ -40,7 +39,7 @@ View {
 							id: dashboardIconImage
 							anchors.fill: parent
 							anchors.margins: Units.dp(6)
-							source: "image://icons/" + title.toLowerCase() + "/" + (index ==  pageModel.selectedIndex ? properties.theme.colors.telldusOrange : "#616161")
+							source: "image://icons/" + title.toLowerCase() + "/" + (index == tabPage.currentIndex ? properties.theme.colors.telldusOrange : "#616161")
 							asynchronous: true
 							smooth: true
 							fillMode: Image.PreserveAspectFit
@@ -50,7 +49,7 @@ View {
 					}
 					Rectangle {
 						id: tabBarItemIndicator
-						visible: (UI_PLATFORM == "android") && (index ==  pageModel.selectedIndex)
+						visible: (UI_PLATFORM == "android") && (index == tabPage.currentIndex)
 						height: screen.showHeaderAtTop ? Units.dp(2) : undefined
 						width: screen.showHeaderAtTop ? undefined : Units.dp(2)
 						anchors.top: screen.showHeaderAtTop ? undefined : parent.top
@@ -71,14 +70,14 @@ View {
 						font.bold: UI_PLATFORM == "android" ? true : false
 						text: UI_PLATFORM == "android" ? title.toUpperCase() : title
 						font.pixelSize: UI_PLATFORM == "android" ? Units.dp(14) : Units.dp(8)
-						color: (index ==  pageModel.selectedIndex ? (UI_PLATFORM == "android" ? "#ffffff" : properties.theme.colors.telldusOrange) : (UI_PLATFORM == "android" ? "#b2ffffff" : "#616161"))
+						color: (index == tabPage.currentIndex ? (UI_PLATFORM == "android" ? "#ffffff" : properties.theme.colors.telldusOrange) : (UI_PLATFORM == "android" ? "#b2ffffff" : "#616161"))
 						rotation: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? 0 : 270) : undefined
 					}
 				}
 				MouseArea {
 					anchors.fill: parent
 					onClicked: {
-						pageModel.selectedIndex = index;
+						tabPage.currentIndex = index;
 					}
 				}
 			}
@@ -91,6 +90,7 @@ View {
 			orientation: screen.showHeaderAtTop ? Qt.Horizontal : Qt.Vertical
 			maximumFlickVelocity: Units.dp(1500)
 			spacing: 0
+			currentIndex: tabPage.currentIndex
 		}
 	}
 }

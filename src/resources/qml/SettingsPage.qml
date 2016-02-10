@@ -20,7 +20,7 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				horizontalAlignment: Text.AlignHCenter
-				text: "You are currently logged in as<br>" + user.firstname + "&nbsp;" + user.lastname
+				text: "Settings are coming here before release!!"
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
 				font.pixelSize: Units.dp(15)
@@ -40,10 +40,11 @@ Rectangle {
 		}
 	}
 
+	function onBackClicked() {
+		mainInterface.setActivePage(0);
+	}
+
 	function updateHeader() {
 		header.title = "Settings";
-		header.backClickedMethod = function() {
-			mainInterface.setActivePage(0);
-		}
 	}
 }

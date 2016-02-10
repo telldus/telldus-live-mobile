@@ -26,10 +26,11 @@ Rectangle {
 		font.pointSize: 12
 	}
 
+	function onBackClicked() {
+		mainInterface.setActivePage(0);
+	}
+
 	function updateHeader() {
 		header.title = "Debug";
-		header.backClickedMethod = function() {
-			mainInterface.setActivePage(0);
-		}
 	}
 }
