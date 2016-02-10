@@ -149,13 +149,13 @@ Item {
 					Item {
 						id: favouriteButton
 						height: parent.height
-						width: 50 * SCALEFACTOR
+						width: Units.dp(48)
 						anchors.left: parent.left
 						anchors.top: parent.top
 						Image {
 							id: favouriteButtonImage
 							anchors.centerIn: parent
-							height: 30 * SCALEFACTOR
+							height: Units.dp(30)
 							width: height
 							source: "image://icons/favourite/" + properties.theme.colors.telldusOrange
 							asynchronous: true
