@@ -27,8 +27,6 @@ public:
 signals:
 	void fullscreen();
 	void backPressed();
-	void swipedLeft();
-	void swipedRight();
 
 protected slots:
 	void workAreaResized(int screen);
