@@ -67,7 +67,7 @@ Item {
 							id: sensorUpdated
 							color: sensor.minutesAgo < 1440 ? "#999999" : "#80990000"
 							font.pixelSize: Units.dp(12)
-							text: "Last update: " + formatLastUpdated(sensor.minutesAgo, sensor.lastUpdated)
+							text: formatLastUpdated(sensor.minutesAgo, sensor.lastUpdated)
 							wrapMode: Text.Wrap
 							width: parent.width
 						}
