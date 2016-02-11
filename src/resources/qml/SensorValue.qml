@@ -13,7 +13,7 @@ Item {
 		anchors.verticalCenter: parent.verticalCenter
 		source: "../svgs/" + icon + ".svg"
 		asynchronous: true
-		height: screen.width <=360 ? Units.dp(20) : Units.dp(32)
+		height: screen.width <=360 ? Units.dp(18) : Units.dp(26)
 		width: height
 		smooth: true
 		fillMode: Image.PreserveAspectFit
@@ -26,6 +26,6 @@ Item {
 		anchors.leftMargin: Units.dp(8)
 		anchors.verticalCenter: parent.verticalCenter
 		color: properties.theme.colors.telldusBlue
-		font.pixelSize: screen.width <=360 ? Units.dp(12) : Units.dp(16)
+		font.pixelSize: screen.width <=360 ? Units.dp(12) : Units.dp(14)
 	}
 }
