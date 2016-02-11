@@ -34,10 +34,6 @@ SchedulerJob::SchedulerJob(QObject *parent) :
 	d->retryInterval = 0;
 	d->active = false;
 	d->type = Time;
-	connect(this, SIGNAL(hourChanged), this, SIGNAL(runTimeTodayChanged));
-	connect(this, SIGNAL(minuteChanged), this, SIGNAL(runTimeTodayChanged));
-	connect(this, SIGNAL(typeChanged), this, SIGNAL(runTimeTodayChanged));
-	connect(this, SIGNAL(offsetChanged), this, SIGNAL(runTimeTodayChanged));
 }
 
 SchedulerJob::~SchedulerJob() {
