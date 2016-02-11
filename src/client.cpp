@@ -153,6 +153,14 @@ int Client::sunset() const {
 	return d->sunset;
 }
 
+QTime Client::sunriseTime() const {
+	return QDateTime::fromTime_t(d->sunrise, Qt::OffsetFromUTC, 0).time().addSecs(d->timezoneOffset);
+}
+
+QTime Client::sunsetTime() const {
+	return QDateTime::fromTime_t(d->sunset, Qt::OffsetFromUTC, 0).time().addSecs(d->timezoneOffset);
+}
+
 QString Client::timezone() const {
 	return d->timezone;
 }

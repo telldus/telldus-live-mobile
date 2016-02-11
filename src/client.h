@@ -22,6 +22,8 @@ class Client : public QObject
 	Q_PROPERTY(QString latitude READ latitude NOTIFY latitudeChanged)
 	Q_PROPERTY(int sunrise READ sunrise NOTIFY sunriseChanged)
 	Q_PROPERTY(int sunset READ sunset NOTIFY sunsetChanged)
+	Q_PROPERTY(QTime sunriseTime READ sunriseTime NOTIFY sunriseTimeChanged)
+	Q_PROPERTY(QTime sunsetTime READ sunsetTime NOTIFY sunsetTimeChanged)
 	Q_PROPERTY(QString timezone READ timezone NOTIFY timezoneChanged)
 	Q_PROPERTY(bool timezoneAutodetected READ timezoneAutodetected NOTIFY timezoneAutodetectedChanged)
 	Q_PROPERTY(int timezoneOffset READ timezoneOffset NOTIFY timezoneOffsetChanged)
@@ -54,6 +56,8 @@ public:
 	QString latitude() const;
 	int sunrise() const;
 	int sunset() const;
+	QTime sunriseTime() const;
+	QTime sunsetTime() const;
 	QString timezone() const;
 	bool timezoneAutodetected() const;
 	int timezoneOffset() const;
@@ -75,6 +79,8 @@ signals:
 	void latitudeChanged();
 	void sunriseChanged();
 	void sunsetChanged();
+	void sunriseTimeChanged();
+	void sunsetTimeChanged();
 	void timezoneChanged();
 	void timezoneAutodetectedChanged();
 	void timezoneOffsetChanged();

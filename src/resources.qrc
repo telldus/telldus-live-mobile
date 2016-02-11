@@ -2,6 +2,7 @@
 	<qresource prefix="/">
 		<file>resources/qml/main.qml</file>
 		<file>resources/qml/MainMenu.qml</file>
+		<file>resources/qml/ClientDetails.qml</file>
 		<file>resources/qml/DashboardPage.qml</file>
 		<file>resources/qml/DevicePage.qml</file>
 		<file>resources/qml/DebugPage.qml</file>
@@ -34,6 +35,7 @@
 		<file>resources/qml/tiles/UnknownTile.qml</file>
 		<file>resources/qml/ProgressIndicatorRectangle.qml</file>
 		<file>resources/qml/PleaseWait.qml</file>
+		<file>resources/qml/UserDetails.qml</file>
 
 		<file>resources/qml/main.tv.qml</file>
 

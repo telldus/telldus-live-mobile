@@ -99,6 +99,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	qmlRegisterType<PropertiesThemeColors>("Telldus", 1, 0, "PropertiesThemeColors");
 	qmlRegisterType<PropertiesThemeCore>("Telldus", 1, 0, "PropertiesThemeCore");
 	qmlRegisterType<PropertiesUi>("Telldus", 1, 0, "PropertiesUi");
+	qmlRegisterType<User>("Telldus", 1, 0, "User");
 
 	qRegisterMetaType<QModelIndex>("QModelIndex");
 

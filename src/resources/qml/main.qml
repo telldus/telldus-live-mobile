@@ -164,6 +164,18 @@ Rectangle {
 						anchors.left: parent.left
 						anchors.leftMargin: Units.dp(56)
 					}
+					/*
+					Disabled until editing of client details is developed
+					MouseArea {
+						id: mouseArea
+						anchors.fill: parent
+						onClicked: {
+							overlayPage.title = client.name
+							overlayPage.icon = 'devices'
+							overlayPage.source = Qt.resolvedUrl("ClientDetails.qml");
+							overlayPage.childObject = client
+						}
+					}*/
 				}
 			}
 			Item {
@@ -393,6 +405,18 @@ Rectangle {
 					font.pixelSize: Units.dp(16)
 					color: "#ffffff"
 				}
+				/*
+				Disabled until editing of user details is developed
+				MouseArea {
+					id: mouseArea
+					anchors.fill: parent
+					onClicked: {
+						overlayPage.title = "Profile"
+						overlayPage.icon = 'house'
+						overlayPage.source = Qt.resolvedUrl("UserDetails.qml");
+						overlayPage.childObject = user
+					}
+				}*/
 			}
 			Rectangle {
 				id: menuUserDetailsAndroid
