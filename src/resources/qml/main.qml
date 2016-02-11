@@ -518,7 +518,7 @@ Rectangle {
 				anchors.left: screen.showHeaderAtTop ? parent.left : (UI_PLATFORM == "android" ? tabBar.right : header.right)
 				anchors.right: screen.showHeaderAtTop ? parent.right : (UI_PLATFORM == "android" ? parent.right : tabBar.left)
 				anchors.bottom: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : tabBar.top) : parent.bottom
-				anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : header.bottom) : parent.top
+				anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBar.bottom : header.bottom) : parent.top
 				ListView {
 					id: tabPage
 					anchors.fill: parent
