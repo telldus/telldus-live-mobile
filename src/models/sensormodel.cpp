@@ -103,6 +103,36 @@ void SensorModel::addSensors(const QVariantList &sensorsList) {
 			dev.insert("temperature", dev["temp"]);
 			dev.remove("temp");
 		}
+		// API returns rrate instead of rainRate
+		if(dev.contains("rrate")) {
+			dev.insert("rainRate", dev["rrate"]);
+			dev.remove("rrate");
+		}
+		// API returns rtot instead of rainTotal
+		if(dev.contains("rtot")) {
+			dev.insert("rainTotal", dev["rtot"]);
+			dev.remove("rtot");
+		}
+		// API returns lum instead of luminance
+		if(dev.contains("lum")) {
+			dev.insert("luminance", dev["lum"]);
+			dev.remove("lum");
+		}
+		// API returns wavg instead of windAvg
+		if(dev.contains("wavg")) {
+			dev.insert("windAvg", dev["wavg"]);
+			dev.remove("wavg");
+		}
+		// API returns wgust instead of windGust
+		if(dev.contains("wgust")) {
+			dev.insert("windGust", dev["wgust"]);
+			dev.remove("wgust");
+		}
+		// API returns wdir instead of windDir
+		if(dev.contains("wdir")) {
+			dev.insert("windDir", dev["wdir"]);
+			dev.remove("wdir");
+		}
 		if (dev["deactive"].toBool() == false) {
 			if (dev["fromCache"].toBool() == false) {
 				activeSensorIds << dev["id"].toInt();
