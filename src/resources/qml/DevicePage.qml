@@ -44,14 +44,6 @@ Item {
 					anchors.left: parent.left
 					anchors.leftMargin: 0
 					anchors.top: parent.top
-					Rectangle {
-						id: divider
-						anchors.left: parent.left
-						anchors.right: parent.right
-						anchors.bottom: parent.bottom
-						height: Units.dp(1)
-						color: "#F5F5F5"
-					}
 					ButtonSet {
 						id: buttons
 						device: wrapper.dev
@@ -272,8 +264,6 @@ Item {
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
 					anchors.leftMargin: Units.dp(20)
-					//anchors.left: parent.left
-					//anchors.leftMargin: Units.dp(10)
 					text: section
 					font.bold: true
 					font.pixelSize: Units.dp(14)
@@ -316,13 +306,12 @@ Item {
 			}
 		}
 	}
-	Rectangle {
+	Item {
 		id: listPage
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
-		color: "#ffffff"
 		visible : deviceListSortFilterModel.count > 0
 		ListView {
 			id: list
@@ -334,7 +323,7 @@ Item {
 			model: deviceListSortFilterModel
 			delegate: deviceDelegate
 			maximumFlickVelocity: Units.dp(1500)
-			spacing: Units.dp(0)
+			spacing: Units.dp(1)
 			focus: true
 			header: deviceListHeader
 			section.property: "device.clientName"

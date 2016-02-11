@@ -38,14 +38,6 @@ Item {
 					anchors.left: parent.left
 					anchors.leftMargin: 0
 					anchors.top: parent.top
-					Rectangle {
-						id: divider
-						anchors.left: parent.left
-						anchors.right: parent.right
-						anchors.bottom: parent.bottom
-						height: Units.dp(1)
-						color: "#F5F5F5"
-					}
 					Column {
 						id: dataTitleRow
 						anchors.left: parent.left
@@ -282,8 +274,6 @@ Item {
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
 					anchors.leftMargin: Units.dp(20)
-					//anchors.left: parent.left
-					//anchors.leftMargin: Units.dp(10)
 					text: section
 					font.bold: true
 					font.pixelSize: Units.dp(14)
@@ -346,6 +336,7 @@ Item {
 			section.criteria: ViewSection.FullString
 			section.delegate: sensorListSectionHeader
 			pressDelay: 100
+			spacing: Units.dp(1)
 			onDragEnded: {
 				if (headerItem.refresh && !refreshTimer.running) {
 					console.log("Refreshing SensorModel")
