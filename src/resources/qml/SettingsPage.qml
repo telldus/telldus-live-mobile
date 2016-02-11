@@ -34,14 +34,9 @@ Rectangle {
 			anchors.bottomMargin: Units.dp(30)
 			anchors.horizontalCenter: parent.horizontalCenter
 			onClicked: {
-				mainInterface.setActivePage(0);
 				telldusLive.logout()
 			}
 		}
-	}
-
-	function onBackClicked() {
-		mainInterface.setActivePage(0);
 	}
 
 	function updateHeader() {
