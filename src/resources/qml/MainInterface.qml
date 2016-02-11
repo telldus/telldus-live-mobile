@@ -473,6 +473,11 @@ Rectangle {
 						}
 					}
 				}
+				onLoaded: {
+					if (index == tabPage.currentIndex) {
+						setAsCurrentIndex();
+					}
+				}
 				function setAsCurrentIndex() {
 					if (tabPageLoader.status == Loader.Ready) {
 						header.title = "";
