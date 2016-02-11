@@ -70,7 +70,7 @@ Item {
 					}
 					MouseArea {
 						id: mouseArea
-						anchors.left: buttons.right
+						width: parent.height
 						anchors.top: parent.top
 						anchors.right: parent.right
 						anchors.bottom: parent.bottom
@@ -87,11 +87,11 @@ Item {
 						anchors.rightMargin: Units.dp(16)
 						anchors.verticalCenter: parent.verticalCenter
 						height: Units.dp(24)
-						width: Units.dp(24 * 0.57)
+						width: height
 						Image {
 							id: arrowImage
 							anchors.fill: parent
-							source: "../svgs/iconArrowRight.svg"
+							source: "image://icons/settings/#9E9E9E"
 							asynchronous: true
 							smooth: true
 							fillMode: Image.PreserveAspectCrop
