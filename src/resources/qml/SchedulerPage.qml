@@ -9,7 +9,7 @@ Item {
 		id: schedulerDelegate
 		Rectangle {
 			color: "#eeeeee"
-			height: wrapper.height + 1
+			height: wrapper.height
 			width: list.width
 			Rectangle {
 				id: wrapper
@@ -23,7 +23,7 @@ Item {
 				Text {
 					id: nextRunTime
 					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(10)
+					anchors.leftMargin: Units.dp(20)
 					anchors.verticalCenter: parent.verticalCenter
 					color: properties.theme.colors.telldusOrange
 					font.pixelSize: Units.dp(16)
@@ -72,6 +72,15 @@ Item {
 			y: -list.contentY - height
 
 			property bool refresh: state == "pulled" ? true : false
+
+			Rectangle {
+				id: schedulerListHeaderBorder
+				height: Units.dp(1)
+				color: "#E0E0E0"
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+			}
 
 			Item {
 				id: arrow
@@ -137,21 +146,20 @@ Item {
 		id: schedulerListSectionHeader
 		Rectangle {
 			width: parent.width
-			height: Units.dp(28)
-			color: "#dddddd"
+			height: Units.dp(27)
+			color: properties.theme.colors.dashboardBackground
 
 			Rectangle {
-				anchors.fill: parent
-				anchors.topMargin: Units.dp(1)
-				anchors.bottomMargin: Units.dp(1)
-				color: "#f5f5f5"
+				height: Units.dp(26)
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.top: parent.top
+				color: "#FAFAFA"
 
 				Text {
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
 					anchors.leftMargin: Units.dp(20)
-					//anchors.left: parent.left
-					//anchors.leftMargin: Units.dp(10)
 					text: getSectionHeading(section)
 					font.bold: true
 					font.pixelSize: Units.dp(14)

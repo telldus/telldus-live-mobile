@@ -185,6 +185,15 @@ Item {
 
 			property bool refresh: state == "pulled" ? true : false
 
+			Rectangle {
+				id: deviceListHeaderBorder
+				height: Units.dp(1)
+				color: "#E0E0E0"
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+			}
+
 			Item {
 				id: arrow
 				anchors.fill: parent
@@ -249,14 +258,15 @@ Item {
 		id: deviceListSectionHeader
 		Rectangle {
 			width: parent.width
-			height: Units.dp(28)
-			color: "#dddddd"
+			height: Units.dp(27)
+			color: properties.theme.colors.dashboardBackground
 
 			Rectangle {
-				anchors.fill: parent
-				anchors.topMargin: Units.dp(1)
-				anchors.bottomMargin: Units.dp(1)
-				color: "#f5f5f5"
+				height: Units.dp(26)
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.top: parent.top
+				color: "#FAFAFA"
 
 				Text {
 					anchors.verticalCenter: parent.verticalCenter
