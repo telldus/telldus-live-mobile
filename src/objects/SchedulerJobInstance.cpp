@@ -79,10 +79,7 @@ void SchedulerJobInstance::setMethodValue(const QString &methodValue) {
 }
 
 QDateTime SchedulerJobInstance::nextRunTime() const {
-	if(!d->nextRunTime.isValid()) {
-		this->calculateNextRunTime();
-	}
-
+	this->calculateNextRunTime();
 	return d->nextRunTime;
 }
 
@@ -110,6 +107,7 @@ QDate SchedulerJobInstance::nextRunDate() const {
 void SchedulerJobInstance::setRunTimeToday(const QTime &runTimeToday) {
 	d->runTimeToday = runTimeToday;
 	emit runTimeTodayChanged();
+	emit nextRunTimeChanged();
 }
 
 QTime SchedulerJobInstance::runTimeToday() const {

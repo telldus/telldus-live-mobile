@@ -5,15 +5,20 @@
 #include "tlistmodel.h"
 
 class SchedulerModel;
+class SchedulerJobInstance;
 
 class SchedulerDayModel : public TListModel
 {
 	Q_OBJECT
 public:
 	SchedulerDayModel(SchedulerModel *model, QObject *parent = 0);
+	SchedulerJobInstance *findSchedulerJobInstance(int id, int weekday) const;
 	virtual QHash<int, QByteArray> roleNames() const;
 
 protected:
+
+signals:
+	void modelDataChanged();
 
 private slots:
 	void reloadData();

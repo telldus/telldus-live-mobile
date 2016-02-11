@@ -8,9 +8,8 @@
 
 SchedulerDaySortFilterModel::SchedulerDaySortFilterModel(SchedulerDayModel *model, QObject *parent) : QSortFilterProxyModel(parent)
 {
+	connect(model, SIGNAL(modelDataChanged()), this, SLOT(invalidate()));
 	connect(model, SIGNAL(modelReset()), this, SLOT(invalidate()));
-	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(invalidate()));
-	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(invalidate()));
 
 	this->setSourceModel(model);
 	this->setDynamicSortFilter(true);
