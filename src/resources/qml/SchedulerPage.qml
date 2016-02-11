@@ -15,7 +15,7 @@ Item {
 				id: wrapper
 				width: list.width
 				z: model.index
-				height: 50 * SCALEFACTOR
+				height: Units.dp(50)
 				color: "#ffffff"
 				anchors.left: parent.left
 				anchors.leftMargin: 0
@@ -23,23 +23,23 @@ Item {
 				Text {
 					id: nextRunTime
 					anchors.left: parent.left
-					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.leftMargin: Units.dp(10)
 					anchors.verticalCenter: parent.verticalCenter
 					color: properties.theme.colors.telldusOrange
 					font.pixelSize: Units.dp(16)
 					text: Qt.formatTime(job.runTimeToday, "HH:mm")
-					width: 60 * SCALEFACTOR
+					width: Units.dp(60)
 				}
 				Text {
 					id: deviceId
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: nextRunTime.right
-					anchors.leftMargin: 10 * SCALEFACTOR
+					anchors.leftMargin: Units.dp(10)
 					anchors.right: stateBox.left
-					anchors.rightMargin: 10 * SCALEFACTOR
+					anchors.rightMargin: Units.dp(10)
 					color: properties.theme.colors.telldusBlue
 					text: job.device.name
-					font.pixelSize: 16 * SCALEFACTOR
+					font.pixelSize: Units.dp(16)
 					width: parent.width
 					wrapMode: Text.Wrap
 					elide: Text.ElideRight
@@ -48,11 +48,11 @@ Item {
 				Item {
 					id: stateBox
 					anchors.right: parent.right
-					width: 70 * SCALEFACTOR
-					height: 50 * SCALEFACTOR
+					width: Units.dp(70)
+					height: Units.dp(50)
 					Item {
 						anchors.fill: parent
-						anchors.margins: 10 * SCALEFACTOR
+						anchors.margins: Units.dp(10)
 						Text {
 							anchors.centerIn: parent
 							text: getMethodText(job.method, job.value)
@@ -205,8 +205,8 @@ Item {
 		section.property: "job.nextRunDate"
 		section.criteria: ViewSection.FullString
 		section.delegate: schedulerListSectionHeader
-		maximumFlickVelocity: 1500 * SCALEFACTOR
-		spacing: 1 * SCALEFACTOR
+		maximumFlickVelocity: Units.dp(1500)
+		spacing: Units.dp(1)
 		header: schedulerListHeader
 		pressDelay: 100
 		onDragEnded: {
