@@ -75,7 +75,6 @@ void SchedulerModel::addJobs(const QVariantList &jobList) {
 				activeJobIds << dev["id"].toInt();
 			}
 			SchedulerJob *job = this->findJob(dev["id"].toInt());
-			connect(job, SIGNAL(saveToCache()), this, SIGNAL(jobsLoaded()));
 			if (!job) {
 				job = new SchedulerJob(this);
 				job->setFromVariantMap(dev);
