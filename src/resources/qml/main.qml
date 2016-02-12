@@ -38,6 +38,12 @@ Rectangle {
 		anchors.fill: parent
 		color: "#000000"
 		opacity: 0
+		MouseArea {
+			id: overlayBackgroundMouseArea
+			anchors.fill: parent
+			enabled: overlayBackground.opacity > 0
+			propagateComposedEvents: false
+		}
 	}
 
 	Item {
@@ -48,10 +54,14 @@ Rectangle {
 		anchors.bottom: parent.top
 		opacity: 0
 
-		property alias source: overlayLoader.source
+		property var source: ''
 		property alias title: overlayHeaderText.text
 		property var icon: ''
 		property var childObject: ''
+		onSourceChanged: {
+			overlayLoader.active = true;
+			overlayLoader.source = source;
+		}
 
 		Card {
 			id: overlayCard
@@ -145,10 +155,11 @@ Rectangle {
 				anchors.top: overlayHeader.bottom
 				anchors.right: parent.right
 				anchors.bottom: parent.bottom
-				onSourceChanged: {
-					if (overlayLoader.source != '') {
-						overlayPage.state = 'visible';
-					}
+				onLoaded: {
+					overlayPage.state = 'visible';
+				}
+				onActiveChanged: {
+					source = ''
 				}
 			}
 		}
@@ -157,7 +168,7 @@ Rectangle {
 				name: ''
 				PropertyChanges {
 					target: overlayLoader
-					source: ''
+					active: false
 				}
 			},
 			State {
@@ -187,7 +198,7 @@ Rectangle {
 				}
 				PropertyChanges {
 					target: overlayLoader
-					source: ''
+					active: false
 				}
 				PropertyChanges {
 					target: overlayBackground
@@ -211,17 +222,23 @@ Rectangle {
 			Transition {
 				from: 'visible'
 				to: 'closeInstantly'
-				PropertyAnimation {
-					target: overlayBackground
-					properties: 'opacity'
-					duration: 250
-				}
 				SequentialAnimation {
 					PropertyAnimation {
+						target: overlayBackground
 						properties: 'opacity'
-						duration: 250
+						duration: 0
 					}
-					AnchorAnimation {
+					SequentialAnimation {
+						PropertyAnimation {
+							properties: 'opacity'
+							duration: 150
+						}
+						AnchorAnimation {
+						}
+					}
+					PropertyAction {
+						target: overlayLoader
+						properties: 'active'
 					}
 				}
 			},
@@ -241,7 +258,8 @@ Rectangle {
 						properties: 'opacity'
 					}
 					PropertyAction {
-						properties: 'source'
+						target: overlayLoader
+						properties: 'active'
 					}
 				}
 			}
