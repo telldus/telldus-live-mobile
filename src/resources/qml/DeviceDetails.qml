@@ -39,6 +39,16 @@ Rectangle {
 				elide: Text.ElideRight
 			}
 
+			Text {
+				id: dimmerTitleText
+				visible: dimmer.visible
+				width: parent.width
+				font.pixelSize: Units.dp(16)
+				elide: Text.ElideRight
+				text: 'Dimming level: ' + Math.round((dimHandle.x + dimHandle.width/2) / dimWidth.width * 100) + '%'
+				color: properties.theme.colors.telldusBlue
+			}
+
 			Item {
 				id: dimmer
 				width: parent.width
@@ -92,6 +102,10 @@ Rectangle {
 						anchors.verticalCenter: parent.verticalCenter
 						x: (childObject.stateValue / 255) * dimWidth.width - (dimHandle.width/2)
 						color: properties.theme.colors.telldusBlue
+						Behavior on x {
+							enabled: !dimHandleMouseArea.drag.active
+							NumberAnimation { duration: 150 }
+						}
 						Image {
 							id: dimHandleImage
 							anchors.fill: parent
@@ -110,6 +124,7 @@ Rectangle {
 						}
 					}
 					MouseArea {
+						id: dimHandleMouseArea
 						anchors.fill: dimHandle
 						anchors.margins: -parent.height  // Make sure the target area is bigger
 						drag.target: dimHandle

@@ -4,6 +4,7 @@ import Telldus 1.0
 import Tui 0.1
 
 Item {
+	id: onOffTile
 	property var deviceState: device.state
 	anchors.fill: parent
 	focus: true
@@ -28,134 +29,166 @@ Item {
 	onDeviceStateChanged: updateButtonColors()
 
 	Rectangle {
-		id: onButtonBackgroundSquarer1
-		width: onButton.width / 2
-		anchors.top: onButton.top
-		anchors.left: onButton.left
-		anchors.bottom: onButton.bottom
-		color: onButton.color
-	}
-	Rectangle {
-		id: onButtonBackgroundSquarer2
-		visible: tile.hasNameInTile
-		height: onButton.height / 2
-		anchors.left: onButton.left
-		anchors.right: onButton.right
-		anchors.bottom: onButton.bottom
-		color: onButton.color
-	}
-	Rectangle {
-		id: onButton
-		height: parent.height
+		id: dimmerValueRectangle
+		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.left: tileSeperator.right
-		color: (deviceState == 1 || deviceState == 16) ? "#FAFAFA" : "#EEEEEE"
-		radius: tileCard.radius
-		Text {
-			id: onButtonText
-			anchors.verticalCenter: parent.verticalCenter
-			anchors.horizontalCenter: parent.horizontalCenter
-			color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
-			font.pixelSize: onButton.height < onButton.width ? parent.height * 0.4 : parent.height * 0.2
-			font.weight: Font.Bold
-			text: "On"
-		}
-		LinearGradient {
-			visible: deviceState == 1 || deviceState == 16
-			anchors.top: parent.top
-			anchors.left: parent.left
-			anchors.bottom: parent.bottom
-			width: 3 * SCALEFACTOR
-			start: Qt.point(0, 0)
-			end: Qt.point(3 * SCALEFACTOR, 0)
-			gradient: Gradient {
-				GradientStop { position: 0.0; color: "#609E9E9E" }
-				GradientStop { position: 1.0; color: "#009E9E9E" }
-			}
-		}
-		MouseArea {
-			id: onMouseArea
-			anchors.fill: parent
-			drag.target: dimHandle
-			drag.axis: Drag.XandYAxis
-			drag.minimumX: 0
-			drag.maximumX: 0
-			drag.minimumY: 0
-			drag.maximumY: dimArea.height - dimHandle.height
-			onPressed: updateButtonColors()
-			onReleased: buttonReleased("onMouseArea")
-		}
-	}
-	Rectangle {
-		id: tileSeperator
-		anchors.top: parent.top
 		anchors.bottom: parent.bottom
-		anchors.horizontalCenter: parent.horizontalCenter
-		width: 1 * SCALEFACTOR
-		color: "#BDBDBD"
+		height: Math.round(dimmerValueRectangle.parent.height - Math.round(dimHandle.y / (dimArea.height - dimHandle.height) * dimmerValueRectangle.parent.height))
+		color: "#E0E0E0"
+	}
+	Text {
+		id: dimmerValueText
+		anchors.centerIn: parent
+		font.pixelSize: Units.dp(16)
+		text: Math.round(100 - Math.round(dimHandle.y / (dimArea.height - dimHandle.height) * 100)) + '%'
+		color: properties.theme.colors.telldusBlue
 	}
 
-	Rectangle {
-		id: offButtonBackgroundSquarer1
-		width: offButton.width / 2
-		anchors.top: offButton.top
-		anchors.right: offButton.right
-		anchors.bottom: offButton.bottom
-		color: offButton.color
-	}
-	Rectangle {
-		id: offButtonBackgroundSquarer2
-		visible: tile.hasNameInTile
-		height: offButton.height / 2
-		anchors.left: offButton.left
-		anchors.right: offButton.right
-		anchors.bottom: offButton.bottom
-		color: offButton.color
-	}
-	Rectangle {
-		id: offButton
-		height: parent.height
-		anchors.left: parent.left
-		anchors.right: tileSeperator.left
-		color: deviceState == 2 ? "#FAFAFA" : "#EEEEEE"
-		radius: tileCard.radius
-		Text {
-			id: offButtonText
-			anchors.verticalCenter: parent.verticalCenter
-			anchors.horizontalCenter: parent.horizontalCenter
-			color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
-			font.pixelSize: offButton.height < offButton.width ? parent.height * 0.4 : parent.height * 0.2
-			font.weight: Font.Bold
-			text: "Off"
+	Item {
+		id: buttonContainer
+		anchors.fill: parent
+
+		Rectangle {
+			id: onButtonBackgroundSquarer1
+			width: onButton.width / 2
+			anchors.top: onButton.top
+			anchors.left: onButton.left
+			anchors.bottom: onButton.bottom
+			color: onButton.color
 		}
-		LinearGradient {
-			visible: deviceState == 2
-			anchors.top: parent.top
+		Rectangle {
+			id: onButtonBackgroundSquarer2
+			visible: tile.hasNameInTile
+			height: onButton.height / 2
+			anchors.left: onButton.left
+			anchors.right: onButton.right
+			anchors.bottom: onButton.bottom
+			color: onButton.color
+		}
+		Rectangle {
+			id: onButton
+			height: parent.height
 			anchors.right: parent.right
-			anchors.bottom: parent.bottom
-			width: 3 * SCALEFACTOR
-			start: Qt.point(0, 0)
-			end: Qt.point(3 * SCALEFACTOR, 0)
-			gradient: Gradient {
-				GradientStop { position: 0.0; color: "#009E9E9E" }
-				GradientStop { position: 1.0; color: "#609E9E9E" }
+			anchors.left: tileSeperator.right
+			color: (deviceState == 1 || deviceState == 16) ? "#FAFAFA" : "#EEEEEE"
+			radius: tileCard.radius
+			Text {
+				id: onButtonText
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
+				color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
+				font.pixelSize: onButton.height < onButton.width ? parent.height * 0.4 : parent.height * 0.2
+				font.weight: Font.Bold
+				text: "On"
+			}
+			LinearGradient {
+				visible: deviceState == 1 || deviceState == 16
+				anchors.top: parent.top
+				anchors.left: parent.left
+				anchors.bottom: parent.bottom
+				width: 3 * SCALEFACTOR
+				start: Qt.point(0, 0)
+				end: Qt.point(3 * SCALEFACTOR, 0)
+				gradient: Gradient {
+					GradientStop { position: 0.0; color: "#609E9E9E" }
+					GradientStop { position: 1.0; color: "#009E9E9E" }
+				}
+			}
+			MouseArea {
+				id: onMouseArea
+				anchors.fill: parent
+				drag.target: dimHandle
+				drag.axis: Drag.XandYAxis
+				drag.minimumX: 0
+				drag.maximumX: 0
+				drag.minimumY: 0
+				drag.maximumY: dimArea.height - dimHandle.height
+				onPressed: {
+					if (!((methods & 16) == 0)) {
+						onOffTile.state = 'dimmerValueShowing'
+					}
+					updateButtonColors()
+				}
+				onReleased: buttonReleased("onMouseArea")
 			}
 		}
-		MouseArea {
-			id: offMouseArea
-			anchors.fill: parent
-			drag.target: dimHandle
-			drag.axis: Drag.XandYAxis
-			drag.minimumX: 0
-			drag.maximumX: 0
-			drag.minimumY: 0
-			drag.maximumY: dimArea.height - dimHandle.height
-			onPressed: updateButtonColors()
-			onReleased: buttonReleased("offMouseArea")
+		Rectangle {
+			id: tileSeperator
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.horizontalCenter: parent.horizontalCenter
+			width: 1 * SCALEFACTOR
+			color: "#BDBDBD"
+		}
+
+		Rectangle {
+			id: offButtonBackgroundSquarer1
+			width: offButton.width / 2
+			anchors.top: offButton.top
+			anchors.right: offButton.right
+			anchors.bottom: offButton.bottom
+			color: offButton.color
+		}
+		Rectangle {
+			id: offButtonBackgroundSquarer2
+			visible: tile.hasNameInTile
+			height: offButton.height / 2
+			anchors.left: offButton.left
+			anchors.right: offButton.right
+			anchors.bottom: offButton.bottom
+			color: offButton.color
+		}
+		Rectangle {
+			id: offButton
+			height: parent.height
+			anchors.left: parent.left
+			anchors.right: tileSeperator.left
+			color: deviceState == 2 ? "#FAFAFA" : "#EEEEEE"
+			radius: tileCard.radius
+			Text {
+				id: offButtonText
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
+				color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
+				font.pixelSize: offButton.height < offButton.width ? parent.height * 0.4 : parent.height * 0.2
+				font.weight: Font.Bold
+				text: "Off"
+			}
+			LinearGradient {
+				visible: deviceState == 2
+				anchors.top: parent.top
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				width: 3 * SCALEFACTOR
+				start: Qt.point(0, 0)
+				end: Qt.point(3 * SCALEFACTOR, 0)
+				gradient: Gradient {
+					GradientStop { position: 0.0; color: "#009E9E9E" }
+					GradientStop { position: 1.0; color: "#609E9E9E" }
+				}
+			}
+			MouseArea {
+				id: offMouseArea
+				anchors.fill: parent
+				drag.target: dimHandle
+				drag.axis: Drag.XandYAxis
+				drag.minimumX: 0
+				drag.maximumX: 0
+				drag.minimumY: 0
+				drag.maximumY: dimArea.height - dimHandle.height
+				onPressed: {
+					if (!((methods & 16) == 0)) {
+						onOffTile.state = 'dimmerValueShowing'
+					}
+					updateButtonColors()
+				}
+				onReleased: buttonReleased("offMouseArea")
+			}
 		}
 	}
 	Item {
 		id: dimArea
+		opacity: buttonContainer.opacity
 		anchors.fill: parent
 		visible: !((methods & 16) == 0)
 		Rectangle {
@@ -166,6 +199,9 @@ Item {
 			anchors.horizontalCenter: parent.horizontalCenter
 			y: dimValue()
 			color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+			Behavior on y {
+				NumberAnimation { duration: 150 }
+			}
 			Image {
 				id: dimHandleArrows
 				width: parent.width
@@ -179,7 +215,28 @@ Item {
 			}
 		}
 	}
+	states: [
+		State {
+			name: 'dimmerValueShowing'
+			PropertyChanges {
+				target: buttonContainer
+				opacity: 0
+			}
+		}
+	]
+	transitions: [
+		Transition {
+			to: 'dimmerValueShowing'
+			reversible: true
+			PropertyAnimation {
+				target: buttonContainer
+				properties: 'opacity'
+				duration: 150
+			}
+		}
+	]
 	function buttonReleased(sender) {
+		onOffTile.state = ''
 		updateButtonColors()
 		var maxY = dimArea.height - dimHandle.height;
 		var value = 255 - Math.round(dimHandle.y / maxY * 255);
