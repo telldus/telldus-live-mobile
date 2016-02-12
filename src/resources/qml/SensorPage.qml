@@ -286,10 +286,10 @@ Item {
 	Rectangle {
 		id: listEmptyView
 		anchors.fill: parent
-		visible : sensorModel.count == 0
+		visible : list.count == 0
 		color: "#F5F5F5"
 		onVisibleChanged: {
-			if (sensorModel.count == 0) {
+			if (list.count == 0) {
 				refreshTimer.stop()
 				closeTimer.stop()
 			}
@@ -322,7 +322,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
-		visible : sensorModel.count > 0
+		visible : list.count > 0
 		ListView {
 			id: list
 			anchors.fill: parent

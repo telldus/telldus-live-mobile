@@ -139,10 +139,10 @@ Item {
 		Rectangle {
 			id: listEmptyView
 			anchors.fill: parent
-			visible : dashboardModel.count == 0
+			visible : list.count == 0
 			color: "#F5F5F5"
 			onVisibleChanged: {
-				if (dashboardModel.count == 0) {
+				if (list.count == 0) {
 					refreshTimer.stop()
 					closeTimer.stop()
 				}
@@ -168,7 +168,7 @@ Item {
 			onWidthChanged: calculateTileSize()
 			onHeightChanged: calculateTileSize()
 
-			visible : dashboardModel.count > 0
+			visible : list.count > 0
 			anchors.top: parent.top
 			anchors.left: parent.left
 			anchors.topMargin: closeTimer.running ? 0 : -headerItem.height + tilePadding

@@ -276,10 +276,10 @@ Item {
 	Rectangle {
 		id: listEmptyView
 		anchors.fill: parent
-		visible : deviceListSortFilterModel.count == 0
+		visible : list.count == 0
 		color: "#F5F5F5"
 		onVisibleChanged: {
-			if (deviceListSortFilterModel.count == 0) {
+			if (list.count == 0) {
 				refreshTimer.stop()
 				closeTimer.stop()
 			}
@@ -312,7 +312,7 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
 		width: parent.width
-		visible : deviceListSortFilterModel.count > 0
+		visible : list.count > 0
 		ListView {
 			id: list
 			anchors.left: parent.left

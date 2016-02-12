@@ -172,10 +172,10 @@ Item {
 	Rectangle {
 		id: listEmptyView
 		anchors.fill: parent
-		visible : schedulerDaySortFilterModel.count == 0
+		visible : list.count == 0
 		color: "#F5F5F5"
 		onVisibleChanged: {
-			if (schedulerDaySortFilterModel.count == 0) {
+			if (list.count == 0) {
 				refreshTimer.stop()
 				closeTimer.stop()
 			}
@@ -204,7 +204,7 @@ Item {
 	}
 	ListView {
 		id: list
-		visible : schedulerDaySortFilterModel.count > 0
+		visible : list.count > 0
 		anchors.fill: parent
 		anchors.topMargin: closeTimer.running ? 0 : -headerItem.height
 		anchors.leftMargin: screen.showHeaderAtTop ? 0 : header.width
