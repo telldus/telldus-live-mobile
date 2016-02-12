@@ -20,7 +20,7 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				horizontalAlignment: Text.AlignHCenter
-				text: "You are using version " + properties.version + " of Telldus Live! Mobile."
+				text: "You are using version " + properties.version + " of Telldus Live! mobile."
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
 				font.pixelSize: Units.dp(15)
