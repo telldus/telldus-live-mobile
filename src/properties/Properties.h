@@ -10,6 +10,7 @@ class Properties : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString foo READ foo WRITE setFoo NOTIFY fooChanged)
+	Q_PROPERTY(QString version READ version NOTIFY versionChanged)
 	Q_PROPERTY(PropertiesTheme *theme READ theme NOTIFY themeChanged)
 	Q_PROPERTY(PropertiesUi *ui READ ui NOTIFY uiChanged)
 public:
@@ -19,11 +20,14 @@ public:
 	QString foo() const;
 	void setFoo(const QString &foo);
 
+	QString version() const;
+
 	PropertiesTheme *theme() const;
 	PropertiesUi *ui() const;
 
 signals:
 	void fooChanged(const QString &foo);
+	void versionChanged(const QString &version);
 	void themeChanged();
 	void uiChanged();
 

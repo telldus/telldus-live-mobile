@@ -1,6 +1,7 @@
 #include "Properties.h"
 #include "properties/PropertiesTheme.h"
 #include "properties/PropertiesUi.h"
+#include "config.h"
 
 class Properties::PrivateData {
 public:
@@ -36,6 +37,10 @@ PropertiesTheme *Properties::theme() const {
 
 PropertiesUi *Properties::ui() const {
 	return d->ui;
+}
+
+QString Properties::version() const {
+	return VERSION;
 }
 
 QString Properties::foo() const {
