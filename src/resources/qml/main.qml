@@ -33,42 +33,43 @@ Rectangle {
 		}
 	}
 
+	Rectangle {
+		id: overlayBackground
+		anchors.fill: parent
+		color: "#000000"
+		opacity: 0
+	}
+
 	Item {
 		id: overlayPage
-		visible: overlayLoader.source == '' ? false : true
-		anchors.fill: parent
+		height: screen.height
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.top
+		opacity: 0
 
 		property alias source: overlayLoader.source
 		property alias title: overlayHeaderText.text
 		property var icon: ''
 		property var childObject: ''
 
-		Rectangle {
-			id: overlayBackground
-			anchors.fill: parent
-			color: "#000000"
-			opacity: 0.6
-		}
-
-		MouseArea {
-			id: overlayBackgroundMouseArea
-			anchors.fill: parent
-			onClicked: {
-				overlayLoader.source = ''
-			}
-		}
-
 		Card {
 			id: overlayCard
 			anchors.fill: parent
-			anchors.leftMargin: Units.dp(16)
-			anchors.rightMargin: Units.dp(16)
-			anchors.bottomMargin: Units.dp(16)
-			anchors.topMargin: (UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0) + Units.dp(16)
-			MouseArea {
-				id: overlayCardMouseArea
+			anchors.leftMargin: Units.dp(24)
+			anchors.rightMargin: Units.dp(24)
+			anchors.bottomMargin: Units.dp(24)
+			anchors.topMargin: (UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0) + Units.dp(24)
+			SwipeArea {
 				anchors.fill: parent
 				preventStealing: false
+				onSwipe: {
+					switch (direction) {
+					case "up":
+						overlayPage.state = '';
+						break
+					}
+				}
 			}
 			Rectangle {
 				id: overlayHeader
@@ -132,7 +133,9 @@ Rectangle {
 					MouseArea {
 						id: overlayCloseButtonMouseArea
 						anchors.fill: parent
-						onClicked: overlayLoader.source = ''
+						onClicked: {
+							overlayPage.state = 'closeInstantly'
+						}
 					}
 				}
 			}
@@ -142,9 +145,107 @@ Rectangle {
 				anchors.top: overlayHeader.bottom
 				anchors.right: parent.right
 				anchors.bottom: parent.bottom
-				source: ''
+				onSourceChanged: {
+					if (overlayLoader.source != '') {
+						overlayPage.state = 'visible';
+					}
+				}
 			}
 		}
+		states: [
+			State {
+				name: ''
+				PropertyChanges {
+					target: overlayLoader
+					source: ''
+				}
+			},
+			State {
+				name: 'visible'
+				AnchorChanges {
+					target: overlayPage
+					anchors.bottom: overlayPage.parent.bottom
+				}
+				PropertyChanges {
+					target: overlayPage
+					opacity: 1
+				}
+				PropertyChanges {
+					target: overlayBackground
+					opacity: 0.6
+				}
+			},
+			State {
+				name: 'closeInstantly'
+				AnchorChanges {
+					target: overlayPage
+					anchors.bottom: overlayPage.parent.top
+				}
+				PropertyChanges {
+					target: overlayPage
+					opacity: 0
+				}
+				PropertyChanges {
+					target: overlayLoader
+					source: ''
+				}
+				PropertyChanges {
+					target: overlayBackground
+					opacity: 0
+				}
+			}
+		]
+
+		transitions: [
+			Transition {
+				to: 'visible'
+				AnchorAnimation {
+					duration: 250
+				}
+				PropertyAnimation {
+					target: overlayBackground
+					properties: 'opacity'
+					duration: 250
+				}
+			},
+			Transition {
+				from: 'visible'
+				to: 'closeInstantly'
+				PropertyAnimation {
+					target: overlayBackground
+					properties: 'opacity'
+					duration: 250
+				}
+				SequentialAnimation {
+					PropertyAnimation {
+						properties: 'opacity'
+						duration: 250
+					}
+					AnchorAnimation {
+					}
+				}
+			},
+			Transition {
+				from: 'visible'
+				to: ''
+				PropertyAnimation {
+					target: overlayBackground
+					properties: 'opacity'
+					duration: 250
+				}
+				SequentialAnimation {
+					AnchorAnimation {
+						duration: 250
+					}
+					PropertyAnimation {
+						properties: 'opacity'
+					}
+					PropertyAction {
+						properties: 'source'
+					}
+				}
+			}
+		]
 	}
 
 }

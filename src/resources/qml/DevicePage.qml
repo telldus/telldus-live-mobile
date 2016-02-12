@@ -91,7 +91,7 @@ Item {
 						Image {
 							id: arrowImage
 							anchors.fill: parent
-							source: "image://icons/settings/#9E9E9E"
+							source: "image://icons/settings/#BDBDBD"
 							asynchronous: true
 							smooth: true
 							fillMode: Image.PreserveAspectCrop
