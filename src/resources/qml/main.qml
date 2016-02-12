@@ -28,7 +28,7 @@ Rectangle {
 		source: opacity > 0  ? "LoginScreen.qml" : ''
 		onSourceChanged: {
 			if (opacity > 0) {
-				overlayLoader.source = ''
+				overlayPage.state = 'closeInstantly'
 			}
 		}
 	}
