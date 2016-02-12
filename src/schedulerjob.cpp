@@ -100,7 +100,7 @@ QDateTime SchedulerJob::nextRunTime() const {
 	return d->nextRunTime;
 }
 
-QTime SchedulerJob::runTimeToday() const {
+QDateTime SchedulerJob::runTimeToday() const {
 	int timezoneOffset = 0;
 	int sunrise = 0;
 	int sunset = 0;
@@ -114,11 +114,13 @@ QTime SchedulerJob::runTimeToday() const {
 		}
 	}
 	if (d->type == Sunrise) {
-		return QDateTime::fromTime_t(sunrise, Qt::OffsetFromUTC, 0).time().addSecs((d->offset * 60) + timezoneOffset);
+		return QDateTime::fromTime_t(sunrise, Qt::OffsetFromUTC, 0).addSecs((d->offset * 60) + timezoneOffset);
 	} else if (d->type == Sunset) {
-		return QDateTime::fromTime_t(sunset, Qt::OffsetFromUTC, 0).time().addSecs((d->offset * 60) + timezoneOffset);
+		return QDateTime::fromTime_t(sunset, Qt::OffsetFromUTC, 0).addSecs((d->offset * 60) + timezoneOffset);
 	} else {
-		return QTime(d->hour, d->minute, 0);
+		QDateTime ts = QDateTime::currentDateTime();
+		ts.setTime(QTime(d->hour, d->minute, 0));
+		return ts;
 	}
 }
 

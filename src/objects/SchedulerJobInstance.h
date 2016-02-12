@@ -21,7 +21,7 @@ class SchedulerJobInstance : public QObject
 	Q_PROPERTY(QString methodValue READ methodValue WRITE setMethodValue NOTIFY methodValueChanged)
 	Q_PROPERTY(QDateTime nextRunTime READ nextRunTime WRITE setNextRunTime NOTIFY nextRunTimeChanged)
 	Q_PROPERTY(QDate nextRunDate READ nextRunDate WRITE setNextRunDate NOTIFY nextRunDateChanged)
-	Q_PROPERTY(QTime runTimeToday READ runTimeToday WRITE setRunTimeToday NOTIFY runTimeTodayChanged)
+	Q_PROPERTY(QDateTime runTimeToday READ runTimeToday WRITE setRunTimeToday NOTIFY runTimeTodayChanged)
 	Q_PROPERTY(SchedulerJob::Type type READ type WRITE setType NOTIFY typeChanged)
 	Q_PROPERTY(bool active READ active WRITE setActive NOTIFY activeChanged)
 	Q_PROPERTY(int hour READ hour WRITE setHour NOTIFY hourChanged)
@@ -56,8 +56,8 @@ public:
 	QDate nextRunDate() const;
 	void setNextRunDate(const QDate &nextRunDate );
 
-	QTime runTimeToday() const;
-	void setRunTimeToday(const QTime &runTimeTodayrn );
+	QDateTime runTimeToday() const;
+	void setRunTimeToday(const QDateTime &runTimeToday );
 
 	SchedulerJob::Type type() const;
 	void setType(SchedulerJob::Type type);

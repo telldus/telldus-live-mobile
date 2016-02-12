@@ -12,7 +12,7 @@ public:
 	QString methodValue;
 	QDateTime nextRunTime;
 	QDate nextRunDate;
-	QTime runTimeToday;
+	QDateTime runTimeToday;
 	SchedulerJob::Type type;
 	bool active;
 };
@@ -84,9 +84,7 @@ QDateTime SchedulerJobInstance::nextRunTime() const {
 }
 
 void SchedulerJobInstance::calculateNextRunTime() const {
-	QDateTime nextRun;
-	QTime nextRunTime = runTimeToday();
-	nextRun.setTime(nextRunTime);
+	QDateTime nextRun = runTimeToday();
 
 	nextRun.setDate(QDate::currentDate().addDays( (weekday() + 1) - QDate::currentDate().dayOfWeek() ));
 	if (nextRun < QDateTime::currentDateTime()) {
@@ -104,13 +102,13 @@ QDate SchedulerJobInstance::nextRunDate() const {
 	return nextRunTime().date();
 }
 
-void SchedulerJobInstance::setRunTimeToday(const QTime &runTimeToday) {
+void SchedulerJobInstance::setRunTimeToday(const QDateTime &runTimeToday) {
 	d->runTimeToday = runTimeToday;
 	emit runTimeTodayChanged();
 	emit nextRunTimeChanged();
 }
 
-QTime SchedulerJobInstance::runTimeToday() const {
+QDateTime SchedulerJobInstance::runTimeToday() const {
 	return d->runTimeToday;
 }
 
