@@ -113,15 +113,15 @@ QDateTime SchedulerJob::runTimeToday() const {
 			sunset = client->sunset();
 		}
 	}
+	QDateTime ts = QDateTime::currentDateTime();
 	if (d->type == Sunrise) {
-		return QDateTime::fromTime_t(sunrise, Qt::OffsetFromUTC, 0).addSecs((d->offset * 60) + timezoneOffset);
+		ts.setTime(QDateTime::fromTime_t(sunrise, Qt::OffsetFromUTC, 0).addSecs((d->offset * 60) + timezoneOffset).time());
 	} else if (d->type == Sunset) {
-		return QDateTime::fromTime_t(sunset, Qt::OffsetFromUTC, 0).addSecs((d->offset * 60) + timezoneOffset);
+		ts.setTime(QDateTime::fromTime_t(sunset, Qt::OffsetFromUTC, 0).addSecs((d->offset * 60) + timezoneOffset).time());
 	} else {
-		QDateTime ts = QDateTime::currentDateTime();
 		ts.setTime(QTime(d->hour, d->minute, 0));
-		return ts;
 	}
+	return ts;
 }
 
 void SchedulerJob::setNextRunTime(const QDateTime &nextRunTime) {
