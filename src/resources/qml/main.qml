@@ -6,7 +6,7 @@ Rectangle {
 	id: screen
 
 	property bool isPortrait: width <= height
-	property bool showHeaderAtTop: (width <= height) || (Units.dp(56) < height * 0.1)
+	property bool showHeaderAtTop: width == 0 || height == 0 || (width <= height) || (Units.dp(56) < height * 0.1)
 
 	Component.onCompleted: {
 		console.log("[UI] Platform: " + UI_PLATFORM);

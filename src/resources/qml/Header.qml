@@ -12,10 +12,6 @@ View {
 	signal editClicked()
 	signal backClicked()
 
-	anchors.left: parent.left
-	anchors.top: parent.top
-	height: screen.showHeaderAtTop ? Units.dp(headerHeight) : mainView.height
-	width: screen.showHeaderAtTop ? mainView.width :Units.dp(headerHeight)
 	tintColor: properties.theme.colors.telldusBlue
 	elevation: (UI_PLATFORM == "android" ? 0 : 1)
 

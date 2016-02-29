@@ -5,8 +5,6 @@ import Tui 0.1
 
 View {
 	id: tabBarBackground
-	height: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? Units.dp(48) : Units.dp(49)) : undefined
-	width: screen.showHeaderAtTop ? undefined : (UI_PLATFORM == "android" ? Units.dp(48) : Units.dp(56))
 	tintColor: "#E0E0E0"
 	elevation: (UI_PLATFORM == "android" ? 2 : 0)
 	Rectangle {

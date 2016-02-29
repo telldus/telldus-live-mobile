@@ -75,7 +75,7 @@ Rectangle {
 			Rectangle {
 				width: parent.width
 				height: Units.dp(56)
-				color: index ==  pageModel.selectedIndex && properties.ui.supportsKeys ? properties.theme.colors.telldusOrange : "transparent"
+				color: index ==  tabPage.currentIndex && properties.ui.supportsKeys ? properties.theme.colors.telldusOrange : "transparent"
 				Item {
 					id: dashboardIcon
 					anchors.left: parent.left
@@ -501,10 +501,12 @@ Rectangle {
 		}
 		Item {
 			id: tabPageContainer
-			anchors.left: screen.showHeaderAtTop ? parent.left : (UI_PLATFORM == "android" ? tabBar.right : header.right)
-			anchors.right: screen.showHeaderAtTop ? parent.right : (UI_PLATFORM == "android" ? parent.right : tabBar.left)
-			anchors.bottom: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? parent.bottom : tabBar.top) : parent.bottom
-			anchors.top: screen.showHeaderAtTop ? (UI_PLATFORM == "android" ? tabBar.bottom : header.bottom) : parent.top
+
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: tabBar.top
+			anchors.top: header.bottom
+
 			ListView {
 				id: tabPage
 				anchors.fill: parent
@@ -520,7 +522,9 @@ Rectangle {
 				highlightMoveVelocity: tabPage.width * pageModel.size
 				boundsBehavior: Flickable.StopAtBounds
 				onCurrentIndexChanged: {
-					tabPage.currentItem.setAsCurrentIndex();
+					if (tabPage.currentItem) {
+						tabPage.currentItem.setAsCurrentIndex();
+					}
 				}
 			}
 			Connections {
@@ -576,17 +580,22 @@ Rectangle {
 		}
 		TabBar {
 			id: tabBar
-			anchors.left: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? parent.left : header.right) : (screen.showHeaderAtTop ? parent.left : undefined)
-			anchors.right: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? parent.right : undefined) : parent.right
-			anchors.bottom: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? undefined : parent.bottom) : parent.bottom
-			anchors.top: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? header.bottom : parent.top) : (screen.showHeaderAtTop ? undefined : parent.top)
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: parent.bottom
+			anchors.top: undefined
+			height: Units.dp(49)
+			width: undefined
 
 		}
 		Header {
 			id: header
 			anchors.left: parent.left
-			anchors.right: screen.showHeaderAtTop ? parent.right : undefined
+			anchors.right: parent.right
 			anchors.top: mainViewOffset.bottom
+			anchors.bottom: undefined
+			height: Units.dp(56)
+			width: mainView.width
 		}
 		Rectangle {
 			id: mainViewOffset
@@ -619,6 +628,108 @@ Rectangle {
 			}
 		}
 	}
+
+	states: [
+		State {
+			name: 'headerNotAtTop'
+			when: UI_PLATFORM != "android" && !screen.showHeaderAtTop
+			AnchorChanges {
+				target: header
+				anchors.right: undefined
+				anchors.bottom: parent.bottom
+			}
+			PropertyChanges {
+				target: header
+				height: mainView.height
+				width: Units.dp(56)
+			}
+			AnchorChanges {
+				target: tabBar
+				anchors.left: undefined
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				anchors.top: parent.top
+			}
+			PropertyChanges {
+				target: tabBar
+				height: undefined
+				width: Units.dp(56)
+			}
+			AnchorChanges {
+				target: tabPageContainer
+				anchors.left: header.right
+				anchors.right: tabBar.left
+				anchors.bottom: parent.bottom
+				anchors.top: parent.top
+			}
+		},
+		State {
+			name: 'android'
+			when: UI_PLATFORM == "android" && screen.showHeaderAtTop
+			AnchorChanges {
+				target: header
+				anchors.right: parent.right
+				anchors.bottom: undefined
+			}
+			PropertyChanges {
+				target: header
+				height: Units.dp(56)
+				width: mainView.width
+			}
+			AnchorChanges {
+				target: tabBar
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.bottom: undefined
+				anchors.top: header.bottom
+			}
+			PropertyChanges {
+				target: tabBar
+				height: Units.dp(48)
+				width: undefined
+			}
+			AnchorChanges {
+				target: tabPageContainer
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				anchors.top: tabBar.bottom
+			}
+		},
+		State {
+			name: 'android_headerNotAtTop'
+			when: UI_PLATFORM == "android" && !screen.showHeaderAtTop
+			AnchorChanges {
+				target: header
+				anchors.right: undefined
+				anchors.bottom: parent.bottom
+			}
+			PropertyChanges {
+				target: header
+				height: mainView.height
+				width: Units.dp(56)
+			}
+			AnchorChanges {
+				target: tabBar
+				anchors.left: header.right
+				anchors.right: undefined
+				anchors.bottom: parent.bottom
+				anchors.top: parent.top
+			}
+			PropertyChanges {
+				target: tabBar
+				height: undefined
+				width: Units.dp(49)
+			}
+			AnchorChanges {
+				target: tabPageContainer
+				anchors.left: tabBar.right
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				anchors.top: parent.top
+			}
+		}
+	]
 
 	function openMenu()
 	{
