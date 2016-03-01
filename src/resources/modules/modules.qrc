@@ -2,6 +2,8 @@
 	<qresource prefix="/qmlmodules">
 
 		<file>Tui/Card.qml</file>
+		<file>Tui/CircleMask.qml</file>
+		<file>Tui/ButtonMouseArea.qml</file>
 		<file>Tui/Object.qml</file>
 		<file>Tui/qmldir</file>
 		<file>Tui/Units.qml</file>

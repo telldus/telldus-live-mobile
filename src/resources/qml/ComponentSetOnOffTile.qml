@@ -54,14 +54,10 @@ Item {
 		}
 		Rectangle {
 			id: onButton
-
-			property color defaultColor: "#DDDDDD"
-			property color pressedColor: "#EEEEEE"
-
 			height: parent.height
 			anchors.right: parent.right
 			anchors.left: tileSeperator.right
-			color: (onMouseArea.pressed && overlayDimmer.opacity < 1) ? onButton.pressedColor : onButton.defaultColor
+			color: "#DDDDDD"
 			radius: tileCard.radius
 			Text {
 				id: onButtonText
@@ -72,7 +68,7 @@ Item {
 				font.weight: Font.Bold
 				text: "On"
 			}
-			MouseArea {
+			ButtonMouseArea {
 				id: onMouseArea
 				anchors.fill: parent
 				drag.target: dimHandle
@@ -118,14 +114,10 @@ Item {
 		}
 		Rectangle {
 			id: offButton
-
-			property color defaultColor: "#EAEAEA"
-			property color pressedColor: "#FAFAFA"
-
 			height: parent.height
 			anchors.left: parent.left
 			anchors.right: tileSeperator.left
-			color: (offMouseArea.pressed && overlayDimmer.opacity < 1) ? offButton.pressedColor : offButton.defaultColor
+			color: "#EAEAEA"
 			radius: tileCard.radius
 			Text {
 				id: offButtonText
@@ -136,7 +128,7 @@ Item {
 				font.weight: Font.Bold
 				text: "Off"
 			}
-			MouseArea {
+			ButtonMouseArea {
 				id: offMouseArea
 				anchors.fill: parent
 				drag.target: dimHandle
@@ -181,7 +173,7 @@ Item {
 				id: dimmerValueText
 				anchors.centerIn: parent
 				font.pixelSize: Units.dp(8)
-				text: onOffTile.dimHandleValue
+				text: onOffTile.dimHandleValue == 0 ? 'Off' : (onOffTile.dimHandleValue == 100 ? 'On' : onOffTile.dimHandleValue)
 				color: Qt.hsla(0.0, 0.0, 0.65, 1)
 			}
 		}
@@ -235,13 +227,11 @@ Item {
 			}
 			PropertyChanges {
 				target: onButton
-				pressedColor: "#EAEAEA"
-				defaultColor: "#FAFAFA"
+				color: "#FAFAFA"
 			}
 			PropertyChanges {
 				target: offButton
-				pressedColor: "#DDDDDD"
-				defaultColor: "#EEEEEE"
+				color: "#EEEEEE"
 			}
 			PropertyChanges {
 				target: onButtonText
@@ -263,13 +253,11 @@ Item {
 			}
 			PropertyChanges {
 				target: onButton
-				pressedColor: "#DDDDDD"
-				defaultColor: "#EEEEEE"
+				color: "#EEEEEE"
 			}
 			PropertyChanges {
 				target: offButton
-				pressedColor: "#EAEAEA"
-				defaultColor: "#FAFAFA"
+				color: "#FAFAFA"
 			}
 			PropertyChanges {
 				target: onButtonText
