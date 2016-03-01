@@ -91,7 +91,7 @@ Item {
 						SensorValue {
 							icon: "sensorIconWind"
 							visible: sensor.hasWindGust
-							value: Number(sensor.windAvg).toLocaleString(Qt.locale("en_GB"), 'f', 1) + ' m/s\n' + Number(sensor.windGust).toLocaleString(Qt.locale("en_GB"), 'f', 1) + ' m/s*\n' + Number(sensor.windDir).toLocaleString(Qt.locale("en_GB"), 'f', 0) + '\u00B0'
+							value: Number(sensor.windAvg).toLocaleString(Qt.locale("en_GB"), 'f', 1) + ' m/s\n' + Number(sensor.windGust).toLocaleString(Qt.locale("en_GB"), 'f', 1) + ' m/s*\n' + windDirection(sensor.windDir)
 						}
 						SensorValue {
 							icon: "sensorIconUv"
@@ -358,6 +358,11 @@ Item {
 			running: false
 			repeat: false
 		}
+	}
+
+	function windDirection(value) {
+		var directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'];
+		return directions[Math.floor(value / 22.5)]
 	}
 
 	function formatLastUpdated(minutes, lastUpdated) {
