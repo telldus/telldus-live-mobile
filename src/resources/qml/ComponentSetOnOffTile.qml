@@ -1,4 +1,3 @@
-import QtGraphicalEffects 1.0
 import QtQuick 2.0
 import Telldus 1.0
 import Tui 0.1
@@ -6,6 +5,12 @@ import Tui 0.1
 Item {
 	id: onOffTile
 	property var deviceState: device.state
+	property var dimHandleValue: Math.round(100 - Math.round(dimHandle.y / (dimArea.height - dimHandle.height) * 100))
+
+	onDimHandleValueChanged: {
+		overlayDimmer.dimValue = dimHandleValue
+	}
+
 	anchors.fill: parent
 	focus: true
 
@@ -24,24 +29,6 @@ Item {
 				event.accepted = true;
 			}
 		}
-	}
-
-	onDeviceStateChanged: updateButtonColors()
-
-	Rectangle {
-		id: dimmerValueRectangle
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		height: Math.round(dimmerValueRectangle.parent.height - Math.round(dimHandle.y / (dimArea.height - dimHandle.height) * dimmerValueRectangle.parent.height))
-		color: "#E0E0E0"
-	}
-	Text {
-		id: dimmerValueText
-		anchors.centerIn: parent
-		font.pixelSize: Units.dp(16)
-		text: Math.round(100 - Math.round(dimHandle.y / (dimArea.height - dimHandle.height) * 100)) + '%'
-		color: properties.theme.colors.telldusBlue
 	}
 
 	Item {
@@ -67,32 +54,23 @@ Item {
 		}
 		Rectangle {
 			id: onButton
+
+			property color defaultColor: "#DDDDDD"
+			property color pressedColor: "#EEEEEE"
+
 			height: parent.height
 			anchors.right: parent.right
 			anchors.left: tileSeperator.right
-			color: (deviceState == 1 || deviceState == 16) ? "#FAFAFA" : "#EEEEEE"
+			color: (onMouseArea.pressed && overlayDimmer.opacity < 1) ? onButton.pressedColor : onButton.defaultColor
 			radius: tileCard.radius
 			Text {
 				id: onButtonText
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				color: (deviceState == 1 || deviceState == 16) ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
+				color: "#BDBDBD"
 				font.pixelSize: onButton.height < onButton.width ? parent.height * 0.4 : parent.height * 0.2
 				font.weight: Font.Bold
 				text: "On"
-			}
-			LinearGradient {
-				visible: deviceState == 1 || deviceState == 16
-				anchors.top: parent.top
-				anchors.left: parent.left
-				anchors.bottom: parent.bottom
-				width: 3 * SCALEFACTOR
-				start: Qt.point(0, 0)
-				end: Qt.point(3 * SCALEFACTOR, 0)
-				gradient: Gradient {
-					GradientStop { position: 0.0; color: "#609E9E9E" }
-					GradientStop { position: 1.0; color: "#009E9E9E" }
-				}
 			}
 			MouseArea {
 				id: onMouseArea
@@ -105,13 +83,13 @@ Item {
 				drag.maximumY: dimArea.height - dimHandle.height
 				onPressed: {
 					if (!((methods & 16) == 0)) {
-						onOffTile.state = 'dimmerValueShowing'
+						overlayDimmer.device = device
 					}
-					updateButtonColors()
 				}
 				onReleased: buttonReleased("onMouseArea")
 			}
 		}
+
 		Rectangle {
 			id: tileSeperator
 			anchors.top: parent.top
@@ -140,32 +118,23 @@ Item {
 		}
 		Rectangle {
 			id: offButton
+
+			property color defaultColor: "#EAEAEA"
+			property color pressedColor: "#FAFAFA"
+
 			height: parent.height
 			anchors.left: parent.left
 			anchors.right: tileSeperator.left
-			color: deviceState == 2 ? "#FAFAFA" : "#EEEEEE"
+			color: (offMouseArea.pressed && overlayDimmer.opacity < 1) ? offButton.pressedColor : offButton.defaultColor
 			radius: tileCard.radius
 			Text {
 				id: offButtonText
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				color: deviceState == 2 ? Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1) : Qt.hsla(0, 0, 0.8, 1)
+				color: "#BDBDBD"
 				font.pixelSize: offButton.height < offButton.width ? parent.height * 0.4 : parent.height * 0.2
 				font.weight: Font.Bold
 				text: "Off"
-			}
-			LinearGradient {
-				visible: deviceState == 2
-				anchors.top: parent.top
-				anchors.right: parent.right
-				anchors.bottom: parent.bottom
-				width: 3 * SCALEFACTOR
-				start: Qt.point(0, 0)
-				end: Qt.point(3 * SCALEFACTOR, 0)
-				gradient: Gradient {
-					GradientStop { position: 0.0; color: "#009E9E9E" }
-					GradientStop { position: 1.0; color: "#609E9E9E" }
-				}
 			}
 			MouseArea {
 				id: offMouseArea
@@ -178,66 +147,48 @@ Item {
 				drag.maximumY: dimArea.height - dimHandle.height
 				onPressed: {
 					if (!((methods & 16) == 0)) {
-						onOffTile.state = 'dimmerValueShowing'
+						overlayDimmer.device = device
 					}
-					updateButtonColors()
 				}
 				onReleased: buttonReleased("offMouseArea")
 			}
 		}
 	}
+
 	Item {
 		id: dimArea
-		opacity: buttonContainer.opacity
 		anchors.fill: parent
 		visible: !((methods & 16) == 0)
 		Rectangle {
 			id: dimHandle
-			height: parent.height * 0.15
-			width: height
-			radius: height / 2
 			anchors.horizontalCenter: parent.horizontalCenter
+			height: Units.dp(12)
+			width: Units.dp(20)
+			radius: height
 			y: dimValue()
-			color: Qt.hsla(tile.hue, tile.saturation, tile.lightness, 1)
+			color: Qt.hsla(0.0, 0.0, 0.75, 1)
 			Behavior on y {
 				NumberAnimation { duration: 150 }
 			}
-			Image {
-				id: dimHandleArrows
-				width: parent.width
-				height: parent.height
+			Rectangle {
 				anchors.centerIn: parent
-				source: "../svgs/deviceIconDim.svg"
-				asynchronous: true
-				smooth: true
-				sourceSize.width: width * 2
-				sourceSize.height: height * 2
+				height: Units.dp(10)
+				width: Units.dp(18)
+				radius: dimHandle.radius
+				color: "#FFFFFF"
+			}
+			Text {
+				id: dimmerValueText
+				anchors.centerIn: parent
+				font.pixelSize: Units.dp(8)
+				text: onOffTile.dimHandleValue
+				color: Qt.hsla(0.0, 0.0, 0.65, 1)
 			}
 		}
 	}
-	states: [
-		State {
-			name: 'dimmerValueShowing'
-			PropertyChanges {
-				target: buttonContainer
-				opacity: 0
-			}
-		}
-	]
-	transitions: [
-		Transition {
-			to: 'dimmerValueShowing'
-			reversible: true
-			PropertyAnimation {
-				target: buttonContainer
-				properties: 'opacity'
-				duration: 150
-			}
-		}
-	]
+
 	function buttonReleased(sender) {
-		onOffTile.state = ''
-		updateButtonColors()
+		overlayDimmer.device = ''
 		var maxY = dimArea.height - dimHandle.height;
 		var value = 255 - Math.round(dimHandle.y / maxY * 255);
 		if (value == device.stateValue) {
@@ -256,34 +207,78 @@ Item {
 			}
 		}
 	}
+
 	function dimValue() {
 		var maxY = dimArea.height - dimHandle.height;
 		var dimValue = maxY - ((device.stateValue / 255) * maxY);
 		return dimValue;
 	}
-	function updateButtonColors() {
-		if (deviceState == 1 || deviceState == 16) {
-			tile.hue = 0.08
-			tile.saturation = 0.99
-			tile.lightness = 0.45
-			offButton.color = offMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
-			onButton.color = onMouseArea.pressed ? "#EAEAEA" : "#FAFAFA"
-			onButtonText.color = "#43A047"
-			offButtonText.color = "#757575"
-		} else if (deviceState == 2) {
-			tile.hue = 0.0
-			tile.saturation = 0.0
-			tile.lightness = 0.74
-			offButton.color = offMouseArea.pressed ? "#EAEAEA" : "#FAFAFA"
-			onButton.color = onMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
-			onButtonText.color = "#757575"
-			offButtonText.color = "#E53935"
-		} else {
-			offButton.color = offMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
-			onButton.color = onMouseArea.pressed ? "#DDDDDD" : "#EEEEEE"
-			tile.hue = tile.hueDefault
-			tile.saturation = tile.saturationDefault
-			tile.lightness = tile.lightnessDefault
+
+	states: [
+		State {
+			name: ''
+			PropertyChanges {
+				target: tile
+				hue: 0.08
+				saturation: 0.99
+				lightness: 0.45
+			}
+		},
+		State {
+			name: 'on_or_dimmed'
+			when: deviceState == 1 || deviceState == 16
+			PropertyChanges {
+				target: tile
+				hue: 0.08
+				saturation: 0.99
+				lightness: 0.45
+			}
+			PropertyChanges {
+				target: onButton
+				pressedColor: "#EAEAEA"
+				defaultColor: "#FAFAFA"
+			}
+			PropertyChanges {
+				target: offButton
+				pressedColor: "#DDDDDD"
+				defaultColor: "#EEEEEE"
+			}
+			PropertyChanges {
+				target: onButtonText
+				color: "#2E7D32"
+			}
+			PropertyChanges {
+				target: offButtonText
+				color: "#9E9E9E"
+			}
+		},
+		State {
+			name: 'off'
+			when: deviceState == 2
+			PropertyChanges {
+				target: tile
+				hue: 0.0
+				saturation: 0.0
+				lightness: 0.75
+			}
+			PropertyChanges {
+				target: onButton
+				pressedColor: "#DDDDDD"
+				defaultColor: "#EEEEEE"
+			}
+			PropertyChanges {
+				target: offButton
+				pressedColor: "#EAEAEA"
+				defaultColor: "#FAFAFA"
+			}
+			PropertyChanges {
+				target: onButtonText
+				color: "#9E9E9E"
+			}
+			PropertyChanges {
+				target: offButtonText
+				color: "#C62828"
+			}
 		}
-	}
+	]
 }
