@@ -84,6 +84,7 @@ TelldusLive::TelldusLive(QObject *parent):QObject(parent) {
 
 void TelldusLive::authenticateSession() {
 #if IS_FEATURE_WEBSOCKETS_ENABLED
+	d->sessionIsAuthenticated = false;
 	if (d->session == "") {
 		QSettings s;
 		d->session = QUuid::createUuid().toString().mid(1, 36);
@@ -91,7 +92,7 @@ void TelldusLive::authenticateSession() {
 	}
 	TelldusLiveParams params;
 	params["session"] = d->session;
-	this->call("user/authenticateSession", params, this, SLOT(onSessionAuthenticated(QVariantMap)));
+	this->call("user/authenticateSession", params, this, SLOT(onSessionAuthenticated(QVariantMap)), QVariantMap(), 1);
 #endif
 }
 

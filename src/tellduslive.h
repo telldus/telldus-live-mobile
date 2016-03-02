@@ -44,10 +44,10 @@ public slots:
 	void authorize();
 	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
+	void authenticateSession();
 
 private slots:
 	void onUrlOpened(const QUrl &url);
-	void authenticateSession();
 	void onTemporaryTokenReceived(const QString &token, const QString &tokenSecret);
 	void onAuthorizationReceived(const QString &token, const QString &verifier);
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);

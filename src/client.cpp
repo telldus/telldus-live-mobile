@@ -350,6 +350,11 @@ void Client::wsConnected() {
 void Client::wsDataReceived(const QString &string) {
 	// Disabled for performance reasons
 	// Dev::instance()->logEvent("websocket", "datareceived", "");
+	if (string == "error") {
+		qDebug().noquote().nospace() << "[CLIENT:" << d->id << ":WEBSOCKET:AUTHERROR] Will reauthenticate";
+		TelldusLive::instance()->authenticateSession();
+		return;
+	}
 	QJsonParseError ok;
 
 	QJsonDocument jsonDocument = QJsonDocument().fromJson(string.toLatin1(), &ok);
