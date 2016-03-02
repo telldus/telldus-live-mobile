@@ -100,7 +100,6 @@ LIST(APPEND LIBRARIES
 	${QT_DIR}/lib/libQt5WebSockets.a
 	${QT_DIR}/qml/QtWebView/libdeclarative_webview.a
 	${QT_DIR}/qml/QtQuick.2/libqtquick2plugin.a
-	${QT_DIR}/qml/QtQuick/LocalStorage/libqmllocalstorageplugin.a
 	${QT_DIR}/qml/QtQuick/Window.2/libwindowplugin.a
 	${OPENSSL_DIR}/lib/libcrypto.a
 	${OPENSSL_DIR}/lib/libssl.a
