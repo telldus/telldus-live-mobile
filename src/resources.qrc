@@ -23,7 +23,6 @@
 		<file>resources/qml/ComponentSetBell.qml</file>
 		<file>resources/qml/BusyIndicator.qml</file>
 		<file>resources/qml/ComponentSetUpDown.qml</file>
-		<file>resources/qml/ComponentSetOnOff.qml</file>
 		<file>resources/qml/ButtonSet.qml</file>
 		<file>resources/qml/DeviceDetails.qml</file>
 		<file>resources/qml/SchedulerPage.qml</file>
