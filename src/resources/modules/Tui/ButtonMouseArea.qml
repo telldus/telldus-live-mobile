@@ -28,11 +28,15 @@ MouseArea {
 	}
 
 	onCanceled: {
-		lastCircle.removeCircle();
+		if (lastCircle) {
+			lastCircle.removeCircle();
+		}
 	}
 
 	onReleased: {
-		lastCircle.removeCircle();
+		if (lastCircle) {
+			lastCircle.removeCircle();
+		}
 	}
 
 	function createTapCircle(x, y) {

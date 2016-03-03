@@ -78,9 +78,7 @@ Item {
 				drag.minimumY: 0
 				drag.maximumY: dimArea.height - dimHandle.height
 				onPressed: {
-					if (!((methods & 16) == 0)) {
-						overlayDimmer.device = device
-					}
+					pressAndHoldTimer.start();
 				}
 				onReleased: buttonReleased("onMouseArea")
 			}
@@ -138,9 +136,7 @@ Item {
 				drag.minimumY: 0
 				drag.maximumY: dimArea.height - dimHandle.height
 				onPressed: {
-					if (!((methods & 16) == 0)) {
-						overlayDimmer.device = device
-					}
+					pressAndHoldTimer.start();
 				}
 				onReleased: buttonReleased("offMouseArea")
 			}
@@ -157,7 +153,7 @@ Item {
 			height: Units.dp(12)
 			width: Units.dp(20)
 			radius: height
-			y: dimValue()
+			y: (dimArea.height - dimHandle.height) - ((device.stateValue / 255) * (dimArea.height - dimHandle.height))
 			color: Qt.hsla(0.0, 0.0, 0.75, 1)
 			Behavior on y {
 				NumberAnimation { duration: 150 }
@@ -179,14 +175,29 @@ Item {
 		}
 	}
 
+	Timer {
+		id: pressAndHoldTimer
+		interval: 250
+		running: false
+		repeat: false
+		onTriggered: {
+			onMouseArea.canceled();
+			offMouseArea.canceled();
+			if (!((methods & 16) == 0)) {
+				overlayDimmer.device = device;
+			}
+		}
+	}
+
 	function buttonReleased(sender) {
+		pressAndHoldTimer.stop();
 		overlayDimmer.device = ''
 		var maxY = dimArea.height - dimHandle.height;
 		var value = 255 - Math.round(dimHandle.y / maxY * 255);
 		if (value == device.stateValue) {
-			if (sender == "offMouseArea") {
+			if (sender == "offMouseArea" && !offMouseArea.canceled) {
 				device.turnOff()
-			} else if (sender == "onMouseArea") {
+			} else if (sender == "onMouseArea" && !onMouseArea.canceled) {
 				device.turnOn()
 			}
 		} else {
@@ -198,12 +209,6 @@ Item {
 				device.dim(value);
 			}
 		}
-	}
-
-	function dimValue() {
-		var maxY = dimArea.height - dimHandle.height;
-		var dimValue = maxY - ((device.stateValue / 255) * maxY);
-		return dimValue;
 	}
 
 	states: [
