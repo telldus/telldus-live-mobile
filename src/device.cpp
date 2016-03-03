@@ -354,6 +354,11 @@ void Device::setFromVariantMap(const QVariantMap &dev) {
 		emit stateChanged();
 		d->hasChanged = true;
 	}
+	if (d->stateValue != dev["statevalue"].toString()) {
+		d->stateValue = dev["statevalue"].toString();
+		emit stateValueChanged(this->stateValue());
+		d->hasChanged = true;
+	}
 	if (dev["type"].type() == QVariant::String) {
 		if (Device::Type(d->type) != getTypeFromString(dev["type"].toString())) {
 			d->type = getTypeFromString(dev["type"].toString());

@@ -190,15 +190,21 @@ Item {
 	}
 
 	function buttonReleased(sender) {
+		var ignoreButtonPresses = false
+		if (overlayDimmer.device != '') {
+			ignoreButtonPresses = true
+		}
 		pressAndHoldTimer.stop();
 		overlayDimmer.device = ''
 		var maxY = dimArea.height - dimHandle.height;
 		var value = 255 - Math.round(dimHandle.y / maxY * 255);
 		if (value == device.stateValue) {
-			if (sender == "offMouseArea" && !offMouseArea.canceled) {
-				device.turnOff()
-			} else if (sender == "onMouseArea" && !onMouseArea.canceled) {
-				device.turnOn()
+			if (!ignoreButtonPresses) {
+				if (sender == "offMouseArea") {
+					device.turnOff()
+				} else if (sender == "onMouseArea") {
+					device.turnOn()
+				}
 			}
 		} else {
 			if (value == 0) {
