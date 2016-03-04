@@ -20,16 +20,15 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				horizontalAlignment: Text.AlignHCenter
-				text: "You are using version " + properties.version + " of Telldus Live! mobile."
+				text: qsTranslate("messages", "You are using version ") + properties.version + qsTranslate("messages", " of Telldus Live! mobile.")
 				wrapMode: Text.WordWrap
-				textFormat: Text.RichText
 				font.pixelSize: Units.dp(15)
 				color: "#093266"
 			}
 		}
 		Button {
 			id: button
-			title: "Logout"
+			title: qsTranslate("misc", "Logout")
 			anchors.bottom: parent.bottom
 			anchors.bottomMargin: Units.dp(30)
 			anchors.horizontalCenter: parent.horizontalCenter
@@ -40,6 +39,6 @@ Rectangle {
 	}
 
 	function updateHeader() {
-		header.title = "Settings";
+		header.title = qsTranslate("pages", "Settings");
 	}
 }

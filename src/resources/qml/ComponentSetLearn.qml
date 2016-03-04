@@ -17,7 +17,7 @@ Item {
 		font.weight: Font.Bold
 		style: Text.Raised
 		styleColor: "white"
-		text: "Learn"
+		text: qsTranslate("", "Learn")
 	}
 	MouseArea {
 		id: buttonMouseArea

@@ -66,7 +66,7 @@ Item {
 				color: "#BDBDBD"
 				font.pixelSize: onButton.height < onButton.width ? parent.height * 0.4 : parent.height * 0.2
 				font.weight: Font.Bold
-				text: "On"
+				text: qsTranslate("", "On")
 			}
 			ButtonMouseArea {
 				id: onMouseArea
@@ -124,7 +124,7 @@ Item {
 				color: "#BDBDBD"
 				font.pixelSize: offButton.height < offButton.width ? parent.height * 0.4 : parent.height * 0.2
 				font.weight: Font.Bold
-				text: "Off"
+				text: qsTranslate("", "Off")
 			}
 			ButtonMouseArea {
 				id: offMouseArea
@@ -169,7 +169,7 @@ Item {
 				id: dimmerValueText
 				anchors.centerIn: parent
 				font.pixelSize: Units.dp(8)
-				text: onOffTile.dimHandleValue == 0 ? 'Off' : (onOffTile.dimHandleValue == 100 ? 'On' : onOffTile.dimHandleValue)
+				text: onOffTile.dimHandleValue == 0 ? qsTranslate("", "Off") : (onOffTile.dimHandleValue == 100 ? qsTranslate("", "On") : onOffTile.dimHandleValue)
 				color: Qt.hsla(0.0, 0.0, 0.65, 1)
 			}
 		}

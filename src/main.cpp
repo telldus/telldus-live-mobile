@@ -1,4 +1,5 @@
 #include <QtWidgets/QApplication>
+#include <QTranslator>
 #include <QDebug>
 
 #include "commonview.h"
@@ -35,10 +36,28 @@ int init(int argc, char *argv[]) {
 	qDebug() << "[APP] Logger is active!";
 #endif
 
+	QStringList args = QCoreApplication::arguments();
+	QString forceLanguage = "sv";
+	for(int i = 1; i < args.length(); ++i) {
+		if (args.at(i) == "--force-language") {
+			forceLanguage = args.at(i+1);
+			++i;
+			continue;
+		}
+	}
+
 	qDebug().noquote() << QString("[ENVIRONMENT] QtVersion: 0x%1").arg(QT_VERSION, 5, 16, QChar('0'));
 	qDebug().noquote() << QString("[FEATURE] Logging: %1").arg(IS_FEATURE_LOGGING_ENABLED ? "Enabled" : "Disabled");
 	qDebug().noquote() << QString("[FEATURE] Websockets: %1").arg(IS_FEATURE_WEBSOCKETS_ENABLED ? "Enabled" : "Disabled");
 	qDebug().noquote() << QString("[FEATURE] GoogleAnalytics: %1").arg(IS_FEATURE_GOOGLEANALYTICS_ENABLED ? "Enabled" : "Disabled");
+	qDebug().noquote() << QString("[ENVIRONMENT] Forced Language: %1").arg(forceLanguage);
+
+	QTranslator translator;
+	if (translator.load(forceLanguage == "" ? QLocale() : forceLanguage, "core", "_", "", ".qm")) {
+		app->installTranslator(&translator);
+	} else {
+		qDebug().nospace().noquote() << "[MISC] Unable to load translation file: " << forceLanguage;
+	}
 
 	CommonView *viewer = new CommonView();
 	TelldusCenter tc(viewer);

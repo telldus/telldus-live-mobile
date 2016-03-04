@@ -48,7 +48,7 @@ Item {
 							id: sensorName
 							color: properties.theme.colors.telldusBlue
 							opacity: sensor.name !== '' ? 1 : 0.5
-							text: sensor.name !== '' ? sensor.name : '(no name)'
+							text: sensor.name !== '' ? sensor.name : qsTranslate("misc", '(no name)')
 							font.pixelSize: Units.dp(16)
 							width: parent.width
 							wrapMode: Text.Wrap
@@ -241,7 +241,7 @@ Item {
 				visible: refreshTimer.running && !closeTimer.running
 				color: properties.theme.colors.telldusBlue
 				font.pixelSize: Units.dp(12)
-				text: "You can refresh once every 10 seconds."
+				text: qsTranslate("messages", "You can refresh once every 10 seconds.")
 				elide: Text.ElideRight
 			}
 			states: [
@@ -305,7 +305,7 @@ Item {
 			font.pixelSize: Units.dp(16)
 			wrapMode: Text.Wrap
 			horizontalAlignment: Text.AlignHCenter
-			text: refreshTimer.running ? "Refreshing...\n\nyou can only refresh once every 10 seconds!" : "No sensors have been detected.\n\nTap here to refresh!"
+			text: refreshTimer.running ? qsTranslate("messages", "Refreshing...\n\nyou can only refresh once every 10 seconds!") : qsTranslate("messages", "No sensors have been detected.\n\nTap here to refresh!")
 		}
 		MouseArea {
 			anchors.fill: parent
@@ -367,27 +367,27 @@ Item {
 
 	function formatLastUpdated(minutes, lastUpdated) {
 		if (minutes === 0) {
-			return 'Just now'
+			return qsTranslate("datetime", 'Just now')
 		}
 		if (minutes === 1) {
-			return '1 minute ago'
+			return qsTranslate("datetime", '1 minute ago')
 		}
 		if (minutes < 60) {
-			return minutes + ' minutes ago'
+			return minutes + qsTranslate("datetime", ' minutes ago')
 		}
 		var hours = Math.round(minutes / 60);
 		if (hours === 1) {
-			return '1 hour ago'
+			return qsTranslate("datetime", '1 hour ago')
 		}
 		if (hours < 24) {
-			return hours + ' hours ago';
+			return hours + qsTranslate("datetime", ' hours ago');
 		}
 		var days = Math.round(minutes / 60 / 24);
 		if (days == 1) {
-			return '1 day ago';
+			return qsTranslate("datetime", '1 day ago');
 		}
 		if (days <= 7) {
-			return days + ' days ago';
+			return days + qsTranslate("datetime", ' days ago');
 		}
 		return lastUpdated.toLocaleString(Qt.locale(), "yyyy-MM-dd");
 	}
@@ -405,7 +405,7 @@ Item {
 	}
 
 	function updateHeader() {
-		header.title = "Sensors"
+		header.title = qsTranslate("pages", "Sensors")
 		header.editButtonVisible = true
 	}
 }

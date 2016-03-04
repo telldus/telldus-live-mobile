@@ -185,13 +185,13 @@ Rectangle {
 							anchors.left: parent.left
 							anchors.right: parent.right
 							wrapMode: Text.WordWrap
-							text: childObject.isFavorite ? "Device is shown on the dashboard" : "Tap to show device on dashboard"
+							text: childObject.isFavorite ? qsTranslate("messages", "Device is shown on the dashboard") : qsTranslate("messages", "Tap to show device on dashboard")
 							color: properties.theme.colors.telldusBlue
 							font.pixelSize: Units.dp(14)
 						}
 						Text {
 							anchors.top: favText.bottom
-							text: "Tap to remove"
+							text: qsTranslate("messages", "Tap to remove")
 							color: properties.theme.colors.telldusBlue
 							font.pixelSize: Units.dp(10)
 							height: childObject.isFavorite ? undefined : 0

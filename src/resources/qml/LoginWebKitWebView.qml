@@ -17,7 +17,7 @@ Item {
 
 		Text {
 			id: progressPercent
-			text: "Communicating with the login server"
+			text: qsTranslate("messages", "Communicating with the login server")
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
 			font.pixelSize: Units.dp(12)

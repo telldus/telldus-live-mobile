@@ -66,7 +66,7 @@ View {
 						anchors.horizontalCenter: UI_PLATFORM == "android" ? parent.horizontalCenter : undefined
 						anchors.verticalCenter: UI_PLATFORM == "android" ? parent.verticalCenter : undefined
 						font.bold: UI_PLATFORM == "android" ? true : false
-						text: UI_PLATFORM == "android" ? title.toUpperCase() : title
+						text: UI_PLATFORM == "android" ? qsTranslate("pages", title).toUpperCase() : qsTranslate("pages", title)
 						font.pixelSize: UI_PLATFORM == "android" ? Units.dp(14) : Units.dp(8)
 						color: (index == tabPage.currentIndex ? (UI_PLATFORM == "android" ? "#ffffff" : properties.theme.colors.telldusOrange) : (UI_PLATFORM == "android" ? "#b2ffffff" : "#616161"))
 						rotation: UI_PLATFORM == "android" ? (screen.showHeaderAtTop ? 0 : 270) : undefined

@@ -8,7 +8,7 @@ Item {
 
 	Text {
 		id: pleaseWaitText
-		text: "Please wait...\n...we'll try to be quick!"
+		text: qsTranslate("messages", "Please wait...\n...we'll try to be quick!")
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.horizontalCenter: parent.horizontalCenter
 		font.pixelSize: Units.dp(18)

@@ -54,6 +54,9 @@ public:
 TelldusCenter *TelldusCenter::PrivateData::instance = 0;
 
 TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(parent) {
+
+	qDebug().nospace().noquote() << "[MISC] Translator test: " << QCoreApplication::translate("extra", "This is untranslated!");
+
 	QString dataPath(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last());
 	if(!QDir(dataPath).exists()) {
 		QDir().mkpath(dataPath);

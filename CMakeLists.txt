@@ -222,6 +222,14 @@ IF (USE_QMAKE)
 	QT5_ADD_RESOURCES(QTRESOURCES src/resources/modules/modules.qrc)
 ENDIF()
 
+FIND_PACKAGE( Qt5LinguistTools REQUIRED )
+
+SET(TRANSLATIONS
+	src/resources/translations/core_sv.ts
+	src/resources/translations/core_en.ts
+)
+QT5_CREATE_TRANSLATION(QTRESOURCES ${QML} ${TRANSLATIONS})
+
 FOREACH(F ${QML})
 	LIST(APPEND RESOURCES ${F})
 ENDFOREACH()

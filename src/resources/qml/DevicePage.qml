@@ -231,7 +231,7 @@ Item {
 				visible: refreshTimer.running && !closeTimer.running
 				color: properties.theme.colors.telldusBlue
 				font.pixelSize: Units.dp(12)
-				text: "You can refresh once every 10 seconds."
+				text: qsTranslate("misc", "You can refresh once every 10 seconds.")
 				elide: Text.ElideRight
 			}
 			states: [
@@ -295,7 +295,7 @@ Item {
 			font.pixelSize: Units.dp(16)
 			wrapMode: Text.Wrap
 			horizontalAlignment: Text.AlignHCenter
-			text: refreshTimer.running ? "Refreshing...\n\nyou can only refresh once every 10 seconds!" : "No devices have been added yet, please go to http://live.telldus.com to add them.\n\nThen tap here to refresh!"
+			text: refreshTimer.running ? qsTranslate("messages", "Refreshing...\n\nyou can only refresh once every 10 seconds!") : qsTranslate("messages", "No devices have been added yet, please go to http://live.telldus.com to add them.\n\nThen tap here to refresh!")
 		}
 		MouseArea {
 			anchors.fill: parent
@@ -366,7 +366,7 @@ Item {
 	}
 
 	function updateHeader() {
-		header.title = "Devices";
+		header.title =  qsTranslate("pages", "Devices");
 		header.editButtonVisible = true;
 		header.backVisible = false;
 	}

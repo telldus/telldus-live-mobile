@@ -127,7 +127,7 @@ Item {
 				visible: refreshTimer.running && !closeTimer.running
 				color: properties.theme.colors.telldusBlue
 				font.pixelSize: Units.dp(12)
-				text: "You can refresh once every 10 seconds."
+				text: qsTranslate("messages", "You can refresh once every 10 seconds.")
 				elide: Text.ElideRight
 			}
 			states: [
@@ -191,7 +191,7 @@ Item {
 			font.pixelSize: Units.dp(16)
 			wrapMode: Text.Wrap
 			horizontalAlignment: Text.AlignHCenter
-			text: refreshTimer.running ? "Refreshing...\n\nyou can only refresh once every 10 seconds!" : "No schedules have been added yet, please go to http://live.telldus.com to add them. Then tap here to refresh!"
+			text: refreshTimer.running ? qsTranslate("messages", "Refreshing...\n\nyou can only refresh once every 10 seconds!") : qsTranslate("messages", "No schedules have been added yet, please go to http://live.telldus.com to add them. Then tap here to refresh!")
 		}
 		MouseArea {
 			anchors.fill: parent
@@ -241,13 +241,13 @@ Item {
 
 	function  getSectionHeading(nextRunDate) {
 		var weekdays = new Array(7);
-		weekdays[0]=  "Sunday";
-		weekdays[1] = "Monday";
-		weekdays[2] = "Tuesday";
-		weekdays[3] = "Wednesday";
-		weekdays[4] = "Thursday";
-		weekdays[5] = "Friday";
-		weekdays[6] = "Saturday";
+		weekdays[0] = qsTranslate("datetime", "Sunday");
+		weekdays[1] = qsTranslate("datetime", "Monday");
+		weekdays[2] = qsTranslate("datetime", "Tuesday");
+		weekdays[3] = qsTranslate("datetime", "Wednesday");
+		weekdays[4] = qsTranslate("datetime", "Thursday");
+		weekdays[5] = qsTranslate("datetime", "Friday");
+		weekdays[6] = qsTranslate("datetime", "Saturday");
 
 		nextRunDate = new Date(nextRunDate);
 		var today = new Date();
@@ -259,11 +259,11 @@ Item {
 		var weekday = nextRunDate.getDay();
 
 		if (nextRunDate.toDateString() == today.toDateString()) {
-			return "Today";
+			return qsTranslate("datetime", "Today");
 		} else if (nextRunDate.toDateString() == tomorrow.toDateString()) {
-			return "Tomorrow";
+			return qsTranslate("datetime", "Tomorrow");
 		} else if (nextRunDate.toDateString() == inAWeek.toDateString()) {
-			return "Next " + weekdays[weekday];
+			return qsTranslate("datetime", "Next") + " " + weekdays[weekday]; // TODO this should be lowercase day in some languages
 		} else {
 			return weekdays[weekday];
 		}
@@ -271,19 +271,19 @@ Item {
 
 	function getMethodText(method, methodValue) {
 		if (method == 1) {
-			return "On"
+			return qsTranslate("", "On")
 		} else if (method == 2) {
-			return "Off"
+			return qsTranslate("", "Off")
 		} else if (method == 4) {
-			return "Bell"
+			return qsTranslate("", "Bell")
 		} else if (method == 16) {
-			return "Dim"
+			return qsTranslate("", "Dim")
 		} else if (method == 128) {
-			return "Up"
+			return qsTranslate("", "Up")
 		} else if (method == 256) {
-			return "Down"
+			return qsTranslate("", "Down")
 		} else if (method == 512) {
-			return "Stop"
+			return qsTranslate("", "Stop")
 		} else {
 			return ""
 		}
@@ -305,6 +305,6 @@ Item {
 	}
 
 	function updateHeader() {
-		header.title = "Upcoming schedule";
+		header.title = qsTranslate("pages", "Upcoming schedule");
 	}
 }

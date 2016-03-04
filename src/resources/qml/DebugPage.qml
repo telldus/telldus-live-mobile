@@ -31,6 +31,6 @@ Rectangle {
 	}
 
 	function updateHeader() {
-		header.title = "Debug";
+		header.title =  qsTranslate("pages", "Debug");
 	}
 }

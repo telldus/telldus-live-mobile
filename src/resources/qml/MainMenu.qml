@@ -37,7 +37,7 @@ Item {
 				id: dashboardButton
 				color: "#ffffff"
 				font.pixelSize: Units.dp(20)
-				text: "Dashboard"
+				text: qsTranslate("pages", "Dashboard")
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(72)
@@ -74,7 +74,7 @@ Item {
 				id: deviceButton
 				color: "#ffffff"
 				font.pixelSize: Units.dp(20)
-				text: "Devices"
+				text: qsTranslate("messages", "Devices")
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(72)
@@ -111,7 +111,7 @@ Item {
 				id: sensorButton
 				color: "#ffffff"
 				font.pixelSize: Units.dp(20)
-				text: "Sensors"
+				text: qsTranslate("messages", "Sensors")
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(72)

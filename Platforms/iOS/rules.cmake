@@ -18,7 +18,6 @@ SET(CMAKE_AUTOMOC ON)
 QT5_ADD_RESOURCES(QTRESOURCES src/resources.qrc)
 QT5_ADD_RESOURCES(QTRESOURCES src/resources/modules/modules.qrc)
 
-
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/platforms/iOS/Info.plist ${CMAKE_BINARY_DIR}/Info.plist)
 
 SET(CMAKE_CXX_FLAGS "-x objective-c++")

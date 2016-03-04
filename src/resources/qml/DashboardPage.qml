@@ -121,7 +121,7 @@ Item {
 					visible: refreshTimer.running && !closeTimer.running
 					color: properties.theme.colors.telldusBlue
 					font.pixelSize: Units.dp(12)
-					text: "You can refresh once every 10 seconds."
+					text: qsTranslate("misc", "You can refresh once every 10 seconds.")
 					elide: Text.ElideRight
 				}
 				states: [
@@ -158,7 +158,7 @@ Item {
 				font.pixelSize: Units.dp(16)
 				wrapMode: Text.Wrap
 				horizontalAlignment: Text.AlignHCenter
-				text: "You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right."
+				text: qsTranslate("messages", "You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.")
 			}
 		}
 		GridView {

@@ -67,7 +67,7 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				horizontalAlignment: Text.AlignHCenter
-				text: "To start using Telldus&nbsp;Live!&nbsp;mobile you need to log in to your Telldus&nbsp;Live! account."
+				text: qsTranslate("messages", "To start using Telldus&nbsp;Live!&nbsp;mobile you need to log in to your Telldus&nbsp;Live! account.")
 				wrapMode: Text.WordWrap
 				textFormat: Text.RichText
 				font.pixelSize: Units.dp(16)
