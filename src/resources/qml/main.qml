@@ -266,57 +266,8 @@ Rectangle {
 		]
 	}
 
-	Card {
+	OverlayDimmer {
 		id: overlayDimmer
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.right: parent.right
-		anchors.bottom: undefined
-		anchors.margins: Units.dp(8)
-		anchors.topMargin: Units.dp(8) + (UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0)
-		height: Units.dp(40)
-		width: undefined
-		opacity: device == '' ? 0 : 1
-		Behavior on opacity {
-			NumberAnimation { duration: 150 }
-		}
-
-		property var device: ''
-		property int dimValue: 0
-
-		Rectangle {
-			id: dimmerValueRectangle
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.bottom: parent.bottom
-			height: overlayDimmer.height * (overlayDimmer.dimValue / 100)
-			radius: overlayDimmer.radius
-			color: "#EEEEEE"
-		}
-		Text {
-			id: dimmerValueText
-			anchors.centerIn: parent
-			font.pixelSize: Units.dp(14)
-			text: overlayDimmer.dimValue + '%'
-			color: properties.theme.colors.telldusOrange
-		}
-
 	}
-	states: [
-		State {
-			name: 'headerNotAtTop'
-			when: !screen.showHeaderAtTop
-			AnchorChanges {
-				target: overlayDimmer
-				anchors.right: undefined
-				anchors.bottom: parent.bottom
-			}
-			PropertyChanges {
-				target: overlayDimmer
-				height: undefined
-				width: Units.dp(40)
-			}
-		}
-	]
 
 }

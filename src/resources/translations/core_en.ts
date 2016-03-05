@@ -5,15 +5,19 @@
     <name></name>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="274"/>
-        <location filename="../qml/ComponentSetOnOffTile.qml" line="69"/>
-        <location filename="../qml/ComponentSetOnOffTile.qml" line="172"/>
+        <location filename="../qml/OverlayDimmer.qml" line="56"/>
+        <location filename="../qml/OverlayDimmer.qml" line="93"/>
+        <location filename="../qml/ComponentSetOnOffTile.qml" line="68"/>
+        <location filename="../qml/ComponentSetOnOffTile.qml" line="170"/>
         <source>On</source>
         <translation>On</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="276"/>
-        <location filename="../qml/ComponentSetOnOffTile.qml" line="127"/>
-        <location filename="../qml/ComponentSetOnOffTile.qml" line="172"/>
+        <location filename="../qml/OverlayDimmer.qml" line="56"/>
+        <location filename="../qml/OverlayDimmer.qml" line="93"/>
+        <location filename="../qml/ComponentSetOnOffTile.qml" line="125"/>
+        <location filename="../qml/ComponentSetOnOffTile.qml" line="170"/>
         <source>Off</source>
         <translation>Off</translation>
     </message>
