@@ -14,7 +14,6 @@ Item {
 		anchors.centerIn: parent
 		color: properties.theme.colors.telldusOrange
 		font.pixelSize: parent.height * 0.4
-		font.weight: Font.Bold
 		style: Text.Raised
 		styleColor: "white"
 		text: qsTranslate("", "Learn")

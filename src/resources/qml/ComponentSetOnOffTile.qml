@@ -65,7 +65,6 @@ Item {
 				anchors.horizontalCenter: parent.horizontalCenter
 				color: "#BDBDBD"
 				font.pixelSize: onButton.height < onButton.width ? parent.height * 0.4 : parent.height * 0.2
-				font.weight: Font.Bold
 				text: qsTranslate("", "On")
 			}
 			ButtonMouseArea {
@@ -123,7 +122,6 @@ Item {
 				anchors.horizontalCenter: parent.horizontalCenter
 				color: "#BDBDBD"
 				font.pixelSize: offButton.height < offButton.width ? parent.height * 0.4 : parent.height * 0.2
-				font.weight: Font.Bold
 				text: qsTranslate("", "Off")
 			}
 			ButtonMouseArea {
