@@ -225,10 +225,19 @@ ENDIF()
 FIND_PACKAGE( Qt5LinguistTools REQUIRED )
 
 SET(TRANSLATIONS
-	src/resources/translations/core_sv.ts
+	src/resources/translations/core_da.ts
+	src/resources/translations/core_de.ts
 	src/resources/translations/core_en.ts
+	src/resources/translations/core_es.ts
+	src/resources/translations/core_fi.ts
+	src/resources/translations/core_fr.ts
+	src/resources/translations/core_nl.ts
+	src/resources/translations/core_no.ts
+	src/resources/translations/core_pl.ts
+	src/resources/translations/core_ru.ts
+	src/resources/translations/core_sv.ts
 )
-QT5_CREATE_TRANSLATION(QM_FILES ${QML} ${TRANSLATIONS})
+QT5_CREATE_TRANSLATION(QTRESOURCES ${QML} ${TRANSLATIONS})
 CONFIGURE_FILE(
 	src/translations.qrc
 	${CMAKE_CURRENT_BINARY_DIR}/translations.qrc

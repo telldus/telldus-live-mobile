@@ -37,7 +37,7 @@ int init(int argc, char *argv[]) {
 #endif
 
 	QStringList args = QCoreApplication::arguments();
-	QString forceLanguage = "sv";
+	QString forceLanguage;
 	for(int i = 1; i < args.length(); ++i) {
 		if (args.at(i) == "--force-language") {
 			forceLanguage = args.at(i+1);
