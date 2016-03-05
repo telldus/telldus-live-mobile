@@ -228,7 +228,12 @@ SET(TRANSLATIONS
 	src/resources/translations/core_sv.ts
 	src/resources/translations/core_en.ts
 )
-QT5_CREATE_TRANSLATION(QTRESOURCES ${QML} ${TRANSLATIONS})
+QT5_CREATE_TRANSLATION(QM_FILES ${QML} ${TRANSLATIONS})
+CONFIGURE_FILE(
+	src/translations.qrc
+	${CMAKE_CURRENT_BINARY_DIR}/translations.qrc
+)
+QT5_ADD_RESOURCES(QTRESOURCES ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 
 FOREACH(F ${QML})
 	LIST(APPEND RESOURCES ${F})

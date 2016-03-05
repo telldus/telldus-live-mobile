@@ -53,10 +53,10 @@ int init(int argc, char *argv[]) {
 	qDebug().noquote() << QString("[ENVIRONMENT] Forced Language: %1").arg(forceLanguage);
 
 	QTranslator translator;
-	if (translator.load(forceLanguage == "" ? QLocale() : forceLanguage, "core", "_", "", ".qm")) {
+	if (translator.load(forceLanguage == "" ? QLocale() : forceLanguage, "core", "_", ":/translations", ".qm")) {
 		app->installTranslator(&translator);
 	} else {
-		qDebug().nospace().noquote() << "[MISC] Unable to load translation file: " << forceLanguage;
+		qDebug().nospace().noquote() << "[MISC] Unable to load translation file: " << forceLanguage << " " << QLocale();
 	}
 
 	CommonView *viewer = new CommonView();
