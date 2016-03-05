@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 import Telldus 1.0
 import Tui 0.1

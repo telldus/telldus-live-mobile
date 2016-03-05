@@ -5,8 +5,8 @@
     <name></name>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="274"/>
-        <location filename="../qml/OverlayDimmer.qml" line="56"/>
-        <location filename="../qml/OverlayDimmer.qml" line="93"/>
+        <location filename="../qml/OverlayDimmer.qml" line="53"/>
+        <location filename="../qml/OverlayDimmer.qml" line="90"/>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="68"/>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"/>
         <source>On</source>
@@ -14,8 +14,8 @@
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="276"/>
-        <location filename="../qml/OverlayDimmer.qml" line="56"/>
-        <location filename="../qml/OverlayDimmer.qml" line="93"/>
+        <location filename="../qml/OverlayDimmer.qml" line="53"/>
+        <location filename="../qml/OverlayDimmer.qml" line="90"/>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="125"/>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"/>
         <source>Off</source>
@@ -47,7 +47,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ComponentSetLearn.qml" line="20"/>
+        <location filename="../qml/ComponentSetLearn.qml" line="19"/>
         <source>Learn</source>
         <translation type="unfinished"></translation>
     </message>
