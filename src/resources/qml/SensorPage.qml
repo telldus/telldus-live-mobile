@@ -373,21 +373,21 @@ Item {
 			return qsTranslate("datetime", '1 minute ago')
 		}
 		if (minutes < 60) {
-			return minutes + qsTranslate("datetime", ' minutes ago')
+			return minutes + ' ' + qsTranslate("datetime", 'minutes ago')
 		}
 		var hours = Math.round(minutes / 60);
 		if (hours === 1) {
 			return qsTranslate("datetime", '1 hour ago')
 		}
 		if (hours < 24) {
-			return hours + qsTranslate("datetime", ' hours ago');
+			return hours + ' ' + qsTranslate("datetime", 'hours ago');
 		}
 		var days = Math.round(minutes / 60 / 24);
 		if (days == 1) {
 			return qsTranslate("datetime", '1 day ago');
 		}
 		if (days <= 7) {
-			return days + qsTranslate("datetime", ' days ago');
+			return days + ' ' + qsTranslate("datetime", 'days ago');
 		}
 		return lastUpdated.toLocaleString(Qt.locale(), "yyyy-MM-dd");
 	}

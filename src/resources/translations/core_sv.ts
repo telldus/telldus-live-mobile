@@ -66,7 +66,7 @@
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="376"/>
-        <source> minutes ago</source>
+        <source>minutes ago</source>
         <translation>minuter sedan</translation>
     </message>
     <message>
@@ -76,7 +76,7 @@
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="383"/>
-        <source> hours ago</source>
+        <source>hours ago</source>
         <translation>timmar sedan</translation>
     </message>
     <message>
@@ -86,7 +86,7 @@
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="390"/>
-        <source> days ago</source>
+        <source>days ago</source>
         <translation>dagar sedan</translation>
     </message>
     <message>
@@ -152,13 +152,13 @@
     <name>messages</name>
     <message>
         <location filename="../qml/SettingsPage.qml" line="23"/>
-        <source>You are using version </source>
-        <translation>Du använder version </translation>
+        <source>You are using version</source>
+        <translation>Du använder version</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="23"/>
-        <source> of Telldus Live! mobile.</source>
-        <translation> av Telldus Live! mobile.</translation>
+        <source>of</source>
+        <translation>av</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="244"/>
@@ -227,6 +227,11 @@ Then tap here to refresh!</source>
 Tryck sedan här för att uppdatera!</translation>
     </message>
     <message>
+        <location filename="../qml/DeviceDetails.qml" line="35"/>
+        <source>Location</source>
+        <translation>Plats</translation>
+    </message>
+    <message>
         <location filename="../qml/DeviceDetails.qml" line="188"/>
         <source>Device is shown on the dashboard</source>
         <translation>Enheten visas på dashboard</translation>
@@ -245,6 +250,11 @@ Tryck sedan här för att uppdatera!</translation>
         <location filename="../qml/DashboardPage.qml" line="161"/>
         <source>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</source>
         <translation>Du har inte valt att visa några enheter eller sensorer på dashboard. För att göra det gå till respektive sida och klicka på stjärnan uppe till höger.</translation>
+    </message>
+    <message>
+        <location filename="../qml/MainInterface.qml" line="194"/>
+        <source>Connected locations</source>
+        <translation>Anslutna platser</translation>
     </message>
 </context>
 <context>
@@ -306,7 +316,7 @@ Tryck sedan här för att uppdatera!</translation>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="308"/>
         <source>Upcoming schedule</source>
-        <translation>Kommande schemaläggningar</translation>
+        <translation>Kommande schema</translation>
     </message>
 </context>
 </TS>

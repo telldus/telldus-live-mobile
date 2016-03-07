@@ -66,7 +66,17 @@
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="376"/>
-        <source> minutes ago</source>
+        <source>minutes ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SensorPage.qml" line="383"/>
+        <source>hours ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SensorPage.qml" line="390"/>
+        <source>days ago</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -75,18 +85,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SensorPage.qml" line="383"/>
-        <source> hours ago</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/SensorPage.qml" line="387"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/SensorPage.qml" line="390"/>
-        <source> days ago</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -151,16 +151,6 @@
 <context>
     <name>messages</name>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="23"/>
-        <source>You are using version </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPage.qml" line="23"/>
-        <source> of Telldus Live! mobile.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/SensorPage.qml" line="244"/>
         <location filename="../qml/SchedulerPage.qml" line="130"/>
         <source>You can refresh once every 10 seconds.</source>
@@ -221,6 +211,11 @@ Then tap here to refresh!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/DeviceDetails.qml" line="35"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/DeviceDetails.qml" line="188"/>
         <source>Device is shown on the dashboard</source>
         <translation type="unfinished"></translation>
@@ -238,6 +233,21 @@ Then tap here to refresh!</source>
     <message>
         <location filename="../qml/DashboardPage.qml" line="161"/>
         <source>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="23"/>
+        <source>You are using version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="23"/>
+        <source>of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/MainInterface.qml" line="194"/>
+        <source>Connected locations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

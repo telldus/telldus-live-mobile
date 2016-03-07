@@ -20,7 +20,7 @@ Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				horizontalAlignment: Text.AlignHCenter
-				text: qsTranslate("messages", "You are using version ") + properties.version + qsTranslate("messages", " of Telldus Live! mobile.")
+				text: qsTranslate("messages", "You are using version") + " " + properties.version + "\n" + qsTranslate("messages", "of") + " Telldus Live! mobile."
 				wrapMode: Text.WordWrap
 				font.pixelSize: Units.dp(15)
 				color: "#093266"

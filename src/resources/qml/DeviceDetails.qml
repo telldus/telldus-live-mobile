@@ -32,7 +32,7 @@ Rectangle {
 			anchors.margins: Units.dp(10)
 			spacing: Units.dp(20)
 			Text {
-				text: "Location: " + childObject.clientName
+				text: qsTranslate("messages", "Location") + ": " + childObject.clientName
 				color: properties.theme.colors.telldusBlue
 				width: parent.width
 				font.pixelSize: Units.dp(16)

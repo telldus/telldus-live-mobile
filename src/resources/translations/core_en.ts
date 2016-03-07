@@ -66,8 +66,22 @@
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="376"/>
+        <source>minutes ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SensorPage.qml" line="383"/>
+        <source>hours ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SensorPage.qml" line="390"/>
+        <source>days ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source> minutes ago</source>
-        <translation> minutes ago</translation>
+        <translation type="vanished"> minutes ago</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="380"/>
@@ -75,9 +89,8 @@
         <translation>1 hour ago</translation>
     </message>
     <message>
-        <location filename="../qml/SensorPage.qml" line="383"/>
         <source> hours ago</source>
-        <translation> hours ago</translation>
+        <translation type="vanished"> hours ago</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="387"/>
@@ -85,9 +98,8 @@
         <translation>1 day ago</translation>
     </message>
     <message>
-        <location filename="../qml/SensorPage.qml" line="390"/>
         <source> days ago</source>
-        <translation> days ago</translation>
+        <translation type="vanished"> days ago</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="244"/>
@@ -151,14 +163,12 @@
 <context>
     <name>messages</name>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="23"/>
         <source>You are using version </source>
-        <translation>You are using version </translation>
+        <translation type="vanished">You are using version </translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="23"/>
         <source> of Telldus Live! mobile.</source>
-        <translation>of Telldus Live! mobile.</translation>
+        <translation type="vanished">of Telldus Live! mobile.</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="244"/>
@@ -228,6 +238,11 @@ Then tap here to refresh!</source>
 Then tap here to refresh!</translation>
     </message>
     <message>
+        <location filename="../qml/DeviceDetails.qml" line="35"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/DeviceDetails.qml" line="188"/>
         <source>Device is shown on the dashboard</source>
         <translation>Device is shown on the dashboard</translation>
@@ -246,6 +261,21 @@ Then tap here to refresh!</translation>
         <location filename="../qml/DashboardPage.qml" line="161"/>
         <source>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</source>
         <translation>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="23"/>
+        <source>You are using version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="23"/>
+        <source>of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/MainInterface.qml" line="194"/>
+        <source>Connected locations</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

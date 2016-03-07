@@ -191,7 +191,7 @@ Rectangle {
 				id: clientListTitleText
 				color: UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff"
 				font.pixelSize: Units.dp(20)
-				text: "Connected locations"
+				text: qsTranslate("messages", "Connected locations")
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(56)
