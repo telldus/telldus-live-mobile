@@ -235,8 +235,8 @@ SET(TRANSLATIONS
 	src/resources/translations/core_gr.ts
 	src/resources/translations/core_it.ts
 	src/resources/translations/core_mt.ts
+	src/resources/translations/core_nb.ts
 	src/resources/translations/core_nl.ts
-	src/resources/translations/core_no.ts
 	src/resources/translations/core_pl.ts
 	src/resources/translations/core_ru.ts
 	src/resources/translations/core_sv.ts

@@ -1,7 +1,7 @@
 <RCC>
 	<qresource prefix="/translations">
 		<file>core_en.qm</file>
-		<file>core_no.qm</file>
+		<file>core_nb.qm</file>
 		<file>core_sv.qm</file>
 	</qresource>
 </RCC>
