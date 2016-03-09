@@ -1,19 +1,7 @@
 <RCC>
 	<qresource prefix="/translations">
-		<file>core_cz.qm</file>
-		<file>core_da.qm</file>
-		<file>core_de.qm</file>
 		<file>core_en.qm</file>
-		<file>core_es.qm</file>
-		<file>core_fi.qm</file>
-		<file>core_fr.qm</file>
-		<file>core_gr.qm</file>
-		<file>core_it.qm</file>
-		<file>core_mt.qm</file>
-		<file>core_nl.qm</file>
 		<file>core_no.qm</file>
-		<file>core_pl.qm</file>
-		<file>core_ru.qm</file>
 		<file>core_sv.qm</file>
 	</qresource>
 </RCC>
