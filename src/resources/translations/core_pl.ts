@@ -165,7 +165,7 @@
 you can only refresh once every 10 seconds!</source>
         <translation>Odświeżanie...
 
-...możesz odświeżać raz na 10 sekund</translation>
+...możesz odświeżać raz na 10 sekund!</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="308"></location>
