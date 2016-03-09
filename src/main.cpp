@@ -51,12 +51,13 @@ int init(int argc, char *argv[]) {
 	qDebug().noquote() << QString("[FEATURE] Websockets: %1").arg(IS_FEATURE_WEBSOCKETS_ENABLED ? "Enabled" : "Disabled");
 	qDebug().noquote() << QString("[FEATURE] GoogleAnalytics: %1").arg(IS_FEATURE_GOOGLEANALYTICS_ENABLED ? "Enabled" : "Disabled");
 	qDebug().noquote() << QString("[ENVIRONMENT] Forced Language: %1").arg(forceLanguage);
+	qDebug().nospace().noquote() << "[ENVIRONMENT] QLocale Languages: " << QLocale().uiLanguages();
 
 	QTranslator translator;
 	if (translator.load(forceLanguage == "" ? QLocale() : forceLanguage, "core", "_", ":/translations", ".qm")) {
 		app->installTranslator(&translator);
 	} else {
-		qDebug().nospace().noquote() << "[MISC] Unable to load translation file: " << forceLanguage << " " << QLocale();
+		qDebug() << "[MISC] Unable to load any translation file.";
 	}
 
 	CommonView *viewer = new CommonView();
