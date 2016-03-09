@@ -45,6 +45,8 @@
 	<true/>
 	<key>LSRequiresCarbon</key>
 	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSHumanReadableCopyright</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
