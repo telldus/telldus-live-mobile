@@ -225,12 +225,16 @@ ENDIF()
 FIND_PACKAGE( Qt5LinguistTools REQUIRED )
 
 SET(TRANSLATIONS
+	src/resources/translations/core_cz.ts
 	src/resources/translations/core_da.ts
 	src/resources/translations/core_de.ts
 	src/resources/translations/core_en.ts
 	src/resources/translations/core_es.ts
 	src/resources/translations/core_fi.ts
 	src/resources/translations/core_fr.ts
+	src/resources/translations/core_gr.ts
+	src/resources/translations/core_it.ts
+	src/resources/translations/core_mt.ts
 	src/resources/translations/core_nl.ts
 	src/resources/translations/core_no.ts
 	src/resources/translations/core_pl.ts
