@@ -168,7 +168,7 @@
     </message>
     <message>
         <source> of Telldus Live! mobile.</source>
-        <translation type="vanished">of Telldus Live! mobile.</translation>
+        <translation> of Telldus Live! mobile.</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="244"></location>
