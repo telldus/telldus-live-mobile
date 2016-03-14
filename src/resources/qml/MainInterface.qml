@@ -99,7 +99,7 @@ Rectangle {
 					id: dashboardButton
 					color: UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff"
 					font.pixelSize: Units.dp(20)
-					text: title
+					text: qsTranslate("pages", title)
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left
 					anchors.leftMargin: Units.dp(56)
@@ -108,7 +108,7 @@ Rectangle {
 					anchors.fill: parent
 					enabled: mainInterface.menuViewVisible;
 					onClicked: {
-						overlayPage.title = title;
+						overlayPage.title = qsTranslate("pages", title);
 						overlayPage.icon = title.toLowerCase();
 						overlayPage.source = Qt.resolvedUrl(page);
 					}
