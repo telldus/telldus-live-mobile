@@ -172,65 +172,69 @@ you can only refresh once every 10 seconds!</source>
         <source>No sensors have been detected.
 
 Tap here to refresh!</source>
-        <translation type="unfinished"></translation>
+        <translation>Żaden czujnik nie został wykryty.
+
+Dotknij aby odświeżyć!</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="194"></location>
         <source>No schedules have been added yet, please go to http://live.telldus.com to add them. Then tap here to refresh!</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmonogram nie został jeszcze dodany. Wejdź na http://live.telldus.com/ aby dodać. Dotknij aby odświeżyć!</translation>
     </message>
     <message>
         <location filename="../qml/PleaseWait.qml" line="11"></location>
         <source>Please wait...
 ...we'll try to be quick!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę czekaj...</translation>
     </message>
     <message>
         <location filename="../qml/MainMenu.qml" line="77"></location>
         <source>Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenia</translation>
     </message>
     <message>
         <location filename="../qml/MainMenu.qml" line="114"></location>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Czujniki</translation>
     </message>
     <message>
         <location filename="../qml/LoginWebKitWebView.qml" line="20"></location>
         <source>Communicating with the login server</source>
-        <translation type="unfinished"></translation>
+        <translation>Łączenie z serwerem</translation>
     </message>
     <message>
         <location filename="../qml/LoginWebKit.qml" line="70"></location>
         <source>To start using Telldus&amp;nbsp;Live!&amp;nbsp;mobile you need to log in to your Telldus&amp;nbsp;Live! account.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aby korzystać z Telldus&amp;nbsp;Live!&amp;nbsp;mobile musisz zalogować się do swojego konta Telldus&amp;nbsp;Live!</translation>
     </message>
     <message>
         <location filename="../qml/DevicePage.qml" line="298"></location>
         <source>No devices have been added yet, please go to http://live.telldus.com to add them.
 
 Then tap here to refresh!</source>
-        <translation type="unfinished"></translation>
+        <translation>Żadne urządzenie nie zostało jeszcze dodane. Wejdź na http://live.telldus.com/ aby dodać.
+
+Dotknij aby odświeżyć!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="35"></location>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokalizacja</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="188"></location>
         <source>Device is shown on the dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenie jest widoczne w dashboard</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="188"></location>
         <source>Tap to show device on dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotknij aby pokazać urządzenie w dashboard</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="194"></location>
         <source>Tap to remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotknij aby usunąć</translation>
     </message>
     <message>
         <location filename="../qml/DashboardPage.qml" line="161"></location>
@@ -245,7 +249,7 @@ Then tap here to refresh!</source>
     <message>
         <location filename="../qml/SettingsPage.qml" line="23"></location>
         <source>of</source>
-        <translation type="unfinished"></translation>
+        <translation>z</translation>
     </message>
     <message>
         <location filename="../qml/MainInterface.qml" line="194"></location>
@@ -258,18 +262,18 @@ Then tap here to refresh!</source>
     <message>
         <location filename="../qml/SettingsPage.qml" line="31"></location>
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyloguj się</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="51"></location>
         <source>(no name)</source>
-        <translation type="unfinished"></translation>
+        <translation>(bez nazwy)</translation>
     </message>
     <message>
         <location filename="../qml/DevicePage.qml" line="234"></location>
         <location filename="../qml/DashboardPage.qml" line="124"></location>
         <source>You can refresh once every 10 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Możesz odświeżać raz na 10 sekund.</translation>
     </message>
 </context>
 <context>
@@ -278,41 +282,41 @@ Then tap here to refresh!</source>
         <location filename="../qml/TranslationStrings.qml" line="8"></location>
         <location filename="../qml/MainMenu.qml" line="40"></location>
         <source>Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Dashboard</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="9"></location>
         <location filename="../qml/DevicePage.qml" line="369"></location>
         <source>Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Urządzenia</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="10"></location>
         <location filename="../qml/SensorPage.qml" line="408"></location>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Czujniki</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="11"></location>
         <source>Scheduler</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmonogram</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="12"></location>
         <location filename="../qml/SettingsPage.qml" line="42"></location>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="13"></location>
         <location filename="../qml/DebugPage.qml" line="34"></location>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="308"></location>
         <source>Upcoming schedule</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najbliższy hamonogram</translation>
     </message>
 </context>
 </TS>
