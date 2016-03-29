@@ -10,7 +10,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="68"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Włącz</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="276"></location>
@@ -19,37 +19,37 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="125"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyłącz</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="278"></location>
         <source>Bell</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzwonek</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="280"></location>
         <source>Dim</source>
-        <translation type="unfinished"></translation>
+        <translation>Przyciemnij</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="282"></location>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Góra</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="284"></location>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Dół</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="286"></location>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <location filename="../qml/ComponentSetLearn.qml" line="19"></location>
         <source>Learn</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapamiętaj</translation>
     </message>
 </context>
 <context>
@@ -239,7 +239,7 @@ Dotknij aby odświeżyć!</translation>
     <message>
         <location filename="../qml/DashboardPage.qml" line="161"></location>
         <source>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie ustawiłeś widoczności w dashboard dla żadnego urządzenia lub czujnika.</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="23"></location>
@@ -254,7 +254,7 @@ Dotknij aby odświeżyć!</translation>
     <message>
         <location filename="../qml/MainInterface.qml" line="194"></location>
         <source>Connected locations</source>
-        <translation type="unfinished"></translation>
+        <translation>Połączony Otiobox</translation>
     </message>
 </context>
 <context>
@@ -316,7 +316,7 @@ Dotknij aby odświeżyć!</translation>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="308"></location>
         <source>Upcoming schedule</source>
-        <translation type="unfinished">Najbliższy hamonogram</translation>
+        <translation>Najbliższy harmonogram</translation>
     </message>
 </context>
 </TS>
