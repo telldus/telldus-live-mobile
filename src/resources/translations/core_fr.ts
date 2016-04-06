@@ -10,7 +10,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="68"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Allumer</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="276"></location>
@@ -19,7 +19,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="125"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Éteindre</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="278"></location>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../qml/ComponentSetLearn.qml" line="19"></location>
         <source>Learn</source>
-        <translation type="unfinished"></translation>
+        <translation>Apprentissage</translation>
     </message>
 </context>
 <context>
@@ -57,37 +57,37 @@
     <message>
         <location filename="../qml/SensorPage.qml" line="370"></location>
         <source>Just now</source>
-        <translation type="unfinished"></translation>
+        <translation>Juste maintenant</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="373"></location>
         <source>1 minute ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Il y a 1 minute</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="376"></location>
         <source>minutes ago</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minutes déjà</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="383"></location>
         <source>hours ago</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Heures déjà</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="390"></location>
         <source>days ago</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jours déjà</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="380"></location>
         <source>1 hour ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Il y a 1 heure</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="387"></location>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Il y a 1 jour</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="244"></location>
@@ -127,17 +127,17 @@
     <message>
         <location filename="../qml/SchedulerPage.qml" line="262"></location>
         <source>Today</source>
-        <translation type="unfinished"></translation>
+        <translation>Aujourd'hui</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="264"></location>
         <source>Tomorrow</source>
-        <translation type="unfinished"></translation>
+        <translation>Demain</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="266"></location>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Suivant</translation>
     </message>
 </context>
 <context>
@@ -145,7 +145,7 @@
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"></location>
         <source>This is untranslated!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce n'est pas traduit!</translation>
     </message>
 </context>
 <context>
@@ -154,7 +154,7 @@
         <location filename="../qml/SensorPage.qml" line="244"></location>
         <location filename="../qml/SchedulerPage.qml" line="130"></location>
         <source>You can refresh once every 10 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous pouvez actualiser que toutes les 10 secondes.</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="308"></location>
@@ -163,25 +163,30 @@
         <source>Refreshing...
 
 you can only refresh once every 10 seconds!</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualisation...
+
+Vous ne pouvez actualiser que toutes les 10 secondes!</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="308"></location>
         <source>No sensors have been detected.
 
 Tap here to refresh!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de capteurs détectés.
+
+Appuyer ici pour actualiser!</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="194"></location>
         <source>No schedules have been added yet, please go to http://live.telldus.com to add them. Then tap here to refresh!</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune planification n'a été encore ajouté, allez à https://live.telldus.com pour en ajouter. Ensuite appuyer ici pour actualiser!</translation>
     </message>
     <message>
         <location filename="../qml/PleaseWait.qml" line="11"></location>
         <source>Please wait...
 ...we'll try to be quick!</source>
-        <translation type="unfinished"></translation>
+        <translation>Patientez s'il vous plaît...
+...nous essayons d'être rapide!</translation>
     </message>
     <message>
         <location filename="../qml/MainMenu.qml" line="77"></location>
@@ -196,59 +201,61 @@ Tap here to refresh!</source>
     <message>
         <location filename="../qml/LoginWebKitWebView.qml" line="20"></location>
         <source>Communicating with the login server</source>
-        <translation type="unfinished"></translation>
+        <translation>Communication avec le serveur d'identification</translation>
     </message>
     <message>
         <location filename="../qml/LoginWebKit.qml" line="70"></location>
         <source>To start using Telldus&amp;nbsp;Live!&amp;nbsp;mobile you need to log in to your Telldus&amp;nbsp;Live! account.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour commencer à utiliser Telldus&amp;nbsp;Live!&amp;nbsp;mobile vous devez vous identifier à votre compte Telldus&amp;nbsp;Live!.</translation>
     </message>
     <message>
         <location filename="../qml/DevicePage.qml" line="298"></location>
         <source>No devices have been added yet, please go to http://live.telldus.com to add them.
 
 Then tap here to refresh!</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun périphérique n'a été encore ajouté, allez à https://live.telldus.com pour en ajouter.
+
+Ensuite appuyer ici pour actualiser!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="35"></location>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Emplacement</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="188"></location>
         <source>Device is shown on the dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Le périphérique est affiché dans le tableau de bord</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="188"></location>
         <source>Tap to show device on dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Appuyer pour afficher le périphérique dans le tableau de bord</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="194"></location>
         <source>Tap to remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Appuyer pour supprimer</translation>
     </message>
     <message>
         <location filename="../qml/DashboardPage.qml" line="161"></location>
         <source>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous n'avez pas ajouté de périphériques ou capteurs à afficher dans le tableau de bord, pour ce faire, aller à leur page et cliquez sur l'étoile en haut à droite.</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="23"></location>
         <source>You are using version</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous utilisez la version</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="23"></location>
         <source>of</source>
-        <translation type="unfinished"></translation>
+        <translation>de</translation>
     </message>
     <message>
         <location filename="../qml/MainInterface.qml" line="194"></location>
         <source>Connected locations</source>
-        <translation type="unfinished"></translation>
+        <translation>Emplacements connectés</translation>
     </message>
 </context>
 <context>
@@ -256,18 +263,18 @@ Then tap here to refresh!</source>
     <message>
         <location filename="../qml/SettingsPage.qml" line="31"></location>
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>Se déconnecter</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="51"></location>
         <source>(no name)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Sans nom)</translation>
     </message>
     <message>
         <location filename="../qml/DevicePage.qml" line="234"></location>
         <location filename="../qml/DashboardPage.qml" line="124"></location>
         <source>You can refresh once every 10 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous ne pouvez actualiser que toutes les 10 secondes.</translation>
     </message>
 </context>
 <context>
@@ -276,7 +283,7 @@ Then tap here to refresh!</source>
         <location filename="../qml/TranslationStrings.qml" line="8"></location>
         <location filename="../qml/MainMenu.qml" line="40"></location>
         <source>Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tableau de bord</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="9"></location>
@@ -299,18 +306,18 @@ Then tap here to refresh!</source>
         <location filename="../qml/TranslationStrings.qml" line="12"></location>
         <location filename="../qml/SettingsPage.qml" line="42"></location>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Réglages</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="13"></location>
         <location filename="../qml/DebugPage.qml" line="34"></location>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Debug</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="308"></location>
         <source>Upcoming schedule</source>
-        <translation type="unfinished"></translation>
+        <translation>Prochaine planification</translation>
     </message>
 </context>
 </TS>
