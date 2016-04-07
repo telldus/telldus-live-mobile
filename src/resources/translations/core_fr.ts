@@ -145,7 +145,7 @@
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"></location>
         <source>This is untranslated!</source>
-        <translation>Ce n'est pas traduit!</translation>
+        <translation>Ce n'est pas traduit !</translation>
     </message>
 </context>
 <context>
@@ -165,7 +165,7 @@
 you can only refresh once every 10 seconds!</source>
         <translation>Actualisation...
 
-Vous ne pouvez actualiser que toutes les 10 secondes!</translation>
+Vous ne pouvez actualiser que toutes les 10 secondes !</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="308"></location>
@@ -174,19 +174,19 @@ Vous ne pouvez actualiser que toutes les 10 secondes!</translation>
 Tap here to refresh!</source>
         <translation>Pas de capteurs détectés.
 
-Appuyer ici pour actualiser!</translation>
+Appuyer ici pour actualiser !</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="194"></location>
         <source>No schedules have been added yet, please go to http://live.telldus.com to add them. Then tap here to refresh!</source>
-        <translation>Aucune planification n'a été encore ajouté, allez à https://live.telldus.com pour en ajouter. Ensuite appuyer ici pour actualiser!</translation>
+        <translation>Aucune planification n'a été encore ajouté, allez à https://live.telldus.com pour en ajouter. Ensuite appuyer ici pour actualiser !</translation>
     </message>
     <message>
         <location filename="../qml/PleaseWait.qml" line="11"></location>
         <source>Please wait...
 ...we'll try to be quick!</source>
         <translation>Patientez s'il vous plaît...
-...nous essayons d'être rapide!</translation>
+...nous essayons d'être rapide !</translation>
     </message>
     <message>
         <location filename="../qml/MainMenu.qml" line="77"></location>
@@ -215,7 +215,7 @@ Appuyer ici pour actualiser!</translation>
 Then tap here to refresh!</source>
         <translation>Aucun périphérique n'a été encore ajouté, allez à https://live.telldus.com pour en ajouter.
 
-Ensuite appuyer ici pour actualiser!</translation>
+Ensuite appuyer ici pour actualiser !</translation>
     </message>
     <message>
         <location filename="../qml/DeviceDetails.qml" line="35"></location>
@@ -312,7 +312,7 @@ Ensuite appuyer ici pour actualiser!</translation>
         <location filename="../qml/TranslationStrings.qml" line="13"></location>
         <location filename="../qml/DebugPage.qml" line="34"></location>
         <source>Debug</source>
-        <translation type="unfinished">Debug</translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="308"></location>
