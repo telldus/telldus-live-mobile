@@ -145,7 +145,7 @@
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"></location>
         <source>This is untranslated!</source>
-        <translation type="unfinished">Dette er oversatt til norsk!</translation>
+        <translation>Dette er ikke oversatt!</translation>
     </message>
 </context>
 <context>
