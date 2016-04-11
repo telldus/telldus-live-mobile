@@ -62,7 +62,7 @@
     <message>
         <location filename="../qml/SensorPage.qml" line="373"></location>
         <source>1 minute ago</source>
-        <translation>1. minutt siden</translation>
+        <translation>Ett minutt siden</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="376"></location>
