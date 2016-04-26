@@ -10,7 +10,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="68"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>On</source>
-        <translation>On</translation>
+        <translation>Zapnout</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="276"></location>
@@ -19,7 +19,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="125"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>Vypnout</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="278"></location>
