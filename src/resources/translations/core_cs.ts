@@ -221,7 +221,7 @@ Dotykem aktualizujte!</translation>
     <message>
         <location filename="../qml/LoginWebKit.qml" line="70"></location>
         <source>To start using Telldus&amp;nbsp;Live!&amp;nbsp;mobile you need to log in to your Telldus&amp;nbsp;Live! account.</source>
-        <translation>Pro použivání Telldus Live! mobile musíte být přihlášeni do Vašeho Telldus Live! účtu.</translation>
+        <translation>Pro použivání Telldus&amp;nbsp;Live!&amp;nbsp;mobile musíte být přihlášeni do Vašeho Telldus&amp;nbsp;Live! účtu.</translation>
     </message>
     <message>
         <location filename="../qml/DevicePage.qml" line="298"></location>
