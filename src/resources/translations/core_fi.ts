@@ -291,7 +291,7 @@ Then tap here to refresh!</source>
         <location filename="../qml/TranslationStrings.qml" line="10"></location>
         <location filename="../qml/SensorPage.qml" line="408"></location>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensorit</translation>
     </message>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="11"></location>
