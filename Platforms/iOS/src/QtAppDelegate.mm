@@ -3,6 +3,7 @@
 
 #import "QtAppDelegate.h"
 #include "TelldusLive.h"
+#include "config.h"
 
 #if IS_FEATURE_LOGGING_ENABLED
 #include "Push.h"

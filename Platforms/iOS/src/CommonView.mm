@@ -1,5 +1,4 @@
 #include <QtGui>
-#include <QtGui/qpa/qplatformnativeinterface.h>
 #include <QtQuick>
 #include <QDebug>
 
@@ -46,11 +45,4 @@ QSize CommonView::windowSize() const {
 	CGFloat screenWidth = screenRect.size.width;
 	CGFloat screenHeight = screenRect.size.height;
 	return QSize(screenWidth, screenHeight);
-}
-
-void CommonView::openUrl(const QUrl &url) {
-	// Get the UIView that backs our QQuickWindow:
-//	UIView *view = static_cast<UIView *>(QGuiApplication::platformNativeInterface()->nativeResourceForWindow("uiview", this->view()));
-//	UIViewController *qtController = [[view window] rootViewController];
-
 }
