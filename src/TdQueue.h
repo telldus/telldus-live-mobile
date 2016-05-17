@@ -15,12 +15,12 @@ public:
 	}
 
 	void enqueue(T value, int priority) {
-		Item<T> item(priority,value);
+		Item<T> item(priority, value);
 		// Start at 1 so never replace the head!!
 		for(int i = 1 ; i < _queue.count() ; ++i ) {
 			const Item<T>& otherItem = _queue[i];
 			if( priority < otherItem._priority )  {
-				_queue.insert(i,item);
+				_queue.insert(i, item);
 				qDebug().nospace().noquote() << "[QUEUE] Queue(" << _queue.count() << ") Enqueued at position " << i << " with priority " << item._priority;
 				return;
 			}
