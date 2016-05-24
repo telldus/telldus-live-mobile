@@ -1,19 +1,43 @@
 <RCC>
 	<qresource prefix="/translations">
 
+		<file>core_cs.qm</file>
+		<file alias="core_cs_CZ.qm">core_cs.qm</file>
+
 		<file>core_en.qm</file>
 		<file alias="core_en_AU.qm">core_en.qm</file>
+		<file alias="core_en_DK.qm">core_en.qm</file>
+		<file alias="core_en_FI.qm">core_en.qm</file>
 		<file alias="core_en_GB.qm">core_en.qm</file>
 		<file alias="core_en_IE.qm">core_en.qm</file>
+		<file alias="core_en_MT.qm">core_en.qm</file>
+		<file alias="core_en_NO.qm">core_en.qm</file>
 		<file alias="core_en_SE.qm">core_en.qm</file>
 		<file alias="core_en_US.qm">core_en.qm</file>
 
+		<file>core_fr.qm</file>
+		<file alias="core_fr_FR.qm">core_fr.qm</file>
+		<file alias="core_fr_SE.qm">core_fr.qm</file>
+
 		<file>core_nb.qm</file>
+		<file alias="core_nb_NO.qm">core_nb.qm</file>
 		<file alias="core_nb_SE.qm">core_nb.qm</file>
 
+		<file>core_nl.qm</file>
+		<file alias="core_nl_BE.qm">core_nl.qm</file>
+		<file alias="core_nl_NL.qm">core_nl.qm</file>
+
+		<file>core_pl.qm</file>
+		<file alias="core_pl_PL.qm">core_pl.qm</file>
+		<file alias="core_pl_SE.qm">core_pl.qm</file>
+
 		<file>core_sv.qm</file>
-		<file alias="core_sv_SE.qm">core_sv.qm</file>
+		<file alias="core_sv_DK.qm">core_sv.qm</file>
 		<file alias="core_sv_FI.qm">core_sv.qm</file>
+		<file alias="core_sv_GB.qm">core_sv.qm</file>
+		<file alias="core_sv_NO.qm">core_sv.qm</file>
+		<file alias="core_sv_SE.qm">core_sv.qm</file>
+		<file alias="core_sv_US.qm">core_sv.qm</file>
 
 	</qresource>
 </RCC>
