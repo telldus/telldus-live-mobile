@@ -243,6 +243,7 @@ SET(TRANSLATIONS
 	src/resources/translations/core_pt.ts
 	src/resources/translations/core_ru.ts
 	src/resources/translations/core_sv.ts
+	src/resources/translations/core_th.ts
 )
 CONFIGURE_FILE(
 	src/translations.qrc
