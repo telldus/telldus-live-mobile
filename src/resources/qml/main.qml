@@ -211,12 +211,12 @@ Rectangle {
 			Transition {
 				to: 'visible'
 				AnchorAnimation {
-					duration: 250
+					duration: 200
 				}
 				PropertyAnimation {
 					target: overlayBackground
 					properties: 'opacity'
-					duration: 250
+					duration: 200
 				}
 			},
 			Transition {
@@ -231,7 +231,7 @@ Rectangle {
 					SequentialAnimation {
 						PropertyAnimation {
 							properties: 'opacity'
-							duration: 150
+							duration: 100
 						}
 						AnchorAnimation {
 						}
@@ -248,11 +248,11 @@ Rectangle {
 				PropertyAnimation {
 					target: overlayBackground
 					properties: 'opacity'
-					duration: 250
+					duration: 200
 				}
 				SequentialAnimation {
 					AnchorAnimation {
-						duration: 250
+						duration: 200
 					}
 					PropertyAnimation {
 						properties: 'opacity'

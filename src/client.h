@@ -29,6 +29,7 @@ class Client : public QObject
 	Q_PROPERTY(int timezoneOffset READ timezoneOffset NOTIFY timezoneOffsetChanged)
 	Q_PROPERTY(QString transports READ transports NOTIFY transportsChanged)
 	Q_PROPERTY(bool websocketConnected READ websocketConnected NOTIFY websocketConnectedChanged)
+	Q_PROPERTY(int addNodeToNetworkTimeout READ addNodeToNetworkTimeout WRITE setAddNodeToNetworkTimeout NOTIFY addNodeToNetworkTimeoutChanged)
 public:
 	explicit Client(QObject *parent = 0);
 	~Client();
@@ -67,6 +68,9 @@ public:
 
 	bool websocketConnected() const;
 
+	int addNodeToNetworkTimeout() const;
+	void setAddNodeToNetworkTimeout(const int addNodeToNetworkTimeout);
+
 signals:
 	void editableChanged();
 	void idChanged();
@@ -86,6 +90,7 @@ signals:
 	void timezoneOffsetChanged();
 	void transportsChanged();
 	void websocketConnectedChanged();
+	void addNodeToNetworkTimeoutChanged();
 
 private slots:
 	void sessionAuthenticated();
@@ -96,6 +101,11 @@ private slots:
 	void wsStateChanged(QAbstractSocket::SocketState);
 	void applicationStateChanged(Qt::ApplicationState state);
 	void saveToCache();
+	void reduceAddNodeToNetworkTimeout();
+
+public slots:
+	void zwaveExclude();
+	void zwaveInclude();
 
 private:
 	class PrivateData;

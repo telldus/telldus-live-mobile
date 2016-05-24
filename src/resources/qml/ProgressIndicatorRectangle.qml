@@ -4,6 +4,8 @@ import Tui 0.1
 Item {
 	id: loadingIndicator
 	anchors.fill: parent
+	property alias color: effectRect.color
+	property alias childHeight: effectRect.height
 	function restart() {
 		animation01.to = width / 3;
 		animation02.to = (width / 3) * 2;

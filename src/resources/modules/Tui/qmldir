@@ -2,5 +2,6 @@ Card 0.1 Card.qml
 CircleMask 0.1 CircleMask.qml
 ButtonMouseArea 0.1 ButtonMouseArea.qml
 Object 0.1 Object.qml
+ProgressCircle 0.1 ProgressCircle.qml
 View 0.1 View.qml
 singleton Units 0.1 Units.qml

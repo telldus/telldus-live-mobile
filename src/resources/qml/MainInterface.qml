@@ -27,14 +27,6 @@ Rectangle {
 			page: "SchedulerPage.qml"
 		}
 	}
-	ListModel {
-		id: drawerMenuModel
-
-		ListElement {
-			title: "Settings"
-			page: "SettingsPage.qml"
-		}
-	}
 
 	Rectangle {
 		id: menuViewUnderlay
@@ -71,285 +63,86 @@ Rectangle {
 		}
 
 		Component {
-			id: mainMenuItem
-			Rectangle {
+			id: drawerMenuItemComponent
+			Item {
 				width: parent.width
-				height: Units.dp(56)
-				color: index ==  tabPage.currentIndex && properties.ui.supportsKeys ? properties.theme.colors.telldusOrange : "transparent"
-				Item {
-					id: dashboardIcon
-					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(16)
-					anchors.verticalCenter: parent.verticalCenter
-					height: Units.dp(32)
-					width: Units.dp(32)
-					Image {
-						id: dashboardIconImage
+				height: Units.dp(56) + (drawerMenuItem.childView == "" ? Units.dp(0) : drawerMenuItemLoader.height)
+				Rectangle {
+					id: drawerMenuItemTitle
+					width: parent.width
+					height: Units.dp(56)
+					color: index ==  tabPage.currentIndex && properties.ui.supportsKeys ? properties.theme.colors.telldusOrange : "transparent"
+					Item {
+						id: dashboardIcon
+						anchors.left: parent.left
+						anchors.leftMargin: Units.dp(16)
+						anchors.verticalCenter: parent.verticalCenter
+						height: Units.dp(32)
+						width: Units.dp(32)
+						Image {
+							id: dashboardIconImage
+							anchors.fill: parent
+							anchors.margins: Units.dp(4)
+							source: "image://icons/" + drawerMenuItem.icon + "/" + (UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff");
+							asynchronous: true
+							smooth: true
+							fillMode: Image.PreserveAspectFit
+							sourceSize.width: width * 2
+							sourceSize.height: height * 2
+						}
+					}
+					Text {
+						id: dashboardButton
+						color: UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff"
+						font.pixelSize: Units.dp(20)
+						text: qsTranslate("pages", drawerMenuItem.title)
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.left: parent.left
+						anchors.leftMargin: Units.dp(56)
+					}
+					MouseArea {
 						anchors.fill: parent
-						anchors.margins: Units.dp(4)
-						source: "image://icons/" + title.toLowerCase() + "/" + (UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff");
-						asynchronous: true
-						smooth: true
-						fillMode: Image.PreserveAspectFit
-						sourceSize.width: width * 2
-						sourceSize.height: height * 2
+						enabled: mainInterface.menuViewVisible;
+						onClicked: {
+							overlayPage.title = qsTranslate("pages", drawerMenuItem.title);
+							overlayPage.icon = drawerMenuItem.icon;
+							overlayPage.source = Qt.resolvedUrl(drawerMenuItem.page);
+						}
 					}
 				}
-				Text {
-					id: dashboardButton
-					color: UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff"
-					font.pixelSize: Units.dp(20)
-					text: qsTranslate("pages", title)
-					anchors.verticalCenter: parent.verticalCenter
+				Loader {
+					id: drawerMenuItemLoader
+					visible: drawerMenuItem.childView != ""
+					source: "DrawerChildViewConnectedLocations.qml"
+					asynchronous: true
 					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(56)
-				}
-				MouseArea {
-					anchors.fill: parent
-					enabled: mainInterface.menuViewVisible;
-					onClicked: {
-						overlayPage.title = qsTranslate("pages", title);
-						overlayPage.icon = title.toLowerCase();
-						overlayPage.source = Qt.resolvedUrl(page);
-					}
+					anchors.top: drawerMenuItemTitle.bottom
+					anchors.right: parent.right
 				}
 			}
 		}
-		Component {
-			id: clientListItem
-			Rectangle {
-				width: parent.width
-				height: Units.dp(40)
-				color: index ==  clientList.selectedIndex && properties.ui.supportsKeys ? properties.theme.colors.telldusOrange : "transparent"
-				Item {
-					id: clientStatusIcon
-					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(16)
-					anchors.verticalCenter: parent.verticalCenter
-					height: Units.dp(32)
-					width: height
-					Image {
-						id: clientStatusIconImage
-						anchors.fill: parent
-						anchors.margins: Units.dp(8)
-						source: "image://icons/devices/" + (client.online ? (client.websocketConnected ? (UI_PLATFORM == "android" ? "#2E7D32" : "#00C853") : (UI_PLATFORM == "android" ? "#F57F17" : "#FFD600")) : (UI_PLATFORM == "android" ? "#B71C1C" : "#D50000"))
-						asynchronous: true
-						smooth: true
-						fillMode: Image.PreserveAspectFit
-						sourceSize.width: width * 2
-						sourceSize.height: height * 2
-					}
-				}
-				Text {
-					id: clientName
-					color: UI_PLATFORM == "android" ? "#616161" : "#ffffff";
-					font.pixelSize: Units.dp(14)
-					text: client.name
-					anchors.verticalCenter: parent.verticalCenter
-					anchors.left: parent.left
-					anchors.leftMargin: Units.dp(56)
-				}
-				/*MouseArea {
-					id: mouseArea
-					anchors.fill: parent
-					onClicked: {
-						overlayPage.title = client.name
-						overlayPage.icon = 'devices'
-						overlayPage.source = Qt.resolvedUrl("ClientDetails.qml");
-						overlayPage.childObject = client
-					}
-				}*/
-			}
-		}
-		Item {
-			id: clientListTitle
+
+		ListView {
+			id: mainMenu
 			anchors.top:  UI_PLATFORM == "android" ? menuUserDetailsAndroid.bottom : menuUserDetails.bottom
 			anchors.topMargin: UI_PLATFORM == "android" ? Units.dp(16) : undefined
 			anchors.left: parent.left
 			anchors.right: parent.right
-			height: Units.dp(56)
-			Item {
-				id: clientListTitleIcon
-				anchors.left: parent.left
-				anchors.leftMargin: Units.dp(16)
-				anchors.verticalCenter: parent.verticalCenter
-				height: Units.dp(32)
-				width: Units.dp(32)
-				Image {
-					id: clientListTitleImage
-					anchors.fill: parent
-					anchors.margins: Units.dp(4)
-					source: "image://icons/house/" + (UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff")
-					asynchronous: true
-					smooth: true
-					fillMode: Image.PreserveAspectFit
-					sourceSize.width: width * 2
-					sourceSize.height: height * 2
-				}
-			}
-			Text {
-				id: clientListTitleText
-				color: UI_PLATFORM == "android" ? properties.theme.colors.telldusBlue : "#ffffff"
-				font.pixelSize: Units.dp(20)
-				text: qsTranslate("messages", "Connected locations")
-				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
-				anchors.leftMargin: Units.dp(56)
-			}
-		}
-		Component {
-			id: clientListHeader
-			Item {
-				height: Units.dp(20)
-				width: parent.width
-				y: -clientList.contentY - height
-
-				property bool refresh: state == "pulled" ? true : false
-
-				Item {
-					id: arrow
-					anchors.fill: parent
-					Image {
-						id: arrowImage
-						visible: !clientListRefreshTimer.running
-						anchors.centerIn: parent
-						height: parent.height * 0.8
-						width: height
-						source: "image://icons/refreshArrow/#999999"
-						asynchronous: true
-						smooth: true
-						fillMode: Image.PreserveAspectFit
-						sourceSize.width: width * 2
-						sourceSize.height: height * 2
-					}
-					Image {
-						id: arrowImageRunning
-						visible: clientListCloseTimer.running
-						anchors.centerIn: parent
-						height: parent.height * 0.8
-						width: height
-						source: "image://icons/refresh/#999999"
-						asynchronous: true
-						smooth: true
-						fillMode: Image.PreserveAspectFit
-						sourceSize.width: width * 2
-						sourceSize.height: height * 2
-						transformOrigin: Item.Center
-						RotationAnimation on rotation {
-							loops: Animation.Infinite
-							from: 0
-							to: 360
-							duration: 1000
-							running: clientListCloseTimer.running
-						}
-					}
-					transformOrigin: Item.Center
-					Behavior on rotation { NumberAnimation { duration: 200 } }
-				}
-				Text {
-					anchors.centerIn: parent
-					visible: clientListRefreshTimer.running && !clientListCloseTimer.running
-					color: "#ffffff"
-					font.pixelSize: Units.dp(10)
-					text: "You can refresh once every 10 seconds."
-					elide: Text.ElideRight
-				}
-				states: [
-					State {
-						name: "base"; when: clientList.contentY >= -Units.dp(40)
-						PropertyChanges { target: arrow; rotation: 180 }
-					},
-					State {
-						name: "pulled"; when: clientList.contentY < -Units.dp(40)
-						PropertyChanges { target: arrow; rotation: 0 }
-					}
-				]
-			}
-		}
-		Item {
-			id: clientListContainer
-			anchors.top: clientListTitle.bottom
-			anchors.left: parent.left
-			anchors.right: parent.right
-			height: UI_PLATFORM == "android" ? (clientModel.count * Units.dp(48)) - Units.dp(8) : clientModel.count * Units.dp(40)
-			clip: true
-			ListView {
-				id: clientList
-				anchors.fill: parent
-				anchors.topMargin: clientListCloseTimer.running ? 0 : -clientList.headerItem.height
-				model: clientModel
-				delegate: clientListItem
-				maximumFlickVelocity: Units.dp(1500)
-				spacing: UI_PLATFORM == "android" ? Units.dp(8) : Units.dp(0)
-				header: clientListHeader
-				pressDelay: 100
-				onDragEnded: {
-					if (headerItem.refresh && !clientListRefreshTimer.running) {
-						clientModel.authorizationChanged()
-						clientListRefreshTimer.start()
-						clientListCloseTimer.start()
-					}
-				}
-			}
-		}
-		Timer {
-			id: clientListCloseTimer
-			interval: 1000
-			running: false
-			repeat: false
-		}
-		Timer {
-			id: clientListRefreshTimer
-			interval: 10000
-			running: false
-			repeat: false
-		}
-		ListView {
-			id: mainMenu
-			anchors.top: clientListContainer.bottom
-			anchors.left: parent.left
-			anchors.right: parent.right
 			anchors.bottom: parent.bottom
 			model: drawerMenuModel
-			delegate: mainMenuItem
+			delegate: drawerMenuItemComponent
 			maximumFlickVelocity: Units.dp(1500)
 			spacing: Units.dp(0)
 			pressDelay: 100
-			/*Keys.onPressed: {
-				if (properties.ui.supportsKeys) {
-					if (event.key == Qt.Key_Up) {
-						console.log("Key up");
-						if (pageModel.selectedIndex > 0) {
-							pageModel.selectedIndex --;
-						}
-						event.accepted = true;
-					}
-					if (event.key == Qt.Key_Down) {
-						console.log("Key down");
-						if (pageModel.selectedIndex + 1 < pageModel.count) {
-							pageModel.selectedIndex ++;
-						}
-						event.accepted = true;
-					}
-					if (event.key == Qt.Key_Enter || event.key == Qt.Key_Right) {
-						mainInterface.closeMenu();
-						event.accepted = true;
-					}
-					if (event.key == Qt.Key_Left) {
-						// beep
-						event.accepted = true;
-					}
-				}
-			}*/
 		}
-		Item {
+		Rectangle {
 			id: menuUserDetails
 			visible: !(UI_PLATFORM == "android")
 			anchors.left: parent.left
-			anchors.top: parent.top
-			anchors.topMargin: UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
+			anchors.top: menuViewOffset.bottom
 			anchors.right: parent.right
 			height: Units.dp(72)
+			color: menuView.tintColor
 			Rectangle {
 				id: menuUserDetailsDivider
 				anchors.left: parent.left
@@ -388,7 +181,7 @@ Rectangle {
 				font.pixelSize: Units.dp(16)
 				color: "#ffffff"
 			}
-			/*MouseArea {
+			MouseArea {
 				id: mouseArea
 				anchors.fill: parent
 				onClicked: {
@@ -397,7 +190,7 @@ Rectangle {
 					overlayPage.source = Qt.resolvedUrl("UserDetails.qml");
 					overlayPage.childObject = user
 				}
-			}*/
+			}
 		}
 		Rectangle {
 			id: menuUserDetailsAndroid
@@ -434,6 +227,16 @@ Rectangle {
 				font.pixelSize: Units.dp(16)
 				color: "#ffffff"
 			}
+		}
+
+		Rectangle {
+			id: menuViewOffset
+			anchors.left: parent.left
+			anchors.top: parent.top
+			anchors.right: parent.right
+			color: menuView.tintColor
+			height: UI_PLATFORM == 'ios' ? Screen.height - Screen.desktopAvailableHeight : 0
+			z: 999999999999
 		}
 	}
 	View {

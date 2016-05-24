@@ -33,7 +33,7 @@ ELSE()
 	SET(ANDROID_TOOLCHAIN_PREFIX ${ANDROID_NDK_ABI_NAME})
 ENDIF()
 
-SET(Qt5_Dir "" CACHE DIR "Path to Qt5")
+SET(QT_DIR "" CACHE DIR "Path to Qt5")
 FIND_PACKAGE( Qt5AndroidExtras REQUIRED )
 LIST(APPEND LIBRARIES Qt5::AndroidExtras)
 
@@ -153,10 +153,10 @@ FUNCTION(COMPILE target)
 	ADD_CUSTOM_COMMAND(
 		TARGET ${target}
 		POST_BUILD
-		COMMAND ${Qt5_Dir}/bin/androiddeployqt --android-platform android-19 --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk
+		COMMAND ${QT_DIR}/bin/androiddeployqt --android-platform android-19 --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk
 	)
 	ADD_CUSTOM_TARGET(run
-		${Qt5_Dir}/bin/androiddeployqt --android-platform android-19 --no-build --verbose --reinstall --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk &&
+		${QT_DIR}/bin/androiddeployqt --android-platform android-19 --no-build --verbose --reinstall --input ${CMAKE_BINARY_DIR}/deployment-settings.json --output ${CMAKE_BINARY_DIR}/apk &&
 		adb shell am start -n com.telldus.live.mobile${SUFFIX}/com.telldus.live.mobile.MainActivity
 		DEPENDS ${target}
 		COMMENT "Package and deploy apk"

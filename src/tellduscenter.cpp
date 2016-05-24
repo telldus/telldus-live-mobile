@@ -12,6 +12,7 @@
 #include "models/DeviceListSortFilterModel.h"
 #include "models/devicemodel.h"
 #include "models/dashboardmodel.h"
+#include "models/DrawerMenuModel.h"
 #include "models/favoritedevicemodel.h"
 #include "models/favoritesensormodel.h"
 #include "models/filtereddevicemodel.h"
@@ -22,6 +23,7 @@
 #include "models/sensormodel.h"
 #include "models/SensorListSortFilterModel.h"
 #include "objects/DashboardItem.h"
+#include "objects/DrawerMenuItem.h"
 #include "properties/Properties.h"
 #include "properties/PropertiesTheme.h"
 #include "properties/PropertiesThemeColors.h"
@@ -43,6 +45,7 @@ public:
 	FilteredDeviceModel *rawDeviceModel, *deviceModel, *groupModel;
 	ClientModel *clientModel;
 	DashboardModel *dashboardModel;
+	DrawerMenuModel *drawerMenuModel;
 	SchedulerDayModel *schedulerDayModel;
 	SchedulerDaySortFilterModel *schedulerDaySortFilterModel;
 	DeviceListSortFilterModel *deviceListSortFilterModel;
@@ -78,6 +81,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->groupModel = new FilteredDeviceModel(DeviceModel::instance(), Device::GroupType, this);
 	d->deviceListSortFilterModel = new DeviceListSortFilterModel(DeviceModel::instance(), this);
 	d->clientModel = ClientModel::instance();
+	d->drawerMenuModel = new DrawerMenuModel(this);
 	d->dashboardModel = new DashboardModel(
 		new FavoriteDeviceModel(DeviceModel::instance(), this),
 		new FavoriteSensorModel(SensorModel::instance(), this),
@@ -96,6 +100,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	qmlRegisterType<Client>("Telldus", 1, 0, "Client");
 	qmlRegisterType<Device>("Telldus", 1, 0, "Device");
 	qmlRegisterType<DashboardItem>("Telldus", 1, 0, "DashboardItem");
+	qmlRegisterType<DrawerMenuItem>("Telldus", 1, 0, "DrawerMenuItem");
 	qmlRegisterType<Sensor>("Telldus", 1, 0, "Sensor");
 	qmlRegisterType<GroupDeviceModel>("Telldus", 1, 0, "GroupDeviceModel");
 	qmlRegisterType<PropertiesTheme>("Telldus", 1, 0, "PropertiesTheme");
@@ -118,6 +123,7 @@ TelldusCenter::TelldusCenter(AbstractView *view, QObject *parent) :QObject(paren
 	d->view->setContextProperty("deviceModel", d->deviceModel);
 	d->view->setContextProperty("groupModel", d->groupModel);
 	d->view->setContextProperty("dashboardModel", d->dashboardModel);
+	d->view->setContextProperty("drawerMenuModel", d->drawerMenuModel);
 	d->view->setContextProperty("clientModel", d->clientModel);
 	d->view->setContextProperty("sensorModel", SensorModel::instance());
 	d->view->setContextProperty("sensorListSortFilterModel", d->sensorListSortFilterModel);
@@ -137,7 +143,7 @@ void TelldusCenter::quit() {
 
 void TelldusCenter::openUrl(const QUrl &url) {
 #ifdef PLATFORM_IOS
-	qobject_cast<CommonView *>(d->view)->openUrl(url);
+//	qobject_cast<CommonView *>(d->view)->openUrl(url);
 #else
 	QDesktopServices::openUrl(url);
 #endif  // PLATFORM_IOS

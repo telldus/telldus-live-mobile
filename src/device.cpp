@@ -14,7 +14,7 @@ class Device::PrivateData {
 public:
 	bool hasChanged;
 	bool isFavorite, online, ignored;
-	int id, methods, state;
+	int id, methods, state, changesInQueue;
 	QString name, stateValue, clientName;
 	Type type;
 	GroupDeviceModel *groupModel;
@@ -27,11 +27,14 @@ Device::Device(QObject *parent) :
 	d->isFavorite = false;
 	d->online = false;
 	d->id = 0;
+	d->changesInQueue = 0;
 	d->methods = 0;
 	d->state = 2;
 	d->type = DeviceType;
 	d->ignored = false;
 	d->groupModel = new GroupDeviceModel(this);
+
+	connect(TelldusLive::instance(), SIGNAL(itemDequeued(int, int)), this, SLOT(itemDequeued(int, int)));
 	connect(d->groupModel, SIGNAL(changed()), this, SLOT(groupContentChanged()));
 
 	SchedulerModel *sm = SchedulerModel::instance();
@@ -214,7 +217,11 @@ void Device::sendMethod(int method, const QString &value) {
 	params["id"] = this->deviceId();
 	params["method"] = method;
 	params["value"] = value;
-	telldusLive->call("device/command", params, this, SLOT(onActionResponse(QVariantMap,QVariantMap)), params, 1);
+	if (d->changesInQueue < 5) {
+		d->changesInQueue++;
+		emit changesInQueueChanged();
+		telldusLive->call("device/command", params, this, SLOT(onActionResponse(QVariantMap,QVariantMap)), params, 1, 1, this->deviceId());
+	}
 }
 
 int Device::state() const {
@@ -307,6 +314,27 @@ void Device::setIgnored(bool ignored) {
 	emit ignoredChanged();
 	d->hasChanged = true;
 	emit saveToCache();
+}
+
+int Device::changesInQueue() const {
+	return d->changesInQueue;
+}
+
+void Device::setChangesInQueue(int changesInQueue) {
+	if (changesInQueue == d->changesInQueue) {
+		return;
+	}
+	d->changesInQueue = changesInQueue;
+	emit changesInQueueChanged();
+}
+
+
+void Device::itemDequeued(const int objectType, const int objectId) {
+	if (objectType == 1 && objectId == d->id) {
+		qDebug().noquote().nospace() << "[QUEUE] !! " << objectType << ":" << objectId;
+		d->changesInQueue--;
+		emit changesInQueueChanged();
+	}
 }
 
 void Device::schedulerJobsChanged(const QModelIndex &, int start, int end) {

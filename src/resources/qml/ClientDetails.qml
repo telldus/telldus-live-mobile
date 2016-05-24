@@ -17,6 +17,24 @@ Rectangle {
 			anchors.fill: parent
 			anchors.margins: Units.dp(10)
 			spacing: Units.dp(20)
+
+			Button {
+				id: includeButton
+				title: qsTranslate("misc", "Include") + (childObject.addNodeToNetworkTimeout == 0 ? "" : " (" + childObject.addNodeToNetworkTimeout + ")")
+				anchors.horizontalCenter: parent.horizontalCenter
+				onClicked: {
+					childObject.zwaveInclude()
+				}
+				enabled: childObject.addNodeToNetworkTimeout == 0
+			}
+			Button {
+				id: excludeButton
+				title: qsTranslate("misc", "Exclude")
+				anchors.horizontalCenter: parent.horizontalCenter
+				onClicked: {
+					childObject.zwaveExclude()
+				}
+			}
 			Text {
 				text: childObject.type
 				color: properties.theme.colors.telldusBlue

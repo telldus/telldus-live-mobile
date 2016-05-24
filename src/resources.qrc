@@ -1,5 +1,7 @@
 <RCC>
 	<qresource prefix="/">
+		<file>resources/qml/AddDevicePage.qml</file>
+		<file>resources/qml/AddLocationPage.qml</file>
 		<file>resources/qml/main.qml</file>
 		<file>resources/qml/MainInterface.qml</file>
 		<file>resources/qml/MainMenu.qml</file>
@@ -38,6 +40,7 @@
 		<file>resources/qml/PleaseWait.qml</file>
 		<file>resources/qml/UserDetails.qml</file>
 		<file>resources/qml/TranslationStrings.qml</file>
+		<file>resources/qml/DrawerChildViewConnectedLocations.qml</file>
 
 		<file>resources/qml/main.tv.qml</file>
 
@@ -104,8 +107,11 @@
 		<file>resources/svgs/sensorIconWatt.svg</file>
 		<file>resources/svgs/sensorIconWind.svg</file>
 
+		<file>resources/svgts/addDevice.svgt</file>
+		<file>resources/svgts/addLocation.svgt</file>
 		<file>resources/svgts/arrowDown.svgt</file>
 		<file>resources/svgts/arrowUp.svgt</file>
+		<file>resources/svgts/connectedLocations.svgt</file>
 		<file>resources/svgts/close.svgt</file>
 		<file>resources/svgts/dashboard.svgt</file>
 		<file>resources/svgts/debug.svgt</file>
@@ -113,6 +119,7 @@
 		<file>resources/svgts/favourite.svgt</file>
 		<file>resources/svgts/hamburger.svgt</file>
 		<file>resources/svgts/house.svgt</file>
+		<file>resources/svgts/location.svgt</file>
 		<file>resources/svgts/logout.svgt</file>
 		<file>resources/svgts/refresh.svgt</file>
 		<file>resources/svgts/refreshArrow.svgt</file>

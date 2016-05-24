@@ -166,6 +166,19 @@ Item {
 			}
 		}
 	}
+
+	Rectangle {
+		id: progressBarComponent
+		visible: device.changesInQueue > 0
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.topMargin: Units.dp(4)
+		anchors.leftMargin: Units.dp(4)
+		width: Units.dp(8)
+		height: width
+		radius: width
+		color: properties.theme.colors.telldusOrange
+	}
 	function updateButtons() {
 		upButton.color = "#ffffff"
 		downButton.color = "#ffffff"

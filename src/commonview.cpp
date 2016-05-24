@@ -1,6 +1,6 @@
 #include "commonview.h"
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QtQuick>
 #include <QDesktopWidget>
 #include <QKeyEvent>
@@ -37,7 +37,7 @@ CommonView::CommonView(QObject *parent):AbstractView(parent) {
 #endif
 
 	d->view.installEventFilter(this);
-//	connect(QApplication::desktop(), SIGNAL(workAreaResized(int)), this, SLOT(workAreaResized(int)));
+//	connect(QGuiApplication::desktop(), SIGNAL(workAreaResized(int)), this, SLOT(workAreaResized(int)));
 
 	d->view.setTitle("Telldus Live! mobile");
 	d->view.rootContext()->setContextProperty("HAVE_WEBKIT", HAVE_WEBKIT);
@@ -93,35 +93,36 @@ d->platform = QGuiApplication::platformName().toLower();
 	if (w > 0 && h > 0) {
 		d->view.resize(size);
 	}
+	d->view.show();
 #elif defined(PLATFORM_IOS)
 	d->platform = "ios";
-	QSize size(this->windowSize());
+	QSize size = QGuiApplication::primaryScreen()->size();
 	d->view.showFullScreen();
+
 #elif defined(PLATFORM_ANDROID)
 	d->platform = "android";
-	QSize size = QApplication::desktop()->size();
+	QSize size = QGuiApplication::primaryScreen()->size();
 	d->view.show();
 #else
-	QRect r(QApplication::desktop()->availableGeometry());
-	QSize size(r.width(), r.height());
+	QSize size = QGuiApplication::primaryScreen()->size();
 	d->view.show();
 #endif
 
 	qDebug() << "[APP] Display is now visible!";
 
 	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << size;
-	qDebug().nospace().noquote() << "[DEVICE] Screen logicalDotsPerInch: " << QApplication::primaryScreen()->logicalDotsPerInch();
-	qDebug().nospace().noquote() << "[DEVICE] Screen physicalDotsPerInch: " << QApplication::primaryScreen()->physicalDotsPerInch();
-	qDebug().nospace().noquote() << "[DEVICE] Screen devicePixelRatio: " << QApplication::primaryScreen()->devicePixelRatio();
-	qDebug().nospace().noquote() << "[DEVICE] Screen virtualGeometry: " << QApplication::primaryScreen()->virtualGeometry();
-	qDebug().nospace().noquote() << "[DEVICE] Screen virtualSize: " << QApplication::primaryScreen()->virtualSize();
-	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << QApplication::primaryScreen()->size();
-	qDebug().nospace().noquote() << "[DEVICE] Screen physicalSize: " << QApplication::primaryScreen()->physicalSize();
-	qDebug().nospace().noquote() << "[DEVICE] Screen geometry : " << QApplication::primaryScreen()->geometry ();
-	qDebug().nospace().noquote() << "[DEVICE] Screen availableVirtualSize: " << QApplication::primaryScreen()->availableVirtualSize();
-	qDebug().nospace().noquote() << "[DEVICE] Screen availableVirtualGeometry: " << QApplication::primaryScreen()->availableVirtualGeometry();
-	qDebug().nospace().noquote() << "[DEVICE] Screen availableSize: " << QApplication::primaryScreen()->availableSize();
-	qDebug().nospace().noquote() << "[DEVICE] Screen availableGeometry : " << QApplication::primaryScreen()->availableGeometry();
+	qDebug().nospace().noquote() << "[DEVICE] Screen logicalDotsPerInch: " << QGuiApplication::primaryScreen()->logicalDotsPerInch();
+	qDebug().nospace().noquote() << "[DEVICE] Screen physicalDotsPerInch: " << QGuiApplication::primaryScreen()->physicalDotsPerInch();
+	qDebug().nospace().noquote() << "[DEVICE] Screen devicePixelRatio: " << QGuiApplication::primaryScreen()->devicePixelRatio();
+	qDebug().nospace().noquote() << "[DEVICE] Screen virtualGeometry: " << QGuiApplication::primaryScreen()->virtualGeometry();
+	qDebug().nospace().noquote() << "[DEVICE] Screen virtualSize: " << QGuiApplication::primaryScreen()->virtualSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen size: " << QGuiApplication::primaryScreen()->size();
+	qDebug().nospace().noquote() << "[DEVICE] Screen physicalSize: " << QGuiApplication::primaryScreen()->physicalSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen geometry : " << QGuiApplication::primaryScreen()->geometry ();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableVirtualSize: " << QGuiApplication::primaryScreen()->availableVirtualSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableVirtualGeometry: " << QGuiApplication::primaryScreen()->availableVirtualGeometry();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableSize: " << QGuiApplication::primaryScreen()->availableSize();
+	qDebug().nospace().noquote() << "[DEVICE] Screen availableGeometry : " << QGuiApplication::primaryScreen()->availableGeometry();
 	qDebug().nospace().noquote() << "[QML] Context property: UI_PLATFORM = " << d->platform;
 
 	d->view.rootContext()->setContextProperty("HEIGHT", size.height());
@@ -141,7 +142,7 @@ void CommonView::setContextProperty(const QString &name, QObject *value) {
 }
 
 void CommonView::workAreaResized(int screen) {
-	QRect r(QApplication::desktop()->availableGeometry());
+	QRect r(QGuiApplication::primaryScreen()->availableGeometry());
 	d->view.resize(r.width(), r.height());
 }
 
@@ -173,10 +174,10 @@ bool CommonView::eventFilter(QObject *obj, QEvent * event ) {
 	}
 
 	if (d->scalefactor == 0) {
-		d->scalefactor = QApplication::primaryScreen()->logicalDotsPerInch() / 72;
+		d->scalefactor = QGuiApplication::primaryScreen()->logicalDotsPerInch() / 72;
 #ifdef PLATFORM_BB10
 		// BB10 has a DU which is multiplied by 16 gets the logicalDPI
-		d->scalefactor = (((QApplication::primaryScreen()->physicalDotsPerInch() / 25.4) / 1.5) * 16) / 72;
+		d->scalefactor = (((QGuiApplication::primaryScreen()->physicalDotsPerInch() / 25.4) / 1.5) * 16) / 72;
 #endif
 	}
 	qDebug().nospace().noquote() << "[DEVICE] Scalefactor: " << d->scalefactor;

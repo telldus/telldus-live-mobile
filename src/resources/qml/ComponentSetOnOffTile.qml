@@ -172,7 +172,17 @@ Item {
 			}
 		}
 	}
-
+	ProgressCircle {
+		id: progressCircle
+		visible: device.changesInQueue > 0
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.topMargin: Units.dp(4)
+		anchors.leftMargin: Units.dp(4)
+		anchors.rightMargin: Units.dp(4)
+		height: Units.dp(10)
+	}
 	Timer {
 		id: pressAndHoldTimer
 		interval: 250

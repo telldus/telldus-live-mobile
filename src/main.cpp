@@ -1,4 +1,4 @@
-#include <QtWidgets/QApplication>
+#include <QGuiApplication>
 #include <QTranslator>
 #include <QDebug>
 
@@ -18,18 +18,19 @@
 	#include "QtAppDelegate-C-Interface.h"
 #endif
 
-int init(int argc, char *argv[]) {
+
+int main(int argc, char **argv) {
 
 #ifdef PLATFORM_IOS
 	QtAppDelegateInitialize();
 	ObjectiveUtils::setGoodStatusBarStyle();
 #endif
 
-	QScopedPointer<QApplication> app(new QApplication(argc, argv));
-	QCoreApplication::setOrganizationName("telldus");
-	QCoreApplication::setOrganizationDomain("com.telldus");
-	QCoreApplication::setApplicationName("Telldus Live! Mobile");
-	QCoreApplication::setApplicationVersion(VERSION);
+	QGuiApplication app(argc,argv);
+	app.setOrganizationName("telldus");
+	app.setOrganizationDomain("com.telldus");
+	app.setApplicationName("Telldus Live! Mobile");
+	app.setApplicationVersion(VERSION);
 
 #ifndef PLATFORM_ANDROID
 	Logger::instance();
@@ -55,7 +56,7 @@ int init(int argc, char *argv[]) {
 
 	QTranslator translator;
 	if (translator.load(forceLanguage == "" ? QLocale() : forceLanguage, "core", "_", ":/translations", ".qm")) {
-		app->installTranslator(&translator);
+		app.installTranslator(&translator);
 	} else {
 		qDebug() << "[MISC] Unable to load any translation file.";
 	}
@@ -65,19 +66,10 @@ int init(int argc, char *argv[]) {
 
 	viewer->loadAndShow();
 
-	int retval = app->exec();
 #ifdef PLATFORM_BB10
 	// For some reason the app won't quit properly on BB10. This is a workaround.
 	// Feel free to remove it if is fixed in a later SDK.
 	exit(0);
 #endif
-	return retval;
-}
-
-#ifdef PLATFORM_IOS
-extern "C" int qtmn(int argc, char *argv[]) {
-#else
-int main(int argc, char *argv[]) {
-#endif
-return init(argc, argv);
+	return app.exec();
 }

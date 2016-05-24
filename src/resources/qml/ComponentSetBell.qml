@@ -21,6 +21,18 @@ Item {
 		sourceSize.height: height * 2
 		opacity: 1
 	}
+	Rectangle {
+		id: progressBarComponent
+		visible: device.changesInQueue > 0
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.topMargin: Units.dp(4)
+		anchors.leftMargin: Units.dp(4)
+		width: Units.dp(8)
+		height: width
+		radius: width
+		color: properties.theme.colors.telldusOrange
+	}
 	MouseArea {
 		id: bellMouseArea
 		anchors.fill: parent

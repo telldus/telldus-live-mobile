@@ -24,6 +24,7 @@ class Device : public QObject
 	Q_PROPERTY(QString stateValue READ stateValue WRITE setStateValue NOTIFY stateValueChanged)
 	Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
 	Q_PROPERTY(bool ignored READ ignored WRITE setIgnored NOTIFY ignoredChanged)
+	Q_PROPERTY(int changesInQueue READ changesInQueue WRITE setChangesInQueue NOTIFY changesInQueueChanged)
 public:
 	explicit Device(QObject *parent = 0);
 	~Device();
@@ -85,6 +86,9 @@ public:
 	bool ignored() const;
 	void setIgnored(bool online);
 
+	int changesInQueue() const;
+	void setChangesInQueue(int changesInQueue);
+
 	void setFromVariantMap(const QVariantMap &dev);
 
 signals:
@@ -99,6 +103,7 @@ signals:
 	void stateValueChanged(const QString &stateValue);
 	void typeChanged();
 	void ignoredChanged();
+	void changesInQueueChanged();
 
 public slots:
 	void bell();
@@ -119,6 +124,7 @@ protected slots:
 	void schedulerJobsChanged( const QModelIndex & parent, int start, int end );
 	void groupContentChanged();
 	void saveToCache();
+	void itemDequeued(const int objectType, const int objectId);
 
 private:
 	class PrivateData;

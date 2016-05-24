@@ -255,7 +255,7 @@ Trykk deretter her for å oppdatere!</translation>
     <message>
         <location filename="../qml/MainInterface.qml" line="194"></location>
         <source>Connected locations</source>
-        <translation>Tilkoblede steder</translation>
+        <translation type="vanished">Tilkoblede steder</translation>
     </message>
 </context>
 <context>
@@ -275,6 +275,16 @@ Trykk deretter her for å oppdatere!</translation>
         <location filename="../qml/DashboardPage.qml" line="124"></location>
         <source>You can refresh once every 10 seconds.</source>
         <translation>Du kan oppdatere hvert 10. sekund.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="23"/>
+        <source>Include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="32"/>
+        <source>Exclude</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

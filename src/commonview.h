@@ -20,10 +20,6 @@ public:
 	void loadAndShow();
 	void setContextProperty(const QString &name, QObject *value);
 
-#ifdef PLATFORM_IOS
-	void openUrl(const QUrl &url);
-#endif  // PLATFORM_IOS
-
 signals:
 	void fullscreen();
 	void backPressed();
@@ -33,7 +29,6 @@ protected slots:
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *event);
-//	void changeEvent( QEvent *event );
 
 private:
 	QQuickView *view() const;

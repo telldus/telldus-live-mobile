@@ -252,9 +252,8 @@ Tryck sedan här för att uppdatera!</translation>
         <translation>Du har inte valt att visa några enheter eller sensorer på dashboard. För att göra det gå till respektive sida och klicka på stjärnan uppe till höger.</translation>
     </message>
     <message>
-        <location filename="../qml/MainInterface.qml" line="194"/>
         <source>Connected locations</source>
-        <translation>Anslutna platser</translation>
+        <translation type="vanished">Anslutna platser</translation>
     </message>
 </context>
 <context>
@@ -274,6 +273,16 @@ Tryck sedan här för att uppdatera!</translation>
         <location filename="../qml/DashboardPage.qml" line="124"/>
         <source>You can refresh once every 10 seconds.</source>
         <translation>Du kan uppdatera var 10:e sekund.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="23"/>
+        <source>Include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="32"/>
+        <source>Exclude</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

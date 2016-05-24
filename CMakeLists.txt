@@ -4,7 +4,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
 SET(PACKAGE_MAJOR_VERSION 2)
 SET(PACKAGE_MINOR_VERSION 0)
-SET(PACKAGE_PATCH_VERSION 7)
+SET(PACKAGE_PATCH_VERSION 8)
 OPTION(RELEASE_BUILD "Is this a release build?" TRUE)
 
 # Feature options
@@ -89,6 +89,7 @@ SET( SOURCES
 	src/models/abstractfiltereddevicemodel.cpp
 	src/models/clientmodel.cpp
 	src/models/dashboardmodel.cpp
+	src/models/DrawerMenuModel.cpp
 	src/models/devicemodel.cpp
 	src/models/DeviceListSortFilterModel.cpp
 	src/models/favoritedevicemodel.cpp
@@ -102,6 +103,7 @@ SET( SOURCES
 	src/models/SensorListSortFilterModel.cpp
 	src/models/tlistmodel.cpp
 	src/objects/DashboardItem.cpp
+	src/objects/DrawerMenuItem.cpp
 	src/objects/SchedulerJobInstance.cpp
 	src/utils/dev.cpp
 	src/utils/Logger.cpp
@@ -113,11 +115,11 @@ SET( SOURCES
 )
 
 IF(ENABLE_FEATURE_PUSH)
-	SET( SOURCES
+	LIST(APPEND SOURCES
 		src/AbstractNotification.cpp
 		src/AbstractPush.cpp
 	)
-	SET( MOC_HEADERS
+	LIST(APPEND MOC_HEADERS
 		src/AbstractNotification.h
 		src/AbstractPush.h
 	)
@@ -142,6 +144,7 @@ SET( MOC_HEADERS
 	src/models/abstractfiltereddevicemodel.h
 	src/models/clientmodel.h
 	src/models/dashboardmodel.h
+	src/models/DrawerMenuModel.h
 	src/models/devicemodel.h
 	src/models/DeviceListSortFilterModel.h
 	src/models/favoritedevicemodel.h
@@ -155,6 +158,7 @@ SET( MOC_HEADERS
 	src/models/SensorListSortFilterModel.h
 	src/models/tlistmodel.h
 	src/objects/DashboardItem.h
+	src/objects/DrawerMenuItem.h
 	src/objects/SchedulerJobInstance.h
 	src/utils/dev.h
 	src/utils/Logger.h

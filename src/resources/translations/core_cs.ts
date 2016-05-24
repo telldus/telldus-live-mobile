@@ -276,6 +276,16 @@ Poté dotykem aktualizujte!</translation>
         <source>You can refresh once every 10 seconds.</source>
         <translation>Můžete aktualizovat každých 10 sekund.</translation>
     </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="23"/>
+        <source>Include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="32"/>
+        <source>Exclude</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>pages</name>

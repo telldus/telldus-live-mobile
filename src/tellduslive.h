@@ -21,7 +21,7 @@ public:
 
 	int queueLength();
 	bool isAuthorized();
-	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap(), const int priority = 100);
+	void call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra = QVariantMap(), const int priority = 100, const int objectType = 0, const int objectId = -1);
 	QString session() const;
 	bool working() const;
 	void setupManager();
@@ -36,6 +36,8 @@ signals:
 	void authorizationAborted();
 	void authorizationGranted();
 	void workingChanged();
+	void itemDequeued(const int &objectType, const int &objectId);
+
 #if IS_FEATURE_PUSH_ENABLED
 	void pushTokenChanged(QString token);
 #endif
@@ -53,6 +55,7 @@ private slots:
 	void onAccessTokenReceived(const QString &token, const QString &tokenSecret);
 	void onRequestReady(const QByteArray &response, QNetworkReply *reply);
 	void onSessionAuthenticated(const QVariantMap &data);
+	void onNetworkAccessibleChanged(const bool isOnline);
 
 private:
 	explicit TelldusLive(QObject *parent = 0);

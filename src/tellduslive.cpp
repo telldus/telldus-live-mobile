@@ -26,6 +26,8 @@ public:
 	QObject *receiver;
 	QByteArray member;
 	QVariantMap extra;
+	int objectType;
+	int objectId;
 };
 
 class TelldusLive::PrivateData {
@@ -177,6 +179,7 @@ void TelldusLive::onRequestReady(const QByteArray &response, QNetworkReply *repl
 
 	qDebug().nospace().noquote() << "[API] Removing from queue (" << reply->url().path() << ")";
 	TelldusLiveCall call(d->queue.dequeue());
+	emit itemDequeued(call.objectType, call.objectId);
 	emit queueLengthChanged();
 
 	//Start next call before parse
@@ -272,7 +275,7 @@ void TelldusLive::call(const QString &endpoint, const QJSValue &params, const QJ
 	}
 }
 
-void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra, const int priority) {
+void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params, QObject * receiver, const char * member, const QVariantMap &extra, const int priority, const int objectType, const int objectId) {
 	qDebug().nospace().noquote() << "[API] Adding call to queue: " << endpoint;
 
 	TelldusLiveCall call;
@@ -280,6 +283,8 @@ void TelldusLive::call(const QString &endpoint, const TelldusLiveParams &params,
 	call.receiver = receiver;
 	call.member = member;
 	call.extra = extra;
+	call.objectType = objectType;
+	call.objectId = objectId;
 
 	for(QMap<QString, QVariant>::const_iterator it = params.constBegin(); it != params.constEnd(); ++it) {
 		call.params.insert(it.key(), it.value().toString());
@@ -365,6 +370,10 @@ void TelldusLive::doCall() {
 	d->manager->executeRequest(d->request);
 }
 
+void TelldusLive::onNetworkAccessibleChanged(const bool isOnline) {
+	qDebug().noquote().nospace() << "[NETWORK] NetworkAccessibilityChanged: " << isOnline;
+}
+
 void TelldusLive::setupManager() {
 	if (d->manager) {
 		delete d->manager;
@@ -377,6 +386,7 @@ void TelldusLive::setupManager() {
 	connect(d->manager, SIGNAL(authorizationReceived(QString,QString)), this, SLOT( onAuthorizationReceived(QString, QString)));
 	connect(d->manager, SIGNAL(accessTokenReceived(QString,QString)), this, SLOT(onAccessTokenReceived(QString,QString)));
 	connect(d->manager, SIGNAL(requestReady(QByteArray, QNetworkReply *)), this, SLOT(onRequestReady(QByteArray, QNetworkReply *)));
+	connect(d->manager, SIGNAL(networkAccessibleChanged(bool)), this, SLOT(onNetworkAccessibleChanged(bool)));
 
 	d->request = new KQOAuthRequest(this);
 

@@ -245,11 +245,6 @@ Then tap here to refresh!</source>
         <source>of</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../qml/MainInterface.qml" line="194"/>
-        <source>Connected locations</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>misc</name>
@@ -267,6 +262,16 @@ Then tap here to refresh!</source>
         <location filename="../qml/DevicePage.qml" line="234"/>
         <location filename="../qml/DashboardPage.qml" line="124"/>
         <source>You can refresh once every 10 seconds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="23"/>
+        <source>Include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ClientDetails.qml" line="32"/>
+        <source>Exclude</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

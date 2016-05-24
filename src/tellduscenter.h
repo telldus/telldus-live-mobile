@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVariantList>
+#include "config.h"
 
 class AbstractView;
 

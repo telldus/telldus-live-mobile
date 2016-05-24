@@ -18,7 +18,7 @@
 class Client::PrivateData {
 public:
 	bool hasChanged, online, editable, timezoneAutodetected;
-	int id, sunrise, sunset, timezoneOffset;
+	int id, sunrise, sunset, timezoneOffset, addNodeToNetworkTimeout;
 	QString name, version, type, sessionId, ip, longitude, latitude, timezone, transports;
 	QWebSocket webSocket;
 };
@@ -30,6 +30,7 @@ Client::Client(QObject *parent) :
 	d->online = false;
 	d->editable = false;
 	d->id = 0;
+	d->addNodeToNetworkTimeout = 0;
 
 	connect(QApplication::instance(), SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(applicationStateChanged(Qt::ApplicationState)));
 	connect(TelldusLive::instance(), SIGNAL(sessionAuthenticated()), this, SLOT(sessionAuthenticated()));
@@ -175,6 +176,29 @@ int Client::timezoneOffset() const {
 
 QString Client::transports() const {
 	return d->transports;
+}
+
+int Client::addNodeToNetworkTimeout() const {
+	return d->addNodeToNetworkTimeout;
+}
+
+void Client::reduceAddNodeToNetworkTimeout() {
+	if (d->addNodeToNetworkTimeout > 0) {
+		d->addNodeToNetworkTimeout--;
+		emit addNodeToNetworkTimeoutChanged();
+		QTimer::singleShot(1000, this, SLOT(reduceAddNodeToNetworkTimeout()));
+	} else {
+
+	}
+}
+
+void Client::setAddNodeToNetworkTimeout(int addNodeToNetworkTimeout) {
+	if (d->addNodeToNetworkTimeout == addNodeToNetworkTimeout) {
+		return;
+	}
+	d->addNodeToNetworkTimeout = addNodeToNetworkTimeout;
+	emit addNodeToNetworkTimeoutChanged();
+	QTimer::singleShot(1000, this, SLOT(reduceAddNodeToNetworkTimeout()));
 }
 
 void Client::setFromVariantMap(const QVariantMap &dev) {
@@ -343,8 +367,33 @@ void Client::addressReceived(const QVariantMap &data) {
 void Client::wsConnected() {
 	Dev::instance()->logEvent("websocket", "connected", "");
 	d->webSocket.sendTextMessage(QString("{\"module\":\"auth\",\"action\":\"auth\",\"data\":{\"sessionid\":\"%1\",\"clientId\":\"%2\"}}").arg(d->sessionId, QString::number(d->id)));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"added\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"removed\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"failSetState\"}}"));
 	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"device\",\"action\":\"setState\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"added\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"removed\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"setName\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"setPower\"}}"));
 	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"sensor\",\"action\":\"value\"}}"));
+}
+
+void Client::zwaveExclude() {
+	Dev::instance()->logEvent("websocket", "zwaveInclude", "");
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"zwave\",\"action\":\"removeNodeFromNetwork\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"zwave\",\"action\":\"removeNodeFromNetworkStartTimeout\"}}"));
+
+	d->webSocket.sendTextMessage(QString("{\"module\":\"client\",\"action\":\"forward\",\"data\":{\"module\":\"zwave\",\"action\":\"removeNodeFromNetwork\"}}"));
+}
+
+void Client::zwaveInclude() {
+	Dev::instance()->logEvent("websocket", "zwaveInclude", "");
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"zwave\",\"action\":\"addNodeToNetwork\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"zwave\",\"action\":\"addNodeToNetworkStartTimeout\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"zwave\",\"action\":\"interviewDone\"}}"));
+	d->webSocket.sendTextMessage(QString("{\"module\":\"filter\",\"action\":\"accept\",\"data\":{\"module\":\"zwave\",\"action\":\"nodeInfo\"}}"));
+
+	d->webSocket.sendTextMessage(QString("{\"module\":\"client\",\"action\":\"forward\",\"data\":{\"module\":\"zwave\",\"action\":\"addNodeToNetwork\"}}"));
 }
 
 void Client::wsDataReceived(const QString &string) {
@@ -373,12 +422,18 @@ void Client::wsDataReceived(const QString &string) {
 			dev->setState(data["method"].toInt());
 			dev->setStateValue(data["value"].toString());
 		}
+	} else if (msg["module"] == "device" && (msg["action"] == "added" || msg["action"] == "removed")) {
+		QTimer::singleShot(500, DeviceModel::instance(), SLOT(authorizationChanged()));
+	} else if (msg["module"] == "sensor" && (msg["action"] == "added" || msg["action"] == "removed" || msg["action"] == "setName" || msg["action"] == "setPower")) {
+		QTimer::singleShot(500, SensorModel::instance(), SLOT(authorizationChanged()));
 	} else if (msg["module"] == "sensor" && msg["action"] == "value") {
 		SensorModel *m = SensorModel::instance();
 		Sensor *sensor = m->findSensor(data["sensorId"].toInt());
 		if (sensor) {
 			sensor->update(data);
 		}
+	} else if (msg["module"] == "zwave" && msg["action"] == "addNodeToNetworkStartTimeout") {
+		this->setAddNodeToNetworkTimeout(msg["data"].toInt());
 	}
 }
 
@@ -405,8 +460,8 @@ void Client::applicationStateChanged(Qt::ApplicationState state) {
 	case Qt::ApplicationInactive:
 	case Qt::ApplicationHidden:
 		Dev::instance()->logEvent("applicationState", "inactive", "");
-		d->webSocket.close();
-		QTimer::singleShot(10000, this, SLOT(sessionAuthenticated()));
+//		d->webSocket.close();
+//		QTimer::singleShot(10000, this, SLOT(sessionAuthenticated()));
 		break;
 	default:
 		break;
