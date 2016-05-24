@@ -277,12 +277,12 @@ Poté dotykem aktualizujte!</translation>
         <translation>Můžete aktualizovat každých 10 sekund.</translation>
     </message>
     <message>
-        <location filename="../qml/ClientDetails.qml" line="23"/>
+        <location filename="../qml/ClientDetails.qml" line="23"></location>
         <source>Include</source>
-        <translation type="unfinished"></translation>
+        <translation>Zařadit</translation>
     </message>
     <message>
-        <location filename="../qml/ClientDetails.qml" line="32"/>
+        <location filename="../qml/ClientDetails.qml" line="32"></location>
         <source>Exclude</source>
         <translation type="unfinished"></translation>
     </message>
