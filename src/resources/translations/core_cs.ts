@@ -284,7 +284,7 @@ Poté dotykem aktualizujte!</translation>
     <message>
         <location filename="../qml/ClientDetails.qml" line="32"></location>
         <source>Exclude</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyřadit</translation>
     </message>
 </context>
 <context>
