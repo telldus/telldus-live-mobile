@@ -67,17 +67,17 @@
     <message>
         <location filename="../qml/SensorPage.qml" line="376"></location>
         <source>minutes ago</source>
-        <translation type="unfinished">Minutes déjà</translation>
+        <translation>minutes déjà</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="383"></location>
         <source>hours ago</source>
-        <translation type="unfinished">Heures déjà</translation>
+        <translation>heures déjà</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="390"></location>
         <source>days ago</source>
-        <translation type="unfinished">Jours déjà</translation>
+        <translation>jours déjà</translation>
     </message>
     <message>
         <location filename="../qml/SensorPage.qml" line="380"></location>
