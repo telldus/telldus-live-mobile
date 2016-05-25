@@ -38,7 +38,7 @@ Item {
 				anchors.left: parent.left
 				anchors.leftMargin: Units.dp(56)
 			}
-			MouseArea {
+/*			MouseArea {
 				id: mouseArea
 				anchors.fill: parent
 				onClicked: {
@@ -47,7 +47,7 @@ Item {
 					overlayPage.source = Qt.resolvedUrl("ClientDetails.qml");
 					overlayPage.childObject = client
 				}
-			}
+			}*/
 		}
 	}
 /*	Component {

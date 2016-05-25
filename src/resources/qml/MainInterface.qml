@@ -181,7 +181,7 @@ Rectangle {
 				font.pixelSize: Units.dp(16)
 				color: "#ffffff"
 			}
-			MouseArea {
+/*			MouseArea {
 				id: mouseArea
 				anchors.fill: parent
 				onClicked: {
@@ -190,7 +190,7 @@ Rectangle {
 					overlayPage.source = Qt.resolvedUrl("UserDetails.qml");
 					overlayPage.childObject = user
 				}
-			}
+			}*/
 		}
 		Rectangle {
 			id: menuUserDetailsAndroid
