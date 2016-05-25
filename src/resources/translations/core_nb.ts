@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="nb_NO">
 <context>
@@ -144,6 +144,11 @@
     <name>extra</name>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"></location>
+        <source>Connected Locations</source>
+        <translation>Tilkoblede steder</translation>
+    </message>
+    <message>
+        <location filename="../qml/TranslationStrings.qml" line="7"></location>
         <source>This is untranslated!</source>
         <translation>Dette er ikke oversatt!</translation>
     </message>
@@ -184,7 +189,7 @@ Trykk her for å oppdatere!</translation>
     <message>
         <location filename="../qml/PleaseWait.qml" line="11"></location>
         <source>Please wait...
-...we'll try to be quick!</source>
+...we&apos;ll try to be quick!</source>
         <translation>Vennligst vent...
 ...vi skynder oss!</translation>
     </message>
@@ -252,11 +257,6 @@ Trykk deretter her for å oppdatere!</translation>
         <source>of</source>
         <translation>av</translation>
     </message>
-    <message>
-        <location filename="../qml/MainInterface.qml" line="194"></location>
-        <source>Connected locations</source>
-        <translation type="vanished">Tilkoblede steder</translation>
-    </message>
 </context>
 <context>
     <name>misc</name>
@@ -277,12 +277,12 @@ Trykk deretter her for å oppdatere!</translation>
         <translation>Du kan oppdatere hvert 10. sekund.</translation>
     </message>
     <message>
-        <location filename="../qml/ClientDetails.qml" line="23"/>
+        <location filename="../qml/ClientDetails.qml" line="23"></location>
         <source>Include</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ClientDetails.qml" line="32"/>
+        <location filename="../qml/ClientDetails.qml" line="32"></location>
         <source>Exclude</source>
         <translation type="unfinished"></translation>
     </message>
@@ -290,36 +290,36 @@ Trykk deretter her for å oppdatere!</translation>
 <context>
     <name>pages</name>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="8"></location>
+        <location filename="../qml/TranslationStrings.qml" line="9"></location>
         <location filename="../qml/MainMenu.qml" line="40"></location>
         <source>Dashboard</source>
         <translation>Dashbord</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="9"></location>
+        <location filename="../qml/TranslationStrings.qml" line="10"></location>
         <location filename="../qml/DevicePage.qml" line="369"></location>
         <source>Devices</source>
         <translation>Enheter</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="10"></location>
+        <location filename="../qml/TranslationStrings.qml" line="11"></location>
         <location filename="../qml/SensorPage.qml" line="408"></location>
         <source>Sensors</source>
         <translation>Sensorer</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="11"></location>
+        <location filename="../qml/TranslationStrings.qml" line="12"></location>
         <source>Scheduler</source>
         <translation>Planlagte hendelser</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="12"></location>
+        <location filename="../qml/TranslationStrings.qml" line="13"></location>
         <location filename="../qml/SettingsPage.qml" line="42"></location>
         <source>Settings</source>
         <translation>Innstillinger</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="13"></location>
+        <location filename="../qml/TranslationStrings.qml" line="14"></location>
         <location filename="../qml/DebugPage.qml" line="34"></location>
         <source>Debug</source>
         <translation>Debug</translation>

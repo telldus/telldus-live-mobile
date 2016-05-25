@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="cs_CZ">
 <context>
@@ -10,7 +10,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="68"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>On</source>
-        <translation>Zapnout</translation>
+        <translation>Zap</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="276"></location>
@@ -19,7 +19,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="125"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>Off</source>
-        <translation>Vypnout</translation>
+        <translation>Vyp</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="278"></location>
@@ -144,6 +144,11 @@
     <name>extra</name>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"></location>
+        <source>Connected Locations</source>
+        <translation>Připojená místa</translation>
+    </message>
+    <message>
+        <location filename="../qml/TranslationStrings.qml" line="7"></location>
         <source>This is untranslated!</source>
         <translation>Toto je nepřeložitelné!</translation>
     </message>
@@ -194,7 +199,7 @@ Dotykem aktualizujte!</translation>
     <message>
         <location filename="../qml/PleaseWait.qml" line="11"></location>
         <source>Please wait...
-...we'll try to be quick!</source>
+...we&apos;ll try to be quick!</source>
         <translation>Vyčkejte...
 ...snažíme se být rychlí!</translation>
     </message>
@@ -207,11 +212,6 @@ Dotykem aktualizujte!</translation>
         <location filename="../qml/MainMenu.qml" line="114"></location>
         <source>Sensors</source>
         <translation>Senzory</translation>
-    </message>
-    <message>
-        <location filename="../qml/MainInterface.qml" line="194"></location>
-        <source>Connected locations</source>
-        <translation>Připojená místa</translation>
     </message>
     <message>
         <location filename="../qml/LoginWebKitWebView.qml" line="20"></location>
@@ -290,36 +290,36 @@ Poté dotykem aktualizujte!</translation>
 <context>
     <name>pages</name>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="8"></location>
+        <location filename="../qml/TranslationStrings.qml" line="9"></location>
         <location filename="../qml/MainMenu.qml" line="40"></location>
         <source>Dashboard</source>
         <translation>Displej</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="9"></location>
+        <location filename="../qml/TranslationStrings.qml" line="10"></location>
         <location filename="../qml/DevicePage.qml" line="369"></location>
         <source>Devices</source>
         <translation>Zařízení</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="10"></location>
+        <location filename="../qml/TranslationStrings.qml" line="11"></location>
         <location filename="../qml/SensorPage.qml" line="408"></location>
         <source>Sensors</source>
         <translation>Senzory</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="11"></location>
+        <location filename="../qml/TranslationStrings.qml" line="12"></location>
         <source>Scheduler</source>
         <translation>Plánovač</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="12"></location>
+        <location filename="../qml/TranslationStrings.qml" line="13"></location>
         <location filename="../qml/SettingsPage.qml" line="42"></location>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="13"></location>
+        <location filename="../qml/TranslationStrings.qml" line="14"></location>
         <location filename="../qml/DebugPage.qml" line="34"></location>
         <source>Debug</source>
         <translation>Ladit</translation>

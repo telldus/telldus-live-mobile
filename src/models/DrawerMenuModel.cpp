@@ -1,6 +1,7 @@
 #include "DrawerMenuModel.h"
 
 #include <QDebug>
+#include <QCoreApplication>
 
 #include "objects/DrawerMenuItem.h"
 #include "tellduslive.h"
@@ -29,13 +30,13 @@ void DrawerMenuModel::addDrawerMenuItems() {
 //	list << drawerMenuItem2;
 
 	DrawerMenuItem *drawerMenuItem3 = new DrawerMenuItem(this);
-	drawerMenuItem3->setTitle("Connected Locations");
+	drawerMenuItem3->setTitle(QCoreApplication::translate("extra", "Connected Locations"));
 	drawerMenuItem3->setChildView("DrawerChildViewConnectedLocations.qml");
 	drawerMenuItem3->setIcon("connectedLocations");
 	list << drawerMenuItem3;
 
 	DrawerMenuItem *drawerMenuItem4 = new DrawerMenuItem(this);
-	drawerMenuItem4->setTitle("Settings");
+	drawerMenuItem4->setTitle(QCoreApplication::translate("pages", "Settings"));
 	drawerMenuItem4->setPage("SettingsPage.qml");
 	drawerMenuItem4->setIcon("settings");
 	list << drawerMenuItem4;

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="sv_SE">
 <context>
@@ -144,6 +144,11 @@
     <name>extra</name>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"></location>
+        <source>Connected Locations</source>
+        <translation>Anslutna platser</translation>
+    </message>
+    <message>
+        <location filename="../qml/TranslationStrings.qml" line="7"></location>
         <source>This is untranslated!</source>
         <translation>Detta är översatt till svenska!</translation>
     </message>
@@ -194,7 +199,7 @@ Tryck här för att uppdatera!</translation>
     <message>
         <location filename="../qml/PleaseWait.qml" line="11"></location>
         <source>Please wait...
-...we'll try to be quick!</source>
+...we&apos;ll try to be quick!</source>
         <translation>Vänligen vänta...</translation>
     </message>
     <message>
@@ -251,10 +256,6 @@ Tryck sedan här för att uppdatera!</translation>
         <source>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</source>
         <translation>Du har inte valt att visa några enheter eller sensorer på dashboard. För att göra det gå till respektive sida och klicka på stjärnan uppe till höger.</translation>
     </message>
-    <message>
-        <source>Connected locations</source>
-        <translation type="vanished">Anslutna platser</translation>
-    </message>
 </context>
 <context>
     <name>misc</name>
@@ -288,36 +289,36 @@ Tryck sedan här för att uppdatera!</translation>
 <context>
     <name>pages</name>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="8"></location>
+        <location filename="../qml/TranslationStrings.qml" line="9"></location>
         <location filename="../qml/MainMenu.qml" line="40"></location>
         <source>Dashboard</source>
         <translation>Dashboard</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="9"></location>
+        <location filename="../qml/TranslationStrings.qml" line="10"></location>
         <location filename="../qml/DevicePage.qml" line="369"></location>
         <source>Devices</source>
         <translation>Enheter</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="10"></location>
+        <location filename="../qml/TranslationStrings.qml" line="11"></location>
         <location filename="../qml/SensorPage.qml" line="408"></location>
         <source>Sensors</source>
         <translation>Sensorer</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="11"></location>
+        <location filename="../qml/TranslationStrings.qml" line="12"></location>
         <source>Scheduler</source>
         <translation>Schemaläggare</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="12"></location>
+        <location filename="../qml/TranslationStrings.qml" line="13"></location>
         <location filename="../qml/SettingsPage.qml" line="42"></location>
         <source>Settings</source>
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="13"></location>
+        <location filename="../qml/TranslationStrings.qml" line="14"></location>
         <location filename="../qml/DebugPage.qml" line="34"></location>
         <source>Debug</source>
         <translation>Debug</translation>

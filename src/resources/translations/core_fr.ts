@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
@@ -10,7 +10,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="68"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>On</source>
-        <translation>Allumer</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="276"></location>
@@ -19,7 +19,7 @@
         <location filename="../qml/ComponentSetOnOffTile.qml" line="125"></location>
         <location filename="../qml/ComponentSetOnOffTile.qml" line="170"></location>
         <source>Off</source>
-        <translation>Éteindre</translation>
+        <translation>Éte</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="278"></location>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../qml/SchedulerPage.qml" line="262"></location>
         <source>Today</source>
-        <translation>Aujourd'hui</translation>
+        <translation>Aujourd&apos;hui</translation>
     </message>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="264"></location>
@@ -144,8 +144,13 @@
     <name>extra</name>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"></location>
+        <source>Connected Locations</source>
+        <translation>Emplacements connectés</translation>
+    </message>
+    <message>
+        <location filename="../qml/TranslationStrings.qml" line="7"></location>
         <source>This is untranslated!</source>
-        <translation>Ce n'est pas traduit !</translation>
+        <translation>Ce n&apos;est pas traduit !</translation>
     </message>
 </context>
 <context>
@@ -179,14 +184,14 @@ Appuyer ici pour actualiser !</translation>
     <message>
         <location filename="../qml/SchedulerPage.qml" line="194"></location>
         <source>No schedules have been added yet, please go to http://live.telldus.com to add them. Then tap here to refresh!</source>
-        <translation>Aucune planification n'a été encore ajouté, allez à https://live.telldus.com pour en ajouter. Ensuite appuyer ici pour actualiser !</translation>
+        <translation>Aucune planification n&apos;a été encore ajouté, allez à https://live.telldus.com pour en ajouter. Ensuite appuyer ici pour actualiser !</translation>
     </message>
     <message>
         <location filename="../qml/PleaseWait.qml" line="11"></location>
         <source>Please wait...
-...we'll try to be quick!</source>
-        <translation>Patientez s'il vous plaît...
-...nous essayons d'être rapide !</translation>
+...we&apos;ll try to be quick!</source>
+        <translation>Patientez s&apos;il vous plaît...
+...nous essayons d&apos;être rapide !</translation>
     </message>
     <message>
         <location filename="../qml/MainMenu.qml" line="77"></location>
@@ -201,7 +206,7 @@ Appuyer ici pour actualiser !</translation>
     <message>
         <location filename="../qml/LoginWebKitWebView.qml" line="20"></location>
         <source>Communicating with the login server</source>
-        <translation>Communication avec le serveur d'identification</translation>
+        <translation>Communication avec le serveur d&apos;identification</translation>
     </message>
     <message>
         <location filename="../qml/LoginWebKit.qml" line="70"></location>
@@ -213,7 +218,7 @@ Appuyer ici pour actualiser !</translation>
         <source>No devices have been added yet, please go to http://live.telldus.com to add them.
 
 Then tap here to refresh!</source>
-        <translation>Aucun périphérique n'a été encore ajouté, allez à https://live.telldus.com pour en ajouter.
+        <translation>Aucun périphérique n&apos;a été encore ajouté, allez à https://live.telldus.com pour en ajouter.
 
 Ensuite appuyer ici pour actualiser !</translation>
     </message>
@@ -240,7 +245,7 @@ Ensuite appuyer ici pour actualiser !</translation>
     <message>
         <location filename="../qml/DashboardPage.qml" line="161"></location>
         <source>You have not set any devices or sensors to show in the dashboard, to do this go to their page and click on the star in the top right.</source>
-        <translation>Vous n'avez pas ajouté de périphériques ou capteurs à afficher dans le tableau de bord, pour ce faire, aller à leur page et cliquez sur l'étoile en haut à droite.</translation>
+        <translation>Vous n&apos;avez pas ajouté de périphériques ou capteurs à afficher dans le tableau de bord, pour ce faire, aller à leur page et cliquez sur l&apos;étoile en haut à droite.</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="23"></location>
@@ -251,11 +256,6 @@ Ensuite appuyer ici pour actualiser !</translation>
         <location filename="../qml/SettingsPage.qml" line="23"></location>
         <source>of</source>
         <translation>de</translation>
-    </message>
-    <message>
-        <location filename="../qml/MainInterface.qml" line="194"></location>
-        <source>Connected locations</source>
-        <translation>Emplacements connectés</translation>
     </message>
 </context>
 <context>
@@ -277,12 +277,12 @@ Ensuite appuyer ici pour actualiser !</translation>
         <translation>Vous ne pouvez actualiser que toutes les 10 secondes.</translation>
     </message>
     <message>
-        <location filename="../qml/ClientDetails.qml" line="23"/>
+        <location filename="../qml/ClientDetails.qml" line="23"></location>
         <source>Include</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ClientDetails.qml" line="32"/>
+        <location filename="../qml/ClientDetails.qml" line="32"></location>
         <source>Exclude</source>
         <translation type="unfinished"></translation>
     </message>
@@ -290,36 +290,36 @@ Ensuite appuyer ici pour actualiser !</translation>
 <context>
     <name>pages</name>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="8"></location>
+        <location filename="../qml/TranslationStrings.qml" line="9"></location>
         <location filename="../qml/MainMenu.qml" line="40"></location>
         <source>Dashboard</source>
         <translation>Tableau de bord</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="9"></location>
+        <location filename="../qml/TranslationStrings.qml" line="10"></location>
         <location filename="../qml/DevicePage.qml" line="369"></location>
         <source>Devices</source>
         <translation>Appareils</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="10"></location>
+        <location filename="../qml/TranslationStrings.qml" line="11"></location>
         <location filename="../qml/SensorPage.qml" line="408"></location>
         <source>Sensors</source>
         <translation>Capteurs</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="11"></location>
+        <location filename="../qml/TranslationStrings.qml" line="12"></location>
         <source>Scheduler</source>
         <translation>Programmation</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="12"></location>
+        <location filename="../qml/TranslationStrings.qml" line="13"></location>
         <location filename="../qml/SettingsPage.qml" line="42"></location>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="13"></location>
+        <location filename="../qml/TranslationStrings.qml" line="14"></location>
         <location filename="../qml/DebugPage.qml" line="34"></location>
         <source>Debug</source>
         <translation>Debug</translation>

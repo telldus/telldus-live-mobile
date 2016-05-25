@@ -149,7 +149,7 @@ Item {
 			id: dimHandle
 			anchors.horizontalCenter: parent.horizontalCenter
 			height: Units.dp(12)
-			width: Units.dp(20)
+			width: Units.dp(24)
 			radius: height
 			y: (dimArea.height - dimHandle.height) - ((device.stateValue / 255) * (dimArea.height - dimHandle.height))
 			color: Qt.hsla(0.0, 0.0, 0.75, 1)
@@ -159,7 +159,7 @@ Item {
 			Rectangle {
 				anchors.centerIn: parent
 				height: Units.dp(10)
-				width: Units.dp(18)
+				width: Units.dp(22)
 				radius: dimHandle.radius
 				color: "#FFFFFF"
 			}

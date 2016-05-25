@@ -156,6 +156,11 @@
     <name>extra</name>
     <message>
         <location filename="../qml/TranslationStrings.qml" line="6"/>
+        <source>Connected Locations</source>
+        <translation>Gekoppelde locaties</translation>
+    </message>
+    <message>
+        <location filename="../qml/TranslationStrings.qml" line="7"/>
         <source>This is untranslated!</source>
         <translation>Dit is nog niet vertaald!</translation>
     </message>
@@ -272,10 +277,6 @@ Tap daarna om te verversen!</translation>
         <source>of</source>
         <translation>van</translation>
     </message>
-    <message>
-        <source>Connected locations</source>
-        <translation type="vanished">Gekoppelde locaties</translation>
-    </message>
 </context>
 <context>
     <name>misc</name>
@@ -309,36 +310,36 @@ Tap daarna om te verversen!</translation>
 <context>
     <name>pages</name>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="8"/>
+        <location filename="../qml/TranslationStrings.qml" line="9"/>
         <location filename="../qml/MainMenu.qml" line="40"/>
         <source>Dashboard</source>
         <translation>Dashboard</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="9"/>
+        <location filename="../qml/TranslationStrings.qml" line="10"/>
         <location filename="../qml/DevicePage.qml" line="369"/>
         <source>Devices</source>
         <translation>Apparaten</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="10"/>
+        <location filename="../qml/TranslationStrings.qml" line="11"/>
         <location filename="../qml/SensorPage.qml" line="408"/>
         <source>Sensors</source>
         <translation>Sensoren</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="11"/>
+        <location filename="../qml/TranslationStrings.qml" line="12"/>
         <source>Scheduler</source>
         <translation>Schema</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="12"/>
+        <location filename="../qml/TranslationStrings.qml" line="13"/>
         <location filename="../qml/SettingsPage.qml" line="42"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../qml/TranslationStrings.qml" line="13"/>
+        <location filename="../qml/TranslationStrings.qml" line="14"/>
         <location filename="../qml/DebugPage.qml" line="34"/>
         <source>Debug</source>
         <translation>Debuggen</translation>
