@@ -50,6 +50,9 @@ void TListModel::append(const QList<QObject *> &objects) {
 }
 
 void TListModel::clear() {
+	if(d->list.size() == 0) {
+		return;
+	}
 	beginRemoveRows(QModelIndex(), 0, d->list.size()-1);
 	d->list.clear();
 	endRemoveRows();

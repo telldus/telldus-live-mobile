@@ -17,6 +17,10 @@
 #include "tellduscenter.h"
 #include "utils/dev.h"
 
+#if IS_FEATURE_PUSH_ENABLED
+#include "Push.h"
+#endif
+
 class TelldusLiveCall {
 public:
 	QString endpoint;
@@ -309,6 +313,11 @@ bool TelldusLive::working() const {
 	return d->requestPending;
 }
 
+#if IS_FEATURE_PUSH_ENABLED
+void TelldusLive::submitPushToken() {
+	Push::instance()->submitPushToken();
+}
+#endif
 
 void TelldusLive::logout() {
 	Dev::instance()->logEvent("user", "logout", "");

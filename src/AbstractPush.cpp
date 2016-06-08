@@ -36,6 +36,15 @@ Push *AbstractPush::instance() {
 	return PrivateData::instance;
 }
 
+void AbstractPush::submitPushToken() {
+	qDebug() << "[PUSH] Submitting push token to server";
+	QSettings s;
+	s.setValue("pushEnabled", false);
+	s.setValue("pushName", "");
+	s.setValue("pushOsVersion", "");
+	this->onAuthorizedChanged();
+}
+
 void AbstractPush::registerToken(const QString &token, const QString &deviceName, const QString &manufacturer, const QString &model, const QString &osVersion) {
 	d->token = token;
 	d->deviceName = deviceName;

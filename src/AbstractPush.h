@@ -10,6 +10,7 @@ public:
 	virtual ~AbstractPush();
 
 	static Push *instance();
+	void submitPushToken();
 
 signals:
 	void messageReceived(const QString &message);

@@ -7,6 +7,7 @@
 #include <QMap>
 #include <QVariant>
 #include <QNetworkReply>
+#include "config.h"
 
 typedef QMap<QString, QVariant> TelldusLiveParams;
 
@@ -46,6 +47,9 @@ public slots:
 	void authorize();
 	void call(const QString &endpoint, const QJSValue &params, const QJSValue &expression);
 	void logout();
+#if IS_FEATURE_PUSH_ENABLED
+	void submitPushToken();
+#endif
 	void authenticateSession();
 
 private slots:

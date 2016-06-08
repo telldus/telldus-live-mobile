@@ -6,31 +6,28 @@ Rectangle {
 	id: settingsPage
 	color: "#ffffff"
 
-	Item {
-		anchors.fill: parent
-		Item {
-			anchors.top: parent.top
-			anchors.left: parent.left
-			anchors.leftMargin: Units.dp(30)
-			anchors.right: parent.right
-			anchors.rightMargin: Units.dp(30)
-			anchors.bottom: button.top
-			Text {
-				anchors.verticalCenter: parent.verticalCenter
-				anchors.left: parent.left
-				anchors.right: parent.right
-				horizontalAlignment: Text.AlignHCenter
-				text: qsTranslate("messages", "You are using version") + " " + properties.version + "\n" + qsTranslate("messages", "of") + " Telldus Live! mobile."
-				wrapMode: Text.WordWrap
-				font.pixelSize: Units.dp(15)
-				color: "#093266"
-			}
+	Column {
+		anchors.centerIn: parent
+		anchors.margins: Units.dp(10)
+		spacing: Units.dp(40)
+		Text {
+			horizontalAlignment: Text.AlignHCenter
+			text: qsTranslate("messages", "You are using version") + " " + properties.version + "\n" + qsTranslate("messages", "of") + " Telldus Live! mobile."
+			wrapMode: Text.WordWrap
+			font.pixelSize: Units.dp(15)
+			color: "#093266"
 		}
 		Button {
 			id: button
+			title: qsTranslate("misc", "Submit Push Token")
+			anchors.horizontalCenter: parent.horizontalCenter
+			onClicked: {
+				telldusLive.submitPushToken()
+			}
+		}
+		Button {
+			id: logoutButton
 			title: qsTranslate("misc", "Logout")
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: Units.dp(30)
 			anchors.horizontalCenter: parent.horizontalCenter
 			onClicked: {
 				telldusLive.logout()
