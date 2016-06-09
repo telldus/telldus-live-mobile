@@ -168,19 +168,23 @@ SchedulerModel * SchedulerModel::instance() {
 }
 
 void SchedulerModel::onJobList(const QVariantMap &result) {
-	if (result["job"].toList().size() == 0) {
-		qDebug() << "[SCHEDULERMODEL] No Jobs found, will deactivate all!!";
-		QSqlDatabase db = QSqlDatabase::database();
-		if (db.isOpen()) {
-			QSqlQuery query(db);
-			query.prepare("UPDATE Scheduler SET deactive = ?");
-			query.bindValue(0, true);
-			query.exec();
+	if (result["job"].toList().size() < 50) {
+		if (result["job"].toList().size() == 0) {
+			qDebug() << "[SCHEDULERMODEL] No Jobs found, will deactivate all!!";
+			QSqlDatabase db = QSqlDatabase::database();
+			if (db.isOpen()) {
+				QSqlQuery query(db);
+				query.prepare("UPDATE Scheduler SET deactive = ?");
+				query.bindValue(0, true);
+				query.exec();
+			}
+			this->clear();
+		} else {
+			this->addJobs(result["job"].toList());
 		}
-		this->clear();
+		qDebug() << "[SCHEDULERMODEL] << will emit jobsLoaded()";
+		emit jobsLoaded();
 	} else {
-		this->addJobs(result["job"].toList());
+		qDebug() << "[SCHEDULERMODEL] Too many jobs were available, so we disable scheduler (temp fix)";
 	}
-	qDebug() << "[SCHEDULERMODEL] << will emit jobsLoaded()";
-	emit jobsLoaded();
 }
