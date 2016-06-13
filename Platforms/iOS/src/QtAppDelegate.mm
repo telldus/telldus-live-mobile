@@ -82,5 +82,22 @@ void QtAppDelegateInitialize ()
 {
 	qDebug().noquote() << QString("[PUSH] Failed to get token, error: %1").arg(QString::fromNSString(error.description));
 }
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+	if(application.applicationState == UIApplicationStateInactive) {
+		completionHandler(UIBackgroundFetchResultNoData);
+	} else if (application.applicationState == UIApplicationStateBackground) {
+		completionHandler(UIBackgroundFetchResultNoData);
+	} else {
+		qDebug().noquote() << QString("[PUSH] Active -> Received notification in app");
+        NSDictionary *notificationDict = [userInfo objectForKey:@"aps"];
+        NSString *alertString = [notificationDict objectForKey:@"alert"];
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Telldus Live!" message:alertString delegate:self
+                              cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+		completionHandler(UIBackgroundFetchResultNoData);
+	}
+}
 #endif
 @end
