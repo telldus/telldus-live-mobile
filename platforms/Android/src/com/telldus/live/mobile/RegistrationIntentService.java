@@ -88,10 +88,10 @@ public class RegistrationIntentService extends IntentService {
 	 * @param token The new token.
 	 */
 	private void sendRegistrationToServer(String token) {
-		callNativeSendRegistrationToServer(token, android.os.Build.SERIAL, android.os.Build.MANUFACTURER, android.os.Build.MODEL, android.os.Build.VERSION.RELEASE);
+		callNativeSendRegistrationToServer(token, android.os.Build.SERIAL, android.os.Build.MANUFACTURER, android.os.Build.MODEL, android.os.Build.VERSION.RELEASE, android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID));
 	}
 
-	private static native void callNativeSendRegistrationToServer(String token, String name, String manufacturer, String model, String os_version);
+	private static native void callNativeSendRegistrationToServer(String token, String name, String manufacturer, String model, String os_version, String device_id);
 
 	/**
 	 * Subscribe to any GCM topics of interest, as defined by the TOPICS constant.
