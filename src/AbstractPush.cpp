@@ -8,7 +8,7 @@
 
 class AbstractPush::PrivateData {
 public:
-	QString token, deviceName, manufacturer, model, osVersion;
+	QString token, deviceName, manufacturer, model, osVersion, deviceId;
 	bool pushEnabled;
 	static Push *instance;
 };
@@ -45,12 +45,13 @@ void AbstractPush::submitPushToken() {
 	this->onAuthorizedChanged();
 }
 
-void AbstractPush::registerToken(const QString &token, const QString &deviceName, const QString &manufacturer, const QString &model, const QString &osVersion) {
+void AbstractPush::registerToken(const QString &token, const QString &deviceName, const QString &manufacturer, const QString &model, const QString &osVersion, const QString &deviceId) {
 	d->token = token;
 	d->deviceName = deviceName;
 	d->manufacturer = manufacturer;
 	d->model = model;
 	d->osVersion = osVersion;
+	d->deviceId = deviceId;
 	this->onAuthorizedChanged();
 }
 
@@ -65,8 +66,11 @@ void AbstractPush::onAuthorizedChanged() {
 		return;
 	}
 
-	if (d->pushEnabled && d->deviceName == s.value("pushName", "").toString() && d->osVersion == s.value("pushOsVersion", "").toString()) {
-		// No changed values, no need to reregister
+	//if (d->pushEnabled && d->deviceName == s.value("pushName", "").toString() && d->osVersion == s.value("pushOsVersion", "").toString()) {
+	//	// No changed values, no need to reregister
+	//	return;
+	//}
+	if (!d->pushEnabled) {
 		return;
 	}
 	TelldusLiveParams params;
@@ -75,6 +79,7 @@ void AbstractPush::onAuthorizedChanged() {
 	params["manufacturer"] = d->manufacturer;
 	params["model"] = d->model;
 	params["osVersion"] = d->osVersion;
+	params["deviceId"] = d->deviceId;
 	params["pushServiceId"] = PUSH_SERVICE_ID;
 	telldusLive->call("user/registerPushToken", params, this, SLOT(registerPushTokenWithApiCallback(QVariantMap)));
 }

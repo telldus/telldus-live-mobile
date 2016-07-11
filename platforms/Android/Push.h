@@ -11,7 +11,7 @@ class Push : public AbstractPush {
 public:
 	virtual ~Push();
 
-	static void fromJavaSendRegistrationToServer(JNIEnv *env, jobject thiz, jstring token, jstring name, jstring manufacturer, jstring model, jstring os_version);
+	static void fromJavaSendRegistrationToServer(JNIEnv *env, jobject thiz, jstring token, jstring name, jstring manufacturer, jstring model, jstring os_version, jstring device_id);
 
 protected:
 	explicit Push();

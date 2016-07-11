@@ -17,7 +17,7 @@ signals:
 
 protected:
 	explicit AbstractPush();
-	void registerToken(const QString &token, const QString &deviceName, const QString &manufacturer, const QString &model, const QString &os_version);
+	void registerToken(const QString &token, const QString &deviceName, const QString &manufacturer, const QString &model, const QString &os_version, const QString &device_id);
 
 private slots:
 	void onAuthorizedChanged();
