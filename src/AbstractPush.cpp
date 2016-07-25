@@ -70,9 +70,9 @@ void AbstractPush::onAuthorizedChanged() {
 	//	// No changed values, no need to reregister
 	//	return;
 	//}
-	if (!d->pushEnabled) {
-		return;
-	}
+//	if (!d->pushEnabled) {
+//		return;
+//	}
 	TelldusLiveParams params;
 	params["token"] = d->token;
 	params["name"] = d->deviceName;
